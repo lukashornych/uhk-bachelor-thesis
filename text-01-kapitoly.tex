@@ -1,34 +1,421 @@
 % ################################
 \section{Úvod}
 
+% todo podle tohoto upravit ještě cíl projektu a abstrakci
+
+Cílem této bakalářské práce je navrhnout a hlavně implementovat webovou aplikaci fungující na všech standardních zařízení
+pro vzájemné sdílení a vyhledávání kontaktních a doplňujících údajů, sociálních sítí a firemní struktury mezi osobami, firmami,
+neziskovými organizacemi, umělci a jinými subjekty na jednom místě.
+Hlavním požadavkem je umožnit snadný a rychlý přístup ke všem informacím všem bez omezení jako je registrace nebo
+geografická lokace jedince.
+I přesto, že existuje spousta podobných webových aplikací, žádná nekombinuje všechny vlastnosti a funkce navrhované
+v této práci, nebo se zaměřuje na jinou cílovou skupinu.
+Cílem není pouze navrhnout a implementovat webovou aplikaci obsahující všechny navrhované funkce, velmi důležitým
+požadavkem je propracované uživatelské prostředí s důrazem na design a uživatelskou přívětivost při zachování kompatibility
+a přívětivosti aplikace na mobilních zařízeních i počítačích.
+
+% todo je to pouze rozcestník ne sociální síť se zprávami, feedem, statusy a podobně
+% digitální vizitky
+
+Velmi důležitým krokem před samotnou implementací je zvolení vhodných technologií umožňující nejsnazší a nejrychlejší
+vývoj a hlavně implementaci všech požadavků.
+
+% ################################
+\section{Konkurenční a podobná řešení}
+
+Jak již bylo zmíněno, existuje spoustu webových aplikací, které by se dali považovat za konkurenční řešení implementované
+v této práci.
+Nicméně žádná momentálně nekombinuje prvky sdílení kontaktních údajů, sociálních sítí a firemní struktury s plně
+fulltextovým vyhledáváním bez nutnosti registrace nebo rušení sociálními prvky jako jsou zprávy nebo feedy novinek
+náhodných osob a firem, případně ukládání subjektů do oblíbených s možností kategorizace či poznámek nebo globálnosti
+platformy.
+U většiny takových aplikací se totiž spoléhá na navigaci na cílené subjekty pomocí přímých odkazů, které si daný subjekt
+vloží na své sociální sítě nebo vizitky.
+
+% TODO
+	\subsection{Linktree}
+	- neumožňuje vyhledávat
+	- neumožňuje ukládat do oblíbených
+	- nemá hezké UI
+	- často pochybné odkazy
+	- spousta integrací do ostatních aplikací
+	- pokročilé statistiky
+	- produkty
+
+	\subsection{LinkedIn}
+
+	- vyžaduje registraci
+	- působí spíš jako samostatná sociální síť, ne jako rozcestník
+	- spam od cizích uživatelů a firem
+	- feed s reklamami
+	- složitě dohledatelná firemní struktur
+	- cílí na firmy a zaměstnance ne na osoby, umělce nebo eventy apod
+
+	\subsection{Firmy.cz}
+
+	- není globální
+	- soustředí se pouze na firmy
+
+	\subsection{Shorby}
+
+	- neumožňuje vyhledávat
+	- neumožňuje ukládat do oblíbených
+
+	\subsection{Zlaté stránky}
+
+	TODO
+
+	\subsection{Swopi}
+
+	TODO
+
+	\subsection{AllMyLinks}
+
+	TODO
+
+% ################################
+
+\section{Návrh vlastního řešení}
+
+Jak již bylo nastíněno, navrhované řešení bude reprezentovat jakýsi rejstřík pro sdílení a vyhledávání základních informací
+subjektů a objektů, které uživatele dovedou k hledaným informacím.
+Základní obecnou jednotkou reprezentující takový subjekt či objekt bude karta; odvozenina z anglického překladu vizitky "business card".
+Každá karta tak bude jakousi digitální pokročilou náhradou klasických vizitek nevztahující se pouze na osoby a jejich
+hlavní kontaktní údaje.
+Cílem je umožňovat vyhledávat a sdílet informace kromě soukromých osob a firem i události, produkty, místa, umělecká díla a mnohem více.
+Jedinou podmínkou pro takový subjekt nebo objekt je existence alespoň jednoho údaje důležitého pro ostatní osoby.
+Tím může být kontaktní údaj, odkaz na jiné webové stránky (např.: sociální sítě), geografická pozice nebo
+nějaká hierarchie ostatních subjektů či objektů.
+
+	\subsection{Oblíbené karty}
+
+	Ostatní uživatelé pak budou mít možnost takové karty, které je nějakým způsobem zajímají, uložit do svého profilu pro
+	zjednodušení zpětného dohledání například kontaktních údajů.
+	Kromě obyčejného uchování oblíbených karet bude možné takové karty seskupovat do vlastních upravitelných složek pro
+	lepší organizaci a komentovat vlastními soukromými poznámkami.
+	Každá oblíbená karta tak bude příslušet nějaké složce a bude mít poznámku s pokročilým formátováním viditelnou pouze
+	autorovi poznámky.
+	Tyto funkce umožní uživatelům komunikujícím s velkým počtem subjektů vyznat se v kontaktních údajích a poznámkách
+	například s poslední komunikace nebo podrobností o daném subjektu bez nutnosti ručně takové informace spravovat v
+	textových editorech nebo papírových poznámkách.
+
+	\subsection{Viditelnost karet}
+
+	Protože vyplnění takové karty může být zdlouhavý proces, i za předpokladu intuitivního \ac{UI}, je potřeba umožnit
+	uživatelům karty skrýt do té doby než budou připravené ke zveřejnění.
+	Zároveň ale takovou rozpracovanou kartu může uživatel chtít někomu vzdáleně ukázat například pro ověření správnosti informací
+	bez zveřejňování.
+	Karty tak budou moct mít dvě viditelnosti: veřejná a skrytá.
+	Veřejná karta bude mít jednoduchou zapamatovatelnou URL adresu a bude ji možné vyhledávat pomocí fulltextového vyhledávače.
+	Skrytá karta nebude vyhledatelná pomocí vyhledávače, nicméně uživatelé vlastnící URL odkaz na danou kartu budou mít přístup
+	ke zobrazení dané karty.
+	Skrytá karta bude mít navíc možnost vygenerování náhodné URL pro znemožnění uhádnutí URL adresy nepovolenou osobou.
+
+	\subsection{Karetní informace}
+
+	Každá karta, jak již bylo nastíněno, bude mít možnost zobrazovat různé informace pro uživatele.
+	Definovatelné informace budou vždy dané, tj. budou mít vlastní strukturu v kódu, validaci správnosti hodnot a specializované
+	\ac{UI}.
+	Nebude možné uživatelem definovat náhodné informace, aby se předešlo ke zhoršení čitelnosti informací karet.
+	Toto rozhodnutí by mělo pomoci především uživatelům nepříliš zdatných v dodržení přehlednosti většího množství
+	informací za pomoci předem daného formátu zobrazení daných informací.
+	Je však potřeba strukturu navrhnout dostatečně univerzálně, aby bylo možné v budoucnu implementovat další typy informací
+	definovatelných na kartách.
+	Momentálně podporovanými takovými informacemi budou:
+	\begin{itemize}
+		\item fotografie/avatar
+		\item kategorizační štítky
+		\item popisek
+		\item základní kontaktní údaje
+		\item odkazy na profily na sociálních sítí
+		\item generické odkazy na jakékoliv externí webové stránky
+		\item geografická lokace
+		\item hlavní otevírací doba
+		\item kanceláře, pobočky
+	\end
+
+	Pro rychlé vizuální rozpoznaní karty bude mít autor k dispozici možnost nahrát vlastní fotografii nebo avatar s logem.
+	Fotografie nebo avatar dokáže dostatečně odlišit jednotlivé karty bez nutnosti čtení názvu nebo popisku ke zjistění o
+	jakou kartu se vlastně jedná.
+
+	Kategorizační štítky budou sloužit pro globální kategorizaci karet pro úvodní povědomí uživatele o jakou kartu se jedná
+	a hlavně pro vyhledání karet ve stejné kategorii.
+	To se může hodit pro seskupení například osob s určitým povolání nebo vyznávaným životním stylem.
+	Konkrétní využití je však na konkrétních uživatelích.
+	Štítku uživatel bude moct definovat několik nebo žádný.
+
+	Popisek bude sloužit především pro stručnou definici obsahu karty, tj. co daná karta reprezentuje.
+	Předpokládá se tedy, že popisek karty bude zodpovídat některé z následujících otázek?
+	\begin{itemize}
+		\item Je to osoba, firma, událost, dílo nebo předmět?
+		\item Čím daný subjekt či objekt zabývá v profesní nebo soukromé sféře?
+		\item Proč je daný subjekt či objekt zajímavý?
+	\end
+	Popisek bude mít omezenou velikost a nebude povinný, nicméně silně doporučovaný.
+
+	Základními kontaktními údaji se v případě těchto karet rozumí: telefonní číslo, hlavní emailová adresa, hlavní
+	webové stránky a identifikační číslo (\noindent\ac{IČO}).
+	Uživatel si pak vybere jaké z těchto údajů bude chtít zveřejnit a jaké nikoliv.
+
+	Pro většiny karet, zejména pak pro karty reprezentující soukromé osoby, budou nejdůležitější odkazy na sociální sítě.
+	Pro jednoduché rozlišení mezi jednotlivými sítěmi a poskytnutí koncovým uživatelům jistotu, že daný odkaz skutečně
+	směřuje na ověřenou doménu dané sociální sítě, systém bude mít předefinované podporované sociální sítě.
+	Každá taková definice bude jakousi šablonou pro výsledné odkazy na sociální sítě a bude obsahovat oficiální název,
+	názvy podle kterým bude možné sít vyhledat, ikonu, šablony validních URL adres a kategorii.
+	Uživatel pak bude moct při tvorbě karty vybrat konkrétní síť ručně ze seznamu nebo nechat aplikaci nalézt správnou
+	síť podle vložené URL adresy.
+	Šablona sítí budou kategorizované a bude možné je vyhledávat podle názvu pro jednodušší dohledání.
+	Po vložení konkrétní URL adresy vznikne konkrétní odkaz držící informaci o použité šabloně, cílové URL adresy a
+	popisku pro rozeznání různých odkazů na stejné sociální sítě.
+	Díky definovaným šablonám reprezentující rozsah validních URL pro konkrétní sociální síť bude aplikace schopna
+	validovat konkrétní URL adresy zda-li odpovídají alespoň jedné šabloně a jestli zadaná URL adresa skutečně existuje.
+	To jednak umožní autory karet upozornit na nesprávné URL adresy a koncovým uživatelům karet poskytne zmiňovanou jistotu
+	URL adresy skutečně vedoucí na prezentovanou síť.
+
+	Generické odkazy budou podobné odkazům na sociální sítě.
+	Rozdíl však bude ve volnosti zadat jakoukoliv validní URL adresu.
+	Taková adresa sice bude stále validovaná aplikaci pro existenci, nebude už však validovaná proti žádnému rozsahu
+	URL adres.
+	To umožní autorovi karty odkazovat na jakékoliv webové stránky, ale znemožní poskytnutí jistoty pravosti odkazu
+	pro koncové uživatele.
+	Bohužel není možné jednoduše strojově zjistit jestli odkaz nevede na podvodnou stránku.
+	Takové stránky jsou obtížné rozeznat od originálních webových stránek i pro pravidelné uživatelé originálních stránek.
+	Navíc podvodné stránky každým dnem přibývají a autoři takových webů jsou stále sofistikovanější.
+
+	Důležitou informací pro firmy, události, pobočky atd. je geografiká lokace sídla.
+	Ta umožní koncovým uživatelům nalézt subjekt či objekt, reprezentovaný kartou, v reálném světě.
+	Zároveň poskytne možnost zobrazit karty v blízkém okolí daného uživatele pomocí mapy.
+	Uživatel tak jednoduše zjistí jaké firmy, osoby nebo události se nachází v okolí jeho bydliště, zaměstnaní nebo
+	cílové destinace.
+
+	Firmy a obchody většinou mají nějakou provozní/otevírací dobu, kdy jsou zaměstnanci schopni obsloužit své zákazníky.
+	Tato informace je navíc uživateli vyhledávaná opakovaně a je tedy nutné, aby byla po ruce a zobrazovala všechny potřebné
+	informace.
+	Každá karta tak bude moct definovat otevírací dobu každého dne v týdnu s volitelnou přestávkou.
+	Uživatelé tak kromě definovaných otevíracích dob uvidí i informaci o tom, jaká otevírací doba pro daný den platí
+	a za jak dlouho daný subjekt bude mít otevřeno, popřípadě kolik času zbývá do konce otevírací doby.
+
+	Nedílnou součástí větších firem a institucí jsou pobočky a kanceláře rozmístěné v různých koutech světa.
+	Každá taková pobočka má své zaměstnance, geografickou lokaci a v některých případech i vlastní otevírací dobu.
+	Autor karty tak může definovat své pobočky či kanceláře a volitelně je obohatit o zmíněné rozšiřující informace.
+	Každá taková pobočka může mít vlastní otevírací dobu, i přes to, že samotná karta může mít již hlavní otevírací dobu
+	definovanou, nebo nemusí mít žádnou.
+	Pro klienty je pak vhodné mít definovanou i lokaci dané pobočky.
+	Podstatnou částí bude možnost přiřadit zaměstnance nacházející se v dané pobočce pro snadné kontaktování přímo konkrétních
+	osob.
+	Zaměstnanec bude mít definovanou pracovní pozici a jméno, volitelně pak ještě fotografii a základní kontaktní údaje
+	v podobě emailové adresy telefonního čísla.
+	Každý takový zaměstnanec bude reprezentován speciálním typem karty pro možnost uložení konkrétních zaměstnanců mezi oblíbené
+	karty.
+
+	\subsection{Typy karet}
+
+	Aby bylo možné definovat pro karty různého zaměření jiné podporované informace, bude existovat podpora pro typy karet.
+	Každý typ bude definovat účel karty, možné informace a platné použití.
+	Koncoví uživatelé budou schopni díky této univerzalitě ukládat karty mezi oblíbené bez rozdílů.
+	Momentálně dostupnými typy budou: obecná karta a karta zaměstnance.
+	Obecná karta bude umožňovat specifikovat všechny výše zmíněné informace a každý uživatel ji bude moct přímo vytvořit.
+	Karta zaměstnance bude automaticky nepřímo tvořena při tvorbě zaměstnanců poboček.
+	To umožní pro zobrazit detail jednotlivých zaměstnanců, mít unikátní odkaz na každého zaměstnance nebo vyhledávat
+	přímo karty zaměstnanců s referencí na rodičovskou firmu.
+	Typy karet se ale mohou v budoucnu rozrůst o další specializované typy, a je proto nutné s takovým rozšířením při
+	implementaci počítat.
+
+	\subsection{Vyhledávání karet}
+
+	Velmi podstatnou součástí výsledné aplikace je schopnost vyhledávat a objevovat karty podle požadavků koncového uživatele.
+	Pro zajištění těchto funkcí bude aplikace umět fulltextově vyhledávat a geograficky zobrazovat karty na mapě světa.
+	Díky fulltextovému vyhledávání bude uživatel schopen vyhledávat chtěné karty podle frází obsažených v názvu,
+	popisku, kontaktních údajích, odkazech, názvů poboček a karet zaměstnanců.
+	Výsledky takového vyhledávání budou seřazený podle relevantnosti vzhledem k hledané frázi.
+	Mimo konkrétního vyhledávání uživateli bude zobrazena mapa světa se zaměřením na jeho současnou lokaci zobrazující
+	karty a pobočky jako body v mapě.
+	Každý bod bude obsahovat souhrn nejdůležitějších informací z reprezentující karty nebo pobočky.
+	Takovou informací může být název, štítky, otevírací doba konkrétního dne, odkazy nebo zaměstnanci.
+	Díky těmto funkcím budou uživatelé schopni objevovat nové subjekty a objekty bez nutnosti znalosti URL adres
+	konkrétních karet.
+
+	\subsection{Dostupnost aplikace}
+
+	Cílem aplikace je poskytnout globálně komukoliv bez omezení přístup k veřejným informacím.
+	Na rozdíl od některé konkurence nebude vyžadováno po uživatelích registrace ve výsledné aplikaci pro přístup k vyhledávání
+	nebo samotným kartám a jejich informacím.
+	Jedinou opodstatněnou výjimkou pro nutnost registrace by se v budoucnu mohli stát karty s příznakem 18+.
+	Registrovaný účet uživatele by pak sloužil pro ověření věku daného uživatele podle data narození.
+	Tento požadavek však současné verzi navrhované aplikace není řešen.
+	Dalším požadavkem je umožnit přístup k informacím z jakékoliv země světa.
+	Budoucím cílem je postupně lokalizovat aplikaci do dalších jazyků pro ještě větší dostupnost v zemích mluvících
+	jiným než anglickým jazykem.
+	Nicméně chybějící jazyk dané země nesmí být sám o sobě důvod pro nedostupnost aplikace v dané zemi, uživatelé by
+	měli být vždy schopni používat minimálně výchozí anglickou lokalizaci.
+
+	\subsection{Uživatelské účty}
+
+	Jak již bylo v předchozí kapitole nastíněno, uživatelské účty budou volitelnou funkcí aplikace přinášející výhody
+	nemožné implementovat bez existující účtu.
+	Mezi takové výhody bude z počátku patřit tvoření karet a ukládání cizích karet mezi oblíbené.
+	Tyto funkce vyžadují uživatelský účet, aby bylo možné určit kdo má právo upravovat a mazat dané vytvořené karty
+	a ukládat soukromé data uživatele jako jsou oblíbené karty a jejich poznámky bez viditelnosti ostatním uživatelům.
+	Uživatelské účtu jsou tak tedy spíše bezpečnostním nástrojem pro správu dat v tvořené webové aplikaci, nikoliv
+	nástrojem pro získání dat uživatelů pro například pro zpracování nesouvisející se záměrem aplikace nebo prodej dat
+	společnostem zabývajících se inzercí reklamy.
+	Uživatelské účty jako takové nebudou reprezentovat vždy jen jednu kartu.
+	Místo toho každý účet bude moct vytvořit několik karet a účet bude představovat jen vlastníka neviditelného pro
+	veřejnost.
+	To umožní uživatelům s potřebou více karet pro různé subjekty či objekty používat jeden registrovaný účet místo
+	separátního pro každou kartu jako tomu bývá zvykem u konkurence.
+
+	Kromě těchto hlavních funkcí uživatelských účtů, správná aplikace musí svým zaregistrovaným uživatelům poskytnout
+	i nástroje pro správu účtů jako takových.
+	Každý uživatelský účet bude identifikován jednoznačně pouze podle emailové adresy.
+	Aplikace nebude vyžadovat žádné další údaje v podobě jména, bydliště a podobně, protože pro tyto nejsou potřeba pro
+	provoz aplikace a aplikace nebude zpracovávat uživatelská data jiným způsobem.
+	Emailová adresa místo uživatelského jména byla zvolena z důvodu možnosti informovat uživatele o různých událostech
+	v aplikaci bez nutnosti otevírat samotnou webovou aplikaci.
+	Takové události mohou zahrnovat potvrzení změny emailové adresy, upozornění na změnu hesla nebo třeba vyžádání obnovy
+	zapomenutého hesla.
+	Mimo samotné registrace a přihlášení, aplikace bude umožňovat změnu emailu bezpečně obnovit zapomenuté heslo, kompletně
+	smazat vytvořený účet se všemi jeho daty nebo odhlásit uživatele ze všech přihlášených zařízení.
+	Přihlášení pomocí emailové adresy a hesla bude navíc rozšířeno o přihlášení a registraci skrze účty třetích stran.
+	To zjednoduší a hlavně zrychlí registraci a přihlášení uživatelů využívající služby Googlu, Facebooku nebo třeba
+	GitHubu, kde již daní uživatelé můžou být zaregistrovaní.
+	Při registraci v aplikaci pomocí některého z poskytovatelů pak poskytovatel předá aplikaci základní údaje automaticky
+	a uživatel pouze registraci potvrdí bez nutnosti cokoliv ručně vyplňovat.
+
+		\subsubsection{Prémiové funkce}
+
+		Aby bylo možné obecně jakoukoliv webovou aplikaci dlouhodobě provozovat, je nutné zajistit financování provozu
+		produkčního prostředí.
+		Možností je velké množství a záleží na představivosti vlastníka aplikace.
+		Nejčastějšími praktikami jsou: prodej produktů nebo služeb, zobrazování reklamy a placené plány s prémiovými funkcemi.
+		V případě této aplikace by bylo možné nabízet a prodávat fyzické produkty v podobě například speciálních čipových karet
+		konfigurovatelných pro přesměrování na uživatelem definovaných karet.
+		Avšak prodej jakýchkoliv fyzických produktů není hlavním cílem této aplikace, zejména kvůli přidané zátěži
+		pro provoz.
+		Zobrazování reklam při navigování aplikací by bylo možné a nepřidalo by toto řešení nadbytečnou zátěž na provoz,
+		nicméně uživatelské rozhraní by značně trpělo svojí razantně sníženou přehledností a nechtěným proklikům zobrazovaných
+		reklam což by mohlo vést ještě k frustraci uživatelů.
+		Existuje navíc značné procento uživatelů využívající speciální nástroje prohlížečů pro blokování všech reklam.
+		Ideální variantou pro tento typ aplikace se jeví zavedení placených plánu s prémiovými funkcemi.
+		Zaregistrovaný uživatel standardně bude mít bezplatný plán poskytující uživateli základní omezené funkce, ale
+		bude moct si aktivovat prémiový placený plán odemykající všechny zbylé funkce co aplikace bude nabízet.
+		Toto řešení zamezí zhoršení uživatelského rozhraní a celkově nebude omezovat běžné koncové uživatele.
+		Zároveň řešení nebude ovlivněno nástroji pro blokování reklam a nebude narušovat soukromí uživatelů v podobě
+		sbírání uživatelských dat z reklam.
+		Nevýhodou o proti reklamám je přidaná náročnost implementace systému umožňující uživatelům přepínat a platit
+		plány a hlavně zamezit uživatelům s bezplatným plánem využívat prémiové funkce.
+		Avšak na rozdíl od fyzických produktů, kde přidaná zátěž je stálá, tato zátěž se týká především počátku implementace.
+		Další možnou nevýhodou je málo uživatelů platící si prémiový plán, protože pokud nebude dostatečný počet
+		platících zákazníků, nebude dostatečný příjem pro produkční provoz.
+
+		Konkrétním řešením pro tuto webovou aplikaci bude zavést limity pro bezplatný plán a umožnit uživatelům jednoduše
+		přejít na placený.
+		Kromě samotných plateb bude možné uplatňovat kupóny, které aktivují prémiový plán na konečnou dobu a poté se plán
+		automatické přepne zpět na bezplatný.
+		Pokud uživatel budem mít na svém účtě aktivované prémiové funkce při vypršení prémiového plánu, bude nucen
+		data zahrnující prémiové funkce odstranit jinak budou automaticky skryta.
+		Samotné limity se budou týkat především karet.
+		V případě bezplatného plánu bude mít uživatel k dispozici omezený počet karet, které může vytvořit.
+		V rámci každé karty pak budou další omezení v podobě nemožnosti tvořit pobočky a zaměstnance.
+		Důležité je připravit takový systém, aby bylo možné co nejjednodušeji limity upravovat a případně přidávat další
+		s novými prémiovými funkcemi.
+
+	\subsection{Bezpečnost}
+
+	V dnešní době s přibývajícími podvodnými stránkami a sofistikovanějšími útočníky je čím dál více důležité myslet i
+	na zabezpečení webových aplikací.
+	Kromě základní již běžné praktiky hashování hesel bezpečným algoritmem je nutné zabezpečit mnohem více.
+	V první řadě jde komunikaci mezi prohlížečem a serverem, aby nemohl útočník odposlouchávat posílaná data a následně
+	se třeba vydávat za určitého uživatele.
+	S kradením identity uživatelů souvisí i další praktiky jako CSRF nebo kradení session.
+	Z pohledu samotného kódu aplikace je zas nutné připravit systém práv a taková práva uživatelů před vykonáním
+	požadovaných akcí ověřovat, aby jeden uživatel nemohl upravovat data jiných uživatelů nebo jinak škodit.
+
+	\subsection{UI}
+
+	Aby byla aplikace schopna konkurovat rozsáhlé konkurenci, musí kromě své základní funkčnosti poskytovat i přehledné
+	a vzhledné uživatelské prostředí (\noindent\ac{UI}).
+	Navržené \ac{UI} by tak mělo uživateli zjednodušovat přístup k informacím a akcím, které chce provést bez nutnosti
+	zdlouhavého hledání skrze aplikací.
+	Kvůli velkému procentu využívání internetu na mobilních zařízení je žádoucí připravit prostředí automaticky se
+	přizpůsobující velikosti zařízení při zachování přehlednosti a dostupnosti i na malých.
+	Hlavním cílem je uživatelům mobilních zařízení poskytnou webovou aplikaci přibližující se svým rozvržením a pohodlím
+	nativním aplikacím stejně jako tak jako pro uživatele osobních počítačů s velkými obrazovkami pomocí jedné
+	aplikace díky dynamické přizpůsobitelnosti \ac{UI}.
+	Tento koncept se navíc v budoucnosti dá dále rozšířit o skutečnou mobilní aplikaci díky některým technologiím
+	bez nutnosti tvořit vlastní nativní aplikaci kopírující funkce webové aplikace což je velmi nákladné.
+
+% ################################
+\section{Technologie pro vývoj}
+
+Vývoj jakékoliv aplikace od nuly až po provoz v produkčním prostředí zahrnuje spustu kroků a každý takový krok
+lze pojmout několika způsoby.
+Před samotným vývojem je tak potřeba důkladně promyslet a naplánovat jaké má projekt požadavky, co je cílem samotného projektu
+a také jaký je rozpočet pro jeho vývoj.
+Od těchto cílů se pak odvíjí způsob vývoje a především výběr technologií a nástrojů použitých při vývoji.
+Ty spolu musí být dostatečně kompatibilní a tvořit efektivní celek.
+Při výběru nevhodných technologií se totiž může stát, že v průběhu vývoje vývojáři narazí na problém, který je buď
+s použitými technologiemi neřešitelný, protože daná technologie třeba nebyla navržena pro konkrétní úlohu, nebo
+je nutné problém obejít a to může způsobit komplikace v budoucnu v podobě malé výkonnosti aplikace nebo příliš
+složitého zdrojového kódu.
 V dnešním moderním světě existuje spousta webových technologií, které umožňují a většinou i značně usnadňují vývoj
 webových stránek, aplikací či mikroslužeb.
-Nové alternativní technologie každým dnem přibývají a může být mnohdy obtížné i pro zkušené
-vývojáře se zorientovat a vybrat tu správnou pro daný projekt.
+Avšak nové alternativní technologie přibývají každým dnem a může být mnohdy obtížné i pro zkušené
+vývojáře se zorientovat a vybrat ty správné pro daný projekt.
 Při rozhodování je důležité vybírat nejen podle popularity, ale především podle typu projektu, ten totiž může zásadně
 ovlivnit, jaké technologie jsou vhodné a které nikoliv.
 
+Kromě webových technologií použitých přímo pro vývoj aplikace je vhodné se při návrhu zabývat i technologiemi a nástroji
+pro:
+\begin{itemize}
+	\item uchovávání uživatelských dat
+	\item uchovávání souborů a poskytování jejich variant
+	\item návrh uživatelského rozhraní
+	\item komunikaci s uživateli jinými kanály než je samotná aplikace
+	\item běh aplikace ve vývojovém a produkčním prostředí
+\end{itemize}
 
-	% ################################
-	\subsection{Cíl seminární práce}
-
-	Cílem této seminární práce je vysvětlit základní pojmy a rozdělení webových technologií a následně
-	charakterizovat ty nejpoužívanější.
-	Součástí charakteristiky každé z nich bude seznámení a shrnutí kladů a záporů v porovnání s konkurencí.
-	V závěru bude následovat stanovení kritérií pro výběr nejvhodnější technologie a samotný výběr.
-
-
-% ################################
-\section{Webové technologie}
-
-Webové technologie se primárně rozdělují na dvě kategorie: front-endové a back-endové.
-Obě obsahují rozdílné technologie zejména kvůli tomu, že každá každá z nich zabývá odlišnou částí
+Webové technologie se navíc primárně rozdělují na dvě kategorie: front-endové a back-endové.
+Obě obsahují rozdílné technologie zejména kvůli tomu, že se každá z nich zabývá odlišnou částí
 vývoje.
 Existují ale i technologie spadající více či méně do obou kategorií, avšak v každé plní trochu jiný účel.
 Nejrozšířenějším takovým kandidátem je \noindent\ac{JS} dominující v současné době oběma kategoriím.
 
+	\subsection{Techonologie pro návrh UI a UX}
+
+	Návrh \ac{UI} je jedním z nejdůležitějších kroků pro úspěšnou aplikaci.
+	Společně s uživatelským zážitkem (\noindent\ac{UX}) z velké části rozhodují zda aplikace nebo webová prezentace
+	uživatele zaujme a bude jí nadále používat nebo přejde ke konkurenci.
+	Je důležité navrhnout moderní, přehledné a hlavně intuitivní \ac{UI} neobtěžující koncového uživatele svojí složitostí.
+	Kromě na vizuálně přívětivého \ac{UI} je stěžejní myslet na \ac{UX}, kdy použité prvky jako tlačítka, nadpisy,
+	vyskakovací okna musí být důkladně promyšleny, aby uživatele podvědomě naváděli uživatele k jeho cíli.
+	U jednotlivých prvků jde tak především o tvary, barvy, stíny, rozestupy mezi prvky a textem nebo třeba kontrast prvků
+	mezi sebou.
+	Dobré je myslet i na uživatele s různými omezeními.
+	Například pro úplnou slepotu je možné do webové stránky přidat speciální metadata umožňující prohlížečům správně
+	předčítat obsah stránky.
+	Pro barvoslepost je zas dobré myslet na správný kontrast vybrané barevné palety při použití s textem, aby byl
+	čitelný pro všechny.
+	Návrh \ac{UI} ještě před samotnou implementací může navíc zásadně šetřit čas vývojáře, protože v úvodních krocích
+	se design často mění, a pokud by měl vývojář kromě každou úpravu ještě implementovat, zabralo by to dvojnásobek času.
+
+	Pro návrh \ac{UI} a \ac{UX} před samotným začátkem vývoje nebo i pro dodatečné úpravy existují specializované
+	grafické nástroje.
+	Použít lze i tradiční grafické nástroje, ty ale nenabízí funkce pro vzájemnou kolaboraci mezi
+	členy v týmu nebo přidávání interaktivních prvků přímo do grafického návrhu pro demonstraci fungování budoucí
+	aplikace.
+	Nejpopulárnějšími nástroji se staly Figma, Sketch a Adobe DX a z toho Figma a Adobe XD poskytují dokonce bezplatné
+	varianty s určitými omezeními \cite{design_tools_database}.
+	S pomocí nich je snadné navrhnout základní drátový model pro návrh struktury, grafický model pro vizualizaci
+	vzhledu i interaktivní demo sestavené z předchozích modelů.
+	Tyto modely pak značně usnadňují tvorbu \ac{UI}, protože vývojář tvořící výslednou stránku nemusí vymýšlet
+	vzhled a strukturu stránku při samotném vývoji stránky.
+	Místo toho se může zabývat čistou implementací až finální verze \ac{UI}.
+	Samotný výběr konkrétního nástroje je otázkou podpory operačních systémů designérů a vývojářů, ceny, případně
+	předchozí znalosti prostředí daného nástroje.
+
 	% ###############################
-	\subsection{Front-endové technologie}
+	\subsection{Front-endové webové technologie}
 
 	Front-endové technologie se věnují především přímé interakci s uživatelem pomocí webového prohlížeče.
 	Definují tak vzhled a samotné ovládání aplikace pro koncového uživatele.
@@ -56,13 +443,13 @@ Nejrozšířenějším takovým kandidátem je \noindent\ac{JS} dominující v s
 		tvoří tak stromovou strukturu bloků dokumentu.
 		Struktura vychází z jazyka \noindent\Ac{XML}, který je obohacen hlavně
 		o vlastní značky s přidaným významem pro orientaci prohlížečů při vykreslování stránek. \cite{html_hypertext_markup_language}
-		
+
 		Další velmi důležitou technologií je stylovací jazyk \noindent\Ac{CSS} definující vzhled struktury
 		dokumentu pro koncové uživatele.
 		Pomocí tohoto jazyka je možné upravovat písma, barvy, pozice prvků dokumentu a dokonce i animace.
 		Vzhled stránek a aplikací je čím dál tím důležitější jak pro snazší orientaci, tak hlavně pro odlišení se od konkurence.
 		\cite{css_cascading_style_sheets}
-		
+
 		V dnešní době už téměř stejně důležitý stavební prvek jako \Ac{HTML} nebo \Ac{CSS} je skriptovací jazyk \ac{JS}
 		umožňující na front-endu dynamicky, v průběhu interakce uživatele se stránkou, modifikovat strukturu a vzhled
 		původní stránky či aplikace.
@@ -122,7 +509,7 @@ Nejrozšířenějším takovým kandidátem je \noindent\ac{JS} dominující v s
 		TailwindCSS je také méně paměťově náročný, a proto nepředstavuje tak velkou zátěž jako Bootstrap.
 		\cite{tailwindcss_vs_bootstrap}
 
-		\subsubsection{JavaScript frameworky a knihovny}
+		\subsubsection{JavaScriptové frameworky a knihovny}
 
 		Frameworky a knihovny představují v \ac{JS} sadu předpřipravených nástrojů pro snazší a rychlejší vývoj
 		oproti čistému \ac{JS}.
@@ -180,7 +567,7 @@ Nejrozšířenějším takovým kandidátem je \noindent\ac{JS} dominující v s
 		nicméně nemá moc dobrou dokumentaci a je obtížný na naučení. \cite{react_vs_angular}
 
 	% ###############################
-	\subsection{Back-endové technologie}
+	\subsection{Back-endové webové technologie}
 
 	Back-endové technologie běží na serverech a proto se na rozdíl od front-endových vůbec nedostanou do styku s koncovými uživateli.
 	Místo toho se zaměřují hlavně na práci s daty a informacemi v podobě poskytování relevantních dat front-endovým
@@ -331,65 +718,473 @@ Nejrozšířenějším takovým kandidátem je \noindent\ac{JS} dominující v s
 		se na nezaběhlou a neověřenou technologii, protože není jasné jestli budu ještě dlouhé roky podporována a
 		navíc nemá z daleka tak velkou komunitu jako např. React nebo Vue. \cite{blazor}
 
-%########################
+% ############################
+
+	\subsection{Databázový systém}
+
+	Databázový systém je stěžejní technologie pro uchovávání a agregaci uživatelských dat.
+	Bez komplexních databázových systému by nebylo možné efektivně uchovávat strukturovaná data, nad kterými lze vyhledávat potřebné
+	informace s možností agregace dat pro různé shrnutí, přehledy a grafy.
+	Výběr správného systému je proto jedním z nejdůležitějších kroků před implementací samotného řešení, protože přímo
+	zásadním způsobem ovlivňuje jak se s daty bude poté ve výsledné aplikaci nakládat a jaká omezení a výhody vybraný
+	systém přináší.
+
+	Existuje spousta databázových systémů s velmi odlišnými zaměřeními a přístupy ke struktuře dat.
+	Různé systémy se tak často kombinují, kde každá poskytuje jiná data pro jiné účely.
+	Nejčastějším takovým rozdělením u klasických webových aplikací je použití jednoho databázového systému pro
+	uchování originálních dat sloužící jako hlavní zdroj dat reprezentující platná data a jako doplněk se pak často vybírá
+	systém pro např.: fulltextové vyhledávání agregující pouze nejnovější data z hlavní databáze pro nejoptimálnější vyhledávání.
+	Existují samozřejmě i další specializované systémy s různými zaměření jako je mezipamět, vyhledávání podle pokročilých kritérií,
+	uchovávání speciálních dat atd.
+	Vyvíjená webové aplikace bude však potřebovat pouze uchovávat a vyhledávat data, postačí proto pouze jeden databázový systém
+	jako zdroj data a jeden pro vyhledávání.
+
+	Existují dvě kategorie databázových systémů podle způsobu jakým pracují s daty: \noindent\Ac{SQL} a \noindent\Ac{NoSQL}.
+	\Ac{SQL} je standardizovaný jazyk postavený na principu relačních databází umožňující pracovat s daty pomocí tabulek.
+	Využívá se k manipulaci s databází a uložených dat definující způsob práce s daty v této kategorii systémů.
+	Jedná se o velice univerzální nástroj především pro ukládání, vyhledávání a agregaci dat dělající z tohoto jazyka
+	nástroj použitelný pro většinu projektů.
+	Nicméně i přesto, že je tento jazyk standardizovaný, každý databázový systém postavený na \Ac{SQL}
+	má vlastní implementaci a často obsahuje rozšíření nebo změny v syntaxi oproti standardu. \cite{sql_intro}
+	Odlišnosti od standardu, ale nejsou příliš velké umožňující uživatelům celkem jednoduše přecházet mezi jednotlivými
+	systému bez nutnosti učení se kompletně nového jazyka a vybírat systém spíše podle nefunkčních požadavků než
+	podle přístupu k datům.
+	\Ac{NoSQL} systémy již nijak standardizované nejsou a každý takový systém obvykle přichází s vlastním
+	vyhledávacích jazykem a strukturou dat.
+	Naštěstí se během své existence \Ac{NoSQL} systémy kategorizovali čtyřmi široce používanými
+	datovými strukturami.
+	Nerozšířenější jsou databáze pracující s \noindent\Ac{JSON} či \Ac{XML} dokumenty a databáze využívají strukturu klíč-hodnota.
+	V krajních případech se používají i databáze podobné relačním ukládající data v tabulkách nebo databáze pracující
+	grafy a jejich uzly. \cite{nosql_explained}
+
+	\Ac{SQL} databáze, jak již bylo zmíněno, ukládají data v tabulkách neboli relacích, kde každý řádek reprezentuje
+	jednu entitu/jedince a sloupce reprezentují jednotlivé parametry dané entity.
+%	TODO example tabulka
+	Jednotlivé relace lze navíc mezi sebou propojovat k vytvoření složitějších struktur pomocí vztahů.
+	Díky tomu je možné např.: k entitě navázat kolekci jiných úplně odlišných entit logicky, které spolu logicky souvisí
+	nebo tvořit hierarchie entit stejného typu.
+	Možnosti návrhu struktury dat jsou tak celkem rozsáhlé, bohužel pro aplikace využívající objektový přístup (\noindent\Ac{OOP})
+	je celkem obtížné mapovat tabulky na jednotlivé objekty.
+	Při prvním pohledu se může zdát, že objekty a tabulky se dají snadno mapovat, praxe ukazuje mnoho skrytých komplikací
+	zmiňované v kapitole o návrhu datového modelu. % todo je to tam fakt zmíněné?
+
+	\Ac{NoSQL} databáze pracující s \Ac{JSON} dokumenty zjednodušují právě zmiňované komplikace při mapování
+	na objekty, protože \Ac{JSON} struktura vychází právě z objektové přístupu.
+	To zároveň umožňuje jednodušší změnu struktury při změně objektů v aplikaci, ale taky velice ztěžuje agregaci dat
+	a vyhledávání na takovými daty.
+	Nejjednodušším databázovým systémem je systém využívající strukturu klíč-hodnota kde každá entita má svůj unikátní klíč
+	a jednu hodnotu připomínající tabulku o dvou sloupcích.
+	Mezi příklady patří: mezipaměť pro rychlé získání konkrétních entit, nákupní košíky nebo třeba preference uživatel.
+	Pro analytická data jsou vhodné databáze pracující se sloupci podobně jako relační databáze.
+	Na rozdíl od relačních databází jsou ale data uložená ne po řádcích ale po sloupcích což umožňuje jednodušší agregaci
+	dat jako je výpočet sumy.
+	Tato struktura má ale nevýhodu ve velmi pomalém ukládání, protože vyžaduje několika násobné zapisování dat na disk.
+	Posledním rozšířeným typem \Ac{NoSQL} databází je grafová struktura zaměřující se v první řadě na vztahy mezi
+	jednotlivými entitami, podle kterých lze vyhledávat jednoduše mezi více entitami na rozdíl od relačních databází, kde
+	je potřeba složitě propojovat jednotlivé relace při samotném vyhledávání.
+	Tyto databáze se používají většinou spíše jako sekundární databáze pro analýza dat a zkoumaných problémů.
+	\cite{types-of-nosql-databases}
+
+		\subsubsection{Databázový systém pro ukládání dat}
+
+		Jak již bylo zmíněno databázové systémy pro ukládání dat se používají jako primární zdroj s nejaktuálnějšími i
+		historickými daty.
+		U těchto systémů je pak téměř vždy vyžadované pravidelné zálohování dat a schopnost zotavení se z pádu celého
+		systému, protože v případě jakékoliv výpadku by mohlo dojít ke ztrátě, často nenahraditelných, dat a to může
+		dále vést ke ztrátě uživatelů nebo dokonce zisků.
+		Stěžejní je pak schopnost zajistit integritu dat při paralelním zápisu a čtení data, aby nedošlo k situacím,
+		kdy každý uživatel vidí stejná data v jiných verzích nebo k vzájemnému přepisu stejných dat.
+		To totiž může v lepším případě vést k milným informacím zobrazovaným uživatelům a v tom horším až třeba ke ztrátě
+		peněz v případě bankovních systémů pracujících při transakcích se starými nebo porušenými daty.
+		Z těchto důvodů existují v databázích transakce definující sled kroků, které musí být splněny při změně dat.
+		S tím souvisí množina vlastností zvaná \noindent\Ac{ACID} určující jaké vlastnosti databáze musí
+		splňovat, aby se její databázové transakce daly považovat za bezpečné v případě nějakého problému.
+		Atomicita definuje, že databázová transakce rozdělená na více kroků musí být splněná celá.
+		Pokud alespoň jedna její část selže, selže celá transakce, čímž je zaručena konzistence změny dat v rámci transakce.
+		Vlastnost konzistence zaručuje správnost dat oproti pravidlům nastaveným daném datovém modelu, tak aby nebylo možné
+		do relací zapsat nevalidní data.
+		Izolace transakcí zajišťuje nepřepisování stejných data, pokud dojde k paralelní změně stejných dat ve více
+		transakcích.
+		Pokud jedna transakce změní nějaká data, ostatní transakce musí počkat až předchozí transakce skončí a až tehdy
+		mohou upravovaná data znovu změnit, aby nedošlo k chybnému přepisování dat.
+		Aby bylo možné zaručit, že data změněná transakcí, která úspěšně doběhla se nemohou ztratit existuje vlastnost
+		zvaná trvalost dat.
+		Bez této vlastnosti by nebylo možné se spolehnout, že uložená data v databázi zůstanou. \cite{acid-compliance}
+
+		Nejpoužívanějšími \Ac{SQL} databázemi splňující výše zmiňované požadavky jsou PostgreSQL, MySQL, MariaDB
+		nebo třeba Oracle DB.
+		Všechny kromě Oracle DB jsou open sourcované a může je využívat kdokoliv bez nutnosti placené licence.
+		To neplatí o Oracle DB vyžadující placenou licenci, za kterou uživatel dostane nejen samotnou databázi, ale
+		i podporu ze strany firmy Oracle jenž využívají především firmy velkých rozměrů, které mají v takových databázích
+		vyšší milióny dat a potřebují proto prvotřídní a přímou podporu ze strany poskytovatele databázového systému.
+		Většina firem a jedinců si však toto nemůže dovolit a proto volí spíše ostatní databáze, které poskytují mnohdy
+		stejné funkce bez větších omezení v používání díky rozsáhle komunitě přispívající k rozvoji.
+		Díky internetovým diskuzím mají také uživatelé těchto databází přístup k diskuzním fórům nahrazující do jisté míry
+		placenou podporu.
+		Open sourcové databáze poskytují v drtivé většině stejné funkce díky zmiňovanému standardu \Ac{SQL} a
+		liší se tak spíše v krajních případech jako jsou podporované datové typy, uživatelská rozšířitelnost systému
+		nebo v podporovaných indexes.
+		Např.: PostgreSQL obsahuje podporu pro pole hodnot, rozsahy hodnot a pokročilou práci s datovým typem \Ac{JSON},
+		na proti tomu MySQL a MariaDB mají omezenější výčet podporovaných datových typů a uzčí schopnosti práce s datovým
+		typem \Ac{JSON}.
+
+		Populární alternativou k tradičním \Ac{SQL} databázím se stále více stávají \Ac{NoSQL} databáze
+		díky jejich flexibilnějšímu přístupu.
+		Zdaleka nejpoužívanější takovou databází sloužící jako zdroj primárních dat je databáze MongoDB využívající
+		\Ac{JSON} dokumentů pro ukládání dat.
+		Její popularita spočívá především ve snadnosti mapování dat na objekty při zachování \Ac{ACID} vlastností.
+		Pro běžné webové aplikace, nezabívající se např.: složitými statistickými výpočty a agregáty, poskytuje MongoDB
+		jednodušší a rychlejší vývoj díky podobnosti s objektovým přístupem.
+		MongoDB navíc umožňuje větší flexibilitu struktury dat, takže při budoucím rozvoji datového modelu aplikace se
+		databáze snadněji přizpůsobí než databáze postavená na \Ac{SQL}.
+		Díky tomu jsou databáze \Ac{NoSQL} běžně jednodušeji škálovatelné přes více serverů.\cite{when_to_use_nosql}
+		To také ale znamená, že vývojář nemusí chyby spojené se strukturou dat objevit už při vývoji ale až při provozu
+		v produkčním prostředí.
+		\Ac{JSON} dokumenty mohou také často vést k zvýšené duplicitě dat pokud datový model zahrnuje spoustu
+		propojení mezi různými typy entity, protože kolekce \Ac{JSON} dokumentů spolehají na to, že většina dat
+		spojená s danou entitou budou obsažena právě v daném \Ac{JSON} dokumentu, a proto podporují jen hodně
+		omezené propojování mezi kolekcemi na rozdíl od \Ac{SQL} databází postavených na vzájemném propojování
+		relací.
+		MongoDB se tak spíše hodí pro aplikace, kde data jsou hodně unikátní a lze tak využít výhod \Ac{JSON}
+		dokumentů jako je rychlost načtení nebo škálování.\cite{why_you_should_never_use_mongodb}
+
+		\subsubsection{Databázový systém pro fulltextové vyhledávání}
+
+		Fulltextové vyhledávání umožňuje vyhledávat entity nejen podle přesně daných klíčových slov, ale hlavně podle
+		frází nacházejících se v dlouhých textech nebo názvech, které v sobě mohou být zapsány s jiným skloňováním nebo
+		dokonce s překlepy.
+		Většinou se tak zadaná fráze uživatele vyhledává napříč několika různými texty entit a nalezené výsledky se pak
+		řadí podle relevantnosti, tj. jak moc daná entita odpovídá hledané frázi.
+
+		Databáze používané primárně pro vyhledávání dat, a tedy jako spíše sekundární zdroj, nepotřebují nutně pravidelné
+		zálohování dat, protože vyhledávací data lze kdykoliv obnovit z hlavní databáze.
+		Je spíše kladen důraz na rychlost a dostupnost pomocí duplikace vyhledávacích dat na více serverů do různých částí
+		světa pro co nejmenší odezvu.
+		Jiná je také struktura dat optimalizovaná pro optimální vyhledávání a nemusí tak obsahovat nevyhledávaná data
+		a agregovaná data, která se dají lépe analyzovat vyhledávacím strojem.
+
+		Ačkoliv většina databázových systému použitých jako primární zdroj až už je to PostgreSQL, MySQL nebo MongoDB
+		nabízejí podporu fulltextové vyhledávání, vlastnost je to spíše doplňková a oproti dedikovaným databázím
+		pro vyhledávání dosti omezující a pomalá.
+		Navíc při vyhledávání nad agregovanými daty se tato data musí často duplikovat vedle originálních dat a to přínáší
+		nepřehlednost.
+		Na proti tomu, při použití dedikované databáze vytvořené speciálně pro vyhledávání, agregovaná data jsou bezpečně
+		oddělená od primárních dat a databáze tak může dělat lepší optimalizace.
+		Takové databáze navíc poskytují speciální jazyky a nástroje pro specifikování hledané fráze na určitými atributy
+		entit bez nutnosti ručního sestavování, mnohdy složitého, vyhledávacího dotazu v tradičních systémech.
+		Nejpopulárnější takovou databází je Elasticsearch, který podobně jako MongoDB je \Ac{NoSQL} databází
+		využívající \Ac{JSON} dokumenty přinášející snazší mapování na objekty \cite{es_documents}.
+		Kromě standardního jazykově specifického fulltextového vyhledávání podporuje například i geolokační vyhledávání
+		\cite{es_documents}.
+		Čím dál více používanou alternativou je hostovaná databáze Algolia poskytující velmi podobné vyhledávací
+		funkce jako Elasticsearch, navíc bez nutnosti složité konfigurace a jednodušším rozhraním pro vývojáře i díky
+		předpřipraveným nástrojům.
+		Bohužel neposkytuje self-hosting, který umožňoval vývojářům provozovat systém na vlastních serverech, je tak
+		nutné využívat servery přímo Algolie s pravděpodobností vyšších nákladů na provoz menší kontrolou nad daty a
+		databází.
+		Algolia je i přesto pro běžné fulltextové vyhledávání vhodnější díky jednoduššímu rozhraní.
+		Na proti tomu Elasticsearch poskytuje pokročilejší nástroje pro složité analytické vyhledávání a možnost
+		provozovat aplikaci na vlastních serverech.\cite{es_vs_algolia}
+		Relativně novou alternativou přicházející s podobnou jednoduchostí jako Algolia je databáze Typesense.
+		Ta je navíc oproti Algolii open-source a lze ji provozovat na vlastních serverech, nicméně momentálně nepodporuje
+		statistiky vyhledávání a personalizaci pro doporučování podobných entit.\cite{typesence}
+		Problémem u takto nové databáze je pak zejména malá komunita a je tak pravděpodobné, že při implementaci vyhledávání
+		nad touto databází vývojář může narazit na problém, na který se mu nemusí dostat řešení a bude odkázán na vlastní
+		výzkum a analýzu problému.
+
+	\subsection{Souborové úložistě}
+
+	Je běžné pro dnešní webové aplikace a aplikace obecně uchovávat kromě textových a číselných dat i soubory jako
+	obrázky, dokumenty nebo videa.
+	Databázové systémy sice umožňují ukládat mezi běžné data i soubory v binární podobě, bohužel je takové řešení dosti
+	těžkopádné kvůli zbytečnému narůstání objemu samotné databáze nebo obtížnou manipulaci s takovými daty.
+	Při uchovávání souborů se od aplikace očekává, že kromě samotného poskytování souborů uživatelům bude umět tvořit
+	varianty obrázků, poskytovat duplicitní úložiště napříč celým světem pro rychlé odezvy nazývané \noindent\Ac{CDN} a zálohování.
+	Zejména pak zmíněné varianty obrázků jsou mnohdy tím stěžejním požadavkem, protože umožňují zobrazovat uživatelům menší
+	komprimované verze originálních souborů a šetří tak objem dat putující mezi serverem a prohlížečem uživatele rapidně
+	zrychlující načítání webové aplikace.
+
+	Souborové úložiště lze implementovat různými způsoby.
+	Kromě již zmíněného databázového systému, lze úložiště implementovat ručně nad vlastním serverem, kde se většinou
+	provozuje samotná webová aplikace.
+	Tento přístup sice vývojáři přináší naprostou kontrolu nad soubory, musí však řešit implementaci tvořiče variant
+	nebo pravidelného zálohování svépomoci.
+	Musí i pak řešit napojení na externího poskytovatel \noindent\Ac{CDN} systému.
+	Existují však služby poskytující tyto funkcionality s minimální konfigurací zbavující vývojáře nutnosti implementovat
+	a udržovat vlastní systém společně s otestovanými nástroji poskytovatelem služby.
+	Mezi takové služby patří Cloudinary, Sirv, imgix nebo imagekit.
+	Všechny nabízejí základní funkce zahrnující tvorbu variant obrázků a systém \Ac{CDN} s jednoduchým napojením
+	z webové aplikace.
+	Bohužel za cenu jednoduchosti, vývojář přijde o část kontroly nad uživatelskými daty.
+	Avšak oproti budování vlastního úložiště je to pro spoustu firem vítaná varianta umožňující především rychlý vývoj
+	aplikací.
+
+	\subsection{Technologie pro transakční e-maily a newslettery}
+
+	Webová aplikace pracující se zaregistrovanými uživateli potřebuje nějakým způsobem komunikovat se svými uživateli i
+	mimo samotné prostředí webové aplikace.
+	To hlavně z důvodu, pokud se ve webové aplikaci objeví nějaká nová událost, na kterou je potřeba uživatele upozornit
+	okamžitě bez čekání až si daný uživatel otevře webovou aplikaci.
+	Takovou událostí může cokoliv, zejména pak upozornění na nové přihlášení z neznámého zařízení, nová aktivita spojená
+	s daným uživatelem nebo upozornění na nové podmínky používání aplikace.
+	Pro tyto a další upozornění se používá převážně emailová komunikace díky její rozšířenosti a univerzálnosti.
+	Webová aplikace potřebující komunikovat se zaregistrovaným uživatelem tímto způsobem si musí při registraci
+	vyžádat email uživatele.
+	Ten je unikátní napříč všemi emailovými poskytovali, a proto ho lze použít zároveň jako unikátní identifikátor
+	uživatele využívajícího služeb příslušné aplikace.
+	Kromě upozorňovacích emailů webové aplikace čím dál častěji využívají hromadné rozesílky emailů s novinkami
+	například nových produktů v případě internetových obchodů.
+	Bohužel implementace rozesílek je poměrně složitá kvůli velkému množství odesílaných dat problémů, které mohou nastat
+	při doručování jednotlivých emailů.
+	Jako příklad lze uvést následující problémy: cílený email může být dočasně zablokovaný nebo
+	poskytovatel dané schránky může zamítnout daný email z podezření na spam.
+	Vlastníci dané webové aplikace navíc potřebují statistiky o úspěšnosti rozesílek jako počet úspěšně doručených emailů,
+	počet prokliků konkrétních odkazů v rozesílaném email apod.
+
+	Podobně jako u souborového úložiště lze takový systém implementovat svépomoci, to však přináší značnou zátěž jak pro
+	prvotní implementaci aplikace, tak hlavně na dodatečnou údržbu daného systému.
+	Taková zátěž je pak velice znatelná převážně u menších vývojářských týmu.
+	Vznikli proto služby zabývající se poskytováním právě těchto služeb s minimální konfigurací pro zbavení se nutnosti
+	udržovat další složitý systém.
+	Služeb poskytující tyto funkcionality a mnohé další je mnoho.
+	Některé poskytují pouze základní infrastrukturu pro odesílání emailů, jiné mají nástroje dokonce pro emailový
+	marketing.
+	Mezi nejoblíbenější platformy patří Sendinblue, SendGrid, Mailgun, Mailchimp nebo třeba Sparkpost.
+	Platformy se liší především svými limity v prodávaných balíčcích.
+	Většina z nich obsahuje omezené balíčky zdarma vhodné pro malé webové aplikace nepotřebující vysoké limity odesílaných
+	emailů nebo pro vyzkoušení dané platformy.
+%	todo nějaké odkazy na zdroje nejpopulárnějších platforem? třeba https://www.isitwp.com/smtp-transactional-email-services/
+	% todo z tohodle jsem asi původně čerpal https://www.ventureharbour.com/transactional-email-service-best-mandrill-vs-sendgrid-vs-mailjet/
+	% https://www.websiterating.com/email-marketing/mailchimp-vs-sendinblue/
+	Při výběru tak hlavně záleží jaké limity jsou pro projekt stěžejní, případně jestli projekt potřebuje nějaké speciální
+	marketingové nástroje.
+
+	\subsection{Provoz v produkčním prostředí}
+
+	Nedílnou součástí vývoje webové aplikace, u které se plánuje ostrý provoz v produkčním prostředí pro reálně uživatele
+	je naplánovaní strategie provozu takové aplikace v produkčním prostředí.
+	Oproti lokálnímu vývojovému prostředí, ve kterém aplikace běží v průběhu vývoje na strojích vývojářů, produkční
+	prostředí vyžaduje mimo jiné určité bezpečnostní a dostupnostní požadavky.
+	Nejdůležitější je zabezpečit produkční server proti neoprávněnému přístupu, tak aby na server mohli přistupovat a
+	upravovat jeho vlastnosti pouze administrátoři webové aplikace.
+	Dalším bezpečnostním prvek sloužící zejména pro bezpečí koncových uživatelů je HTTPS protokol zajišťující bezpečnou
+	a šifrovanou komunikaci mezi prohlížečem a serverem aniž by někdo neoprávněný nemohl odposlouchávat danou komunikaci.
+	V dnešní době je tento protokol již standardem a prohlížeče upozorňují uživatele webových stránek nepodporující tento
+	protokol.
+	Chybějící podpora tohoto protokolu může vést například k odcizení hesel nebo bankovních údajů a útočník se tak
+	může vydávat za úplně někoho jiného a způsobit nemalé škody nejen koncových uživatelům ale firmě stojící za danou
+	aplikací.
+	Šifrování je zajištěno certifikátem SSL podepsaný věrohodnou autoritou spojený s doménou webové aplikace.
+	Mimo bezpečnost je stěžejní i nepřetržitá dostupnost aplikace.
+	Pokud webová aplikace je často nedostupná pro koncové uživatele, ať už z důvodu zahlcení aplikace požadavky nebo
+	chybě v infrastruktuře produkčního prostředí, znamená to, že uživatelé mohou přestat aplikaci využívat a přejít
+	ke konkurenci, i v případě že konkurence nemusí nabízet stejné funkcionality.
+	To má obrovský dopad hlavně na zisky firmy stojící za takovou aplikací, zejména pak pro internetové obchody jsou
+	pravidelní zákazníci klíčoví.
+
+		\subsubsection{Technologie pro provoz produkčního prostředí}
+
+		Existuje několik odlišných variant jak řešit provoz produkčního řešení, každý se svými jasnými výhodami i nevýhodami.
+		Nejstarší variantou je pronajmutí serveru.
+		Ten lze pronajmou celý nebo jen jeho část ve formě \noindent\Ac{VPS}.
+		Pronájem celého dedikovaného serveru je mnohdy zbytečné, pokud aplikace neumí využít celý jeho potenciál.
+		Právě díky tomu vznikly zmiňované \noindent\Ac{VPS} poskytující jen takový výkon, který aplikace skutečně využije za
+		zlomek ceny.
+		Díky tomu lze navíc levněji poskytovat aplikaci z různých koutů světa bez nutnosti vlastnit několik, ne zcela
+		využitých, serverů.
+		Nicméně takové řešení je velice náročné na konfiguraci a správu kvůli zajištění bezpečnosti a optimálnímu běhu cílové
+		aplikace.
+		Kvůli tomu provoz vlastního serveru vyžaduje mnohdy dedikovaného správce né-li celý tým, v případě velkých projektu.
+		To si však malé start-upy nemohou většinou dovolit a i pro velké organizace je to podstatná finanční zátěž.
+		Postupem času a zkušeností s provozem různých webových řešení vznikly různé nástroje pro částečnou automatizaci
+		celého procesu, protože podstatná část provozu je ve většině případů repetitivní napříč různými projekty.
+		Populárními řešeními pro jednodušší aplikace se stávají předpřipravená konkrétní prostředí pro aplikace využívající
+		konkrétní programovací jazyky s jejich ekosystémy.
+		Ty umožňují provozovat webové aplikace s minimální konfigurací ze strany administrátora při zachování bezpečnosti
+		a dostupnosti.
+		Pro náročnější webové aplikace, ať už z důvodu nutné specifické konfigurace nebo spojení více částí tvořící finální
+		webovou aplikaci, existují nástroje stojící mezi těmito dvěma řešeními umožňující za cenu nutné malé konfigurace
+		relativní volnost ve struktuře dané aplikace bez nutnosti spravovat samotný server.
+		Administrátor se pak stará pouze o infrastrukturu dané aplikace a už neřešení infrastrukturu serverů a úložišť.
+		Mezi takové nejpoužívanější nástroje patří systémy založené na konceptu kontejnerizace jednotlivých dílčích aplikací.
+		Kontejner v tomto kontextu představuje spustitelný balíček spojující kód aplikace a všechny její potřebné závislosti jako jsou
+		knihovny, běhové prostředí a konfiguraci prostředí, tak aby bylo možné balíček spustit na jakémkoliv stroji podporující
+		běh kontejnerů \cite{what_is_container}.
+		Příkladem je systém Kubernetes zajišťující nejen běh několika aplikací najednou a jejich vzájemné síťové propojení,
+		ale taky schopnost jednoduše provozovat webovou aplikaci na více serverech najednou což umožňuje distribuci
+		uživatelského provozu mezi všechny takové servery, aby nedošlo k přetížení a následné nedostupnosti.
+		Alternativou, také postavenou, na kontejnerizaci je Docker, který tento přístup zpopularizoval.
+		Velmi oblíbený je pak zejména pro běh webové aplikace ve vývojovém prostředí na vývojářských strojích.
+		Avšak lze ho využít i pro provoz produkčního prostředí za cenu nutnosti vetší konfigurace.
+		Docker je tak spíše nástroj pro samotnou správu a běh kontejnerů než komplexní správce pro produkční prostředí.
+		Síla také spočívá v univerzálnosti kontejnerů.
+		Ty mohou obsahovat téměř jakoukoliv aplikaci, přes webové aplikace, desktopové nástroje až po databázové systémy.
+		Díky systému jako je třeba Kubernetes je pak možné poměrně jednoduše spustit samotnou webovou aplikace, API server pro
+		aplikaci, hlavní databázi a navíc ještě třeba databázi pro vyhledávání pomocí pár příkazů v uzavřené lokální síti
+		s pevně definovanými pravidly síťového provozu.
+
+		% todo nějaké zdroje? je to všechno z mojí hlavy tak nevím
+
+		I přes správně nakonfigurované prostředí však může dojít k chybě například v samotné aplikaci a ta se může stát nedostupnou
+		nehledě na to, že samotná infrastruktura funguje v pořádku.
+		Pro takovéto případy je dobré mít nějaký monitorovací systém sledující dostupnost aplikace a korektnost odpovědí
+		vracených serverem.
+		K tomu je většinou využíván strojově ovládaný prohlížeč simulující základní uživatelské kroky při vstupu na stránku
+		aplikace.
+		Kromě jednoduchého zjišťování dostupnosti, některé nástroje umožňují i monitoring rychlosti načtení stránky pro
+		průběžnou kontrolu, že se v aplikaci neděje něco neobvyklého.
+
+		\subsubsection{Poskytovatelé prostředí pro produkční provoz}
+
+		Z důvodu velké náročnosti provozu vlastního fyzického serveru ve vlastní serverovně jednotlivci i menší firmy
+		využívají serverů ostatních společností zabývající se čistě provozem serverů k pronájmu.
+		Takové společnosti se nazývají poskytovatelé, protože poskytují prostor pro běh jakékoliv aplikace.
+		Koncový administrátor se pak už nemusí start o infrastrukturu spojenou s propojením serverů k internetu, a jak už
+		bylo zmíněno, mnohdy se nemusí start ani o infrastrukturu vně serveru.
+
+		Mezi nejznámější patří poskytovatelé: DigitalOcean, Microsoft Azure, Google Cloud Platform, Amazon Web Services,
+		Linode nebo třeba Vultr. % todo nějaký odkazy? je to čístě z hlavy spíš
+		Samozřejmostí je poskytování základních služeb v podobě různých variant \noindent\Ac{VPS} na různě výkonných serverech.
+		Lze si ale pronajmou již předkonfigurovaný server přímo pro konkrétní typ aplikace, kdy stačí umožnit poskytovateli
+		přístup ke zdrojových kódům a vše ostatní připraví poskytoval.
+		Tato varianta je nejjednodušší a ideální pro jednodušší aplikace nemající specifika oproti standardizovanému postupu
+		pro vybraný programovací jazyk.
+		Není tak ani potřeba mít v týmu administrátora starajícího se pouze o provoz produkčního prostředí.
+		Pro složitější aplikace s proprietární konfigurací nebo více dílčími aplikacemi si lze často pronajmout
+		předkonfigurovanou strukturu pro běh systému Kubernetes.
+		Ani v tomto případě většinou není potřeba speciálního administrátora, protože Kubernetes je navržen především
+		pro programátory a v ideálním případě systému říct odkud stáhnout kontejnery s potřebnými aplikacemi.
+		Jednotliví poskytovatelé se pak hlavně lišší v cenách za pronájem, kvalitou podpory, dostupným hardwarem, předkonfigurovaných
+		prostředích a v garantované dostupnosti.
+		Záleží tedy na požadavcích projektu na produkční prostředí a rozpočtu projektu.
+
+		Poskytovatelé samotného prostředí sice většinou umožňují monitorovat aplikaci a samotný server zevnitř serveru,
+		pro monitoring aplikace zvenčí existují externí služby zabývající se pouze monitoringem a díky tomu nabízí pokročilé nástroje.
+		Takových služeb je nepřeberné množství a většina z nich poskytuje téměř stejné funkce.
+		Pravděpodobně nejznámější službou je Pingdom umožňující monitorovat webové stránky z desítek lokalit po celém
+		světě \cite{pingdom}.
+		Nicméně přichází pouze s placenými plány, které jsou poměrně drahé pro malé a neprofitující aplikace.
+		Naštěstí existují omezenější služby poskytující zdarma alespoň základní monitoring dostačující pro pravidelné
+		ověřování běhu aplikace i s ověřováním správnosti odpovědi serveru za cenu méně častého provolávání.
+		Některé služby dokonce zdarma poskytují pokročilejší funkce jako je třeba SSL monitoring pro kontrolu
+		platnosti certifikátů.
+		Jako příklad lze uvést Better Uptime, UptimeRobot, HetrixTools nebo Checkly.
+		Samozřejmostí jsou pak i placené plány s více funkcemi, takže lze dodatečně podle potřeby funkce získat.
+		% todo tady prostě nevím co uvést, všude uvádějí něco jiného, ani nevím kde jsem našel to checkly.
+		% prostě asi direct google search
+		% todo https://websitesetup.org/website-monitoring-services/
+		% todo https://makeawebsitehub.com/best-website-monitoring-services/
+
+\section{Implementace}
+
+% TODO
+
+	% todo přesunuto ze závěru
+	\subsection{Výběr technologíí}
+
+	Je patrné, že vybrat správnou technologii pro daný projekt není snadný úkol, především pokud vývojář nemá ani okrajové
+	zkušenosti s většinou těchto technologií a nemůže tedy vybírat podle vlastních poznatků.
+	Pokud jsou ale vybrány celosvětově používané a podporované technologie, nelze udělat chybu výběrem ani jednou z nich, protože
+	každá má své výhody.
+	Hlavní rozdíl pro většinu vývojářů spočívá ve stylu, jakým se v dané technologii vyvíjí a jestli daný vývojář má alespoň
+	nějaké znalosti používaného programovacího či skriptovacího jazyka.
+
+
+		\subsubsection{Kritéria pro výběr technologií}
+
+		Vyvíjený projekt se bude zabývat možností tvorby a zveřejňování profilových karet obsahující např. odkazy na
+		sociální sítě, kontaktní údaje nebo popis daného subjektu.
+
+		Hlavním požadavkem je vytvořit webovou aplikaci, která se bude chováním a interakcí co nejvíce přibližovat
+		k nativní aplikaci jak pro desktop, tak pro mobilní aplikaci zároveň (podle typu zařízení, na kterém aplikace
+		v danou chvíli poběží) bez nutnosti instalace takové aplikace, aby byl poskytnut co možná nejrychlejší přístup
+		k informacím v dané aplikaci.
+
+		Dalším velmi důležitým aspektem pro aplikaci poskytující spoustu vyhledatelných informací je možnost vytvořit
+		kvalitní SEO, aby se daná aplikace dostala do předních žebříčků při vyhledávání uživateli skrze internetové
+		vyhledávače.
+		\noindent\Ac{SEO} je tedy technika pro optimalizaci webových stránek pro internetové vyhledávače jako např.
+		Google, Bing nebo DuckDuckGo, tak aby byly schopné co nejlépe pochopit a kategorizovat informace poskytnuté
+		danou stránkou a předat dané informace koncovému uživateli. \cite{what_is_seo}
+
+		\subsubsection{Vybrané technologie}
+
+		Vzhledem k tomu, že cílem je vytvořit webovou aplikaci, která poběží v standardních webových prohlížečích,
+		a tím pádem se nelze vyhnout základním front-endovým technologiím \Ac{HTML}, \Ac{CSS} a \ac{JS}.
+		Ty lze ale do jisté míry nahradit jejich nadstavbami.
+
+		V případě \Ac{CSS} byl vybrán preprocesor \Ac{SASS}, pro jeho širokou komunitu a funkce.
+		Kvůli výše zmíněné potřebě zobrazovat různé typy odkazů na profilových kartách, \ac{SASS} umožní
+		do jisté míry automatizovat repetitivní a nepřehledné \ac{CSS} třídy.
+
+		V případě tvorby interaktivního \Ac{GUI} je výběr složitější.
+		Je možno využít jak základního \ac{JS}, tak frameworků či knihoven usnadňující tvorbu reaktivních komponent.
+		Alternativou může být jazyk C\# s pomocí technologie Blazor, díky kterému je možné se úplně od \ac{JS} odstínit.
+		Ze studijních účelů byl vybrán \ac{JS}, především pro hlubší pochopení tohoto jazyka, protože je používán v současné
+		době téměř každou webovou stránkou či aplikací a pravděpodobně tomu tak ještě dlouhou dobu bude.
+		Jako nadstavba jazyka pro zrychlení vývoje byl vybrán framework Vue díky jeho velmi dobré dokumentaci, snazšího
+		pochopení a možnosti programovat přímo v jazyku \ac{JS}.
+		Vue (a stejně tak ostatní takové nadstavby) sám o sobě ale nedisponuje zrovna dobrými prostředky pro \Ac{SEO},
+		což je dáno delegací sestavení výsledné stránky až na front-endový \ac{JS}.
+		Kvůli tomu vyhledávače při strojovém procházení takových stránek nevidí výslednou stránku a nemohou tak
+		vyextrahovat potřebné informace.
+		Řešením může být vykreslení takové stránky již na serveru a prohlížeči poslat již připravenou stránku, kterou už
+		následně převezme samotný Vue.
+		Tuto techniku poskytují již hotovou např. serverové frameworky Nuxt.js nebo Next.js.
+		Protože byl ale vybrán Vue, lze vybrat pouze Nuxt.js mající tuto techniku jako jednu z jeho hlavních výhod.
+
+		Co se týče serverových technologií, tam je výběr, v případě aplikace či stránky bez nutnosti výpočetně náročných operací,
+		spíše otázka preferencí a předchozích znalostí daného vývojáře.
+		Tím, že byl již vybrán serverový framework Nuxt.js pro podporu \Ac{SEO}, by bylo možné jednoduše použít Node.js, na kterém
+		Nuxt.js staví v kombinaci např. s frameworkem Express.js a vystavit \Ac{REST} API přímo pomocí něj.
+		Ekvivalentní alternativou pro tvorbu samotného \Ac{REST} API je použití např. jazyka Java, C\#, \ac{JS} nebo \Ac{PHP}.
+		Ze studijních důvodů a vývojářovy předchozí znalosti byl vybrán právě jazyk Java společně s frameworkem
+		Spring poskytující všechny nástroje potřebné pro jednoduchou tvorbu \Ac{REST} API a jeho automatizované testování
+		bez nutnosti řešit licenční poplatky jako v případě Java EE.
+
+	\subsection{UI a UX}
+
+ 	TODO
+
+	\subsection{Datový model}
+
+	TODO
+
+	\subsection{DDD}
+
+	TODO
+
+	\subsection{Propojení FE a BE}
+
+	TODO
+
+	\subsection{Unit testy}
+
+	TODO
+
+	\subsection{Validace odkazů sociálních sítí}
+
+	TODO
+
+	\subsection{GDPR}
+
+	\subsection{Docker a Kubernetes}
+
+	% TODO
+%	ostatní věci, konkretní implementace
+
+% ####################################
 \section{Závěr}
 
-Je patrné, že vybrat správnou technologii pro daný projekt není snadný úkol, především pokud vývojář nemá ani okrajové
-zkušenosti s většinou těchto technologií a nemůže tedy vybírat podle vlastních poznatků.
-Pokud jsou ale vybrány celosvětově používané a podporované technologie, nelze udělat chybu výběrem ani jednou z nich, protože
-každá má své výhody.
-Hlavní rozdíl pro většinu vývojářů spočívá ve stylu, jakým se v dané technologii vyvíjí a jestli daný vývojář má alespoň
-nějaké znalosti používaného programovacího či skriptovacího jazyka.
+% TODO
 
-
-	\subsection{Kritéria pro výběr technologií}
-
-	Vyvíjený projekt se bude zabývat možností tvorby a zveřejňování profilových karet obsahující např. odkazy na
-	sociální sítě, kontaktní údaje nebo popis daného subjektu.
-
-	Hlavním požadavkem je vytvořit webovou aplikaci, která se bude chováním a interakcí co nejvíce přibližovat
-	k nativní aplikaci jak pro desktop, tak pro mobilní aplikaci zároveň (podle typu zařízení, na kterém aplikace
-	v danou chvíli poběží) bez nutnosti instalace takové aplikace, aby byl poskytnut co možná nejrychlejší přístup
-	k informacím v dané aplikaci.
-
-	Dalším velmi důležitým aspektem pro aplikaci poskytující spoustu vyhledatelných informací je možnost vytvořit
-	kvalitní SEO, aby se daná aplikace dostala do předních žebříčků při vyhledávání uživateli skrze internetové
-	vyhledávače.
-	\noindent\Ac{SEO} je tedy technika pro optimalizaci webových stránek pro internetové vyhledávače jako např.
-	Google, Bing nebo DuckDuckGo, tak aby byly schopné co nejlépe pochopit a kategorizovat informace poskytnuté
-	danou stránkou a předat dané informace koncovému uživateli. \cite{what_is_seo}
-
-	\subsection{Výběr technologií}
-
-	Vzhledem k tomu, že cílem je vytvořit webovou aplikaci, která poběží v standardních webových prohlížečích,
-	a tím pádem se nelze vyhnout základním front-endovým technologiím \Ac{HTML}, \Ac{CSS} a \ac{JS}.
-	Ty lze ale do jisté míry nahradit jejich nadstavbami.
-
-	V případě \Ac{CSS} byl vybrán preprocesor \Ac{SASS}, pro jeho širokou komunitu a funkce.
-	Kvůli výše zmíněné potřebě zobrazovat různé typy odkazů na profilových kartách, \ac{SASS} umožní
-	do jisté míry automatizovat repetitivní a nepřehledné \ac{CSS} třídy.
-
-	V případě tvorby interaktivního \Ac{GUI} je výběr složitější.
-	Je možno využít jak základního \ac{JS}, tak frameworků či knihoven usnadňující tvorbu reaktivních komponent.
-	Alternativou může být jazyk C\# s pomocí technologie Blazor, díky kterému je možné se úplně od \ac{JS} odstínit.
-	Ze studijních účelů byl vybrán \ac{JS}, především pro hlubší pochopení tohoto jazyka, protože je používán v současné
-	době téměř každou webovou stránkou či aplikací a pravděpodobně tomu tak ještě dlouhou dobu bude.
-	Jako nadstavba jazyka pro zrychlení vývoje byl vybrán framework Vue díky jeho velmi dobré dokumentaci, snazšího
-	pochopení a možnosti programovat přímo v jazyku \ac{JS}.
-	Vue (a stejně tak ostatní takové nadstavby) sám o sobě ale nedisponuje zrovna dobrými prostředky pro \Ac{SEO},
-	což je dáno delegací sestavení výsledné stránky až na front-endový \ac{JS}.
-	Kvůli tomu vyhledávače při strojovém procházení takových stránek nevidí výslednou stránku a nemohou tak
-	vyextrahovat potřebné informace.
-	Řešením může být vykreslení takové stránky již na serveru a prohlížeči poslat již připravenou stránku, kterou už
-	následně převezme samotný Vue.
-	Tuto techniku poskytují již hotovou např. serverové frameworky Nuxt.js nebo Next.js.
-	Protože byl ale vybrán Vue, lze vybrat pouze Nuxt.js mající tuto techniku jako jednu z jeho hlavních výhod.
-
-	Co se týče serverových technologií, tam je výběr, v případě aplikace či stránky bez nutnosti výpočetně náročných operací,
-	spíše otázka preferencí a předchozích znalostí daného vývojáře.
-	Tím, že byl již vybrán serverový framework Nuxt.js pro podporu \Ac{SEO}, by bylo možné jednoduše použít Node.js, na kterém
-	Nuxt.js staví v kombinaci např. s frameworkem Express.js a vystavit \Ac{REST} API přímo pomocí něj.
-	Ekvivalentní alternativou pro tvorbu samotného \Ac{REST} API je použití např. jazyka Java, C\#, \ac{JS} nebo \Ac{PHP}.
-	Ze studijních důvodů a vývojářovy předchozí znalosti byl vybrán právě jazyk Java společně s frameworkem
-	Spring poskytující všechny nástroje potřebné pro jednoduchou tvorbu \Ac{REST} API a jeho automatizované testování
-	bez nutnosti řešit licenční poplatky jako v případě Java EE.
+% todo
+% - změnit vzhled FE
+% - vymazat todočka z projektů
+% - vymazat WIP todočka (hlavně z HP)
+% - smazat emaily
+% - smazat hesla
+% - možná omezit sítě jen na ty co mají nějaké zvláštnosti
+% - zajištění přístupu ke službám třetích stran?
+% - smazat statistiky
+% - připravit český návod pro rozjetí lokálně všeho komplet, asi i s hosts a tak

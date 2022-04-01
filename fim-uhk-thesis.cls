@@ -294,7 +294,7 @@
 %-----------------------------------------------------------------------------
 % Projectinfo - parametrizace sablony / template parameters
 %-----------------------------------------------------------------------------
-%Parametry 
+%Parametry
 \define@key{projinfo}{title.cs}{\global\def\@title@CS{#1}}
 \define@key{projinfo}{title.en}{\global\def\@title@EN{#1}}
 \define@key{projinfo}{faculty.cs}{\def\@faculty@CS{#1}}
@@ -328,19 +328,19 @@
 %Vychozi hodnoty / Default values
 \setkeys{projinfo}{
   title.cs=Název práce (česky),
-  title.en=Název práce (anglicky), 
-  project=BP, 
+  title.en=Název práce (anglicky),
+  project=BP,
   department=KIT,
-  declaration=, 
-  annotation.cs=, 
-  annotation.en=, 
-  keywords.cs=, 
+  declaration=,
+  annotation.cs=,
+  annotation.en=,
+  keywords.cs=,
   keywords.en=,
-  author.name=Jméno, 
-  author.surname=Příjmení, 
-  author.field=, 
+  author.name=Jméno,
+  author.surname=Příjmení,
+  author.field=,
   supervisor.name=Jméno,
-  supervisor.surname=Příjmení, 
+  supervisor.surname=Příjmení,
   department.cs=,
   department.en=,
   title.length=,
@@ -566,7 +566,7 @@
 \fontfamily{qhv}\selectfont%
 
 
-  
+
 \begin{center}
     \ifczech
         \noindent\hspace{-34.0pt}\mktxtc{14}{\@uhk@CS}
@@ -577,9 +577,9 @@
     \ifenglish
       \noindent\hspace{-34.0pt}\mktxtc{14}{\@uhk@EN}
     \fi
-    
+
     \vspace{5.6mm}
-    
+
     \ifczech
         \noindent\hspace{-34.0pt}\mktxtc{14}{\@fim@CS}
     \fi
@@ -589,9 +589,9 @@
     \ifenglish
       \noindent\hspace{-34.0pt}\mktxtc{14}{\@fim@EN}
     \fi
-    
+
     \vspace{5.6mm}
-    
+
     \ifczech
         \noindent\hspace{-34.0pt}\mktxtc{14}{\@departmentname@CS}
     \fi
@@ -601,9 +601,9 @@
     \ifenglish
       \noindent\hspace{-34.0pt}\mktxtc{14}{\@departmentname@EN}
     \fi
-    
+
     \vspace{6.3cm}
-    
+
     \ifczech
       \noindent\hspace{-34.0pt}\mktxtc{14}{\@title@CS}
     \fi
@@ -613,7 +613,7 @@
     \ifenglish
       \noindent\hspace{-34.0pt}\mktxtc{14}{\@title@EN}
     \fi
-    
+
     \ifczech
       \noindent\hspace{-34.0pt}\mktxtcn{14}{\@projecttype@CS}
     \fi
@@ -623,7 +623,7 @@
     \ifenglish
       \noindent\hspace{-34.0pt}\mktxtcn{14}{\@projecttype@EN}
     \fi
-    
+
     \enlargethispage{5.1\baselineskip}
 \end{center}
 
@@ -635,7 +635,7 @@
 \vspace{2cm}
 
 \mktxtcn{12}{\ifslovak\@supervisor@SK\else\ifczech\@supervisor@CS\else\@supervisor@EN\fi\fi: \get@supervisor}
-  
+
 \vfill
 \noindent\mktxtcn{12}{Hradec Králové \hfill \@year\hspace{5.0pt}~}
 
@@ -791,7 +791,7 @@
 %
 \csdoublequoteson
 
-% Zarovnání v seznamu typu description 
+% Zarovnání v seznamu typu description
 % Alignment in description list
 % http://tex.stackexchange.com/questions/7008/change-hanging-indent-in-description-list
 \makeatletter
