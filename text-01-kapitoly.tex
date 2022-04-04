@@ -603,15 +603,18 @@ Nejrozšířenějším takovým kandidátem je \noindent\ac{JS} dominující v s
 		mnoho objekty, které jsou mezi sebou propojené a bylo by obtížné tyto vazby spravovat svépomoci.
 		Neméně důležitou funkcionalitou je systém událostí poskytující vývojářům možnost jednoduše v rámci programu vyvolávat
 		události, na které se lze kdekoliv v kódu napojit a spouštět potřebné procesy. \cite{spring_framework_documentation_core}
-		Pro vývoj webových stránek pak poskytuje nástroje pro implementaci \noindent\Ac{MVC}
+		Pro vývoj běžných webových stránek pak poskytuje nástroje pro implementaci \noindent\Ac{MVC}
 		architektury, \noindent\Ac{REST} API architektury atp. \cite{spring_framework_documentaiton_web}
 		\Ac{MVC} architektura rozděluje zpracovávání požadavku mezi datový model starající se o data a jejich přípravu,
 		pohled sestavují výsledné stránky s připravených dat a v poslední řadě řadič zpracovávající požadavky,
 		které následně deleguje na datový model a výsledná data předá pohledu. \cite{mvc}
-		Čím dál více využívanou architekturou při tvorbě webů je \Ac{REST} API.
+		Čím dál více využívanou architekturou pro komunikace mezi serverem a koncovou aplikací nebo stránkou je \Ac{REST} API.
 		Ta se vůbec nestará o to jak se data dostanou ke koncovému uživateli natož v jaké podobě.
 		Místo toho se soustředí pouze na zpracování požadavku a poskytnutí relevantních dat, se kterými pak
 		většinou pracují front-endové technologie pro sestavení stránek a aplikací. \cite{restfulapi}
+		\ac{MVC} a \ac{REST} architektury se tak často kombinují tam kde potřeba ze serveru získat strojově čitelná data
+		místo sestavených stránek pro koncové uživatele. \ac{MVC} část se pak stará o zpracování a poskytnutí dat
+		a \ac{REST} část se stará do doručení a přijmutí dat.
 		Nicméně Spring poskytuje velké množství dalších nástrojů a funkcionalit, a proto může být pro začínající vývojáře
 		jeho rozsáhlost odrazující.
 		Avšak znalost tohoto frameworku se značně vyplatí, hlavně pak při tvorbě velkých projektů; příkladem mohou být
@@ -1077,30 +1080,179 @@ Nejrozšířenějším takovým kandidátem je \noindent\ac{JS} dominující v s
 
 \section{Implementace}
 
-% TODO
+Pro samotnou implementaci vlastního navrhovaného řešení je potřeba vybrat správné technologie podle definovaných požadavků
+popsaného řešení.
+Je dobré se zamyslet nad výběrem technologií z každé kategorie hned na začátku a promyslet, zda všechny vybrané technologie
+jsou vůbec kompatibilní mezi sebou, případně zda-li daná kombinace je optimální pro implementovaný projekt.
+Při výběru jen části technologií by se mohlo v průběhu vývoje stát, že nějaká nově vybraná technologie nemusí být snadno
+zakomponovatelná do existujícího kódu, který je pak třeba nutné z části předělat, což přináší zbytečné další náklady na vývoj.
+Po výběru technologií je vhodné nejdříve navrhované řešení načrtnout v nějakém grafickém editoru pro ustanovení finální
+podoby a rozvržení struktury aplikace.
+Následně je již možné začít se samotnou implementací s pomocí vybraných technologií a prototypu \ac{UI}.
 
-	% todo přesunuto ze závěru
-	\subsection{Výběr technologíí}
+	\subsection{Návrh implementace}
 
-	Je patrné, že vybrat správnou technologii pro daný projekt není snadný úkol, především pokud vývojář nemá ani okrajové
-	zkušenosti s většinou těchto technologií a nemůže tedy vybírat podle vlastních poznatků.
-	Pokud jsou ale vybrány celosvětově používané a podporované technologie, nelze udělat chybu výběrem ani jednou z nich, protože
-	každá má své výhody.
-	Hlavní rozdíl pro většinu vývojářů spočívá ve stylu, jakým se v dané technologii vyvíjí a jestli daný vývojář má alespoň
-	nějaké znalosti používaného programovacího či skriptovacího jazyka.
+	Způsobů jak implementovat webovou aplikaci je mnoho a o to těžší může pro nezkušeného programátora výběr být.
+	Není totiž vždy úplně jednoznačné jakou cestou se vydat, protože pro většinu běžných webových aplikací je více
+	vhodných způsobů.
+	Je tak na zvážení implementátora jaký způsob je vhodnější pro daný projekt porovnáním výhod a nevýhod.
+	Nejpoužívanějšími jsou následující dva přístupy:
 
+	Starším a do nedávna nejvíce obecně používaným způsobem je serverová aplikace poskytující sestavené stránky
+	prohlížeči.
+	Taková aplikace sestavuje stránky z programátorem připravených šablon jednotlivých stránek, do kterých se při sestavení
+	vloží na určená místa aktuální a požadované informace.
+	Těmi může být téměř cokoliv: od jednoduchého údaje jako jméno přihlášeného uživatele přes celý seznam článků k přečtení
+	až po kompletně dynamické sestavení dané stránky na základě dat třeba z databáze.
+	Pro tvorbu takových šablon existuje velké množství nástrojů a specializovaných scriptovacích jazyků, kde každý
+	ekosystém má své.
+	Sestavená stránka poslaná prohlížeči je ale víceméně statická, a i když lze takové stránky obohatit například jazykem
+	\ac{JS} pro dodatečnou dynamičnost v uživatelově prohlížeči, s rostoucí dynamičností velice roste komplexnost a nepřehlednost.
+	Kvůli této nevýhodě společně s nutností tvořit pro každou stránku novou šablonu tento způsob upadá díky lepším novějším
+	alternativám.
+	Nástroje pro tvorbu šablon sice umožňují do jisté míry přepoužívání částí stránek bez nutnosti duplicity,
+	nicméně i tak neumožňují hlavně velkou míru dynamičnosti po sestavení výsledné stránky.
+	Výhodou ale je přímé propojení s logikou aplikace a díky tomu snazší přístup k samotným datům bez nutnosti přeposílání
+	dat mezi více zařízeními pomocí nějaké standardizované komunikace.
+	Pro jednodušší a hlavně méně dynamické stránky v podobě například blogů může být tento způsob stále vyhovující díky
+	mírnější křivce učení daných technologií.
+	Pro vetší webové stránky a hlavně webové aplikace je tento způsob v dnešní době již zbytečně nepřehledný a složitý a
+	neumožňuje takovou dynamičnost jako nativní aplikace.
+
+	Novějším a stále více používaným a oblíbeným způsobem je sestavování stránek pomocí dynamických přepoužitelných
+	komponent prvků s pomocí jazyka \ac{JS}.
+	Každá komponenta reprezentuje jeden prvek (např.: tlačítko nebo kontejner), který má svoji šablonu pro vykreslení
+	a svůj stav zajišťující dynamičnost prvku v čase nebo při interakci uživatele.
+	Šablonovací nástroje pro tvorbu komponent jsou velmi podobné těm z předchozího způsobu, nicméně hluboce integrují
+	jazyk \ac{JS} pro propojení vzhledu a stavu komponenty.
+	Stav takové komponenty může obsahovat pouze například jednoduchý příznak kdy bylo tlačítko stisknuto nebo komplexnější
+	data jako uživatelem vložený text, jeho formátování nebo variantu vzhledu.
+	Díky zapouzdření stavu a šablony je možné celkem jednoduše takové komponenty používat na více místech bez
+	nutnosti přidávat do rodičovské stránky logiku pro ovládání daného prvku.
+	Tento způsob pak navíc při využití jeho dynamických schopností poskytnout uživatelům podobný zážitek jako v případě
+	nativní aplikace.
+	Pro zajištění všech těchto vlastností se používá jazyk \ac{JS} běžící v prohlížeči, kde se veškeré sestavování běžně
+	děje.
+	Nicméně prohlížeč tímto způsobem nemá přístup k datům a je proto nutné zajistit ještě nějaký zdroj dat a komunikaci
+	mezi tímto zdrojem a aplikací v prohlížeči.
+	Tím je většinou serverová aplikace poskytující \ac{API} zpřístupňující data pomocí standardizované strojové komunikace,
+	které musí rozumět jak serverová aplikace tak i aplikace v prohlížeči.
+	\ac{API} je obecný název pro rozhraní poskytující více aplikacím možnost strojově komunikovat mezi sebou pomocí
+	strukturovaných dat.
+	Momentálně nejpoužívanějšími přístupy pro tvorbu \ac{API}
+	Aplikace vystavující \ac{API} definuje jaké data a funkce umí zpracovat a ostatní aplikace při doržení těchto pravidel
+	mohou získávat z této služby data nebo je naopak odesílat ke zpracování.
+	Momentálně nejpoužívanějšími přístupy jsou \ac{REST} \ac{API} a GraphQL \ac{API}, kde každý má své výhody, nevýhody
+	a myšlenku jak takové \ac{API} má vypadat, nicméně slouží ke stejnému účelu: poskytovat data frond-endové aplikaci
+	ze serveru.
+	I tak je oproti předchozího způsobu, kde šablony mají přímí přístup k aktuálním datům, složitější správně synchronizovat
+	informace mezi prohlížečem a serverem právě z důvodu separace, kde si front-endová aplikace musí hlídat data
+	korektně sama data aktualizovat.
+	Především je tato nevýhoda viditelná při implementaci systémů uživatelů a přihlášení.
+	Jak už se může na první pohled zdát, tento způsob tvorby aplikace je složitější, protože vyžaduje znalosti více technologií
+	najednou a schopnosti všechny tyto prvky správně propojit do fungujícího celku.
+	Další nevýhodou jsou zvýšené nároky na výkon cílového zařízení uživatele kvůli zmíněné dynamičnosti probíhající přímo
+	v uživatelově prohlížeči.
+	Z pohledu vyhledávačů je zde nevýhoda omezených možnostech nastavení \ac{SEO} vlastností kvůli posunutému sestavování
+	v prohlížeči s čímž má většina botů prohledávající weby pro problém kvůli snížené podpoře \ac{JS}.
+	Naštěstí zvýšenou náročnost překračují již popsané výhody v podobě velké dynamičnosti, přehlednosti a znovupoužitelnost.
+	Navíc již existují i nástroje sestavující prvotní podobu stránek již na serveru a díky tomu lze poskytnout sestavenou
+	stránku uživateli dříve a se správným nastavením pro \ac{SEO}.
+
+	I když by se tedy dali použít pro implementované řešení oba způsoby, bylo vybráno řešení využívající dynamické komponenty
+	zejména z důvodu požadované velké dynamičnosti aplikace přibližující se nativním aplikacím.
+	Tento způsob navíc umožňuje budoucí transformaci webové aplikace na téměř nativní mobilní aplikace díky systému
+	sestavování stránek přímo v prohlížeči podobně jako nativní aplikace jsou sestavovány přímo v zařízení.
+	Původní prototyp aplikace byl sice implementován pomocí prvního zmíněného způsobu za pomocí šablon stránek, jak se
+	ale ukázalo krátce po začátku vývoje, tento způsob by byl spíše limitující při snaze vyvinout moderní dynamickou aplikaci.
+	Bylo proto rozhodnuto pojmout výzkum dostupných a vhodných technologií sofistikovaněji a začít víceméně od znovu. % todo možná přesunout někam do úvodu a třeba rozšířit že to bylo dobré rozhodnutí a potvrzuje to nutnost výběru technologií dopředu
+	Znamenalo by to také vyvinout vlastní ekosystém pro poskytnutí dynamičnosti zbytečně oddělený od samotných stránek,
+	což dále vede k nepřehlednosti a horšímu rozšiřování z důvodu chybějícího zapouzdření komponent.
+	Místo toho by bylo nutné udržovat separátně šablony stránek a obecnou logiku pro dynamičnost starající o místo
+	jednotlivých komponent o vše.
+	Kromě jasných výhod pro tento konkrétní projekt je zde ještě vedlejší benefit v podobě zkušeností získaných
+	z návrhu komplexnějšího systému, kde jednotlivé části mezi sebou musejí korektně komunikovat.
+
+	Při implementace řešení využívající serverové \ac{API}, je zásadní vybrat jaký přístup bude implementovat.
+	Tento způsob totiž neurčuje specificky jak má být taková aplikace implementovaná s jakými konkrétními nástroje, jde
+	spíše osvědšený vzor, který je dobré následovat a tím že \ac{API} není nějaká specifická technologie ale také spíše
+	způsob jak tvořit komunikaci, je potřeba se zamyslet nad konkrétním způsobem před samotným výběrem technologií.
+	Pomineme-li kompletně vlastní řešení, které by bylo pracné na vyvinutí a nepřinášející žádné benefity pro tento projekt,
+	je na výběr mezi přístupy \ac{SOAP} (Simple Object Access Protocol), \ac{REST} nebo GraphQL \ac{API}.
+	Vzor \ac{SOAP} je již poměrně starý a i když nabízí rozsáhlé možnosti jeho struktura založená na značkovacím jazyku
+	\ac{XML} je zbytečně složitá oproti alternativám a příliš upovídaná, což může zbytečně zatěžovat a zpomalovat
+	síťovou komunikaci.
+	Z tohoto důvodu již nějakou dobu výměně strukturovaných dat dominuje jazyk \ac{JSON}, který je značně stručnější a
+	čitelnější a hlavně jednodušší na zpracování.
+	Na tomto jazyka staví právě vzory \ac{REST} a \ac{GraphQL}.
+	\ac{REST} staví na principu poskytování jednotlivých ucelených dat v předem specifikované formě a objemu v
+	podobě jednotlivých "resource", které lze získat nebo zapsat a to vše bez návaznosti mezi jednotlivými požadavky
+	\cite{restfulapi}.
+	GraphQL je novější a o proti \ac{REST} postaven na myšlence získání jen těch dat, které aplikace opravdu potřebuje díky svému
+	speciálnímu dotazovacímu jazyku a pevná struktura dat je tak spíše udává jaké všechna data lze získat a jak budou vypadat
+	pokud si o ně aplikace skutečně požádá \cite{graphql}.
+	GraphQL tak řeší problém se získáváním příliš mnoho dat nebo nedostatek dat s nutností dělat několik separátních dotazů
+	pro získání všech potřebných dat díky možnosti specifikování jaká data jsou vyžadovaná oproti získání
+	přesně daných dat z \ac{REST} \ac{API}.
+	Nelze ale říci, že GraphQL je za všech podmínek lepší než \ac{REST}, protože každé \ac{API} musí z pohledu serveru
+	řešit stejné problémy v podobě serializace dat, zpracování chyb, cachování a mnoho dalšího.
+	GraphQL tak sice poskytuje lepší kontrolu nad vracenými daty, nemusí však být vhodné pro některé projekty (např.:
+	obecné mikroslužby poskytující \ac{API} pro kohokoliv), navíc klient konzumující takové GraphQL \ac{API} potřebuje
+	komplexnější knihovnu pro zpracování takových dat.
+	Kromě toho, \ac{REST} za svou delší existenci vyspěl a existuje nepřeberné množství dostupných materiálů jak navrhnout
+	správné \ac{API} a nástrojů pro samotnou tvorbu.
+
+	Právě kvůli vyspělosti \ac{REST} \ac{API} a rozšířenosti padlo rozhodnutí právě na tento přístup.
+	Vzor \ac{REST} je navíc stále velmi populární a používaný a tak hlubší znalosti návrhu \ac{API} pomocí tohoto vzoru
+	nejsou k zahození.
+	Obecně jsou pro tento projekt vhodné oba přístupy a ani jeden by nekomplikoval vývoj, protože každé mají své výhody.
+
+	\subsection{Výběr technologií}
+
+	Po rozhodnutí jakým způsobem bude projekt fungovat je možné vybrat konkrétní technologie vhodné pro vybraný způsob,
+	pomocí kterých bude aplikace vyvíjena.
+	I přes to je patrné, že vybrat správnou technologii pro daný projekt není snadný úkol, především pokud vývojář
+	nemá ani okrajové zkušenosti s většinou těchto technologií a nemůže tedy vybírat podle vlastních poznatků.
+	Pokud jsou ale vybrány celosvětově používané a podporované technologie, nelze většinou udělat chybu výběrem ani
+	jednou z nich, protože každá je většinou dostatečně univerzální.
+	Krajní výjimkou můžou být specifické projekty s náročnými požadavky splňující pouze užší výběr technologií.
+	Tam je pak oproti běžnějším projektům, jako jsou webové stránky a aplikace, kladen větší důraz na výběr správných
+	technologií, protože některé technologie nemusí poskytovat dostatečnou podporu pro dané specifické požadavky a tím
+	se může vývoj značně zkomplikovat.
+	Kromě prodloužení implementace se totiž může stát, že je potřeba podstatnou část aplikace kompletně předělat.
+	Nicméně pro běžnější projekty hlavní rozdíl pro většinu vývojářů spočívá ve stylu, jakým se v dané technologii
+	vyvíjí a jestli daný vývojář má alespoň nějaké znalosti používaného programovacího či skriptovacího jazyka.
+	Čas strávený studováním nových technologií v porovnání s konkurenčními technologiemi, které již vývojář zná, může být
+	poměrně velká část samotného vývoje.
 
 		\subsubsection{Kritéria pro výběr technologií}
 
-		Vyvíjený projekt se bude zabývat možností tvorby a zveřejňování profilových karet obsahující např. odkazy na
-		sociální sítě, kontaktní údaje nebo popis daného subjektu.
+		Jak již bylo zmíněno, vyvíjený projekt bude webovou aplikací potencionálně dostupnou ve všem moderních prohlížečích.
+		Stěžejním kritériem je vybraný přístup s využitím dynamických komponent a tudíž aplikace bude rozdělena
+		na front-endovou aplikaci a \ac{API} server.
+		Toto kritérium zásadním způsobem omezuje možnosti vybratelných technologií, protože ne všechny webové technologie
+		a programovací jazyky tento přístup podporují a mají pro něj připravené nástroje.
+		Důležité je i omezení pouze na moderní prohlížeče, protože pokud by byl požadavek podporovat i několik let staré,
+		již nepodporované prohlížeče používající jen malé procentu uživatelů, možnosti výběru technologií by to značně
+		ovlivnilo a omezilo.
+		Nebylo by možné použít novější technologie značně usnadňující vývoj a bylo by nutné dělat mnohem více kompromisů
+		při výběru technologií a především při samotném vývoji.
+		Webová aplikace, jak již bylo zmíněno, se bude zabývat možností tvorby, zveřejňování a vyhledávání
+		karet obsahující veřejně dostupné a vyhledatelné informace, např.: odkazy na sociální sítě,
+		kontaktní údaje nebo popis daného subjektu.
 
 		Hlavním požadavkem je vytvořit webovou aplikaci, která se bude chováním a interakcí co nejvíce přibližovat
-		k nativní aplikaci jak pro desktop, tak pro mobilní aplikaci zároveň (podle typu zařízení, na kterém aplikace
+		k nativní aplikaci jak pro osobní počítače, tak pro mobilní zařízení zároveň (podle typu zařízení, na kterém aplikace
 		v danou chvíli poběží) bez nutnosti instalace takové aplikace, aby byl poskytnut co možná nejrychlejší přístup
 		k informacím v dané aplikaci.
+		Kromě odpadající nutnosti instalovat aplikaci tento přístup přináší i značné urychlení vývoje v porovnání s
+		nativními aplikacemi.
+		Pro každou platformu by totiž musela být tvořena separátní aplikace od začátku vícekrát znovu a znovu.
+		Výjimkou jsou programovací jazyky a frameworky umožňující tvorbu opravdových aplikací běžících na několika
+		platformách zároveň, podobně jako webové aplikace.
+		I tak se ale tyto aplikace musí instalovat a distribuovat separátně.
 
-		Dalším velmi důležitým aspektem pro aplikaci poskytující spoustu vyhledatelných informací je možnost vytvořit
+		Dalším velmi důležitým aspektem pro aplikaci poskytující spoustu vyhledatelných informací je možnost nastavit
 		kvalitní SEO, aby se daná aplikace dostala do předních žebříčků při vyhledávání uživateli skrze internetové
 		vyhledávače.
 		\noindent\Ac{SEO} je tedy technika pro optimalizaci webových stránek pro internetové vyhledávače jako např.
@@ -1109,17 +1261,26 @@ Nejrozšířenějším takovým kandidátem je \noindent\ac{JS} dominující v s
 
 		\subsubsection{Vybrané technologie}
 
+		Prvním nástrojem při návrhu aplikace, jak již bylo zmíněno, měl být grafický editor pro náčrt struktury a vzhledu.
+		Vzhledem k tomu, že všechny dostupné nástroje obsahují podobné základní funkce, byl vybrán editor Figma díky
+		schopnosti běhu v prohlížeči a tím odpadající nutnosti vlastnit zařízení s operačním systémem Windows nebo macOS.
+		Program je navíc bezplatný i pro základní kolaboraci mezi členy v týmu v případě potřeby.
+		Figma je tak ideální volbou i pro začátečníky bez zkušeností ostatních grafických editorů.
+
 		Vzhledem k tomu, že cílem je vytvořit webovou aplikaci, která poběží v standardních webových prohlížečích,
-		a tím pádem se nelze vyhnout základním front-endovým technologiím \Ac{HTML}, \Ac{CSS} a \ac{JS}.
+		nelze se úplně vyhnout základním front-endovým technologiím \Ac{HTML}, \Ac{CSS} a \ac{JS}.
 		Ty lze ale do jisté míry nahradit jejich nadstavbami.
 
 		V případě \Ac{CSS} byl vybrán preprocesor \Ac{SASS}, pro jeho širokou komunitu a funkce.
-		Kvůli výše zmíněné potřebě zobrazovat různé typy odkazů na profilových kartách, \ac{SASS} umožní
-		do jisté míry automatizovat repetitivní a nepřehledné \ac{CSS} třídy.
+		Tento preprocesor umožní přehlednější kód a tím rychlejší vývoj.
+		Kvůli výše zmíněné potřebě zobrazovat různé typy odkazů na profilových kartách, \ac{SASS} navíc umožní
+		do jisté míry automatizovat repetitivní a nepřehledné \ac{CSS} třídy pro velké množství barevných kombinací
+		(každá sociální síť používá jiné barevné kombinace ve svém designu).
 
 		V případě tvorby interaktivního \Ac{GUI} je výběr složitější.
 		Je možno využít jak základního \ac{JS}, tak frameworků či knihoven usnadňující tvorbu reaktivních komponent.
-		Alternativou může být jazyk C\# s pomocí technologie Blazor, díky kterému je možné se úplně od \ac{JS} odstínit.
+		Alternativou může být jazyk C\# s pomocí technologie Blazor, díky kterému je možné se úplně od ekosystému
+		\ac{JS} odstínit za cenu menší komunity a vyspělosti.
 		Ze studijních účelů byl vybrán \ac{JS}, především pro hlubší pochopení tohoto jazyka, protože je používán v současné
 		době téměř každou webovou stránkou či aplikací a pravděpodobně tomu tak ještě dlouhou dobu bude.
 		Jako nadstavba jazyka pro zrychlení vývoje byl vybrán framework Vue díky jeho velmi dobré dokumentaci, snazšího
@@ -1128,21 +1289,68 @@ Nejrozšířenějším takovým kandidátem je \noindent\ac{JS} dominující v s
 		což je dáno delegací sestavení výsledné stránky až na front-endový \ac{JS}.
 		Kvůli tomu vyhledávače při strojovém procházení takových stránek nevidí výslednou stránku a nemohou tak
 		vyextrahovat potřebné informace.
-		Řešením může být vykreslení takové stránky již na serveru a prohlížeči poslat již připravenou stránku, kterou už
+		Řešením může být vykreslení takové stránky již na serveru a prohlížeči poslat již připravenou stránku, kterou
 		následně převezme samotný Vue.
-		Tuto techniku poskytují již hotovou např. serverové frameworky Nuxt.js nebo Next.js.
+		Tuto techniku poskytují již hotovou serverové frameworky Nuxt.js nebo Next.js.
 		Protože byl ale vybrán Vue, lze vybrat pouze Nuxt.js mající tuto techniku jako jednu z jeho hlavních výhod.
+		Kromě lepších nástrojů pro \ac{SEO}, sestavení stránky na serveru zrychlí prvotní vykreslení stránky
+		koncovým uživatelům, protože daná stránka přijde ze serveru již sestavená.
 
-		Co se týče serverových technologií, tam je výběr, v případě aplikace či stránky bez nutnosti výpočetně náročných operací,
-		spíše otázka preferencí a předchozích znalostí daného vývojáře.
-		Tím, že byl již vybrán serverový framework Nuxt.js pro podporu \Ac{SEO}, by bylo možné jednoduše použít Node.js, na kterém
-		Nuxt.js staví v kombinaci např. s frameworkem Express.js a vystavit \Ac{REST} API přímo pomocí něj.
-		Ekvivalentní alternativou pro tvorbu samotného \Ac{REST} API je použití např. jazyka Java, C\#, \ac{JS} nebo \Ac{PHP}.
+		Co se týče technologií pro vývoj serverové aplikace fungující jako \ac{API} poskytující data, tam je výběr spíše
+		otázka preferencí a předchozích znalostí daného vývojáře s programovacími jazyky a frameworky.
+		Všechny zmiňované totiž nabízí alespoň základní nástroje pro tvorbu \ac{API} aplikace.
+		Některé však nabízí i komplexní podporu pro tvorbu \ac{API}.
+		Tím, že byl již vybrán serverový framework Nuxt.js pro podporu \Ac{SEO}, by bylo možné jednoduše použít Node.js,
+		na kterém Nuxt.js běží v kombinaci např. s frameworkem Express.js a vystavit \Ac{REST} \ac{API} přímo pomocí něj.
+		Ekvivalentní alternativou pro tvorbu samotného \Ac{REST} \ac{API} je použití např. jazyka Java, C\#, \ac{JS}
+		nebo \Ac{PHP}.
 		Ze studijních důvodů a vývojářovy předchozí znalosti byl vybrán právě jazyk Java společně s frameworkem
-		Spring poskytující všechny nástroje potřebné pro jednoduchou tvorbu \Ac{REST} API a jeho automatizované testování
-		bez nutnosti řešit licenční poplatky jako v případě Java EE.
+		Spring poskytující pokročilé nástroje potřebné pro tvorbu jednoduchého i komplexního \Ac{REST} \ac{API} a jeho
+		automatizované testování bez nutnosti řešit licenční poplatky jako v případě Java EE.
+		Kromě podpory pro \ac{REST} \ac{API}, ekosystém Spring přichází například s vlastní knihovnou pro správu
+		zabezpečení dat a komunikace pomocí práv a různých doporučených taktik v různých oblastech pro znemožnění zcizení
+		identit a podobně.
+		Knihovna je má navíc taktéž podporu pro \ac{REST} \ac{API} a díky tomu lze jednodušeji zabezpečit celou aplikaci.
+		I když je knihovna poměrně rozsáhlá a náročná na pochopení, bezpečnost webu je mnohem složitější a při vývoji
+		kompletně vlastního řešení bezpečnosti se mnohem jednodušeji může stát, že vývojář zapomene na podstatnou část a ohrozí tak
+		data uživatelů o proti použití knihovny řešící všechny tyto problémy systematicky a často automaticky.
+		Není však problém knihovnu kdykoliv celkem jednoduše rozšířit o vlastní požadavky, dělající z knihovny
+		nenahraditelný nástroj.
 
-	\subsection{UI a UX}
+		Pro uchovávání uživatelských dat je nutné vybrat vhodný databázový systém.
+		Pro účely tohoto projektu by se daly použít jak \ac{SQL} databáze tak i \ac{NoSQL} databáze.
+		Projekt nevyžaduje specifické náročné analytické agregace dat, které by bylo možné poskytnou pouze nějakou z
+		\ac{SQL} databází, dalo by se tak uvažovat o \ac{NoSQL} databázi MongoDB pro ulehčení mapovaní objektů na
+		\ac{JSON} dokumenty.
+		Nicméně navrhované řešení počítá s určitou hierarchií karet, což už není by v případě MongoDB mohl být značný
+		problém, pokud jednotlivé karty, i když v hierarchii, musí být dostupné na stejné úrovni pro koncové uživatele
+		\cite{why_you_should_never_use_mongodb}.
+		Projekt bude sice vyžadovat zprvu pouze poměrně jednoduchou jednoúrovňovou hierarchii, i tak by ale docházelo ke
+		zbytečně duplicitě dat kvůli požadavku na ukládání i podřízených karet do oblíbených nebo požadavku a na vyhledávání
+		všech karet pomocí jednoho vyhledávače.
+		Z těchto důvodů padla volba na některou z \ac{SQL} databází.
+		Mezi bezplatnými databázemi by se dala vybrat například PostgreSQL, MySQL nebo MariaDB a všechny byly schopny
+		poskytnou potřebné funkce pro vývoj navrhovaného řešení.
+		Proto finální výběr byl tak spíše preferencí podle programátorových předchozích znalostí s bezchybnou funkčností,
+		dostupnými funkcemi a vyspělostí databázového systému PostgreSQL.
+
+		Dalším důležitým úložištěm dat je úložiště uživatelských souborů.
+		V tomto případě se jedná především o obrázky a možnosti jednoduché tvorby jejich variant pro optimalizaci \ac{UI}.
+		Jak již bylo zmíněno v analýze, možností s největší kontrolou nad daty by bylo vyvinou vlastní řešení s pomocí
+		různých knihoven.
+		Takové řešení by bylo ale poměrně pracné a i přes velký investovaný čas by nemuselo poskytovat všechny funkce
+		poskytující ostatní řešení.
+		Protože cílem tohoto projektu není vyvinou optimální souborové úložiště ani uchovávat přísně tajná data, je
+		vhodnější využít hotového řešení a vývojové prostředky investovat do samotné aplikace.
+		Vhodné řešení by tak mělo poskytovat kromě \ac{CDN} hlavně tvořič variant.
+		Takových služeb je vícero a mnohdy jsou svými poskytujícími funkcemi ekvivalentní a výběr je tedy opět spíše
+		preferencí.
+		Vybrána byla služba Cloudinary především díky její rozšířenosti mezi ostatními uživateli poskytující všechny
+		požadované funkce pro tento projekt a navíc bezplatně.
+
+		EMAILY
+
+\subsection{UI a UX}
 
  	TODO
 
@@ -1163,6 +1371,8 @@ Nejrozšířenějším takovým kandidátem je \noindent\ac{JS} dominující v s
 	TODO
 
 	\subsection{Validace odkazů sociálních sítí}
+
+	\subsection{Přihlašování (JWT/SESSION)}
 
 	TODO
 
