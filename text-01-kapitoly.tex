@@ -2,6 +2,7 @@
 \section{Úvod}
 
 % todo podle tohoto upravit ještě cíl projektu a abstrakci
+% todo cílem je taky udělat high level pohled na moderní vývoj web aplikací a jejich možných technologií a způsobů vývoje
 
 Cílem této bakalářské práce je navrhnout a hlavně implementovat webovou aplikaci fungující na všech standardních zařízení
 pro vzájemné sdílení a vyhledávání kontaktních a doplňujících údajů, sociálních sítí a firemní struktury mezi osobami, firmami,
@@ -922,7 +923,7 @@ Nejrozšířenějším takovým kandidátem je \noindent\ac{JS} dominující v s
 	Avšak oproti budování vlastního úložiště je to pro spoustu firem vítaná varianta umožňující především rychlý vývoj
 	aplikací.
 
-	\subsection{Technologie pro transakční e-maily a newslettery}
+	\subsection{Technologie pro transakční e-maily a rozesílky}
 
 	Webová aplikace pracující se zaregistrovanými uživateli potřebuje nějakým způsobem komunikovat se svými uživateli i
 	mimo samotné prostředí webové aplikace.
@@ -961,6 +962,10 @@ Nejrozšířenějším takovým kandidátem je \noindent\ac{JS} dominující v s
 	% https://www.websiterating.com/email-marketing/mailchimp-vs-sendinblue/
 	Při výběru tak hlavně záleží jaké limity jsou pro projekt stěžejní, případně jestli projekt potřebuje nějaké speciální
 	marketingové nástroje.
+
+	\subsection{Nástroje pro správu kódu}
+
+	% todo verzovací nástroje a teamové nástroje
 
 	\subsection{Provoz v produkčním prostředí}
 
@@ -1026,8 +1031,11 @@ Nejrozšířenějším takovým kandidátem je \noindent\ac{JS} dominující v s
 		aplikaci, hlavní databázi a navíc ještě třeba databázi pro vyhledávání pomocí pár příkazů v uzavřené lokální síti
 		s pevně definovanými pravidly síťového provozu.
 
+		% todo storage pro docker image
 		% todo nějaké zdroje? je to všechno z mojí hlavy tak nevím
+		% todo co web servery? nginx apod?
 
+		% todo nemělo by toto být spíš dolejc?
 		I přes správně nakonfigurované prostředí však může dojít k chybě například v samotné aplikaci a ta se může stát nedostupnou
 		nehledě na to, že samotná infrastruktura funguje v pořádku.
 		Pro takovéto případy je dobré mít nějaký monitorovací systém sledující dostupnost aplikace a korektnost odpovědí
@@ -1173,6 +1181,8 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 	Kromě jasných výhod pro tento konkrétní projekt je zde ještě vedlejší benefit v podobě zkušeností získaných
 	z návrhu komplexnějšího systému, kde jednotlivé části mezi sebou musejí korektně komunikovat.
 
+	% todo reactivní aplikace??? tady v případě api serveru
+
 	Při implementace řešení využívající serverové \ac{API}, je zásadní vybrat jaký přístup bude implementovat.
 	Tento způsob totiž neurčuje specificky jak má být taková aplikace implementovaná s jakými konkrétními nástroje, jde
 	spíše osvědšený vzor, který je dobré následovat a tím že \ac{API} není nějaká specifická technologie ale také spíše
@@ -1261,96 +1271,205 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 
 		\subsubsection{Vybrané technologie}
 
-		Prvním nástrojem při návrhu aplikace, jak již bylo zmíněno, měl být grafický editor pro náčrt struktury a vzhledu.
-		Vzhledem k tomu, že všechny dostupné nástroje obsahují podobné základní funkce, byl vybrán editor Figma díky
-		schopnosti běhu v prohlížeči a tím odpadající nutnosti vlastnit zařízení s operačním systémem Windows nebo macOS.
-		Program je navíc bezplatný i pro základní kolaboraci mezi členy v týmu v případě potřeby.
-		Figma je tak ideální volbou i pro začátečníky bez zkušeností ostatních grafických editorů.
+			\paragraph{Návrh UI a UX}
 
-		Vzhledem k tomu, že cílem je vytvořit webovou aplikaci, která poběží v standardních webových prohlížečích,
-		nelze se úplně vyhnout základním front-endovým technologiím \Ac{HTML}, \Ac{CSS} a \ac{JS}.
-		Ty lze ale do jisté míry nahradit jejich nadstavbami.
+			Prvním nástrojem při návrhu aplikace, jak již bylo zmíněno, měl být grafický editor pro náčrt struktury a vzhledu.
+			Vzhledem k tomu, že všechny dostupné nástroje obsahují podobné základní funkce, byl vybrán editor Figma díky
+			schopnosti běhu v prohlížeči a tím odpadající nutnosti vlastnit zařízení s operačním systémem Windows nebo macOS.
+			Program je navíc bezplatný i pro základní kolaboraci mezi členy v týmu v případě potřeby.
+			Figma je tak ideální volbou i pro začátečníky bez zkušeností ostatních grafických editorů.
 
-		V případě \Ac{CSS} byl vybrán preprocesor \Ac{SASS}, pro jeho širokou komunitu a funkce.
-		Tento preprocesor umožní přehlednější kód a tím rychlejší vývoj.
-		Kvůli výše zmíněné potřebě zobrazovat různé typy odkazů na profilových kartách, \ac{SASS} navíc umožní
-		do jisté míry automatizovat repetitivní a nepřehledné \ac{CSS} třídy pro velké množství barevných kombinací
-		(každá sociální síť používá jiné barevné kombinace ve svém designu).
+			\paragraph{Technologie pro vývoj GUI}
 
-		V případě tvorby interaktivního \Ac{GUI} je výběr složitější.
-		Je možno využít jak základního \ac{JS}, tak frameworků či knihoven usnadňující tvorbu reaktivních komponent.
-		Alternativou může být jazyk C\# s pomocí technologie Blazor, díky kterému je možné se úplně od ekosystému
-		\ac{JS} odstínit za cenu menší komunity a vyspělosti.
-		Ze studijních účelů byl vybrán \ac{JS}, především pro hlubší pochopení tohoto jazyka, protože je používán v současné
-		době téměř každou webovou stránkou či aplikací a pravděpodobně tomu tak ještě dlouhou dobu bude.
-		Jako nadstavba jazyka pro zrychlení vývoje byl vybrán framework Vue díky jeho velmi dobré dokumentaci, snazšího
-		pochopení a možnosti programovat přímo v jazyku \ac{JS}.
-		Vue (a stejně tak ostatní takové nadstavby) sám o sobě ale nedisponuje zrovna dobrými prostředky pro \Ac{SEO},
-		což je dáno delegací sestavení výsledné stránky až na front-endový \ac{JS}.
-		Kvůli tomu vyhledávače při strojovém procházení takových stránek nevidí výslednou stránku a nemohou tak
-		vyextrahovat potřebné informace.
-		Řešením může být vykreslení takové stránky již na serveru a prohlížeči poslat již připravenou stránku, kterou
-		následně převezme samotný Vue.
-		Tuto techniku poskytují již hotovou serverové frameworky Nuxt.js nebo Next.js.
-		Protože byl ale vybrán Vue, lze vybrat pouze Nuxt.js mající tuto techniku jako jednu z jeho hlavních výhod.
-		Kromě lepších nástrojů pro \ac{SEO}, sestavení stránky na serveru zrychlí prvotní vykreslení stránky
-		koncovým uživatelům, protože daná stránka přijde ze serveru již sestavená.
+			Vzhledem k tomu, že cílem je vytvořit webovou aplikaci, která poběží v standardních webových prohlížečích,
+			nelze se úplně vyhnout základním front-endovým technologiím \Ac{HTML}, \Ac{CSS} a \ac{JS}.
+			Ty lze ale do jisté míry nahradit jejich nadstavbami.
 
-		Co se týče technologií pro vývoj serverové aplikace fungující jako \ac{API} poskytující data, tam je výběr spíše
-		otázka preferencí a předchozích znalostí daného vývojáře s programovacími jazyky a frameworky.
-		Všechny zmiňované totiž nabízí alespoň základní nástroje pro tvorbu \ac{API} aplikace.
-		Některé však nabízí i komplexní podporu pro tvorbu \ac{API}.
-		Tím, že byl již vybrán serverový framework Nuxt.js pro podporu \Ac{SEO}, by bylo možné jednoduše použít Node.js,
-		na kterém Nuxt.js běží v kombinaci např. s frameworkem Express.js a vystavit \Ac{REST} \ac{API} přímo pomocí něj.
-		Ekvivalentní alternativou pro tvorbu samotného \Ac{REST} \ac{API} je použití např. jazyka Java, C\#, \ac{JS}
-		nebo \Ac{PHP}.
-		Ze studijních důvodů a vývojářovy předchozí znalosti byl vybrán právě jazyk Java společně s frameworkem
-		Spring poskytující pokročilé nástroje potřebné pro tvorbu jednoduchého i komplexního \Ac{REST} \ac{API} a jeho
-		automatizované testování bez nutnosti řešit licenční poplatky jako v případě Java EE.
-		Kromě podpory pro \ac{REST} \ac{API}, ekosystém Spring přichází například s vlastní knihovnou pro správu
-		zabezpečení dat a komunikace pomocí práv a různých doporučených taktik v různých oblastech pro znemožnění zcizení
-		identit a podobně.
-		Knihovna je má navíc taktéž podporu pro \ac{REST} \ac{API} a díky tomu lze jednodušeji zabezpečit celou aplikaci.
-		I když je knihovna poměrně rozsáhlá a náročná na pochopení, bezpečnost webu je mnohem složitější a při vývoji
-		kompletně vlastního řešení bezpečnosti se mnohem jednodušeji může stát, že vývojář zapomene na podstatnou část a ohrozí tak
-		data uživatelů o proti použití knihovny řešící všechny tyto problémy systematicky a často automaticky.
-		Není však problém knihovnu kdykoliv celkem jednoduše rozšířit o vlastní požadavky, dělající z knihovny
-		nenahraditelný nástroj.
+			V případě \Ac{CSS} byl vybrán preprocesor \Ac{SASS}, pro jeho širokou komunitu a funkce.
+			Tento preprocesor umožní přehlednější kód a tím rychlejší vývoj.
+			Kvůli výše zmíněné potřebě zobrazovat různé typy odkazů na profilových kartách, \ac{SASS} navíc umožní
+			do jisté míry automatizovat repetitivní a nepřehledné \ac{CSS} třídy pro velké množství barevných kombinací
+			(každá sociální síť používá jiné barevné kombinace ve svém designu).
 
-		Pro uchovávání uživatelských dat je nutné vybrat vhodný databázový systém.
-		Pro účely tohoto projektu by se daly použít jak \ac{SQL} databáze tak i \ac{NoSQL} databáze.
-		Projekt nevyžaduje specifické náročné analytické agregace dat, které by bylo možné poskytnou pouze nějakou z
-		\ac{SQL} databází, dalo by se tak uvažovat o \ac{NoSQL} databázi MongoDB pro ulehčení mapovaní objektů na
-		\ac{JSON} dokumenty.
-		Nicméně navrhované řešení počítá s určitou hierarchií karet, což už není by v případě MongoDB mohl být značný
-		problém, pokud jednotlivé karty, i když v hierarchii, musí být dostupné na stejné úrovni pro koncové uživatele
-		\cite{why_you_should_never_use_mongodb}.
-		Projekt bude sice vyžadovat zprvu pouze poměrně jednoduchou jednoúrovňovou hierarchii, i tak by ale docházelo ke
-		zbytečně duplicitě dat kvůli požadavku na ukládání i podřízených karet do oblíbených nebo požadavku a na vyhledávání
-		všech karet pomocí jednoho vyhledávače.
-		Z těchto důvodů padla volba na některou z \ac{SQL} databází.
-		Mezi bezplatnými databázemi by se dala vybrat například PostgreSQL, MySQL nebo MariaDB a všechny byly schopny
-		poskytnou potřebné funkce pro vývoj navrhovaného řešení.
-		Proto finální výběr byl tak spíše preferencí podle programátorových předchozích znalostí s bezchybnou funkčností,
-		dostupnými funkcemi a vyspělostí databázového systému PostgreSQL.
+			V případě tvorby interaktivního \Ac{GUI} je výběr složitější.
+			Je možno využít jak základního \ac{JS}, tak frameworků či knihoven usnadňující tvorbu reaktivních komponent.
+			Alternativou může být jazyk C\# s pomocí technologie Blazor, díky kterému je možné se úplně od ekosystému
+			\ac{JS} odstínit za cenu menší komunity a vyspělosti.
+			Ze studijních účelů byl vybrán \ac{JS}, především pro hlubší pochopení tohoto jazyka, protože je používán v současné
+			době téměř každou webovou stránkou či aplikací a pravděpodobně tomu tak ještě dlouhou dobu bude.
+			Jako nadstavba jazyka pro zrychlení vývoje byl vybrán framework Vue díky jeho velmi dobré dokumentaci, snazšího
+			pochopení a možnosti programovat přímo v jazyku \ac{JS}.
+			Vue (a stejně tak ostatní takové nadstavby) sám o sobě ale nedisponuje zrovna dobrými prostředky pro \Ac{SEO},
+			což je dáno delegací sestavení výsledné stránky až na front-endový \ac{JS}.
+			Kvůli tomu vyhledávače při strojovém procházení takových stránek nevidí výslednou stránku a nemohou tak
+			vyextrahovat potřebné informace.
+			Řešením může být vykreslení takové stránky již na serveru a prohlížeči poslat již připravenou stránku, kterou
+			následně převezme samotný Vue.
+			Tuto techniku poskytují již hotovou serverové frameworky Nuxt.js nebo Next.js.
+			Protože byl ale vybrán Vue, lze vybrat pouze Nuxt.js mající tuto techniku jako jednu z jeho hlavních výhod.
+			Kromě lepších nástrojů pro \ac{SEO}, sestavení stránky na serveru zrychlí prvotní vykreslení stránky
+			koncovým uživatelům, protože daná stránka přijde ze serveru již sestavená.
 
-		Dalším důležitým úložištěm dat je úložiště uživatelských souborů.
-		V tomto případě se jedná především o obrázky a možnosti jednoduché tvorby jejich variant pro optimalizaci \ac{UI}.
-		Jak již bylo zmíněno v analýze, možností s největší kontrolou nad daty by bylo vyvinou vlastní řešení s pomocí
-		různých knihoven.
-		Takové řešení by bylo ale poměrně pracné a i přes velký investovaný čas by nemuselo poskytovat všechny funkce
-		poskytující ostatní řešení.
-		Protože cílem tohoto projektu není vyvinou optimální souborové úložiště ani uchovávat přísně tajná data, je
-		vhodnější využít hotového řešení a vývojové prostředky investovat do samotné aplikace.
-		Vhodné řešení by tak mělo poskytovat kromě \ac{CDN} hlavně tvořič variant.
-		Takových služeb je vícero a mnohdy jsou svými poskytujícími funkcemi ekvivalentní a výběr je tedy opět spíše
-		preferencí.
-		Vybrána byla služba Cloudinary především díky její rozšířenosti mezi ostatními uživateli poskytující všechny
-		požadované funkce pro tento projekt a navíc bezplatně.
+			\paragraph{Technologie pro vývoj API}
 
-		EMAILY
+			Co se týče technologií pro vývoj serverové aplikace fungující jako \ac{API} poskytující data, tam je výběr spíše
+			otázka preferencí a předchozích znalostí daného vývojáře s programovacími jazyky a frameworky.
+			Všechny zmiňované totiž nabízí alespoň základní nástroje pro tvorbu \ac{API} aplikace.
+			Některé však nabízí i komplexní podporu pro tvorbu \ac{API}.
+			Tím, že byl již vybrán serverový framework Nuxt.js pro podporu \Ac{SEO}, by bylo možné jednoduše použít Node.js,
+			na kterém Nuxt.js běží v kombinaci např. s frameworkem Express.js a vystavit \Ac{REST} \ac{API} přímo pomocí něj.
+			Ekvivalentní alternativou pro tvorbu samotného \Ac{REST} \ac{API} je použití např. jazyka Java, C\#, \ac{JS}
+			nebo \Ac{PHP}.
+			Ze studijních důvodů a vývojářovy předchozí znalosti byl vybrán právě jazyk Java společně s frameworkem
+			Spring poskytující pokročilé nástroje potřebné pro tvorbu jednoduchého i komplexního \Ac{REST} \ac{API} a jeho
+			automatizované testování bez nutnosti řešit licenční poplatky jako v případě Java EE.
+			Kromě podpory pro \ac{REST} \ac{API}, ekosystém Spring přichází například s vlastní knihovnou pro správu
+			zabezpečení dat a komunikace pomocí práv a různých doporučených taktik v různých oblastech pro znemožnění zcizení
+			identit a podobně.
+			Knihovna je má navíc taktéž podporu pro \ac{REST} \ac{API} a díky tomu lze jednodušeji zabezpečit celou aplikaci.
+			I když je knihovna poměrně rozsáhlá a náročná na pochopení, bezpečnost webu je mnohem složitější a při vývoji
+			kompletně vlastního řešení bezpečnosti se mnohem jednodušeji může stát, že vývojář zapomene na podstatnou část a ohrozí tak
+			data uživatelů o proti použití knihovny řešící všechny tyto problémy systematicky a často automaticky.
+			Není však problém knihovnu kdykoliv celkem jednoduše rozšířit o vlastní požadavky, dělající z knihovny
+			nenahraditelný nástroj.
 
-\subsection{UI a UX}
+			% todo asi by bylo fajn tady zmínit i ORM, ale db se řeší až dál
+			% možná i další stěžejní knihovny?
+
+			\paragraph{Databázový systém jako zdroj dat}
+
+			Pro uchovávání uživatelských dat je nutné vybrat vhodný databázový systém.
+			Pro účely tohoto projektu by se daly použít jak \ac{SQL} databáze tak i \ac{NoSQL} databáze.
+			Projekt nevyžaduje specifické náročné analytické agregace dat, které by bylo možné poskytnou pouze nějakou z
+			\ac{SQL} databází, dalo by se tak uvažovat o \ac{NoSQL} databázi MongoDB pro ulehčení mapovaní objektů na
+			\ac{JSON} dokumenty.
+			Nicméně navrhované řešení počítá s určitou hierarchií karet, což už není by v případě MongoDB mohl být značný
+			problém, pokud jednotlivé karty, i když v hierarchii, musí být dostupné na stejné úrovni pro koncové uživatele
+			\cite{why_you_should_never_use_mongodb}.
+			Projekt bude sice vyžadovat zprvu pouze poměrně jednoduchou jednoúrovňovou hierarchii, i tak by ale docházelo ke
+			zbytečně duplicitě dat kvůli požadavku na ukládání i podřízených karet do oblíbených nebo požadavku a na vyhledávání
+			všech karet pomocí jednoho vyhledávače.
+			Z těchto důvodů padla volba na některou z \ac{SQL} databází.
+			Mezi bezplatnými databázemi by se dala vybrat například PostgreSQL, MySQL nebo MariaDB a všechny byly schopny
+			poskytnou potřebné funkce pro vývoj navrhovaného řešení.
+			Proto finální výběr byl tak spíše preferencí podle programátorových předchozích znalostí s bezchybnou funkčností,
+			dostupnými funkcemi a vyspělostí databázového systému PostgreSQL.
+
+			\paragraph{Databázový systém pro fulltextové vyhledávání}
+
+			% todo
+
+			\paragraph{Souborové úložiště}
+
+			Dalším důležitým úložištěm dat je úložiště uživatelských souborů.
+			V tomto případě se jedná především o obrázky a možnosti jednoduché tvorby jejich variant pro optimalizaci \ac{UI}.
+			Jak již bylo zmíněno v analýze, možností s největší kontrolou nad daty by bylo vyvinou vlastní řešení s pomocí
+			různých knihoven.
+			Takové řešení by bylo ale poměrně pracné a i přes velký investovaný čas by nemuselo poskytovat všechny funkce
+			poskytující ostatní řešení.
+			Protože cílem tohoto projektu není vyvinou optimální souborové úložiště ani uchovávat přísně tajná data, je
+			vhodnější využít hotového řešení a vývojové prostředky investovat do samotné aplikace.
+			Vhodné řešení by tak mělo poskytovat kromě \ac{CDN} hlavně tvořič variant.
+			Takových služeb je vícero a mnohdy jsou svými poskytujícími funkcemi ekvivalentní a výběr je tedy opět spíše
+			preferencí.
+			Vybrána byla služba Cloudinary především díky její rozšířenosti mezi ostatními uživateli poskytující všechny
+			požadované funkce pro tento projekt a navíc bezplatně.
+
+			\paragraph{Transakční emaily a rozesílky}
+
+			Protože aplikace bude pracovat se zaregistrovanými uživateli bude potřeba uživatelům odesílat transakční emaily
+			o důležitých událostech spojených se změnou v daném účtu, případně o jiných důležitých událostech jako změna podmínek
+			aplikace a podobně.
+
+			Transakční emaily jsou tedy emaily odesílané konkrétnímu uživateli připravené na míru danému účtu, nikoliv
+			hromadné rozesílky v podobě reklam nebo obecných novinek aplikace.
+			Opět jako v případě souborového úložiště lze připravit vlastní implementaci zpracovávání šablon emailů a jejich
+			odesílání pomocí knihovny JavaMail starající se pouze o samotné odeslání a doručení emailu.
+			Avšak u emailů kromě samotného odesílání řešit dynamické šablony (podobně jako u šablon stránek) a připravit
+			takovou infrastrukturu, aby emaily skutečně byly doručovány a nepadali do spamu.
+			Na proti tomu většina nástrojů zmíněných v analýze poskytuje poměrně jednoduché \ac{API} pro odesílání emailů
+			s již připravenou infrastrukturou pro tvorbu šablon a jednoduchou možnost nastavit odesílání emailů tak aby
+			byly správně doručovány.
+			Na druhou stranu bezplatné plány jsou omezené na počet možných odeslaných emailů za nějakou dobu a za větší limity
+			se musí logicky platit.
+			Avšak přináší tato řešení záruku určité spolehlivosti doručitelnosti emailů díky používaným serverům s dobrou pověstí
+			u emailových serverů, které jen tak daný email nezahodí do nevyžádané pošty.
+			Navíc pro případ speciálních požadavků na správu emailů aplikací existují služby jako je SparkPost zaměřující
+			se pouze na spolehlivé doručení emailů bez nadbytečných nástrojů.
+			V případě této aplikace je důraz především na jednoduchost tvorby šablon a odesílání transakčních emailů bez
+			speciálních požadavků.
+			To umožňuje využít zvolenou služby SendinBlue poskytující intuitivní editor šablon emailů, jednoduché \ac{API}
+			pro odesílání emailů s parametry pro šablony a navíc podporuje i rozesílky v případě budoucího rozvoje.
+
+			\paragraph{Provoz aplikace}
+
+			Poslední částí skládanky je samotný provoz ve vývojovém lokálním prostředí, produkčního prostředí a případně
+			i v dalších, například: testovacích prostředí.
+
+			Jak již bylo v analýze nástrojů a poskytovatelů zmíněno, možností jak webovou aplikaci provozovat je mnoho: od
+			manuálního nastavování a spouštění až po částečnou automatizaci v podobě kontejnerů.
+			Protože se jedná o nový projekt nemá moc smysl se vydávat starou metodou manuálního nastavování a spouštění všeho.
+			Místo toho se vyplatí jít cestou kontejnerizace, protože umožňuje jednoduché nahození podpůrných systémů
+			(např.: databáze), na kterých aplikace stojí, a zároveň umožňuje připravit izolované kontejnery samotné aplikace
+			podle vyvinutých verzí což poměrně zjednodušuje celý proces sestavovaní aplikace ze zdrojového kódu a přenos
+			spustitelné aplikace na cílené prostředí mimo lokálního.
+			Jako bonus je možné jednoduše spouštět historické verze aplikace (např.: pro ověření nějaké funcionality nebo chyby)
+			bez nutnosti transformovat zdrojový kód do nějaké
+			předchozí verze a následného sestavení pro samotné spuštění.
+			Staré verze navíc mohou obsahovat jiné a zastaralé postupy sestavování dané aplikace a nemusí být jednoduché
+			přenastavit vývojové prostředí pro tuto skutečnost.
+			Kromě zjednodušeného přenosu mezi prostředími se zjednoduší i přenos aplikace i mezi členy případného týmu.
+			Nevýhodou je znalost dalšího nástroje pro sestavování takových kontejnerů a jejich následné spuštění, u většiny
+			projektů je ale tato nevýhoda mnohonásobně překročena zrychlením a zjednodušením vývoje.
+
+			Pro jednoduché projekty lze využít ještě jednodušší variantu v podobě sdílení zdrojového kódu s poskytovatelem
+			prostředí a poskytoval sám automatizovaně zajistí sestavení a spuštění aplikace na cílovém prostředí.
+			Avšak taková aplikace musí splňovat určitou standardizovanou strukturu a neumožňuje spuštění více aplikací tvořicí
+			jeden systém.
+			Navíc vývojář přijde o schopnost jednoduše spouštět historické verze aplikací a zjednodušeného sdílení mezi členy
+			v týmu.
+
+			V rámci tohoto projektu je potřeba spouštět dvě aplikace: front-endové \ac{GUI} a serverové \ac{API}.
+			Tyto části spolu musí umět komunikovat a tvářit se navenek jako celek.
+			Právě na tento scénář je vhodné využít kontejnerů a nějakého orchestrálního nástroje jako Kubernetes.
+			Tento nástroj umožní poměrně jednoduše čitelně definovat jaké aplikace v jakých verzích se mají spouštět, jaká mají
+			práva a jak mezi sebou budou po sítí komunikovat.
+			Je požadavkem aby \ac{GUI} a \ac{API} mezi sebou mohli komunikovat pouze v rámci interní sítě uvnitř jednoho serveru
+			a pro koncové uživatelé zobrazoval pouze funkční celek v podobě interaktivního \ac{GUI}.
+			Kubernetes s tímto přístupem počítá a automaticky zajišťuje potřebnou interní komunikaci a v základu žádnou komunikaci
+			nepustí ven ani dovnitř serveru.
+			Je pak na vývojáři, případně administrátorovi, aby explicitně definoval jakým způsobem bude systém komunikovat s
+			okolním světem pomocí jednoduchých pravidel.
+
+			Výběrem systému Kubernetes pro provoz částí implementovaného systému zužuje výběr možných poskytovatelů pouze na
+			nutné minimum.
+			Sice v dnešní době již většina poskytovatelů nabízí servery Kubernetes, nicméně často lišší cenou daného řešení.
+			% todo nějaké srovnání cen
+			Mezi dlouhodobě nejlevnější mezi nejoblíbenějšími patří poskytovatelé DigitalOcean a Linode.
+			Oba poskytují široké možnosti konfigurace, přívětivou cenu, rozsáhlou dokumentaci, základní monitoring hardwaru
+			a ochotnou podporu.
+			Z vlastních zkušenosti byla dána přednost DigitalOcean díky jednoduší konfiguraci celého Kubernetes systému
+			zejména pak při nastavování bezpečnostních funkcí a celkového propojení s danou Kubernetes konfigurací běžících
+			webových aplikací.
+			DigitalOcean navíc jeden z nejpopulárnějších poskytovatelů a tak kromě oficiální dokumentaci a podpory lze
+			najít spousta komunitních materiálů.
+
+			Finálním nástrojem je monitorovací systém automatizovaně kontrolující produkční prostředí jestli aplikace
+			stále běží a je dostupná pro koncové uživatele.
+			Těchto externích nástrojů je celá řada a většina těch co poskytují bezplatné plány nabízí podobné funkce a
+			a konkrétní volba je tak spíše otázkou preferencí nebo předchozích zkušeností s nějakou z dostupných služeb.
+			Pro tento konkrétní projekt byla vybrána služby Checkly díky poměrně široké nabídce funkcí, zejména pak
+			možnost monitorovat webové dotazy, dotazy přímo na \ac{API}, expiraci SSL certifikátu pro šifrovanou
+			komunikaci a možnost upozorňovat programátora či správce pomocí emailu nebo komunikačních aplikací
+			(např.: Discord), což je vhodné zejména pro vývojové týmy, kde případné upozornění vidí všichni.
+
+	Jak je vidět, výběr konkrétních technologií je poměrně náročný úkol, zejména pak pokud programátor nemá praktické
+	zkušenosti s vývojem různých typů aplikací a technologií, aby dokázal spolehlivě určit vhodné technologie před samou
+	implementací.
+	Avšak pořádná analýza před samotných vývojem může několika násobně zrychlit vývoj, i pokud se některé, ne tolik
+	stěžejní, technologie v průběhu vývoje změní.
+
+	\subsection{UI a UX}
 
  	TODO
 
