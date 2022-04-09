@@ -1098,6 +1098,20 @@ Po výběru technologií je vhodné nejdříve navrhované řešení načrtnout 
 podoby a rozvržení struktury aplikace.
 Následně je již možné začít se samotnou implementací s pomocí vybraných technologií a prototypu \ac{UI}.
 
+	\subsection{Pojmy}
+
+	Před samotným návrhem implementace je dobré si stanovit a vysvětlit určité běžně používané technické pojmy, které
+	nemusí být úplně jednoznačné na první pohled:
+
+		\subsubsection{Business logika}
+
+		Tento pojem označuje hlavní část zdrojového kódu zabývající se naplněním stanovených funkčních požadavků aplikace.
+		Běžně taková logika řeší poskytování vyžádaných dat z nějakého úložiště, transformuje data nebo ukládá nová data.
+		Může ale i vykonávat složité výpočetní operace, pokud je to jeden z požadavků aplikace.
+		Do této části se už ale nevztahuje jak jsou data dotažena z databáze nebo uložena do dní, neřeší komunikace
+		s okolím, tj. poskytování \ac{API} reflektující funkcionality business logiky nebo sestavení stránek z poskytnutých
+		dat apod.
+
 	\subsection{Návrh implementace}
 
 	Způsobů jak implementovat webovou aplikaci je mnoho a o to těžší může pro nezkušeného programátora výběr být.
@@ -1469,9 +1483,416 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 	Avšak pořádná analýza před samotných vývojem může několika násobně zrychlit vývoj, i pokud se některé, ne tolik
 	stěžejní, technologie v průběhu vývoje změní.
 
+	\subsection{Prototyp}
+
+	Prvotní verze aplikace byla sice taktéž postavená na frameworku Spring společně \ac{ORM} frameworkem Hibernate pro
+	přístup k databázovému systému MySQL.
+	Tato verze stavěla na starším způsobu tvorby webových aplikací se sestavováním jednotlivých stránek již na serveru pomocí
+	šablon.
+	Neexistovalo tak rozdělení na front-endovou \ac{GUI} aplikace a \ac{API} server aplikace předávající si data mezi sebou
+	pomocí \ac{REST} \ac{AC}.
+	Místo toho existovala pouze jedna standardní webová aplikace poskytující již sestavené stránky pomocí dat z databáze.
+	Aplikace však zahrnovala střípky \ac{REST} \ac{API} se snahou udělat \ac{GUI} více dynamické např.: při editaci poznámek
+	oblíbených karet.
+	Aplikace tak měla vlastně dvě části: hlavní kde byly šablony a přístupové třídy k datům hluboce propojeny a vedlejší
+	poskytující omezená data pomocí \ac{API}.
+	Nicméně i přes to že se jednalo o rannou fázi aplikace s minimem funkcí, začalo být postupně znát, že vytvořit
+	plně dynamickou aplikaci chovající se podobně jako nativní aplikace by bylo při nejmenším kostrbaté.
+	Pro rozšíření \ac{API} by se navíc samotná business logika musela k tomu přizpůsobit a být více modulární.
+	Šablony stránek navíc byly tvořeny bez jakéhokoliv vzhledu \ac{UX} návrhu a obsahovaly pouze nejnutnější prvky pro
+	interakci.
+	To však pro aplikaci vyžadující intuitivní \ac{UI} není vhodné a mohlo by se stát, že při implementaci finálního vzhledu
+	by se podstatná část jednak šablon, ale samotných stránek mohla zásadně změnit což by vyžadovalo velký zásah pro již
+	existujícího kódu.
+
+	Právě kvůli těmto obavám a možnostech moderních technologií byl kompletně změněn přístup k vývoji a bylo potřeba začít
+	od nuly s analýzou technologií a možností.
+	Část původního kódu se sice přepoužila, nicméně původní kód byl po analýze natolik přepracovat, že se dá uvažovat
+	spíše o nové aplikaci.
+	Nově tedy bylo rozhodnuto řádně zanalyzovat využívané styly a postupy vývoje webových aplikací společně s populárními
+	technologiemi pro dané styly.
+	Následně bylo potřeba navrhnout alespoň prototyp \ac{UI} a \ac{UX} pro lepší orientaci a explicitního definování
+	funkcionálních požadavků a způsobu interakce uživatele s aplikací.
+	Po této komplexní analýze a návrhu bylo již možné začít implementovat přepracovanou verzi aplikace.
+
 	\subsection{UI a UX}
 
- 	TODO
+ 	Zejména pro explicitní definování funkcionálních požadavků a způsobu interakce uživatele s aplikací byl před samotnou
+	implementací věnován čas návrhu právě \ac{UI} a \ac{UX}.
+	Tento krok navíc umožnil *něco(zobrazit)* vizi finální aplikace a zhodnotit designová rozhodnutí přímo v grafickém
+	editoru.
+	Právě grafický editor Figma napomohl zhotovit téměř kompletní grafický návrh jednotlivých prvků a stránek a uceleně
+	definovat designový jazyk budoucí aplikace.
+	Díky tomuto návrhu bylo možné postupně vypilovat grafické prvky, styly a strukturu na jednom místě díky systému
+	znovu použitelných komponent, kdy se změny promítly do celého návrhu.
+	Bylo tak možné lépe nahlédnout na designový jazyk jako celek použitý v různých scénářích a upravit ho tak, aby byl
+	dostatečně univerzální pro co možná nejširší skupinu úloh.
+
+	Kromě samotného rozvržení struktury a vytvoření nadhledu nad aplikací, právě příprava a vypilování designového jazyka
+	bylo jedním s velkých benefitů návrhu \ac{UI} v grafickém editoru.
+	Designový jazyk je soubor pravidel, schémat a stylů grafického designu, kterým se řídí vývoj veškerých prvků \ac{UI}.
+	Tento jazyk má především zajistit jednotnost designu napříč celou aplikací pro poskytnutí intuitivnějšího rozhraní,
+	tak aby uživatel nemusel stejnou věc dělat kompletně jinak v různých částech aplikace.
+	To by totiž přineslo značnou frustraci koncovému uživateli což by mohlo vést úbytku využívání.
+	Z tohoto důvodu je nutné věnovat návrhu designového jazyka nějaký čas a zamýšlet se nad všemi možnými scénáři používání
+	prvků.
+
+	% TODO DL z dropboxu
+	Design jazyk si bere velkou inspiraci \href{https://material.io/}{Material Design 2} definující jakýsi soubor
+	základních rozvržení, velikostí prvků, barev a podobně.
+	Nicméně navržený design jazyk se v některých prvcích rozchází kvůli potřebám tohoto projektu a není proto pravidlem,
+	že Material Design 2 striktně kopíruje, spíše slouží jako výchozí bod pro nové prvky, které ještě nebyly navrženy
+	design jazyku.
+	I tvůrci Material Designu berou tyto materiály jako výchozí bod a počítají s tím, že daný projekt si ho přizpůsobí
+	tak aby co nejlépe vystihoval danou aplikaci.
+	Z Material Designu si bere hlavně \href{https://material.io/design/layout/spacing-methods.html#baseline-grid}{velikosti a odsazení}
+	mezer a prvků a základní pravidla jako pozicování tlačítek, rozvržení seznamů, modální okna a podobně.
+
+		\subsubsection{Rozvržení prvků a grafická pravidla}
+
+		Rozvržení prvků by mělo být maximálně přehledné a intuitivní.
+		Mezi hlavní pravidla patří nezatěžování stránek příliš mnoha informacemi a zobrazit koncovému uživateli pouze to
+		co je skutečně nutné.
+		Pokud je nutno zobrazit velké množství informací, je lepší rozdělit jednu stránku na více přehlednějších, aby
+		uživatel nebyl přehlcen a neztratil lehce pozornost.
+		Další podstatným pravidlem je zakomponování tzv. bílého prostoru kolem prvk.
+		Bílý prostor znamená prostor kolem prvků oddělující jednotlivé prvky od sebe prázdnotou.
+		Prvky tak poté nejsou na sobě tak nalepené a uživatel se dokáže lépe orientovat a užívat si používání aplikace.
+		Neméně důležité je vizuálně navést uživatele co na dané stránce může vše provést bez zbytečných překážek a
+		složitostí.
+		Díky tomu je pravděpodobnější že uživatel dosáhne svého cíle bez frustrace, opuštění aplikace nebo vyhledání
+		pomoci.
+		To také může velice přispět k návratnosti uživatele do aplikace.
+		Pro intuitivnost prostředí a spokojenost uživatele je dále nutné udržovat konzistenci grafických pravidel a prvků
+		napříč celou aplikací, aby uživatele jen tak něco nepřekvapilo s čím by se neuměl poradit.
+		Konzistence zaručí efektivnější a příjemnější práci s danou aplikací.
+		\cite{create_great_ux}
+
+		Zajímavou a užitečnou pomůckou pro návrh rozvržení prvků je princip vizuální rovnováhy.
+		Vizuální rovnováha staví na pomyslené vizuální váze prvků, kde určité vlastnosti, jako konstrast nebo složitost,
+		určují jakosi váhu prvku.
+		Následně dva prvky porovnává na fyzikální páce, která musí zůstat v rovině i pokud jsou prvky jinak těžké pomocí
+		posunu jednotlivých prvků od sebe.
+		% todo citace obrázku https://uploads-ssl.webflow.com/5c72b8b72d05ce02c7987c46/5d066cd3d9b514108395ac6f_naprava-rovnovahy-1.png
+		\includegraphics[width=0.24\linewidth]{obrazky/rovnovaha_paka.png}\hfill
+		Pokud je tedy nejaký prvek vizuálně těžší než druhý, je dobré lehčímu prvku přidat více bílého prostoru a odsunout
+		ho tak od těžšího prvku.
+		Tím vznikne rovnováha mezi prvky a celkově přívětivější rozhraní.
+		\cite{vizualni_rovnovaha}
+
+		Rozvržení prvků ale není vše a je potřeba myslet i na samotný design.
+		Je potřeba definovat jasná pravidla a styly, aby byla zajištěna konzistence.
+
+		Nejdůležitější částí designu je správně připravená paleta barev.
+		Bylo potřeba připravit spolu kompatibilní barvy použitelné napříč aplikací.
+		Hlavní část palety obsahuje obecné barvy: hlavní prezentovanou barvu použitou na místech, která musí být
+		patřičně zvýrazněna a barvy pro různé texty jako hlavní text, nadpis, podnadpis nebo popisek.
+		Dále paleta obsahuje paletu obecných základních barev pro případ například uživatelských úprav některých objektů.
+		Důležitými barvami jsou i barvy pro označování polí formuláře, zejména pak jejich správnosti při validaci
+		hodnot.
+		Paleta obsahuje i ostatní méně obecné barvy a je samozřejmě možné ji v budoucnu rozšiřovat, avšak je potřeba se
+		vždy zamyslet jestli je nová barva skutečně nutná a zda-li je kompatibilní s již použitými barvami.
+		Většina barev je inspirována výše zmíněným Material Designem obsahující širokou paletu barev, kterou lze jednoduše
+		využít v jakémkoliv projektu.
+
+		\includegraphics[width=0.24\linewidth]{obrazky/paleta_barev.png}\hfill
+		Navržená paleta barev. % todo anotace
+
+		Dalším velmi důležitým designovým prvkem jsou stíny pomáhající vizualizovat pomyslnou vzdálenost jednotlivých
+		prvků od uživatelova zraku.
+		Díky stínům je totiž možné u více překrývajících se prvků jasně ilustrovat uživateli, které prvky jsou více v
+		popředí než ostatní.
+		Tím lze zároveň poměrně efektivně odlišit jednotlivé bloky od sebe.
+		Způsobů používání stínu je mnoho.
+		Pro tento projekt byl vybrán způsob, kdy stín se snaží simulovat reální stín generovaný jedním světelným zdrojem.
+		Na takové stíny jsou uživatelé zvyklí z reálného světa a je pro ně jednodušší pochopit oddělení prvků.
+		Velmi používané je i využití linek kolem jednotlivých prvků pro oddělení bloků, případně se kombinuje obojí.
+		Ve skutečnosti i tento projekt používá kombinaci linek a stínů.
+		Stíny jsou v tomto případě použity hlavně pro bloky ucelených informací a prvků které mají vyšší prioritu než
+		ostatní v rámci jednoho bloku a linky jsou použity pro standardní prvky uvnitř bloků.
+		Kombinace byla vybrána z důvodu zjednodušení vzhledu, protože použití pouze stínů by mohlo pro některé uživatele
+		být příliš rozptylující.
+
+		\includegraphics[width=0.24\linewidth]{obrazky/ukazka_stinu_a_linek}\hfill
+		Ukázka kombinace stínů a linek v jednom bloku. % todo anotace
+
+		Kromě linek a stínu je dobré myslet i na samotné okraje prvků, tj. zda-li budou mít zaoblené rohy a podobně.
+		Po vzoru Material Designu byly zvoleny zaoblené rohy o průměru 8px pro větší lehkost prvků.
+		Toto rozhodnutí je však celkem subjektivní a někteří uživatelé mohou preferovat ostré rohy.
+
+		\includegraphics[width=0.24\linewidth]{obrazky/blok_obsahu}\hfill
+		Ukázka zaoblených rohů. % todo anotace
+
+		Posledním pravidlem je jednotná signalizace výběru.
+		Tato část musí být obzvlášť konzistentní napříč aplikací a intuitivní pro koncové uživatele.
+		Uživatel musí být schopen jednoznačně určit jaký prvek ze všech možných je vybraný ať už se jedná o navigaci
+		nebo výběr položky ve formuláři.
+		Velice používaným způsem jak tuto signalizaci řešit je jednoduchá linka zobrazená u vybraného prvku.
+		V rámci této aplikace byly navrženy dvě varianty: varianta pro pás prvků a varianta pro samostatné prvky.
+		Varianta pro pás prvků se použije v případě pásu prvků, u kterých nemůže dojít k přetečení na více řádků.
+		V takovém případě se použije jednoduchá linka pod či nad prvkem.
+		V případě osamocených prvků nebo víceřádkových prvků je použita linka kolem celého okraje prvku.
+
+		\includegraphics[width=0.24\linewidth]{obrazky/ukazka_vyberu_1}\hfill
+		Ukázka signalizace výběru v navigaci. % todo anotace
+
+		\includegraphics[width=0.24\linewidth]{obrazky/ukazka_vyberu_2}\hfill
+		Ukázka signalizace výběru konkrétního prvku. % todo anotace
+
+		Na těchto principech je tedy možné navrhnout nějaké základní univerzální prvky pro tvorbu konkrétních stránek
+		a následně celý vzhled.
+
+		\subsubsection{Strukturální prvky}
+
+		Strukturálními prvky jsou myšlené takové prvky, které slouží jako základní stavební prvky pro jednotné
+		rozvržení stránek a oddělení prvků uceleným způsobem.
+		Tyto prvky tak slouží jako prvky obalovací a bez vnořených interaktivních prvků nedávají samostatně smyl
+		a jsou především pomůckou pro tvoření stránek.
+
+			\paragraph{Blok obsahu}
+
+			\includegraphics[width=0.24\linewidth]{obrazky/blok_obsahu.png}\hfill
+
+			Stránky jsou rozvrženy hlavně pomocí tzv. bloků obsahu označující jeden logický celek informací
+			na stránce.
+			Blok obsahu vždy obaluje nějaký konkrétní obsah: dlouhý text, seznam položek, editor a cokoliv dalšího.
+			Blok obsahuje hlavičku obsahující nadpis popisující logický celek informací, co se bude v bloku nacházet
+			a k čemu slouží, a lištu tlačítek dávající smysl pro celý logický celek seřazenou zprava od nejdůležitějších
+			akcí.
+			Samotný obsah těla už je pak záležitostí konkrétního použití, avšak pravidlem je jednotné odsazení 24px od
+			okrajů bloku.
+			Krajním případem je využití bloku bez hlavičky na speciálních stránkách s vlastním nadpisem, kde blok
+			představuje logický celek informací platných pro celou stránku (příkladem mohou být stránky s popisem
+			funkcí aplikace uživateli).
+
+			V případě více logických celků na jedné stránce se použije více bloků řazených pod sebou a oddělených 24px
+			pro dostatečné oddělení rozlišných informací.
+
+			\includegraphics[width=0.24\linewidth]{obrazky/blok_obsahu_ukazka.png}\hfill
+			Ukázka využití bloku % todo styl anotace obrázku
+
+			Uvnitř bloku se může nacházet jakýkoliv obsah.
+			Nicméně je několik základních prvků, které se zde běžně nacházejí a je nutno aby byly konzistentní.
+			Jedná se především o seznamy prvků, textová pole a vnitřní logické celky.
+			Seznamy prvků definují vlastní odsazení a proto jsou výjimkou nepoužívající standardní vnitřní odsazení
+			bloku.
+			Dobrým pravidlem je omezit množství seznamů v jednom bloku na jeden, protože více seznamů může představovat
+			značné zmatení uživatele.
+			Textová pole vlastní odsazení nemají, nicméně pokud takových polí je v jednom bloku více, musí být oddělena
+			mezi sebou 16px a horizontálně zobrazovat maximálně dvě pole.
+			Ve některých případech je nutné logický celek rozdělit ještě na dílčí celky, většinou pomocí speciálních
+			tlačítek odkazujících na jiné stránky.
+			Ty po vzoru bloků mají stín pro odlišení od běžných prvků a mezi sebou mají prostor 16px stejně jako
+			textová pole.
+
+			\paragraph{Lišta akcí}
+
+			\includegraphics[width=0.24\linewidth]{obrazky/lista_akci.png}\hfill
+
+			Kromě hlavní navigační lišty aplikace dostupné téměř na všech stránkách pro jednoduchou navigaci mezi
+			částmi aplikace, bylo nutné zavést ještě jeden typ lišt: lišta akcí.
+			Díky ní je možné na určitých stránkách zobrazit sekundární lištu s nadpisem a dodatečnými akcemi vztahující
+			se k obsahu stránky jako celku.
+			Takovými stránkami jsou většinou stránky zobrazující detail určitého jednoho objektu, který lze například
+			smazat nebo upravit, ale zároveň je potřeba zobrazit vnořená data (příkladem může být editor jedné karty).
+			Navíc může obsahovat i sekundární navigaci spojenou s konkrétním objektem.
+
+			\paragraph{Modální okno}
+
+			\includegraphics[width=0.24\linewidth]{obrazky/modalni_okno.png}\hfill
+
+			Modální okna představují bloky obsahu překrývající všechen ostatní obsah při zobrazí, aby se uživatel zaměřil
+			pouze na obsah uvnitř okna a nebyl rušen zbylým obsahem, který v danou chvíli není důležitý.
+			Jedná se především o potvrzení určité akce vyvolané uživatelem nebo zobrazení detailu nějakého dílčího prvky.
+			Modální okno se může zobrazit pouze jako reakce na uživatelskou akci, nesmí dojít k samovolnému zobrazování
+			náhodných oken, protože to vede k frustraci uživatele.
+			Každé okno má hlavičku a případně i patičku, avšak obsah se mění podle typu okna.
+			Tato aplikace rozlišuje dva primární typy oken: informační okno a akční okno.
+			Informační okno slouží pouze k zobrazení již existujících dat a nevyžaduje od uživatele žádnou akci.
+			Lze ho zavřít buď křížkem v hlavičce nebo kliknutím mimo okno a neobsahuje patičku.
+			Akční okno akci vyžaduje a uživatel musí vždy nějakou akci zvolit, nelze okno zavřít pouhým kliknutím mimo okno.
+			Takové okno má v hlavičce pouze nadpis a obsahuje patičku se všemi možnými akcemi, které uživatel může provést.
+			Akce jsou většinou dvě a jsou seřazeny zprava od té nejdůležitější.
+			Příkladem takových akcí může být potvrzení vytvoření objektu a zrušení akce.
+			U tohoto typu okna se navíc předpokládá, že bude obsahovat kromě statických i nějaký formulář, který musí
+			uživatel vyplnit, není to však pravidlem.
+			Tlačítko nejdůležitější akce by mělo být patřičně odlišeno od běžných tlačítek, aby bylo zřejmé co se po
+			uživateli chce.
+
+			Okna mají podobná pravidla odsazení jednotlivých vnitřních prvků jako bloky obsahu.
+			Obsah by měl být odsazen 24px od okrajů okna (až na výjimky s vlastním odsazením) a akční tlačítka jsou
+			mezi sebou odsazeny 8px.
+			Celá patička je navíc od samotného obsahu taktéž odsazena 24px pro jasné rozdělení částí.
+
+			\includegraphics[width=0.24\linewidth]{obrazky/modalni_okno_informacni_ukazka.png}\hfill
+			Ukázka konkrétního informačního modální okna. % todo anotace
+
+			\includegraphics[width=0.24\linewidth]{obrazky/modalni_okno_akcni_ukazka.png}\hfill
+			Ukázka konkrétního akčního modálního okna. % todo anotace
+
+			\paragraph{Kontextuální nabídka}
+
+			\includegraphics[width=0.24\linewidth]{obrazky/kontextualni_nabidka.png}\hfill
+
+			Jedná se malé menu zobrazující rozšířené možnosti nějaké akce.
+			Většinou se používá pro zobrazení vícero akcí možných nad nějakým objektem, pokud není v \ac{UI} dostatek
+			místa pro všechny akce nebo pro výběr konkrétní položky výběrového pole ve formuláři.
+			Nabídka podobně jako modální okno překrývá část obsahu pro zviditelnění, nicméně ji lze jednoduše zavřít
+			kliknutím mimo nabídku.
+
+			\includegraphics[width=0.24\linewidth]{obrazky/kontextualni_nabidka_seznam_ukazka.png}\hfill
+			Ukázka kontextuální nabídky akcí položky v seznamu. % todo anotace
+
+			\includegraphics[width=0.24\linewidth]{obrazky/kontextualni_nabidka_vyberove_pole_ukazka.png}\hfill
+			Ukázka kontextuální nabídky položek výběrového pole. % todo anotace
+
+			\paragraph{Sekce}
+
+			\includegraphics[width=0.24\linewidth]{obrazky/sekce.png}\hfill
+
+			Pro stránky složené z více podstránek (např.: nastavení uživatelského účtu) je vhodné provázat tyto stránky
+			nějakou navigací pro jednoduchý přechod mezi dílčími stránkami.
+			K tomu slouží extenze bloku obsahu o postranní menu sloužící právě pro navigaci souvisejících stránek.
+			Díky viditelnému menu je jasně viditelné jako sekce jsou uživateli dostupné a co tak uživatel může vše dělat.
+
+		\subsubsection{Prvky pro interakci}
+
+		Po prvcích strukturující obsah je možné navrhnout již prvky, se kterými bude uživatel přímo či nepřímo interagovat.
+
+			\paragraph{Tlačítko}
+
+			Nejhlavnějším takovým prvkem je tlačítko.
+			To umožňuje uživatelům vyvolávat akce, potvrzovat akce nebo se nechat přesměrovat na jiné stránky.
+			Tlačítek je v aplikaci spousta a každé dělá trochu něco jiného.
+			Lze je ale zařadit do pár kategorií a navrhnout tak pár typů tlačítek evokující jejich prioritu a vážnost akce,
+			se kterou jsou spojeni.
+			Všechny tlačítka byla rozdělena na tlačítka s nízkou prioritou, tlačítka s vysokou prioritou a tlačítka s vysokou
+			prioritou a vysokou vážností akce.
+
+			Tlačítko s nízkou prioritou reprezentuje vedlejší akci, kterou sice uživatel může provést, ale není hlavním cílem.
+			Takové tlačítko má neutrální barvu a ve většině případech neobsahuje ani ikonu, aby nevyjadřovalo vysokou prioritu
+			a uživatel se zaměřil spíše na výraznější tlačítka.
+
+			\includegraphics[width=0.24\linewidth]{obrazky/tlacitko_s_malou_prioritou}\hfill
+			Ukázka tlačítka s malou prioritou. % todo anotace
+
+			Tlačítko s vysokou prioritou představuje primární akci, kterou by se uživatel měl vydat.
+			Taková tlačítka představují potvrzení nějaké akce, vytvoření nových objektů, přidání existujících objektů a
+			podobně.
+			Měli by být proto patřičně zvýrazněna a uživatele podvědomě navést kam má kliknout pokud v danou akci chce
+			provést.
+			Tato tlačítka mají proto výraznou barvu a vystihující ikonu pro zpřehlednění a zpříjemnění celkového dojmu.
+
+			\includegraphics[width=0.24\linewidth]{obrazky/tlacitko_s_velkou_prioritou}\hfill
+			Ukázka tlačítka s vysokou prioritou. % todo anotace
+
+			Pro případy kdy uživatel provádí nějakou akci s vysokou vážností jako je například nevratné smazání nějakého
+			objektu, vzniklo rozšíření tlačítka s vysokou prioritou.
+			Tlačítko se lišší pouze v červené barvě evokující dojem závažné akce.
+			Právě červená barva by měla uživatele přimět znovu zamyslet se nad prováděnou akcí, protože červená barva
+			je využívána jako symbol něčeho negativního.
+
+			\includegraphics[width=0.24\linewidth]{obrazky/tlacitko_s_velkou_prioritou_a_velkou_vaznosti}\hfill
+			Ukázka tlačítka provádějící nevratnou změnu. % todo anotace
+
+			\paragraph{Vstupní pole}
+
+			Vstupní pole různých druhu jsou společně s tlačítky nejdůležitějšími prvky jakékoliv aplikace.
+			Vstupní pole umožňují uživatelům předat data aplikaci v různých formátech podle požadované informace.
+			Vzniklo proto několik základních typů vstupních polí, které lze jednoduše kombinovat uvnitř v formulářů.
+			Mezi ně patří: textové pole, výběrové pole, pole pro výběr času a data, pole pro nahrání obrázku a pole pro
+			výběr geografické lokace.
+			Vstupní pole využívají linek namísto stínu, protože sami o sobě nereprezentují celek ale pouze část celého
+			bloku.
+			Pole mají popisek pro identifikaci účelu konkrétního pole, ikonu a mohou mít i akční tlačítko pro jednoduchou
+			akci nad danou zadanou hodnotou.
+			U většiny polí je navíc popisek plovoucí, kdy pokud pole nemá žádnou hodnotu, nahradí ji popisek, pokud však
+			nějaká hodnota byla zadána, popisek se zmenší a posune stranou, aby zůstal stále viditelný, ale nepřekážel.
+			Pole jsou také schopna změnit svoji barvu a zobrazit popis chyb, pokud je zadaná hodnota nevalidní.
+			Pokud je hodnota validní nebo žádná ještě neexistuje, je možné na místo chyby pod pole vepsat nápovědu k danému
+			poli pro koncového uživatele v případě nejasných polí nebo potřebě dodatečných informací v podobě například
+			požadovaného formátu.
+
+			Textové pole slouží pro zadávání různých krátkých i dlouhých textů, mají vždy popisek a mohou mít ikonu a
+			akční tlačítko.
+			Mohou sloužit i pro zadávání hesel a v takovém případě zobrazují pouze zástupné znaky.
+			Obsahují však tlačítko pro přepnutí mezi zástupnými znaky a originálními pro kontrolu zadaného hesla.
+
+			\includegraphics[width=0.24\linewidth]{obrazky/textove_pole}\hfill
+			Ukázka textového pole s ikonou a nápovědou. % todo anotace
+
+			Extenzí textového pole jsou pole pro zadání času a data.
+			Ty rozšiřují manuální zadávání o okénka pro pohodlný výběr bez nutnosti klávesnice.
+
+			\includegraphics[width=0.24\linewidth]{obrazky/datumove_pole}\hfill
+			Ukázka pole s výběrem data a času. % todo anotace
+
+			Vzhledem k požadavku možnosti specifikovat geografické lokace karet bylo potřeba zavést i specifické pole
+			pro výběr bodu v mapě.
+			Pole zobrazuje automaticky mapu světa, kterou je možné hýbat a přibližovat ji a vybírat konkrétní body.
+			Vybraný bod lze také jednoduše smazat/resetovat.
+			Na rozdíl od textového pole toto pole neumožňuje specifikovat ikonu ani akční tlačítko a obsahuje pouze
+			statický popisek kvůli stále zobrazené mapě do všech krajů.
+
+			\includegraphics[width=0.24\linewidth]{obrazky/pole_lokace}\hfill
+			Ukázka pole pro výběr geografického bodu v mapě. % todo anotace
+
+			Posledním méně používaným polem v této aplikaci je pole pro výběr obrázku.
+			Pole umožní výběr souboru ze souborového systému uživatele, který je následně nahrát a zobrazen jeho náhled
+			přímo v poli.
+			Vybraný obrázek je pak možné jednoduše změnit nebo úplně odstranit.
+
+			\includegraphics[width=0.24\linewidth]{obrazky/obrazkove_pole}\hfill
+			Ukázka pole s nahraným obrázkem. % todo anotace
+
+			\paragraph{Seznam položek}
+
+			Velmi využívaným prvkem je seznam jakýchkoliv položek.
+			Seznam může být jednoduchý pouze pro jednoduché zobrazení několika podobných položek nebo může umožňovat
+			spravovat objekty stejného typu pomocí přidělených akcí a dodatečných informací.
+			Samotný seznam je pouze obalovací prvek, až prvky konkrétních položek obsahují pokročilé možnosti.
+			Každá položka může obsahovat ikonu nebo obrázek, text, seznam akcí nebo dokonce i vnořený seznam dílčích
+			položek stahujících se k dané nadřazené položce.
+			Nicméně vnořené seznamy jsou omezeny pouze na jednu úroveň kvůli zachování přehlednosti, více úrovní navíc
+			běžně není potřeba a u takového scénáře by bylo na zvážení zda-li je vícenásobné vnoření tím správným řešením.
+			Seznamy akcí se kromě běžného zobrazení umí i seskupit v případě malého místa a schovat akce do kontextuální
+			nabídky, aby uživatel využívající malé zařízení nepřišel o možnost využívat všechny akce s minimálním omezením.
+
+			\includegraphics[width=0.24\linewidth]{obrazky/jednoduchy_seznam}\hfill
+			Ukázka jednoduchého seznamu podobných prvků. % todo anotace
+
+			\includegraphics[width=0.24\linewidth]{obrazky/seznam}\hfill
+			Ukázka pokročilého seznamu prvků. % todo anotace
+
+			\includegraphics[width=0.24\linewidth]{obrazky/vnoreny_seznam}\hfill
+			Ukázka vnořeného seznamu uvnitř jiného seznamu. % todo anotace
+
+			\paragraph{Stránkování}
+
+			Při velkém množství položek v jednom seznamu je běžně používaný systém stránkování, kdy se položky rozdělí
+			do stránek s omezeným počtem prvků pro jednodušší navigaci po stránce bez nutnosti příliš pohybovat myší.
+			Prvek stránkování umožňuje přepínat mezi konkrétními stránkami nebo se přepínat mezi předchozí a následující.
+			Pokud je velké množství stránek, prvek nezobrazí všechny stránky, ale zobrazí pouze okolí vybrané stránky
+			a první a poslední stránky pro rychlou navigaci.
+
+			\includegraphics[width=0.24\linewidth]{obrazky/strankovani}\hfill
+			Ukázka stránkování. % todo anotace
+
+		\subsubsection{Finální návrh}
+
+		% TODO možná konkrétní stránky? figma není úplně aktuální a řekl bych že ten finální design u nění asi úplně to
+		% podstatný, myšlenkové postupy už jsou vysvětleny v přechozích kapitolách
+		S pomocí výše navržených základních prvků a jejich variacemi bylo navrženo finální \ac{UI} všech stěžejních
+		stránek.
+
+		\includegraphics[width=0.24\linewidth]{obrazky/finalni_navrh}\hfill
+		Finální grafický návrh aplikačních stránek a prvků. % todo anotace
+
+		Tento postup s návrhem aplikace před samotnou aplikací se ukázal jako velmi efektivní oproti původnímu prototypu
+		pomohl nejen snadněji implementovat samotné \ac{GUI}, ale i navrhnout \ac{API} díky zřetelným požadavkům na
+		manipulaci s daty.
+		\ac{API} tak bylo částečně navrženo právě podle designového návrhu, protože návrh mimo jiné umožnil realizovat
+		vizi požadavků na \ac{UI} i funkce aplikace.
 
 	\subsection{Datový model}
 
@@ -1480,6 +1901,7 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 	\subsection{DDD}
 
 	TODO
+	DDD zmínít až v závěru protože to nepoužívám úplně dobře, takže možná to spojit s datovým modelem
 
 	\subsection{Propojení FE a BE}
 
@@ -1500,12 +1922,14 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 	\subsection{Docker a Kubernetes}
 
 	% TODO
-%	ostatní věci, konkretní implementace
+%	ostatní věci, konkretní implementace, knihovny v FE a řešení určitých interakcí, stránkování, jak to funguje a co nabízí
 
 % ####################################
 \section{Závěr}
 
 % TODO
+DDD
+digital ocean si občas prostě něco přenastaví pokud to není v souboru o čemž se jentak nedozvíš
 
 % todo
 % - změnit vzhled FE
