@@ -1896,7 +1896,51 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 
 	\subsection{Datový model}
 
-	TODO
+	Úkol API server je poskytovat a zpracovávat data ať už textová v pobobě \ac{JSON} dokumentů nebo binární v podobě
+	obrázků.
+	Tyto funkce pro samotné API bude zprostředkovávat implementovaná business logika starající se, aby všechna data
+	byla správně zpracována.
+	Je ale stěžejní se na počátku zamyslet a vybrat styl a navrhnout model jakým bude business logika implementována.
+	Stěžejní je to z důvodu budoucí čitelnosti kódu a možnostech rozšíření o nové funkce, protože při špatném
+	návrhu může být složité aplikace rozšířit a kód se tak může stávat postupně nečitelným.
+
+	Vzhledem k tomu, že byl vybrán jazyk Java, který je primárně objektově orientovaný programovací jazyk, business
+	logika bude využívat právě objektově orientovaného programování \ac{OOP}.
+	\ac{OOP} je velice populární a většinově používané obecné programovací paradigma využívané spousty programovacími
+	jazyky.
+	Toto paradigma využívá objekty pro reprezentaci celého systému (aplikace).
+	Každý objekt má nějaké své vlastnosti a operace, které může buď využívat vnitřně nebo poskytnou k využití ostatním
+	objektům.
+	Hlavní myšlenka \ac{OOP} je popisovat reálné objekty (člověk, pes, budova, událost...) těmi virtuálními ve zjednodušené
+	formě, kdy popisujeme jen tu část reálného objektu, která nás zajímá.
+	Tyto objekty pak v systému mezi sebou komunikují pomocí zpráv a předávají si data, tak aby dosáhli výsledku
+	očekávaného od celého systému.
+	Každý objekt v systému má svou předlohu zvanou třída definující pro každý objekt jako vlastnosti a operace daný objekt
+	může obsahovat a objekt je pak už konkrétní instance obsahující konkrétní data.
+	Kromě tříd ještě existují rozhraní a abstraktní třídy, které můžou mezi sebou dědit vlastnosti a operace a z nich
+	následně vznikají konkrétní třídy.
+	Rozhraní a abstraktní třídy definují obecnou předlohu operací, tzv. kontrakt, který dědící třída musí splňovat, což
+	následně umožňuje využít techniku polymorfismus, tj. provádět operace na základě obecného rozhraní bez nutnosti
+	vědět konkrétní a třídu a její chování.
+	\cite{oop}
+
+	Právě díky \ac{OOP} bylo možné poměrně věrně reprezentovat objekty využívané jednotlivými stránkami v logické,
+	přehledné a jasně definované struktuře.
+	Model navrhovaného systému původně vycházel z modelu použitém v prototypu, avšak po hlubší analýze požadavků byl
+	značně přepracován.
+	Nový model byl pro přehlednost interně rozdělen na několik modulů podle jejich zaměření, nicméně všechny moduly
+	mezi sebou i tak komunikují, ale nejsou spolu hluboce provázány.
+	Momentálně se datový model skládá z modulu pro správu uživatelských účtů, modulu pro správu karet, modulu pro správu
+	kupónů pro prémiové plány a podpůrného modulu.
+
+	Modul uživatelských účtů je zodpovědný za vytváření, uchování, úpravu a mazání jednotlivých účtů a jejich dat
+	každého jednoho uživatele.
+	S tím je spojena i správa oblíbených karet a poznámek, které jsou vždy na konkrétního uživatele a propojují
+	moduly účtů a karet.
+	Modul dál řeší i prémiový plán, předplatné, expiraci a podobně s tím spojené.
+	TODO uml
+
+	\subsection{Přístup k databázi}
 
 	\subsection{DDD}
 
@@ -1904,6 +1948,8 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 	DDD zmínít až v závěru protože to nepoužívám úplně dobře, takže možná to spojit s datovým modelem
 
 	\subsection{Propojení FE a BE}
+
+	\subsubsection{REST API}
 
 	TODO
 
@@ -1922,7 +1968,8 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 	\subsection{Docker a Kubernetes}
 
 	% TODO
-%	ostatní věci, konkretní implementace, knihovny v FE a řešení určitých interakcí, stránkování, jak to funguje a co nabízí
+%	ostatní věci, konkretní implementace, knihovny v FE a řešení určitých interakcí, stránkování, jak to funguje a co nabízí, notifikace
+vycházet z modulů v javě - mail, search, sercurity,storage, validation, app config, testy
 
 % ####################################
 \section{Závěr}
