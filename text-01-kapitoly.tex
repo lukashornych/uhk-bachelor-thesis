@@ -1,4 +1,3 @@
-% ################################
 \section{Úvod}
 
 % todo podle tohoto upravit ještě cíl projektu a abstrakci
@@ -21,8 +20,16 @@ a přívětivosti aplikace na mobilních zařízeních i počítačích.
 Velmi důležitým krokem před samotnou implementací je zvolení vhodných technologií umožňující nejsnazší a nejrychlejší
 vývoj a hlavně implementaci všech požadavků.
 
-% ################################
-\section{Konkurenční a podobná řešení}
+\section{Cíl práce}
+
+% TODO
+
+\section{Vstupní stránky pro osoby a instituce}
+
+% todo
+
+\section{Existující aplikace}
+% todo název
 
 Jak již bylo zmíněno, existuje spoustu webových aplikací, které by se dali považovat za konkurenční řešení implementované
 v této práci.
@@ -76,7 +83,9 @@ vloží na své sociální sítě nebo vizitky.
 
 % ################################
 
-\section{Návrh vlastního řešení}
+\section{Návrh vlastní aplikace}
+
+% todo aplikace místo řešení
 
 Jak již bylo nastíněno, navrhované řešení bude reprezentovat jakýsi rejstřík pro sdílení a vyhledávání základních informací
 subjektů a objektů, které uživatele dovedou k hledaným informacím.
@@ -1897,7 +1906,7 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 
 	\subsection{Implementace API serveru}
 
-		\subsection{Datový model}
+		\subsubsection{Datový model}
 
 		Úkol API serveru je poskytovat a zpracovávat data ať už textová v pobobě \ac{JSON} dokumentů nebo binární v podobě
 		obrázků.
@@ -2098,7 +2107,7 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 		Oblíbené karty je pak možné seskupovat do složek definovaných uživatelem pro lepší orientaci.
 		Složky, poznámky ani oblíbené karty však nevidí nikdo jiný než autor a každý uživatel má tak vlastní sadu těchto dat.
 
-		\subsection{Práce s datovým modelem}
+		\subsubsection{Práce s datovým modelem}
 
 		Práci s datovým modelem zastřešuje právě již několikrát zmíněná business logika, která s ním manipuluje k dosažení
 		cíle uživatelů.
@@ -2224,50 +2233,50 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 		logiku.
 		Zde je možné vidět reprezentativní ukázku části repozitáře pro práci uživatelskými účty.
 		\begin{lstlisting}[language=Java]
-			@Mapper
-			public interface AccountDao {
+@Mapper
+public interface AccountDao {
 
-				// Získání uživatelského účtu z databáze společně s vnořeným předplatným a kolekcí rolí.
-				// Entita je pak automaticky namapována MyBatisem díky stejnému pojmenování sloupců tabulek a atributů třídy.
-				@Results({
-					@Result(property = "id", column = "id"),
-					@Result(property = "authorities", column = "id", many = @Many(select = "findAllRoles")),
-					@Result(property = "subscription", column = "id", one = @One(select = "findSubscriptionByAccountId"))
-				})
-				@Select("select * from " + Account.TABLE_NAME + " where email = #{email}")
-				Optional<Account> findByEmail(String email);
+	// Získání uživatelského účtu z databáze společně s vnořeným předplatným a kolekcí rolí.
+	// Entita je pak automaticky namapována MyBatisem díky stejnému pojmenování sloupců tabulek a atributů třídy.
+	@Results({
+		@Result(property = "id", column = "id"),
+		@Result(property = "authorities", column = "id", many = @Many(select = "findAllRoles")),
+		@Result(property = "subscription", column = "id", one = @One(select = "findSubscriptionByAccountId"))
+	})
+	@Select("select * from " + Account.TABLE_NAME + " where email = #{email}")
+	Optional<Account> findByEmail(String email);
 
-				// Uložení nového uživatelského účtu do databáze.
-				// MyBatis zároveň zpětně doplní do objektu účtu automaticky vygenerované unikátní ID databází.
-				@Insert({
-					"insert into " + Account.TABLE_NAME + " (email, password, state, createdOn, changedOn, passwordChangedOn, googleExternalId, gitHubExternalId, facebookExternalId)",
-					"values (#{email}, #{password}, #{state}, #{createdOn}, #{changedOn}, #{passwordChangedOn}, #{googleExternalId}, #{gitHubExternalId}, #{facebookExternalId})"
-				})
-				@Options(useGeneratedKeys = true, keyProperty = "id")
-				void saveNew(Account account);
+	// Uložení nového uživatelského účtu do databáze.
+	// MyBatis zároveň zpětně doplní do objektu účtu automaticky vygenerované unikátní ID databází.
+	@Insert({
+		"insert into " + Account.TABLE_NAME + " (email, password, state, createdOn, changedOn, passwordChangedOn, googleExternalId, gitHubExternalId, facebookExternalId)",
+		"values (#{email}, #{password}, #{state}, #{createdOn}, #{changedOn}, #{passwordChangedOn}, #{googleExternalId}, #{gitHubExternalId}, #{facebookExternalId})"
+	})
+	@Options(useGeneratedKeys = true, keyProperty = "id")
+	void saveNew(Account account);
 
-				// Uložení již existujícího uživatelského účtu do databáze.
-				// Přepisují se pouze hodnoty, které se mohou měnit.
-				@Update({
-					"update " + Account.TABLE_NAME,
-					"set",
-					"   email = #{email},",
-					"   password = #{password},",
-					"   state = #{state},",
-					"   changedOn = #{changedOn},",
-					"   passwordChangedOn = #{passwordChangedOn},",
-					"   googleExternalId = #{googleExternalId},",
-					"   gitHubExternalId = #{gitHubExternalId},",
-					"   facebookExternalId = #{facebookExternalId}",
-					"where id = #{id}"
-				})
-				void saveUpdated(Account account);
+	// Uložení již existujícího uživatelského účtu do databáze.
+	// Přepisují se pouze hodnoty, které se mohou měnit.
+	@Update({
+		"update " + Account.TABLE_NAME,
+		"set",
+		"   email = #{email},",
+		"   password = #{password},",
+		"   state = #{state},",
+		"   changedOn = #{changedOn},",
+		"   passwordChangedOn = #{passwordChangedOn},",
+		"   googleExternalId = #{googleExternalId},",
+		"   gitHubExternalId = #{gitHubExternalId},",
+		"   facebookExternalId = #{facebookExternalId}",
+		"where id = #{id}"
+	})
+	void saveUpdated(Account account);
 
-				/* ... zbytek kódu byl vynechán pro přehlednost ... */
-			}
+	/* ... zbytek kódu byl vynechán pro přehlednost ... */
+}
 		\end{lstlisting}
 
-		\subsection{Validace entit}
+		\subsubsection{Validace entit}
 
 		Validace entit je velice důležitá, pokud uživatelé mohou data upravovat zvenčí.
 		Díky ní se do databáze dostanou jen validní data.
@@ -2277,50 +2286,363 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 		značně zjednodušují práci.
 		Co se týče formátu hodnot, tím může být ku příkladu maximální délka textového řetězce, omezení pouze na velká
 		písmena nebo maximální číselná hodnota.
-		Druhým TODO
+		Druhým typem využívané validace v implementované aplikaci je validace, že určité hodnoty se u upravených entit
+		nezměnily oproti původní verzi.
+		Takovými hodnotami jsou většinou stavy entity nebo různé datumy.
+		Příkladem může být stav karty, kdy smazaný karta již nesmí přejít do stavu aktivní karty, protože nemá potřebná data.
+		Dalším příkladem je datum vytvoření entity, který se nesmí změnit jinak by postrádal svůj účel nebo typ karty,
+		protože systém nepodporuje změnu typu karty (technicky náročné, protože každý typ karty obsahuje úplně jiný data
+		a má jiný účel).
 
-		Pro tento projekt byla využita knihovna Hibernate Validator využívající Java anotace pro specifikování pravidel.
+		Pro tento projekt byla využita knihovna Hibernate Validator zabývající se především prvním typem validací
+		využívající Java anotace pro specifikování jednotlivých pravidel.
 		Pravidla se můžou stahovat buď na celou třídu nebo na konkrétní atributy třídy.
 		Knihovna sama o sobě poskytuje rozsáhlou sadu běžných pravidel, avšak umožňuje jednoduché implementování vlastních
 		pravidel.
 		Takto může vypadat třída s definovanými pravidly.
 		\begin{lstlisting}[language=Java]
-			@CardLinkUrl
-			public class CardLinkGroup {
+@CardLinkUrl
+public class CardLinkGroup {
 
-				@CardLinkTemplateId
-				private String templateId;
+	@CardLinkTemplateId
+	private String templateId;
 
-				@NotNull
-				@Size(min = 1)
-				private List<@Valid CardLink> links;
+	@NotNull
+	@Size(min = 1)
+	private List<@Valid CardLink> links;
 
-				/* ... zbytek kódu byl vynechán pro přehlednost ... */
-			}
+	/* ... zbytek kódu byl vynechán pro přehlednost ... */
+}
 		\end{lstlisting}
 		Tato třída obsahuje vlastní třídní pravidlo pro validaci URL adres vnořených odkazů na základě definované šablony,
 		atributové pravidlo pro validaci existence šablony a validaci kolekce odkazů, která nesmí být prázdná.
 
+		Díky rozšířitelnosti této knihovny je možné poměrně jednoduše implementovat i druhý typ validací.
+		Tyto validace pak mají vlastní Java anotace tvářící se jako běžná pravidla, mají však vlastní implementaci
+		validátoru ověřující validovaný objekt.
+		Zde je vidět ukázka validátoru ověřující neměnitelné atributy upravené karty oproti její původní verzi:
+		\begin{lstlisting}[language=Java]
+public class UpdatedCardValidator implements ConstraintValidator<UpdatedCard, Card> {
+	/* ... */
+	@Override
+	public boolean isValid(Card updatedCard, ConstraintValidatorContext context) {
+		final Optional<Card> originalCard = cardService.getCard(updatedCard.getId(), true);
+		/* ... */
+		if (originalCard.get().getState().equals(CardState.DELETED)) {
+			return false;
+		}
+		if (!updatedCard.getType().equals(originalCard.get().getType())) {
+			return false;
+		}
+		/* ... */
+		return true;
+	}
+}
+		\end{lstlisting}
+		Pokud se nějaký takový atribut změnil o proti původní verzi změnil, validace selže a neumožní uživateli
+		uložit novou verzi entity.
 
-		\subsection{Šablony odkazů sítí}
+		Po nastavení pravidel entitám je již možné provádět samotnou validaci.
+		K tomu v knihovně Hibernate Validator slouží jedna centrální třída reprezentující validátor příjímající
+		entitu označenou pravidly a vrací kolekcí nalezených porušení pravidel.
+		Je pak už na programátorovi jak s touto kolekcí naloží.
+		V případě této aplikace, kód vyhodí výjimkou, která se následně v \ac{API} přeloží na chybu.
+		\begin{lstlisting}[language=Java]
+final Set<ConstraintViolation<Card>> violations = validator.validate(updatedCard);
+Assert.isTrue(
+		violations.isEmpty(),
+		"Card is not valid: " + violations.stream().map(ConstraintViolation::getMessage).collect(Collectors.joining("; "))
+);
+		\end{lstlisting}
+
+		\subsubsection{Úložiště souborů}
+
+		Jak již bylo nastíněno, aplikace nebude implementovat vlastní souborové úložiště s generováním variant obrázků.
+		Místo toho bude využívat externí službu Cloudinary, která zajistí uchování souborů, generování variant obrázků
+		a \ac{CDN} pomocí \ac{REST} \ac{API} zajišťující komunikaci mezi aplikací a službou.
+		Cloudinary navíc poskytuje knihovnu obalující \ac{REST} \ac{API} přímo do Java tříd, takže se není potřeba zabývat
+		komunikací čistým \ac{REST} \ac{API}.
+		Aplikace bude \ac{API} využívat k ukládání souborů a získávání uložených souborů pro interní validace.
+		Získávání variant obrázku do \ac{GUI} bude zajišťovat přímo front-endová aplikace.
+
+		Cloudinary poskytuje jeden velký adresář pro všechny soubory, což je při více typů souborů nevhodné.
+		Naštěstí podporuje vnořené adresáře.
+		Právě kvůli tomu vznikl koncept předem definovaných tzv. typů uložišť, kde každý typ definuje cestu
+		relativního kořenového adresáře, typ ukládaných souborů a interní ID.
+		Momentálně existuje pouze jedno uložiště a to pro profilové obrázky karet
+
+		\begin{lstlisting}[language=Java]
+public enum StorageType {
+    CARDS_AVATARS("cards-avatars", "cards/avatars", "image");
+
+    private final String id;
+    private final String folderPath;
+    private final String resourceType;
+}
+		\end{lstlisting}
+		Ukázka definových typů uložišť. % todo
+
+		Aby bylo možné zpětně jednoduše identifikovat autora a typ uložiště uloženého souboru, je potřeba ke každému
+		souboru definovat dodatečná metadata.
+		Cloudinary naštěstí takový metadata podporuje.
+		Každý uložený soubor je pak popsán následující třídou obsahující všechny potřebné informace o souboru pro zobrazení
+		a validaci:
+		\begin{lstlisting}[language=Java]
+public class StorageFile {
+    private final StorageType storageType;
+    private final long ownerId; // ID uživatelského účtu, který tento soubor nahrál
+    private final String publicId; // ID soubor v Cloudinary uložišti
+    private final String url; // veřejná URL adresa, na které je obrázek možné zobrazit
+}
+		\end{lstlisting}
+		Autor a typ úložiště slouží momentálně hlavně k jednoduché validaci zvoleného obrázku při ukládání karty, kdy
+		se validuje jestli majitel karty je zároveň majitelem obrázku a zda-li se jedná skutečně o profilový obrázek.
+		Tyto validace existují, aby nebylo možné někým záměrně využít obrázek někoho jiného nebo soubor, který k tomu
+		není určený.
+
+		Finální uložení se pak už skládá pouze z načtení binárních dat obrázku a sestavení výše zmíněných metadat a zavolání \ac{API}
+		služby:
+		\begin{lstlisting}[language=Java]
+// sestavení metadat
+final long authenticatedAccountId = accountService.getAuthenticatedAccount().getId();
+final Map<String, Object> params = buildFileUploadParams(storageType, authenticatedAccountId);
+
+// načtení souboru
+final BufferedInputStream bis = new BufferedInputStream(file.getInputStream());
+final byte[] fileBytes = bis.readAllBytes();
+
+// nahrání souboru do Cloudinary
+cloudinary.uploader().upload(fileBytes, params);
+		\end{lstlisting}
+
+		Získání popisného souboru z Cloudinary je podobně jednoduché jako uložení.
+		\ac{API} umožňuje získat data o jednotlivých souborech pomocí interního ID a požadavek lze obohatit o dodatečné požadavky.
+		V případě této aplikace se výsledek obohacuje o metadata.
+		\begin{lstlisting}[language=Java]
+final Map<String, Object> params = new HashMap<>();
+params.put("metadata", true);
+
+final ApiResponse response = cloudinary.api().resource(publicId, params);
+
+return Optional.of(new StorageFile(
+	StorageType.getById((String) ((Map) response.get("metadata")).get(STORAGE_FILE_METADATA_STORAGE_TYPE_NAME)),
+	((Integer) ((Map) response.get("metadata")).get(STORAGE_FILE_METADATA_OWNER_ID_NAME)).longValue(),
+	(String) response.get("public_id"),
+	(String) response.get("secure_url")
+));
+		\end{lstlisting}
+		Popisující soubor obecně používá na místech, kde nejsou potřeba konkrétní binární data souboru, ale pouze
+		informace o něm.
+		Binární data jsou většinou potřeba pouze v případě zobrazení souborů v \ac{GUI} nikoliv přímo v aplikaci díky
+		odstínění generování variant.
+
+		Konkrétní binární data souborů pro zobrazení například v \ac{GUI} aplikace je možné získat přímo ze serverů
+		Cloudinary pomocí speciální URL adresy obsahující identifikaci úložiště, identifikaci konkrétního souboru a
+		požadovanou variantu.
+		Díky přímému přístupu je možné využít \ac{CDN} pro menší odezvy při stahování.
+		Konkrétní URL adresa pro stažení profilové obrázku karty v podobě varianty o rozměrech 256x256 pixelů může
+		vypadat následovně:
+		\begin{lstlisting}
+https://res.cloudinary.com/id_uloziste/image/upload/t_256x256/id_souboru
+		\end{lstlisting}
+		V tomto případě je varianta nakonfigurována přímo v administraci Cloudinary a v URL adrese je pouze její jméno,
+		je však možné formát varianty nadefinovat přímo v URL adrese.
+
+		\subsubsection{Transakční emaily}
+
+		Aby bylo možné upozorňovat uživatele na nečekané údalosti vzniklé v aplikaci nebo zaslání informací uživateli,
+		je potřeba nějaký komunikační kanál.
+		Jak již bylo zmíněno, tím budou emailové zprávy.
+		Cílem je tedy vytvořit systém odesílající předem definované zprávy přiřazené konkrétním událostem.
+		Stejně jako v případě souborového úložiště, aplikace nebude implementovat vlastní řešení, ale využije externích
+		služeb.
+		Vlastní řešení by znamenalo značnou zátěž na implementaci aplikace a i tak by bylo nutné napojit odesílání
+		emailů na ověřeného odesílatele emailů, aby emaily nekončily uživatelům v nevyžádané poště.
+		Proto bylo zvoleno využít externí službu SendinBlue, která poskytne vše potřebné již připravené skrz \ac{API}
+		s existující Java knihovnou.
+		V aplikaci už je pak nutné pouze připravit propojení mezi tímto \ac{API} a událostmi v aplikaci.
+
+		Pro odesílaní emailů je nejdříve nutné připravit šablony zpráv, aby bylo co odesílat.
+		Ty lze připravit buď ručně pomocí šablonovacího jazyk (např.: FreeMarker) a odeslat pomocí \ac{API} do externí
+		služby nebo v případě SendinBlue lze využít integrovaného klikacího editoru umožňujícího jednoduše připravit
+		šablony pomocí předpřipravených prvků.
+		Obsah emailů se vytváří v jazyce \ac{HTML}, nicméně podpora zobrazování ostylovaného \ac{HTML} obsahu v
+		emailových klientech je poměrně omezená a velice se liší mezi jednotlivými klienty.
+		Kvůli tomu je časově náročné připravit šablonu fungující na všech populárních klientech a to navíc ve dvouch
+		verzích: desktopové a mobilní.
+		Tyto problémy do jisté míry řeší právě interaktivní editor, avšak za cenu nižších možností přizpůsobení vzhledu
+		a struktury.
+		Výhodou je, že SendinBlue poskytuje oba přístupy a není problém použít jeden nebo druhý.
+		Právě proto padla volba na interaktivní editor, který ušetří v začátku spoustu času a v budoucnu je možné
+		přejít na vlastní šablony.
+
+		Každá šablona má v systému unikátní ID, takže byla tvořena jednoduchá enumerace pro explicitní mapování
+		šablon ke kryptickým identifikátorům.
+		\begin{lstlisting}[language=Java]
+public enum EmailTemplate {
+    NEW_ACCOUNT_CONFIRMATION(1),
+    NEW_ACCOUNT_WELCOMING(2),
+    ACCOUNT_PASSWORD_CHANGED(3),
+    ACCOUNT_FORGOTTEN_PASSWORD(4),
+    ACCOUNT_NEW_EMAIL(5),
+    ACCOUNT_EMAIL_CHANGED(6),
+    ACCOUNT_DELETED(7),
+    ACCOUNT_SUBSCRIPTION_WILL_EXPIRE(8),
+    ACCOUNT_SUBSCRIPTION_EXPIRED(9),
+    ACCOUNT_SUBSCRIPTION_EXPIRATION_WARNING(10),
+    ACCOUNT_SUBSCRIPTION_EXPIRATION_FINAL_ACTION(11);
+
+    private final long id;
+
+    /* ... zbytek kódu byl vynechán pro přehlednost ... */
+}
+		\end{lstlisting}
+		Díky této enumeraci je pak v aplikaci jasné jaká šablona bude použita.
+		Dále může šablona využívat parametry místo konkrétního textu, které jsou při zpracování šablony nahrazeny
+		parametry požadavku.
+		Těmi může být cokoliv, například emailová adresa adresáta nebo expirační datum nějaké entity.
+
+		Odeslání konkrétního emailu už je pak jednoduché a vyžaduje pouze specifikování emailové adresy adresáta,
+		šablonu emailu a volitelně i parametry šablony.
+		Aplikace pak už pouze sestaví požadavek o odeslání emailu a předá ho \ac{API}.
+		\begin{lstlisting}[language=Java]
+public CreateSmtpEmail sendTransactionalEmail(@NonNull String to, @NonNull EmailTemplate template, Properties templateArguments) {
+	final SendSmtpEmail sendSmtpEmail = new SendSmtpEmail();
+
+	final SendSmtpEmailTo sendSmtpEmailTo = new SendSmtpEmailTo();
+	sendSmtpEmailTo.email(to);
+	sendSmtpEmail.to(List.of(sendSmtpEmailTo));
+
+	sendSmtpEmail.setTemplateId(template.getId());
+
+	if (templateArguments == null) {
+		templateArguments = new Properties();
+	}
+	templateArguments.put(DOMAIN_TEMPLATE_PROPERTY_NAME, appConfig.getDomain());
+	sendSmtpEmail.setParams(templateArguments);
+
+	try {
+		log.info("Sending transaction email to " + to + " with template " + template + " ...");
+		return new TransactionalEmailsApi(apiClient).sendTransacEmail(sendSmtpEmail);
+	} catch (ApiException e) {
+		throw new RuntimeException("Could not send transactional email to " + to + " with template " + template + ": ", e);
+	}
+}
+		\end{lstlisting}
+
+		Jak bylo nastíněno, systém bude odesílat emaily automaticky jako reakci na vzniklé události v aplikaci.
+		Události jsou v tomto případě reprezentování aplikačními událostmi z frameworku Spring.
+		Spring umožňuje do systému publikovat aplikační události a definovat pozorovatele, kteří naslouchají na konkrétní
+		vzniklé aplikační události a mohou na ně reagovat vykonáním libovolných operací.
+		Samotná aplikační událost je pouze jednoduchý objekt nesoucí kontextové data reprezentovaná událostí.
+		\begin{lstlisting}[language=Java]
+public class CardUpdatedEvent extends ApplicationEvent {
+    private final Card originalCard;
+    private final Card updatedCard;
+
+    public CardUpdatedEvent(Object source, @NonNull Card originalCard, @NonNull Card updatedCard) {
+        super(source);
+        this.originalCard = originalCard;
+        this.updatedCard = updatedCard;
+    }
+
+    public Card getOriginalCard() {
+        return originalCard;
+    }
+
+    public Card getUpdatedCard() {
+        return updatedCard;
+    }
+}
+		\end{lstlisting}
+		Příkladem může být událost vyvolaná jako následek uložení upravené karty.
+		Událost tedy reprezentuje úpravu karty a může sebou nést danou upravnou kartu, kterou pozorovatel může
+		využít pro provedení svých operací.
+		\begin{lstlisting}[language=Java]
+public class CardUpdatedEventListener {
+    @EventListener
+    public void processCardUpdatedEvent(@NonNull CardUpdatedEvent event) {
+        /* operace nad událostí */
+    }
+}
+		\end{lstlisting}
+
+		Právě tento přístup využívá modul odesílání emailů.
+		Modul má do systému vystavené vlastní posluchače na konkrétní aplikační události (změna emailu uživatele, změna hesla,
+		vypršení platnosti předplatného...) vytvářející požadavky pro odesílání správných emailů.
+		Tento přístup vhodný, protože moduly uživatelských účtů, karet a podobně vůbec nevědí o modulu emailů a nevzniká
+		tak fyzické propojení znepřehledňující kód.
+		Navíc je pomocí aplikačních události jednoduché přidávat nové události a jejich posluchače.
+
+		\begin{lstlisting}[language=Java]
+@EventListener
+public void processAccountNewEmailRequestedEvent(@NonNull AccountNewEmailRequestedEvent event) {
+	final Properties templateArguments = new Properties();
+	templateArguments.put(TOKEN_TEMPLATE_PROPERTY_NAME, event.getVerificationToken().getToken());
+	mailService.sendTransactionalEmail(event.getNewEmail(), EmailTemplate.ACCOUNT_NEW_EMAIL, templateArguments);
+}
+		\end{lstlisting}
+		Ukázka odeslání emailu jako reakce na událost informující o novém požadavku na změnu hesla. % todo
+
+		\subsubsection{Vyhledávání karet}
+
+		Fulltextové vyhledávání je komplexní operace, který vyžaduje analýzu textů a přípravu vyhledatelných dat.
+		Tyto data musí být při vyhledávání korektně párována s uživatelkou frází, tak aby systém vrátil co nejrelevantnější
+		výsledky.
+		Naštěstí existují nástroje zabývající se touto problematikou.
+		Vybraným nástrojem pro tuto aplikaci je populární a všestranný databázový systém Elasticsearch.
+		Ten umí spoustu věcí, avšak pro tento projekt je důležitá problematika fulltextového vyhledávání.
+		Tuto problematiku Elasticsearch schovává před programátorem a programátorovi stačí pouze popsat
+		vyhledatelné entity a při vyhledávání definovat pouze požadavky.
+
+		I přes míru abstrakce je potřeba znát základní koncepty fulltextového vyhledávání.
+		Fulltextové vyhledávání pracuje s tzv. analyzátory, kteří analyzují text a generují z něj index relevantních
+		slov podle určených pravidel.
+		Tento proces je aplikovat na vyhledatelné dokumenty i na vyhledávací frázi zadanou uživatelem.
+		Vygenerované indexy se při vyhledávání porovnávají a podle určitých kritérií, databáze vyhodnotí relevantnost
+		dokumentu pro vyhledávanou frázi. \cite{index_search_analysis}
+
+		Každý analyzér se skládá z filtrů znaků, tokenizérů a filtrů tokenů.
+		Filtry znaků v analyzovaném textu upravují jednotlivé znaky.
+		Znaky mohou přidávat, odebírat nebo nahrazovat jinými (např.: odstranění diakritiky).
+		Poté je takto upravený text předán tokenizérům, kteří text rozdělí na kolekci tokenů.
+		Token může představovat cokoliv co dává v kontextu aplikace smysl, nicméně většinou token přestavuje jedno
+		slovo věty.
+		Tyto tokeny můžou být ještě upraveny pomocí filtrů tokenů.
+		Ty podobně jako filtry znaků umožňují přidávání, úpravu a mazání tokenů.
+		Těmi mohou být: filtr pro odmazání generických slov bez přidaného významu (např.: spojky), filtr pro odstranění
+		diakritiky nebo filtr pro převedení tokenů na malá písmena, aby nezáleželo na tvaru zadaného slova oproti slovu
+		v dokumentu.
+		Výsledné tokeny pak tvoří index, nad kterým lze již vyhledávat.
+		\cite{analyzer_anatomy}
+
+		Elasticsearch pracuje s tzv. indexy, což jsou kolekce indexovaných \ac{JSON} dokumentů entit stejného typu.
+		Tyto dokumenty pak lze vyhledávat pomocí dotazovacího jazyka.
+		Každý index má kromě samotných dat i konfiguraci jak s daty pracovat.
+		Kromě obecných konfiguračních hodnot obsahuje hlavně strukturu dokumentů, aby databáze mohla efektivně vyhledávat
+		nad uloženými daty.
+		Tato definice zahrnuje v první řadě určení datových typů jednotlivých hodnot entit.
+		Od datového typu se pak odvíjí další dostupné konfigurační hodnoty.
+		Nejdůležitějším takovým nastavením pro fulltextové vyhledávání je specifikování analyzérů pro textové hodnoty.
+		Specifikované analyzéry by měli odpovídat analyzéru použitému při vyhledávání pro kompatibilitu indexů tokenů.
+
+		TODO - problém se změnou mapingu, translace entity na searchable entity, více typů indexů ale jedno vyhledávání
+
+		\subsubsection{Šablony odkazů sítí}
 
 
+		 todo stránkování?, search, , app config, plány, generování bezpečných tokenů?
 
-		\subsection{Přihlašování (JWT/SESSION)}
+		\subsubsection{Propojení FE a BE}
+		sercurity
+		\subsubsection{REST API}
+			\subsubsection{Přihlašování (JWT/SESSION) a security}
+
+			TODO
 
 		TODO
 
-		\subsection{GDPR}
-
-
-		 todo stránkování,mail, search, sercurity,storage, validation, app config, plány, generování bezpečných tokenů
-
-		\subsection{Propojení FE a BE}
-		\subsection{REST API}
-
-		TODO
-
-		\subsection{Unit testy}
+		\subsubsection{Unit testy}
 
 		TODO
 
@@ -2353,3 +2675,9 @@ spring data jdbc
 % - zajištění přístupu ke službám třetích stran?
 % - smazat statistiky
 % - připravit český návod pro rozjetí lokálně všeho komplet, asi i s hosts a tak
+% - popisky i ke blokům kodu
+% - autoři obrátků a kodu i když to je autor
+% - vygenerovat poslední stránku https://ris2.uhk.cz/eVSKP/
+% - testovací dataset - sql dump
+% - žádné zkratky v názvech kapitol
+GIT21Q4HUB100-7e075147
