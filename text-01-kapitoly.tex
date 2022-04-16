@@ -2114,7 +2114,8 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 		Struktura business logiky si bere inspiraci z návrhového vzoru domain-driven design \ac{DDD}, který se zabývá
 		navrhováním přehledné, znovu použitelné a hlavně jednoduše rozšiřitelné struktury řešící zadané businessové požadavky
 		projektu.
-		Tento vzor staví hlavně na konceptu tzv. služeb, což jsou speciální třídy objektového programování, které
+		Tento vzor pohlíží na problematiku jako na doménu problému a staví hlavně na konceptu tzv. služeb,
+		což jsou speciální třídy objektového programování, které
 		neudržují vnitřní stav, ale poskytují právě služby manipulující s datovými objekty \cite{ddd_quickly}.
 		Jednotlivé služby by se měli vždy zabývat pouze jedním typem dat kvůli přehlednosti a ostatní data delegovat na
 		ostatní služby \cite{ddd_quickly}.
@@ -2951,25 +2952,144 @@ https://pepa-pavel.example.com
 
 		Zvolený přístup se jeví jako dostatečně flexibilní a pokrývající všemožné scénáře požadované aplikací.
 
-		\subsubsection{Propojení FE a BE}
-		sercurity
 		\subsubsection{REST API}
-			\subsubsection{Přihlašování (JWT/SESSION) a security}
 
-			TODO
+		K zajištění komunikace mezi front-endovou \ac{GUI} aplikací a aplikací \ac{API} serveru, server
+		vysvavuje právě \ac{REST} \ac{API}.
+		Díky němu je možné vytvářet, ukládat a získávat entity a spouště různé akce.
 
-		TODO
+		\ac{REST} \ac{API} obecně pracuje s tzv. zdroji.
+		Každý zdroj představuje jeden typ pojmenovatelné informace.
+		Tím může být třeba entita, obrázek, dokument nebo kolekce.
+		Jednotlivé zdroje jsou pak vystaveny na přesně daných \ac{URL} adresách a pomocí \ac{HTTP} metod (GET, POST, PUT...)
+		je možné s těmito zdroji provádět operace.
+		Operacemi jsou většinou následující: získání konkrétního zdroje nebo kolekce, vytvoření nového zdroje na základě
+		předaných dat nebo úprava již existující zdroje opět na základě předaných dat.
+		Nejrozšířenějším jazykem pro popis zdrojů je \ac{JSON}, díky kterému je možné objekty aplikace poměrně jednoduše
+		mapovat na \ac{JSON} dokumenty. \cite{restfulapi}
+
+		Implementované \ac{API} v běžných scénářích (získání, vytvoření, úprava zdrojů) respektuje doporučovaná pravidla.
+		Nicméně v krajních případech je potřeba provádět i jiné, většinou servisní, operace, které tyto pravidla porušují.
+		Toto je však poměrně běžná praxe, a pokud takto není navržena větší část \ac{API}, tak to většinou nepředstavuje
+		problém.
+
+		Jak je možné vidět níže, \ac{API} pro uživatelské účty zahrnuje manipulaci s účtem přihlášeného uživatele a manipulaci
+		s oblíbenými kartami.
+
+		\includegraphics{obrazky/api_model_ucty}\hfill
+		Stromový přehled struktury API uživatelských účtů. % todo
+
+		Nejpodstatnější \ac{API} se zabývá manipulací karet a zároveň umožňuje získávat i další podržezané entity.
+		Mimo to nabízí i pomocné operace pro manipulaci s display ID.
+
+		\includegraphics{obrazky/api_model_karty}\hfill
+		Stromový přehled struktury API karet. % todo
+
+		\ac{API} úložiště momentálně umožňuje pouze soubory nahrávat, protože systém pracuje pouze s věřejnými soubory, které
+		lze získat přímo z Cloudinary serverů.
+
+		\includegraphics{obrazky/api_model_uloziste}\hfill
+		Stromový přehled struktury API uložště. % todo
+
+		Pro vyhledávání karet a míst existuje separátní vyhledávací \ac{API} pro přehlednost.
+
+		\includegraphics{obrazky/api_model_vyhledavani}\hfill
+		Stromový přehled struktury API vyhledávání karet. % todo
+
+		Aplikace také nabízí interní administraci celé aplikaci pro správce.
+		Proto vzniklo i \ac{API} pro spouštění servisních operací a k správě zákulisních zdrojů (např.: kupóny).
+
+		\includegraphics{obrazky/api_model_adm}\hfill
+		Stromový přehled struktury API operací administrace. % todo
+
+
+			\paragraph{Objekty pro přenos dat}
+
+			V rámci komunikace mezi konzumentem \ac{API} a serverem je nezbytné přenášet objekty reprezentující data
+			aplikace.
+			K tomu by šlo přímo využít datových tříd z business logiky.
+			Bohužel některé tyto třídy obsahují data, která by se neměla dostat ven ze serveru.
+			Nejtypičtějšími takovými daty jsou hesla uživatelů.
+			Nicméně někdy je také nezbytné poskytnout agregované atributy, které však nemají své místo v originálních datech.
+			Právě z těchto důvodů \ac{API} využívá tzv. objektů pro přenost dat \ac{DTO}.
+			Tyto datové objekty slouží obecně pro přenos daty mezi procesy.
+			V tomto případě přenáší data mezi \ac{API} serverem a front-endovou aplikací.
+
+			\ac{API} tak na venek pracuje pouze s \ac{DTO} objekty reflektující doménové objekty.
+			Speciálním případem jsou \ac{DTO} objekty nemající ekvivalentní doménový objekt a slouží tak pouze pro jednorázové
+			předání dat.
+			Většinou se používají pro specifikování požadavků front-endové aplikace na zvolenou operace nebo jako
+			objekty nesoucí výsledek nějaké operace.
+
+			Pro transformaci mezi doménovými objekty a \ac{DTO} objekty vznikla jednoduchá podpora pro standardizovanou
+			a centralizovanou transformaci.
+			Slouží k tomu továrnové třídy dědící z obecného rozhraní zpřístupňující metodu pro transformaci z doménového
+			objektu na \ac{DTO} objekt a metodu pro obráceno transformaci.
+
+			\begin{lstlisting}[language=Java]
+public interface DtoFactory<E, D> {
+    D createDto(E entity);
+    E updateEntity(E originalEntity, D dto);
+}
+			\end{lstlisting}
+			Ukázka obecného rozhraní třídy pro transformaci mezi doménovými objekty a DTO objekty. % todo
+
+			Transformace z \ac{DTO} objektu na doménový objekty je specifická v tom, že pro transformaci používá zároveň
+			i originální doménový objekt z databáze.
+			Díky tomu je možné zajistit, že výsledný objekt bude mít změněné pouze ty atributy, které jsou povolené.
+
+			Rozhraní továrny je generické a proto pro každou transformovatelnou entitu je potřeba implementovat konkrétní
+			transformaci.
+			Každá entita má vlastní doménovou třídu a vlastní \ac{DTO} třídu a především jiná data a jiný způsob transformace.
+
+			\paragraph{Zabezpečení}
+
+			Zabezpečení je velmi důležitou součástí aplikace pro znemožnění zneužití dat útočníky.
+			Je nezbytné zajistit, aby se neoprávnění uživatelé nedostali k datům, které jim nepřísluší a aby nemohl
+			poškodit cizí data.
+			Těmito problémy se zabývá především společnost OWASP poskytující kvalitní materiály o bezpečnosti programátorům.
+			Avšak řešit všechny existující problémy svépomoci by zabralo spoustu času a bez dlouholetých znalostí v
+			oblasti bezpečnosti, by implementovaný systém nemusel být ani správně zabezpečený.
+			Navíc nové hrozby stále vznikají a udržovat bezpečnostní systém paralelně s rozšiřováním aplikace by vyžadovalo
+			celý tým vývojářů.
+
+			Naštěstí framework Spring zahrnuje i knihovnu Spring Security pro zabezpečení celé webové aplikace.
+			Tato knihovna jednak automaticky zajišťuje doporučené bezpečnostní praktiky a jednak poskytuje programátorovi
+			nástroje pro tvorbu přihlašování a práv uživatelů.
+			Knihovna obsahuje předpřipravené nástroje pro běžné postupy přihlašování a implementaci práv.
+			Programátor si však tyto nástroje může relativně snadno rozšířit nebo implementovat vlastní.
+
+			Specificky pro tuto aplikaci bylo definováno jaké \ac{URL} adresy \ac{API} vyžadují přihlášení a specifické
+			role a výchozí přihlašovací proces byl rozšířen o externí poskytovatele a vlastní správu účtů.
+
+			\begin{lstlisting}[language=Java]
+@Override
+protected void configure(HttpSecurity http) throws Exception {
+        http
+            .mvcMatchers(HttpMethod.GET, "/api/search/cards").permitAll() // tuto URL adresu mohou využívat i nepřihlášení uživatelé
+            .mvcMatchers(HttpMethod.GET, "/api/search/places").permitAll() // tuto URL adresu mohou využívat i nepřihlášení uživatelé
+            .mvcMatchers("/api/adm/**").hasRole("ADMIN") // URL adresy s tímto vzorem mohou využít jen uživatelé s rolí ADMIN
+            .mvcMatchers("/api/**").authenticated() // všechny ostatní URL adresy začínající "/api" prefixem využadují přihlášeného uživatele
+            .anyRequest().denyAll() // ostatní URL adresy nemůže využít nikdo
+        /* ... zbytek kódu byl vynechán pro přehlednost ... */
+}
+			\end{lstlisting}
+			Ukázka části nastavení zabezpečení pomocí knihovny Spring Security. % todo
+
+			\paragraph{Přihlašování}
+
+			TODO email+heslo, externí ucty, propojování, session, rememberme?
+
+			aktivace uživatele?
+			obnova hesla?
 
 		\subsubsection{Unit testy}
 
 		TODO
 
-		aktivace uživatele?
-		obnova hesla?
-
 	\subsection{Implementace FE aplikace}
 
-	todo notifikace, vuex, komunikace s api, ssr .......
+	todo notifikace, vuex, komunikace s api, ssr, csrf .......
 
 	\subsection{Docker a Kubernetes}
 
