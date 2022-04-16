@@ -2205,6 +2205,8 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 		Hibernate sice má dobré nástroje pro validaci dat entit, ty však validují pouze aktuální hodnoty v objektu a
 		není možné porovnat hodnoty z již uloženou entitou v databázi.
 		To je v případě kdy má vlastnosti, které se nesmí změnit poměrně limitující.
+		Instance entity sice lze vyjmout z Hibernatu, je to však poměrně složité a těžkopádné a tím se zesložiťuje
+		celá business logika.
 		MyBatis tento neduh nemá a vrací vždy novou instanci entity.
 		MyBatis se obecně nesnaží řešit vše a díky tomu jeho abstrakce je mnohem menší a snazší na pochopení.
 		To ovšem znamená, že programátor musí odvést více práce při mapování a psát \ac{SQL} dotazy.
@@ -2216,13 +2218,15 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 		Mezi největší problémy patří nejednoznačné chyby mapování, nutnost přizpůsobit databázový model zvyklostem Hibernatu
 		(který nesplňuje běžné doporučované postupy), náhodné chyby s dodatečným dotahováním dat nebo nejednoznačné operace
 		v \ac{API} knihovny.
-		Na druhou stranu spousta uživatelů této knihovny jsou spokojeni s odstínením \ac{SQL} jazyka a problémů jako
+		Na druhou stranu spousta uživatelů této knihovny jsou spokojeni s odstíněním \ac{SQL} jazyka a problémů jako
 		mapování kolekcí a podobně. \cite{bad_hibernate}
 
 		Záleží tedy hodně na konkrétním projektu a zkušenostech implementátorů jakou knihovnu zvolit.
-		Avšak pro tuto aplikaci bylo rozhodnutí jednoznačné zejména kvůli výše zmíněné validaci verzí entit.
-		Právě proto byla zvolena knihovna MyBatis společně s knihovnou zjednodušující nastavení díky napojení na
-		framework Spring.
+		Pro tuto aplikaci byl z počátku zvolen Hibernate právě díky jeho odstínění od problémů mapování a poměrně
+		jednoduché konfigurace složitějších entit.
+		Bohužel se posléze začal projevovat již zmiňovaný problém validací verzí entit.
+		Po dodatečné analýze padlo rozhodnutí nahradit Hibernate MyBatisem.
+		Za cenu prvotní transformace, MyBatis zjednodušil práci s entitami a hledání chyb bylo přímočařejší.
 		MyBatis navíc podporuje konfiguraci pomocí \ac{XML} souborů nebo pomocí Java anotací přívo v Java rozhraních.
 		Pro zjednodušení a držení logiky na jednom místě byl vybrán přístup s Java anotacemi.
 		Ten se ukázal jako dostačující ve většině případů, avšak výjimky se našli, kdy složitost použitého \ac{SQL} kódu
@@ -2314,7 +2318,7 @@ public class CardLinkGroup {
 	/* ... zbytek kódu byl vynechán pro přehlednost ... */
 }
 		\end{lstlisting}
-		Tato třída obsahuje vlastní třídní pravidlo pro validaci URL adres vnořených odkazů na základě definované šablony,
+		Tato třída obsahuje vlastní třídní pravidlo pro validaci \ac{URL} adres vnořených odkazů na základě definované šablony,
 		atributové pravidlo pro validaci existence šablony a validaci kolekce odkazů, která nesmí být prázdná.
 
 		Díky rozšířitelnosti této knihovny je možné poměrně jednoduše implementovat i druhý typ validací.
@@ -2437,16 +2441,16 @@ return Optional.of(new StorageFile(
 		odstínění generování variant.
 
 		Konkrétní binární data souborů pro zobrazení například v \ac{GUI} aplikace je možné získat přímo ze serverů
-		Cloudinary pomocí speciální URL adresy obsahující identifikaci úložiště, identifikaci konkrétního souboru a
+		Cloudinary pomocí speciální \ac{URL} adresy obsahující identifikaci úložiště, identifikaci konkrétního souboru a
 		požadovanou variantu.
 		Díky přímému přístupu je možné využít \ac{CDN} pro menší odezvy při stahování.
-		Konkrétní URL adresa pro stažení profilové obrázku karty v podobě varianty o rozměrech 256x256 pixelů může
+		Konkrétní \ac{URL} adresa pro stažení profilové obrázku karty v podobě varianty o rozměrech 256x256 pixelů může
 		vypadat následovně:
 		\begin{lstlisting}
 https://res.cloudinary.com/id_uloziste/image/upload/t_256x256/id_souboru
 		\end{lstlisting}
-		V tomto případě je varianta nakonfigurována přímo v administraci Cloudinary a v URL adrese je pouze její jméno,
-		je však možné formát varianty nadefinovat přímo v URL adrese.
+		V tomto případě je varianta nakonfigurována přímo v administraci Cloudinary a v \ac{URL} adrese je pouze její jméno,
+		je však možné formát varianty nadefinovat přímo v \ac{URL} adrese.
 
 		\subsubsection{Transakční emaily}
 
@@ -2584,7 +2588,7 @@ public void processAccountNewEmailRequestedEvent(@NonNull AccountNewEmailRequest
 		\end{lstlisting}
 		Ukázka odeslání emailu jako reakce na událost informující o novém požadavku na změnu hesla. % todo
 
-		\subsubsection{Vyhledávání karet}
+		\subsubsection{Vyhledávání karet a míst}
 
 		Fulltextové vyhledávání je komplexní operace, který vyžaduje analýzu textů a přípravu vyhledatelných dat.
 		Tyto data musí být při vyhledávání korektně párována s uživatelkou frází, tak aby systém vrátil co nejrelevantnější
@@ -2626,12 +2630,326 @@ public void processAccountNewEmailRequestedEvent(@NonNull AccountNewEmailRequest
 		Nejdůležitějším takovým nastavením pro fulltextové vyhledávání je specifikování analyzérů pro textové hodnoty.
 		Specifikované analyzéry by měli odpovídat analyzéru použitému při vyhledávání pro kompatibilitu indexů tokenů.
 
-		TODO - problém se změnou mapingu, translace entity na searchable entity, více typů indexů ale jedno vyhledávání
+		Elasticsearch pro práci s těmito indexy a dokumenty poskytuje Java knihovnu reflektující jeho \ac{REST} \ac{API},
+		prostřednictvím které lze jednoduše nahrávat entity do indexu k indexaci.
+
+		\begin{lstlisting}[language=Java]
+// vytvoření entity
+final SearchableCard cardToIndex = searchableCardFactory.create(card);
+// nahrání entity do Elasticsearch indexu, který ji automaticky zanalyzuje
+final IndexResponse cardResponse = esClient.index(i -> i
+		.index(SearchableCard.INDEX_ALIAS)
+		.id(String.valueOf(card.getId()))
+		.document(cardToIndex));
+		\end{lstlisting}
+		Ukázka indexace jedné karty do Elasticsearch databáze. % todo
+
+		Podobně jednoduše lze entity fulltextově vyhledávat napříč vícero atributy entit
+		\begin{lstlisting}[langauge=Java,label={lst:Ukázka fulltextového vyhledání indexovaných karet pomocí několika atributů.}]
+final SearchResponse<SearchableCard> response = esClient.search(
+		_0 -> _0
+				.index(SearchableCard.INDEX_ALIAS)
+				.query(_1 -> _1
+					.multiMatch(_2 -> _2
+						.query(phrase)
+						.analyzer(ANALYZER_MAIN)
+						.fields(
+							"name",
+							"description",
+							"contactEmail",
+							"contactPhone",
+							"jobPosition",
+							"crn",
+							"website",
+							"linkProfiles",
+							"tags")))
+				.from(pageSpecs != PageSpecs.UNPAGED ? (int) pageSpecs.getOffset() : null)
+				.size(pageSpecs != PageSpecs.UNPAGED ? (int) pageSpecs.getSize() : null),
+		SearchableCard.class);
+		\end{lstlisting}
+
+		Hlavní řešený problémy tak spočívají spíše v v přípravě entit a správě indexů a jejich konfigurace.
+		Tuto problematiku totiž Elasticsearch knihovna řeší ve formě dílčích operací, nikoliv však jako celek.
+		Bylo potřeba vyřešit indexaci a vyhledávání karet a geografických míst.
+		Karty musí být uživatel schopen vyhledat fulltextově skrze vícero atributů (název, popisek, odkazy...) a geografická
+		místa podle lokace uživatele.
+
+		První jednodušší problematikou je příprava entit.
+		Mohlo by se zdát, že tento problém nastane spíše v nestandardním projektu, avšak data využívaná k vyhledávání
+		jsou trochu jiná než ta hlavní.
+		V případě karet je nebytné komplexní strukturu všech navázaných dat značně zjednodušit, proto by jinak Elasticsearch
+		nebyl schopen tolik zanořená data správně analyzovat.
+		Některé atributy je zase potřeba zagregovat do jiné formy.
+		V případě geografických míst je na proti tomu nutné zagregovat více různých dat a paradoxně struktury míst lehce
+		zesložitit, aby obsahovala vše co uživatel potřebuje.
+
+		\begin{lstlisting}[language=Java,label{lst=Ukázka indexovatelné varianty karty.}]
+public class SearchableCard {
+
+	// metadata pouze pro následné zobrazení entity
+    String displayId;
+    String avatarId;
+    Set<CardLinkDto> links;
+    CardOpeningHoursDto openingHours;
+
+	// atributy, podle kterých lze fulltextově vyhledávat
+    String name;
+    String website;
+    String contactEmail;
+    String contactPhone;
+    String description;
+    String crn;
+    String jobPosition;
+    Set<String> linkProfiles;
+    Set<String> tags;
+    Set<String> officeNames;
+
+    /* ... zbytek kódu byl vynechán pro přehlednost ... */
+}
+		\end{lstlisting}
+
+		Na ukázce varianty karty připravené pro indexaci je možné vidět právě zmiňované zjednodušení a agregace dat.
+		První řadě třída obsahuje pouze část originálních dat, která jsou relevantní pro vyhledávání.
+		Následně je možné vidět, že karta obsahuje data z různých typů karet nebo jen části vnořených entit (z poboček jsou
+		zde pouze jejich názvy).
+
+		Ukázkovým příkladem agregace je pak kolekce profilových ID odkazů.
+		Originální karta má totiž přístup pouze k cílovým \ac{URL} adresám odkazům a je tak na aplikaci, aby z těchto dat
+		vytáhla ID profilů uživatelů.
+		K tomu využívá šablony \ac{URL} adres z šablon sítí a standardizovaného formátu \ac{URL} adres.
+		Pomocí \ac{URL} šablony je možné získat část \ac{URL} adresy, která je specifická pro uživatele a obsahuje profilové ID.
+		Tento řetězec je následně očištěn částí \ac{URL} adres jako jsou: část cesty nebo dotazovací parametry.
+
+		\begin{lstlisting}[label={lst=Ukázka transformace URL adresy na profilové ID.}]
+// možná originální URL adresa zadaná uživatelem
+https://example.com/profile/jan_novak?detail
+// vytažené profilové ID
+jan_novak
+		\end{lstlisting}
+
+		Tyto transformovací operace zajišťují speciální třídy tzv. továrny, které vezmou originální entity a vytvoří
+		z ní indexovatelnou entitu.
+		Takové entity již lze předat \ac{API} k indexaci.
+
+		Dalším složitějším problémem je změna struktury dat a změna konfigurace již existujících indexů.
+		Je předpokládatelné, že entity se v průběhu vývoje budou měnit a rozšiřovat.
+		Bohužel tím že Elasticsearch je spíše vyhledávacím strojem než klasickou databází, neposkytuje nástroje pro editaci
+		dílčích data již indexovaných entit jako tomu je v případě \ac{SQL}.
+		Stejně tak má omezené nástroje pro úpravu konfigurace indexu a není proto možné jednoduše změnit například
+		použitý analyzátor.
+		Naštěstí Elasticsearch nabízí alespoň možnost vzít dokumenty z jednoho indexu a zindexovat je do jiného pomocí jeho
+		konfigurace.
+		To ovšem stále neřeší stav kdy se změnila struktura entit nebo formát jednotlivých atributů entit.
+		Bylo proto nezbytné vytvořit systém správy těchto dat, který by zajistil reindexaci všech entit dvěma způsoby.
+		Oba způsoby mají podobnou základní strukturu, ale liší se v samotné přípravě dat.
+		Proces nejdřív vytvoří nový prázdný index s novým nastavením.
+		Následně se některým ze způsobů indexují data do nového indexu.
+		Po dokončené indexaci je možné přesunout unifikovaný identifikátor indexu na nový index a starý index premanentně
+		smazat.
+
+		Prvním jednodušším a rychlejším způsobem je reindexace na úrovni Elasticsearch.
+		Pro tento případ má Elasticsearch připravené jednoduché \ac{API}, kde programátor pouze specifikuje starý a nový
+		index a vše ostatní už si zařídí sám Elasticsearch.
+		Tento způsob však nenabízí možnost nahrání upravených dat entit, pouze změnu konfigurace indexu.
+
+		\includegraphics{obrazky/proces_reindexace_na_urovni_es}\hfill
+		Ukázka procesu hromadné reindexace dat na úrovni Elasticsearch. % todo
+
+		Druhým složitějším a časově náročnějším způsobem, který však umožňuje indexovat kompletně nová data, je
+		reindexace dat z primární databáze.
+		Tento způsob vyžaduje hromadné stažený entit z primární databáze, jejich transformaci do indexovatelných entit
+		a konečně hromadnou indexaci pomocí \ac{API}.
+		Tento proces je zdlouhavý právě kvůli nutnosti přesunutí dat mezi dvě kompletně oddělenými systémy přes mezičlánek,
+		kterým je aplikace.
+
+		\includegraphics{obrazky/proces_reindexace_z_db}\hfill
+		Ukázka procesu hromadné reindexace nových dat z primární databáze. % todo
+
+		Každý index pak má svého správce obsahující napojení na korektní index a jeho nastavení, aby se nastavení nemohla
+		mezi indexy míchat.
+
+		\subsubsection{Nastavení aplikace}
+
+		Nedílnou součástí větší aplikace běžící ve více prostředích jsou rozdílná nastavená na každém takovém prostředí.
+		Nastavení každé aplikace je vysoce individuální a záleží čistě na požadavckých aplikace jaké nastavení potřebuje
+		se změnou prostředí změnit.
+		U většiny aplikací se nachází alespoň nastavení připojení k primární databázi, která je pro každého prostředí
+		odlišná, aby nedocházelo k poškození dat (např.: mezi vývojovým a produkčním prostředím).
+		Dalšími otázkami jsou formát zápisu nastavení a přístup k nastavení z kódu aplikace.
+		V případě Java aplikací se často využívá tzv. "properties" souborů obsahující nastavení v podobě klíč-hodnota.
+		V modernějších aplikacích postavených na frameworku Spring se ale tento formát postupně nahrazuje flexibilnějším
+		\ac{YAML} umožňující lépe definovat celé objekty a hodnoty jejich atributů podobně jako jazyk \ac{JSON}.
+
+		\begin{lstlisting}[language=YAML]
+accounts:
+	deletion:
+		process-accounts-deletion-requests-every: 300
+		delete-account-after: 180
+	subscription:
+		process-expiration-every: 60
+		\end{lstlisting}
+		Ukázka části nastavení aplikace v jazyce YAML. % todo
+
+		Spring tyto soubory umí zpracovat a poskytnout jednotlivé hodnoty atributů programátorovi.
+		Nicméně používání tohoto způsobu pro získaní nastavení napříč aplikací je jednak náchylné k chybovosti a
+		především zesložiťuje úpravu struktury nastavení.
+		Navíc pokud struktura nastavení je komplexní a očekává se její průběžné rozšířování.
+
+		Proto byla vytvořena tenká abstrakce nad Springovými nástroji vystavující jasně definovavé třídy a jejich atributy
+		reflektující nastavení celé aplikace.
+		Konkrétní naplněné objekty lze následně pomocí Springu získat skrze celou aplikaci.
+		Implementace zahrnovala připravení datového modelu a analyzátoru uživatelem definovaných vlastností.
+		Analyzátor pak z načtených a výchozích hodnot sestaví finální objekty reprezentující aktuální nastavení.
+
+		\includegraphics{obrazky/datovy_model_nastaveni_aplikace}\hfill
+		Ukázka datového modelu nastavení aplikace. % todo
 
 		\subsubsection{Šablony odkazů sítí}
 
+		Aby bylo možné uživatelům poskytnou komfort v podobě předdefinovaných sociálních sítí společně s validací \ac{URL} adres,
+		bylo potřeba vytvořit robustní systém.
+		Byl proto vytvořen systém šablon, kde každá šablona definuje vlastnosti jedné sítě.
+		Každý konkrétní odkaz pak má přiřazenou jednu šablonu, na základě které je možné adresu validovat a
+		zobrazit uživateli správnou ikonu a název sítě.
+		Šablona má tak v první řadě hlavně unikátní identifikátor, oficiální název a ikonu.
+		Dále má kolekci možných názvů a zkratek pro potřeby pohodlného vyhledávání.
+		Nejdůležítějšími daty pro validaci jsou šablony \ac{URL} adres a příznak zda se má validovat konkrétní \ac{URL} adresa odkazu.
 
-		 todo stránkování?, search, , app config, plány, generování bezpečných tokenů?
+		\begin{lstlisting}[language=Java]
+public class CardLinkTemplate {
+    String id;
+    Set<String> names; // názvy podle kterých lze šablony vyhledat v uživatelské administraci
+    Set<String> urlTemplates; // validní URL adresy
+    Set<CardLinkTemplateCategory> categories; // kategorie, ve kterých lze šablonu vyhledat
+    boolean ignoreExistenceValidation; // zda se má validovat existence odkazu s touto šablonou
+
+    /* ... zbytek kódu byl vynechán pro přehlednost ... */
+}
+		\end{lstlisting}
+		Ukázka možných nastavení pro každou šablonu sítí. % TODO
+
+			\paragraph{Šablony URL adres}
+
+			Šablony \ac{URL} adres slouží pro specifikování vzoru povolených \ac{URL} adres dané sítě.
+			Tím je zaručeno, že odkaz vede skutečně na ověřenou sít a jen se tak netváří.
+			Zároveň to umožňuje získat u \ac{URL} adresy ID uživatelského profilu na cílové síti pro možnosti fulltextového
+			vyhledávání karet podle těchto identifikátorů.
+
+			S pomocí speciálních vyhrazených sekvencí znaků je tak možné definovat poměrně velké množství kombinací
+			šablon.
+			Šablony jsou pak následně zanalyzovány a vytvoří se z nich Regex výrazy, pomocí kterých dokáže Java zjistit
+			zdá daný textový řetězec odpovídá nějakému výrazu.
+			Regex je výrazový jazyk skládající se ze speciálních znaků definující pravidla porvnávání \cite{regex}.
+			Systém momentálně podporuje sekvence \lstinline{*} a \lstinline{userPart}.
+			Sekvence \lstlisting{*} říká, že se na tomto místě může nacházet jakýkoliv znak vyjma hostové části \ac{URL}
+			adresy, kde se mohou pod touto sekvencí skrývat pouze písmena a pomlčky.
+			Sekvence \lstlisting{userPart} může obsahovat stejné znaky jako \lstlisting{*} sekvence, avšak textové
+			řetězec označený touto sekvenci v cílové \ac{URL} adresa má speciální význam.
+			Nachází se v něm totiž právě zmiňované profilové ID.
+			Díky tomuto označení je pak systém schopen určit, kde se profilové ID nachází a vytáhnou jej.
+
+			\begin{lstlisting}
+// ukázková šablona URL adresy
+https://*.example.com/{userPart}
+// vyhovující URL adresy
+https://shop.example.com/jan_novak
+https://profile.example.com/pepa_pavel
+
+// ukázková šablona URL adresy
+https://{userPart}.example.com
+// vyhovující URL adresy
+https://jan-novak.example.com
+https://pepa-pavel.example.com
+			\end{lstlisting}
+			Ukázka šablon URL adres a jejich vyhovujících konkrétních URL adres. % todo
+
+			Systém navíc obsahuje různé validace aplikované při analyzování šablon, aby se do aplikace nemohli načíst
+			nevalidní šablony.
+			Momentálně definovanými pravidly URL šablon jsou následující:
+			\begin{itemize}
+				\item právě jedna sekvence \lstinline{userPart}
+				\item oddělovač mezi jednotlivými sekvencemi
+				\item šablona je po záměně sekvencí validní URL adresa
+			\end{itemize}
+
+			\paragraph{Validace odkazů}
+
+			Na základě nakonfigurovaných šablon URL odkazů je možné konkrétní odkazy validovat.
+			Standardní validace se skládá ze dvou hlavních částí.
+			První část řeší jestli \ac{URL} adresa odpovídá předpokládané šabloně sítí.
+			Předpokládaná šablona je určena nadřazenou skupinou odkazů.
+			Validátor se pak pokusí nalést existující šablonu z předané URL adresy.
+			Pokud je tento předpoklad splněn a zároveň se má validovat existence adresy, přechází validátor do druhé části.
+			Druhá část se zabývá validací existence \ac{URL} adresy, tj. zda URL adresa odkazuje na nějakou existujicí
+			webovou stránku.
+			Toto se ověřuje simulováním \ac{HTTP} požadavku webového prohlížeče a z odpovědi se zjistí, že buď stránka
+			existuje, stránka neexistuje nebo URL adresa přesměrovává na jinou stránku.
+			V prvních dvou případech validace končí.
+			V tom posledním se proces opakuje s novou vrácenou URL adresou.
+			I u této adresy se kontroluje šablona a existence.
+			Takto se proces opakuje do té doby než validátor dostane jasnou odpověď existence nebo vyprší interně stanovený
+			limit přesměrování.
+			Limit byl zaveden, aby nemohlo dojít k potencionálnímu zacyklení validace.
+			Je ale nastaven dostatečně vysoký, aby nedocházelo k předčasným selhání validací.
+
+			\includegraphics{obrazky/proces_validace_odkazu}\hfill
+			Proces validace URL adresy odkazu. % todo
+
+			Bohužel ne u všechn URL adres lze validovat existence.
+			Některé stránky totiž mají pokročilou ochranu proti škodlivým strojovým botům a tato validace je tedy
+			vyhodnocena některými jako škodlými bot.
+			Byly provedeny optimalizace v podobě úpravy \ac{HTTP} hlaviček, aby se validace tvářila jako webový prohlížeč
+			a u některých stránek to skutečně pomohlo, jiné jsou ale pečlivější.
+			Proto se zavedl příznak přímo do definice šablon, který tuto validaci existence vypíná.
+			Naštestí se jedná o nižší procenta stránek a pro bezpečnost uživatelů je stěžejní pouze první část validace.
+
+		\subsubsection{Prémiový plán a předplatné}
+
+		Prémiový plán odemyká uživateli prémiové funkce, které jsou běžně uzamknuté.
+		S tím souvisí pojem předplatného popisující stav aktuálního plánu uživatele.
+		Prémiový plán lze momentálně aktivovat pouze aplikování kupónu, nicméně systém by měl počítat s budoucím rozšíření
+		o možnost předplácet si plán na dobu neurčitou.
+
+		Bez aktivovaného prémiového plánu, uživatel může vytvořit maximálně dvě karty a to navíc bez firemní hierarchie.
+		Limity se ale můžou s přibývajícími funkcemi v budoucnu měnit a systém by s tím měl počítat.
+
+		Proces aktivace prémiového plánu začíná aktivováním platného kupónu.
+		Na základě této aktivace je uživateli přiřazena speciální role a vytvořen nový popisný objekt předplatného
+		definující datum expirace.
+		Datum expirace je vypočítán z doby platnosti kupónu.
+		Každý kupón definuje po jakou dobu bude předplatné aktivní a při aktivace se tato doba přičte k aktuálnímu datumu.
+		V tuto chvíli uživatel může využívat všechny prémiové funkce.
+		Pokud v tuto chvíli uživatel aplikoval další jiný kupón, datum expirace by změnil podle nového kupónu.
+
+		V případě placeného předplatného by objekt předplatného zprvu neměl datum expiraci.
+		Ta by se nastavila automaticky až při neprovedené následující platbě.
+
+		Systém tedy při vytváření a ukládání karet musí vždy validovat zda daná karta neobsahuje prémiový obsah.
+		Pokud ano, musí zkontrolovat, zda-li uživatel má příslušnou roli.
+		V případě, že by neměl, je celý požadavek zaříznut a uživateli je vrácena chyba.
+
+		Nejkomplikovanější částí celého systému je expirace předplatného.
+		Problém spočívá v existenci prémiového obsahuje.
+		Pokud uživatel v době expirace nemá prémiový obsah na svém účtu, je situace jednoduchá a předplatné se zruší.
+		Pokud však uživatel prémiový obsah na svém účtu má v době expirace, je potřeba definovat způsob jakým se
+		s takovými daty naloží.
+		Uživatel pak v takovém případě má tři možnosti.
+		Tou nejjednodušší je upozornění ignorovat a v takovém případě se po nějaké době všechny karty uživatele skryjí
+		a veřejnost je na ně již nepodívá.
+		Druhou možností je prémiový obsah pomocí speciálního formuláře odstranit, aby bylo možné zrušit předplatné.
+		Poslední možností je prodloužení předplatného.
+		V tomto případě uživateli všechen obsah zůstane a může prémiové funkce nadále využívat.
+
+		Celý proces začíná nějakou dobou před samotnou expirací.
+		Uživatel je dopředu upozorněn na blížící se expiraci emailem.
+		Pokud uživatel do té doby nesmaže všechen prémiový obsah, v den expirace přijde druhý email s informací o
+		proběhlé expiraci a možnosti, které uživatel může provést.
+		Pokud bude uživatel ignorovat toto upozornění, během několika dnů mu přijde druhé stejné upozornění.
+		V případě, že uživatel ignoruje i toto poslední varování, všechna data uživatele jsou během několika dnů
+		automaticky skryta.
+		Uživateli už jen přijde informativní email o skrytí dat.
+
+		Zvolený přístup se jeví jako dostatečně flexibilní a pokrývající všemožné scénáře požadované aplikací.
 
 		\subsubsection{Propojení FE a BE}
 		sercurity
@@ -2646,17 +2964,17 @@ public void processAccountNewEmailRequestedEvent(@NonNull AccountNewEmailRequest
 
 		TODO
 
+		aktivace uživatele?
+		obnova hesla?
+
 	\subsection{Implementace FE aplikace}
 
 	todo notifikace, vuex, komunikace s api, ssr .......
 
 	\subsection{Docker a Kubernetes}
 
-	% TODO
-%	ostatní věci, konkretní implementace, knihovny v FE a řešení určitých interakcí, stránkování, jak to funguje a co nabízí, notifikace
+	TODO
 
-aktivace uživatele?
-obnova hesla?
 % ####################################
 \section{Závěr}
 
