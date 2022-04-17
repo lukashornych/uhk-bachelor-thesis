@@ -72122,6 +72122,683 @@
 					]
 				}
 			]
+		},
+		{
+			"_type": "DFDDataFlowModel",
+			"_id": "AAAAAAGAOAQsnCm2Ty0=",
+			"_parent": {
+				"$ref": "AAAAAAFF+h6SjaM2Hec="
+			},
+			"name": "DataFlowModel1",
+			"ownedElements": [
+				{
+					"_type": "DFDDiagram",
+					"_id": "AAAAAAGAOAQsnCm3NLQ=",
+					"_parent": {
+						"$ref": "AAAAAAGAOAQsnCm2Ty0="
+					},
+					"name": "DFDDiagram1",
+					"ownedViews": [
+						{
+							"_type": "DFDExternalEntityView",
+							"_id": "AAAAAAGAOAQ9OCs9OwM=",
+							"_parent": {
+								"$ref": "AAAAAAGAOAQsnCm3NLQ="
+							},
+							"model": {
+								"$ref": "AAAAAAGAOAQ9Nys7d2c="
+							},
+							"subViews": [
+								{
+									"_type": "LabelView",
+									"_id": "AAAAAAGAOAQ9OCtDbqk=",
+									"_parent": {
+										"$ref": "AAAAAAGAOAQ9OCs9OwM="
+									},
+									"font": "Arial;13;0",
+									"left": 58,
+									"top": 269,
+									"width": 87.4326171875,
+									"height": 13
+								},
+								{
+									"_type": "LabelView",
+									"_id": "AAAAAAGAOAQ9OCs+7BU=",
+									"_parent": {
+										"$ref": "AAAAAAGAOAQ9OCs9OwM="
+									},
+									"font": "Arial;13;0",
+									"left": 58,
+									"top": 274,
+									"width": 87.4326171875,
+									"height": 26,
+									"text": "HTTP požadavek",
+									"wordWrap": true
+								},
+								{
+									"_type": "LabelView",
+									"_id": "AAAAAAGAOAQ9OCs/PuE=",
+									"_parent": {
+										"$ref": "AAAAAAGAOAQ9OCs9OwM="
+									},
+									"font": "Arial;13;0",
+									"left": -48,
+									"top": -8,
+									"height": 13
+								}
+							],
+							"font": "Arial;13;0",
+							"left": 48,
+							"top": 264,
+							"width": 107.4326171875,
+							"height": 54,
+							"nameLabel": {
+								"$ref": "AAAAAAGAOAQ9OCs+7BU="
+							}
+						},
+						{
+							"_type": "DFDProcessView",
+							"_id": "AAAAAAGAOARtOCtKX3o=",
+							"_parent": {
+								"$ref": "AAAAAAGAOAQsnCm3NLQ="
+							},
+							"model": {
+								"$ref": "AAAAAAGAOARtOCtIcVY="
+							},
+							"subViews": [
+								{
+									"_type": "LabelView",
+									"_id": "AAAAAAGAOARtOCtLEUo=",
+									"_parent": {
+										"$ref": "AAAAAAGAOARtOCtKX3o="
+									},
+									"font": "Arial;13;0",
+									"left": 234,
+									"top": 288,
+									"width": 78.18994140625,
+									"height": 26,
+									"text": "Webový server nginx ",
+									"wordWrap": true
+								},
+								{
+									"_type": "LabelView",
+									"_id": "AAAAAAGAOARtOCtM/NA=",
+									"_parent": {
+										"$ref": "AAAAAAGAOARtOCtKX3o="
+									},
+									"font": "Arial;13;0",
+									"left": 234,
+									"top": 261,
+									"width": 78.18994140625,
+									"height": 13
+								}
+							],
+							"font": "Arial;13;0",
+							"left": 224,
+							"top": 256,
+							"width": 98.18994140625,
+							"height": 69,
+							"nameLabel": {
+								"$ref": "AAAAAAGAOARtOCtLEUo="
+							},
+							"idLabel": {
+								"$ref": "AAAAAAGAOARtOCtM/NA="
+							}
+						},
+						{
+							"_type": "DFDDataFlowView",
+							"_id": "AAAAAAGAOASutCtYjQM=",
+							"_parent": {
+								"$ref": "AAAAAAGAOAQsnCm3NLQ="
+							},
+							"model": {
+								"$ref": "AAAAAAGAOASutCtWKIo="
+							},
+							"subViews": [
+								{
+									"_type": "EdgeLabelView",
+									"_id": "AAAAAAGAOASutCtZpYs=",
+									"_parent": {
+										"$ref": "AAAAAAGAOASutCtYjQM="
+									},
+									"model": {
+										"$ref": "AAAAAAGAOASutCtWKIo="
+									},
+									"visible": false,
+									"font": "Arial;13;0",
+									"left": 189,
+									"top": 271,
+									"height": 13,
+									"alpha": 1.5707963267948966,
+									"distance": 15,
+									"hostEdge": {
+										"$ref": "AAAAAAGAOASutCtYjQM="
+									},
+									"edgePosition": 1
+								}
+							],
+							"font": "Arial;13;0",
+							"head": {
+								"$ref": "AAAAAAGAOARtOCtKX3o="
+							},
+							"tail": {
+								"$ref": "AAAAAAGAOAQ9OCs9OwM="
+							},
+							"lineStyle": 2,
+							"points": "154:292;224:292",
+							"nameLabel": {
+								"$ref": "AAAAAAGAOASutCtZpYs="
+							}
+						},
+						{
+							"_type": "DFDProcessView",
+							"_id": "AAAAAAGAOATBaSthmZg=",
+							"_parent": {
+								"$ref": "AAAAAAGAOAQsnCm3NLQ="
+							},
+							"model": {
+								"$ref": "AAAAAAGAOATBaStftlE="
+							},
+							"subViews": [
+								{
+									"_type": "LabelView",
+									"_id": "AAAAAAGAOATBaSti1N8=",
+									"_parent": {
+										"$ref": "AAAAAAGAOATBaSthmZg="
+									},
+									"font": "Arial;13;0",
+									"left": 458,
+									"top": 288,
+									"width": 77.32080078125,
+									"height": 26,
+									"text": "Front-endová aplikace",
+									"wordWrap": true
+								},
+								{
+									"_type": "LabelView",
+									"_id": "AAAAAAGAOATBaStjre0=",
+									"_parent": {
+										"$ref": "AAAAAAGAOATBaSthmZg="
+									},
+									"font": "Arial;13;0",
+									"left": 458,
+									"top": 261,
+									"width": 77.32080078125,
+									"height": 13
+								}
+							],
+							"font": "Arial;13;0",
+							"left": 448,
+							"top": 256,
+							"width": 97.32080078125,
+							"height": 69,
+							"nameLabel": {
+								"$ref": "AAAAAAGAOATBaSti1N8="
+							},
+							"idLabel": {
+								"$ref": "AAAAAAGAOATBaStjre0="
+							}
+						},
+						{
+							"_type": "DFDDataFlowView",
+							"_id": "AAAAAAGAOAToiytufZY=",
+							"_parent": {
+								"$ref": "AAAAAAGAOAQsnCm3NLQ="
+							},
+							"model": {
+								"$ref": "AAAAAAGAOAToiytsyho="
+							},
+							"subViews": [
+								{
+									"_type": "EdgeLabelView",
+									"_id": "AAAAAAGAOATojCtvOGM=",
+									"_parent": {
+										"$ref": "AAAAAAGAOAToiytufZY="
+									},
+									"model": {
+										"$ref": "AAAAAAGAOAToiytsyho="
+									},
+									"font": "Arial;13;0",
+									"left": 328,
+									"top": 260,
+									"width": 97,
+									"height": 26,
+									"alpha": -4.222432173162247,
+									"distance": 17,
+									"hostEdge": {
+										"$ref": "AAAAAAGAOAToiytufZY="
+									},
+									"edgePosition": 1,
+									"text": "vyžádání webové stránky",
+									"wordWrap": true
+								}
+							],
+							"font": "Arial;13;0",
+							"head": {
+								"$ref": "AAAAAAGAOATBaSthmZg="
+							},
+							"tail": {
+								"$ref": "AAAAAAGAOARtOCtKX3o="
+							},
+							"lineStyle": 2,
+							"points": "321:289;448:289",
+							"nameLabel": {
+								"$ref": "AAAAAAGAOATojCtvOGM="
+							}
+						},
+						{
+							"_type": "DFDProcessView",
+							"_id": "AAAAAAGAOAT2USt3Kj4=",
+							"_parent": {
+								"$ref": "AAAAAAGAOAQsnCm3NLQ="
+							},
+							"model": {
+								"$ref": "AAAAAAGAOAT2USt1RPg="
+							},
+							"subViews": [
+								{
+									"_type": "LabelView",
+									"_id": "AAAAAAGAOAT2USt4WeU=",
+									"_parent": {
+										"$ref": "AAAAAAGAOAT2USt3Kj4="
+									},
+									"font": "Arial;13;0",
+									"left": 674,
+									"top": 288,
+									"width": 93,
+									"height": 26,
+									"text": "API server aplikace",
+									"wordWrap": true
+								},
+								{
+									"_type": "LabelView",
+									"_id": "AAAAAAGAOAT2USt5JIw=",
+									"_parent": {
+										"$ref": "AAAAAAGAOAT2USt3Kj4="
+									},
+									"font": "Arial;13;0",
+									"left": 674,
+									"top": 261,
+									"width": 93,
+									"height": 13
+								}
+							],
+							"font": "Arial;13;0",
+							"left": 664,
+							"top": 256,
+							"width": 113,
+							"height": 69,
+							"nameLabel": {
+								"$ref": "AAAAAAGAOAT2USt4WeU="
+							},
+							"idLabel": {
+								"$ref": "AAAAAAGAOAT2USt5JIw="
+							}
+						},
+						{
+							"_type": "DFDDataFlowView",
+							"_id": "AAAAAAGAOAUqNyuFpNk=",
+							"_parent": {
+								"$ref": "AAAAAAGAOAQsnCm3NLQ="
+							},
+							"model": {
+								"$ref": "AAAAAAGAOAUqNyuDmJw="
+							},
+							"subViews": [
+								{
+									"_type": "EdgeLabelView",
+									"_id": "AAAAAAGAOAUqNyuGoWQ=",
+									"_parent": {
+										"$ref": "AAAAAAGAOAUqNyuFpNk="
+									},
+									"model": {
+										"$ref": "AAAAAAGAOAUqNyuDmJw="
+									},
+									"font": "Arial;13;0",
+									"left": 575,
+									"top": 267,
+									"width": 59.25537109375,
+									"height": 13,
+									"alpha": 1.5707963267948966,
+									"distance": 15,
+									"hostEdge": {
+										"$ref": "AAAAAAGAOAUqNyuFpNk="
+									},
+									"edgePosition": 1,
+									"text": "volání API"
+								}
+							],
+							"font": "Arial;13;0",
+							"head": {
+								"$ref": "AAAAAAGAOAT2USt3Kj4="
+							},
+							"tail": {
+								"$ref": "AAAAAAGAOATBaSthmZg="
+							},
+							"lineStyle": 2,
+							"points": "544:288;664:288",
+							"nameLabel": {
+								"$ref": "AAAAAAGAOAUqNyuGoWQ="
+							}
+						},
+						{
+							"_type": "DFDProcessView",
+							"_id": "AAAAAAGAOAWFbSuRjxg=",
+							"_parent": {
+								"$ref": "AAAAAAGAOAQsnCm3NLQ="
+							},
+							"model": {
+								"$ref": "AAAAAAGAOAWFbSuPPwc="
+							},
+							"subViews": [
+								{
+									"_type": "LabelView",
+									"_id": "AAAAAAGAOAWFbSuSdsQ=",
+									"_parent": {
+										"$ref": "AAAAAAGAOAWFbSuRjxg="
+									},
+									"font": "Arial;13;0",
+									"left": 826,
+									"top": 224,
+									"width": 69,
+									"height": 26,
+									"text": "Primární databáze",
+									"wordWrap": true
+								},
+								{
+									"_type": "LabelView",
+									"_id": "AAAAAAGAOAWFbSuTJO4=",
+									"_parent": {
+										"$ref": "AAAAAAGAOAWFbSuRjxg="
+									},
+									"font": "Arial;13;0",
+									"left": 826,
+									"top": 197,
+									"width": 69,
+									"height": 13
+								}
+							],
+							"font": "Arial;13;0",
+							"left": 816,
+							"top": 192,
+							"width": 89,
+							"height": 69,
+							"nameLabel": {
+								"$ref": "AAAAAAGAOAWFbSuSdsQ="
+							},
+							"idLabel": {
+								"$ref": "AAAAAAGAOAWFbSuTJO4="
+							}
+						},
+						{
+							"_type": "DFDProcessView",
+							"_id": "AAAAAAGAOAW3fiufZm8=",
+							"_parent": {
+								"$ref": "AAAAAAGAOAQsnCm3NLQ="
+							},
+							"model": {
+								"$ref": "AAAAAAGAOAW3fiudm3k="
+							},
+							"subViews": [
+								{
+									"_type": "LabelView",
+									"_id": "AAAAAAGAOAW3fiugsag=",
+									"_parent": {
+										"$ref": "AAAAAAGAOAW3fiufZm8="
+									},
+									"font": "Arial;13;0",
+									"left": 826,
+									"top": 352,
+									"width": 70.33837890625,
+									"height": 26,
+									"text": "Vyhledávací databáze",
+									"wordWrap": true
+								},
+								{
+									"_type": "LabelView",
+									"_id": "AAAAAAGAOAW3fiuhmDU=",
+									"_parent": {
+										"$ref": "AAAAAAGAOAW3fiufZm8="
+									},
+									"font": "Arial;13;0",
+									"left": 826,
+									"top": 325,
+									"width": 70.33837890625,
+									"height": 13
+								}
+							],
+							"font": "Arial;13;0",
+							"left": 816,
+							"top": 320,
+							"width": 90.33837890625,
+							"height": 69,
+							"nameLabel": {
+								"$ref": "AAAAAAGAOAW3fiugsag="
+							},
+							"idLabel": {
+								"$ref": "AAAAAAGAOAW3fiuhmDU="
+							}
+						},
+						{
+							"_type": "DFDDataFlowView",
+							"_id": "AAAAAAGAOAXW1iuszyI=",
+							"_parent": {
+								"$ref": "AAAAAAGAOAQsnCm3NLQ="
+							},
+							"model": {
+								"$ref": "AAAAAAGAOAXW1SuqwoQ="
+							},
+							"subViews": [
+								{
+									"_type": "EdgeLabelView",
+									"_id": "AAAAAAGAOAXW1iutyfA=",
+									"_parent": {
+										"$ref": "AAAAAAGAOAXW1iuszyI="
+									},
+									"model": {
+										"$ref": "AAAAAAGAOAXW1SuqwoQ="
+									},
+									"font": "Arial;13;0",
+									"left": 666,
+									"top": 203,
+									"width": 108.39892578125,
+									"height": 13,
+									"alpha": 1.5707963267948966,
+									"distance": 15,
+									"hostEdge": {
+										"$ref": "AAAAAAGAOAXW1iuszyI="
+									},
+									"edgePosition": 1,
+									"text": "získání/uložení dat"
+								}
+							],
+							"font": "Arial;13;0",
+							"head": {
+								"$ref": "AAAAAAGAOAWFbSuRjxg="
+							},
+							"tail": {
+								"$ref": "AAAAAAGAOAT2USt3Kj4="
+							},
+							"lineStyle": 2,
+							"points": "720:256;720:224;816:224",
+							"nameLabel": {
+								"$ref": "AAAAAAGAOAXW1iutyfA="
+							}
+						},
+						{
+							"_type": "DFDDataFlowView",
+							"_id": "AAAAAAGAOAZabiu+t3Q=",
+							"_parent": {
+								"$ref": "AAAAAAGAOAQsnCm3NLQ="
+							},
+							"model": {
+								"$ref": "AAAAAAGAOAZabiu8qew="
+							},
+							"subViews": [
+								{
+									"_type": "EdgeLabelView",
+									"_id": "AAAAAAGAOAZabiu/ekI=",
+									"_parent": {
+										"$ref": "AAAAAAGAOAZabiu+t3Q="
+									},
+									"model": {
+										"$ref": "AAAAAAGAOAZabiu8qew="
+									},
+									"font": "Arial;13;0",
+									"left": 680,
+									"top": 368,
+									"width": 77.33349609375,
+									"height": 13,
+									"alpha": -1.7126926813989904,
+									"distance": 14.142135623730951,
+									"hostEdge": {
+										"$ref": "AAAAAAGAOAZabiu+t3Q="
+									},
+									"edgePosition": 1,
+									"text": "vyhledání dat"
+								}
+							],
+							"font": "Arial;13;0",
+							"head": {
+								"$ref": "AAAAAAGAOAW3fiufZm8="
+							},
+							"tail": {
+								"$ref": "AAAAAAGAOAT2USt3Kj4="
+							},
+							"lineStyle": 2,
+							"points": "720:324;720:360;816:360",
+							"nameLabel": {
+								"$ref": "AAAAAAGAOAZabiu/ekI="
+							}
+						}
+					]
+				},
+				{
+					"_type": "DFDExternalEntity",
+					"_id": "AAAAAAGAOAQ9Nys7d2c=",
+					"_parent": {
+						"$ref": "AAAAAAGAOAQsnCm2Ty0="
+					},
+					"name": "HTTP požadavek",
+					"ownedElements": [
+						{
+							"_type": "DFDDataFlow",
+							"_id": "AAAAAAGAOASutCtWKIo=",
+							"_parent": {
+								"$ref": "AAAAAAGAOAQ9Nys7d2c="
+							},
+							"source": {
+								"$ref": "AAAAAAGAOAQ9Nys7d2c="
+							},
+							"target": {
+								"$ref": "AAAAAAGAOARtOCtIcVY="
+							}
+						}
+					]
+				},
+				{
+					"_type": "DFDProcess",
+					"_id": "AAAAAAGAOARtOCtIcVY=",
+					"_parent": {
+						"$ref": "AAAAAAGAOAQsnCm2Ty0="
+					},
+					"name": "Webový server nginx ",
+					"ownedElements": [
+						{
+							"_type": "DFDDataFlow",
+							"_id": "AAAAAAGAOAToiytsyho=",
+							"_parent": {
+								"$ref": "AAAAAAGAOARtOCtIcVY="
+							},
+							"name": "vyžádání webové stránky",
+							"source": {
+								"$ref": "AAAAAAGAOARtOCtIcVY="
+							},
+							"target": {
+								"$ref": "AAAAAAGAOATBaStftlE="
+							}
+						}
+					]
+				},
+				{
+					"_type": "DFDProcess",
+					"_id": "AAAAAAGAOATBaStftlE=",
+					"_parent": {
+						"$ref": "AAAAAAGAOAQsnCm2Ty0="
+					},
+					"name": "Front-endová aplikace",
+					"ownedElements": [
+						{
+							"_type": "DFDDataFlow",
+							"_id": "AAAAAAGAOAUqNyuDmJw=",
+							"_parent": {
+								"$ref": "AAAAAAGAOATBaStftlE="
+							},
+							"name": "volání API",
+							"source": {
+								"$ref": "AAAAAAGAOATBaStftlE="
+							},
+							"target": {
+								"$ref": "AAAAAAGAOAT2USt1RPg="
+							}
+						}
+					]
+				},
+				{
+					"_type": "DFDProcess",
+					"_id": "AAAAAAGAOAT2USt1RPg=",
+					"_parent": {
+						"$ref": "AAAAAAGAOAQsnCm2Ty0="
+					},
+					"name": "API server aplikace",
+					"ownedElements": [
+						{
+							"_type": "DFDDataFlow",
+							"_id": "AAAAAAGAOAXW1SuqwoQ=",
+							"_parent": {
+								"$ref": "AAAAAAGAOAT2USt1RPg="
+							},
+							"name": "získání/uložení dat",
+							"source": {
+								"$ref": "AAAAAAGAOAT2USt1RPg="
+							},
+							"target": {
+								"$ref": "AAAAAAGAOAWFbSuPPwc="
+							}
+						},
+						{
+							"_type": "DFDDataFlow",
+							"_id": "AAAAAAGAOAZabiu8qew=",
+							"_parent": {
+								"$ref": "AAAAAAGAOAT2USt1RPg="
+							},
+							"name": "vyhledání dat",
+							"source": {
+								"$ref": "AAAAAAGAOAT2USt1RPg="
+							},
+							"target": {
+								"$ref": "AAAAAAGAOAW3fiudm3k="
+							}
+						}
+					]
+				},
+				{
+					"_type": "DFDProcess",
+					"_id": "AAAAAAGAOAWFbSuPPwc=",
+					"_parent": {
+						"$ref": "AAAAAAGAOAQsnCm2Ty0="
+					},
+					"name": "Primární databáze"
+				},
+				{
+					"_type": "DFDProcess",
+					"_id": "AAAAAAGAOAW3fiudm3k=",
+					"_parent": {
+						"$ref": "AAAAAAGAOAQsnCm2Ty0="
+					},
+					"name": "Vyhledávací databáze"
+				}
+			]
 		}
 	]
 }

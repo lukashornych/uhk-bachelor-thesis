@@ -3241,13 +3241,339 @@ public void validateLink_InvalidLink_ExpectedFalse() {
 
 	\subsection{Implementace front-endové aplikace}
 
+	Front-endová aplikace zpřístupňující \ac{GUI} koncovým uživatelům pro \ac{REST} \ac{API} byla postavena na frameworku
+	Nuxt obalující knihovnu Vue.
+	Díky tomu je zajištěna reaktivnost komponent a prvotní vykreslení stránek na serveru.
+	Zaměření tak padlo na konkrétní problémy řešené domény.
 
+		\subsubsection{Komunikace s API serverem}
 
-	todo notifikace, vuex, komunikace s api, ssr, csrf .......
+		Prvním stavebním kamenem je možnost komunikovat s vyvinutým \ac{API}.
+		Opět existuje spousta ověřených knihoven řešící pohodlnou komunikace.
+		Nuxt přichází se svou vlastní, která má jednoduché \ac{API} a byla tedy zvolena ta.
+		Díky integraci s Nuxt frameworkem bylo možné jednoduše centralizovaně přednastavit knihovnu pro všechna volání \ac{API}.
+		Hlavní takovou konfigurací byla správa chyb z volání \ac{API}.
+		Ta řeší obecné chyby jako nepřihlášený uživatel nebo nedostačená práva uživatele.
+		Zároveň řeší aby v každém požadavku byl zahrnut platný \noindent\ac{CSRF} token.
+		\ac{CSRF} token zabraňuje útočníkům provádět operace pod účet jiného uživatele pomocí podvodných stránek \cite{csrf}.
+		Token je poskytován \ac{API} serverem na vyžádání.
+		Front-endová aplikace však musí zaručit jeho získání a následné uložení pro další požadavky.
+		To je zajištěno přidáním \ac{CSRF} tokenu do speciální hlavičky \ac{HTTP} požadavku ještě před odesláním požadavku.
+		Pokud token v aplikaci ještě neexistuje, je odeslán paralelní požadavek na \ac{API} server pro vygenerování tokenu.
 
-	\subsection{Docker a Kubernetes}
+		\begin{lstlisting}[language=JavaScript]
+$http.onRequest(async (request) => {
+	if (!csrfAllowedMethods.includes(request.method)) {
+		await addCsrfTokenToRequest(store, $http, request)
+	}
+})
+		\end{lstlisting}
+		Ukázka vložení CSRF tokenu do každého požadavku putujícího na API server. % todo
 
-	TODO
+		\subsubsection{Centrální zdroj informací}
+
+		Dalším důležitým stavebním prvkem je tzv. centrální zdroj informací.
+		Ten představuje centralizované místo pro ukládání a získávání dočasných dat napříč celou aplikací.
+		Je zde možné například uložit informace o přihlášeném uživateli nebo výše zmíněný \ac{CSRF} token.
+		K tomu slouží knihovna Vuex řešící uchování dat a záznam změn dat v čase.
+		Díky ní je pak uživatelský účet jednoduše přístupný ze všech komponent bez nutnosti opakovaného provolávání
+		\ac{API} serveru.
+
+		\subsubsection{Lokalizace textů}
+
+		Lokalizace textů se zabývá zobrazováním textů prvků \ac{UI} v konkrétním jazyce uživatele.
+		Díky tomu různí uživatelé mluvící odlišnými jazyky mohou bez problému aplikaci využívat jejich nativním jazyce.
+		Tuto problematiku je dobré řešit hned na počátku implementace potencionálně vícejazykové aplikace.
+
+		Knihovna i18n of tvůrců frameworku Nuxt tuto problematiku řeší.
+		Konkrétně zajišťuje nahrazování klíčů konkrétními texty v komponentech a automatické přepínání použitého jazyka
+		podle webové prohlížeče.
+
+		\begin{lstlisting}
+{
+  "general": {
+    "button": {
+      "add": "Add",
+      "apply": "Apply",
+  /* ... zbytek kódu byl vynechán pro přehlednost ... */
+}
+		\end{lstlisting}
+		Ukázka souboru s mapováním klíčů na texty pro anglický jazyk. % todo
+
+		\begin{lstlisting}[language=HTML]
+<button>
+	<!-- klíč textu, který při vykreslení bude nahrazen konkrétním textem -->
+	{{ $t('general.button.apply') }}
+</button
+		\end{lstlisting}
+		Ukázka definování klíče na stránce, který je při vykreslení stránky nahrazen textem. % todo
+
+		Problém ale nastal při tvorbě informačních stránek (nápověda, podmínky použítí...).
+		U těchto stránek je obsah zapsán jako jeden velký \ac{HTML} soubor pro podporu formátování, nikoliv
+		jako dílčí texty.
+		Knihovna totiž očekává všechny texty zapsané v jednom \ac{JSON} dokumentu.
+		Do těchto dokumentů tedy bylo potřeba nějakým způsobem vložit i ty \ac{HTML} dokumenty.
+		Z tohoto důvodu pro každý jazyk vznikl \ac{JS} soubor, který posbírá všechny překladové materiály a poskládá z nich
+		výsledný \ac{JSON} dokument se všemi překladovými texty.
+
+		\begin{lstlisting}[language=JavaScript]
+// načtení univerzálních textů v požadovaném JSON formátu. Tyto texty jsou stejné pro všechny jazyky.
+import cardLinkTemplates from '../universal/card-link-templates.json'
+
+// načtení běžných překladových textů v požadovaném JSON formátu
+import lang from './en/en.json'
+
+// načtení HTML dokumentů s texty pro informační stránky
+import helpAboutContent from './en/help/about-content.help'
+import helpCookiesContent from './en/help/cookies-content.help'
+import helpPrivacyContent from './en/help/privacy-content.help'
+import helpTermsContent from './en/help/terms-content.help'
+import helpSupportBasicContent from './en/help/support-basic-content.help'
+import helpSupportSecurityContent from './en/help/support-security-content.help'
+
+// doplnění načtených textů to hlavního JSON dokumentu
+lang.card.link.template = cardLinkTemplates
+lang.help.about.content = helpAboutContent
+lang.help.cookies.content = helpCookiesContent
+lang.help.privacy.content = helpPrivacyContent
+lang.help.terms.content = helpTermsContent
+lang.help.support.basic.content = helpSupportBasicContent
+lang.help.support.security.content = helpSupportSecurityContent
+
+// vystavení výsledného sestaveného JSON dokumentu
+export default lang
+		\end{lstlisting}
+		Ukázka sestavení JSON dokumentu se všemi překladovými texty. % todo
+
+		\subsubsection{Validace formulářových polí}
+
+		Validace uživatelsky vložených dat je důležitá především pro zaručení správnosti uložených dat.
+		Ne všichni uživatelé jsou však podvodníci chtějící poškodit data.
+		Většina uživatelů zadávají očekávaná data, nicméně je velká pravděpodobnost, že se nějaký uživatel omylem upíše
+		a udělá nechtěnou chybu.
+		Proto je dobré v rámci kvalitního \ac{UX} poskytnou uživatelům rychlou a cílenou zpětnou vazbu o chybně zadaných
+		datech.
+
+		\includegraphics{obrazky/nevalidni_pole_formulare}\hfill
+		Ukázka pole formuláře s textem v nevalidním formátu. % todo
+
+		Pomocí knihovny Vuelidate bylo možné snadno implementovat zobrazování chyb přímo v konkrétních polích
+		hned jakmile uživatel vyplní dané pole.
+		Knihovna řeší celý mechanismus validace hodnot polí a poskytování výpisu všech chyb ve formuláři.
+		Zároveň přichází s obecnými validátory, ale programátor může implementovat vlastní.
+		Toho bylo využito například u validace \ac{URL} adresy odkazu na sociální síť, kdy je potřeba se dotázat \ac{API},
+		které adresu zvaliduje.
+
+		\begin{lstlisting}[language=JavaScript]
+export const displayId = function (cardId) {
+	return async function (displayId) {
+		if (!helpers.req(displayId)) {
+		    return true
+		}
+
+		if (!displayIdFormat(displayId)) {
+		    return true
+		}
+
+		// provolání API s URL adresou pro ověření, API vrátí zda je validní či nikoliv
+		const requestBody = { cardId, displayId }
+		try {
+	  		return (await this.$http.$post('cards/validate-display-id', requestBody)).valid
+		} catch (e) {
+		    this.$notifyError()
+		}
+	}
+}
+		\end{lstlisting}
+		Ukázka implementace vlastního validátoru využívající API k validaci hodnoty. % todo
+
+		S připravenými dílčími validátory je pak možné definovat pravidla pro jednotlivá pole ve formuláři.
+		Tyto pravidla jsou následně aplikována na jednotlivá pole, která sledují změnu hodnoty a informují o tom změnách
+		a případných chybách formulář.
+		Díky reaktivnosti Vue je pak možné chybu zobrazit hned jakmile vznikne.
+		Následně při odeslání formuláře uživatelem, je validace provedena ještě jednou a buď je formulář odeslán nebo
+		zobrazena chyba.
+		V případě běžných uživatelů by se tedy na server vůbec chybná data neměla dostat.
+
+		\begin{lstlisting}[language=JavaScript]
+// definice pravidel polí
+validations () {
+	return {
+		card: {
+			name: {
+				required,
+				minLength: minLength(3)
+			},
+			displayId: {
+				required,
+				minLength: minLength(2),
+				maxLength: maxLength(64),
+				displayIdFormat,
+				displayId: displayId(this.card.id)
+			}
+		}
+	}
+}
+
+// poslední validace a odeslání formuláře
+submitForm () {
+	// naposled zvalidovat data ve formuláři, pokud budou nevalidní, chyby se zrovna zobrazí
+	this.$v.$touch()
+
+	if (!this.$v.$invalid) {
+		/* ... formulář je validní, formulář je možné odeslat ... */
+	}
+}
+		\end{lstlisting}
+		Ukázka definice pravidel polí a odeslání formuláře. % todo
+
+		\subsubsection{Upozornění v UI}
+
+		Pokud v aplikace vznikne nějaká událost o které by měl být uživatel okamžitě informován (chyba, úspěšnost operace...).
+		To je v tomto případě vyřešeno vyskakujícími upozorněnými po vzoru upozorněních využitých v mobilních operačních
+		systémech.
+		Tento způsob je výhodný v tom, že uživatel si upozornění všimne ať už je kdekoliv na stránce.
+		Zároveň při přechodu mezi modálními okny se upozornění neztratí.
+
+		\includegraphics{obrazky/upozorneni_chyba}\hfill
+		Ukázka upozornění na chybu vzniklou špatnými přihlašovacími údaji. % todo
+
+		K implementaci upozornění byla využita knihovna \url{https://www.npmjs.com/package/vue-notification}{Vue.js notifications}
+		poskytující dostatečnou volnost přizpůsobení vzhledu a chování oproti ostatním podobným knihovnám.
+		Je navíc na míru tvořena pro knihovnou Vue.
+		Knihovna poskytuje jednoduché \ac{API} pro vystavování upozornění pomocí specifikování typ zprávy (chyba, úspěch, info...)
+		samotné zprávy.
+		Pro velkou aplikaci, kde je nutné na spoustě místech taková upozornění vystavovat je nevhodné duplikovat
+		pokaždé celou specifikaci upozornění.
+		Stejně jako komponenty i upozornění využívají překladových textů.
+		Tato kombinace tak značně zvyšuje riziko chybovosti délky kódu.
+		Vznikla proto jednoduchá abstrakce zpřístupňující pomocné metody dostupné skrze celou aplikaci.
+		Pro každý používaný typ zprávy (chyba, úspěch, info) existuje právě jedna metoda vyžadující pouze klíč překladového textu.
+		Malou výjimkou jsou chybové zprávy, kde existují dvě metody: jedna s možností vložení vlastního textu, druhá
+		zobrazující generickou chybu.
+
+		\begin{lstlisting}[language=JavaScript]
+// obecná metoda vystavená knihovnou
+this.$notify({
+    type: 'success', // nebo error nebo info
+    title: this.$t('general.success.done')
+})
+
+// pomocné implementované metody
+this.$notifySuccess('general.success.added')
+this.$notifyInfo('general.info.linkCopied')
+this.$notifyError('general.error.invalidData')
+this.$notifyError()
+		\end{lstlisting}
+		Porovnání obecné metody pro vystavení upozornění a pomocných metod. % todo
+
+	\subsection{Příprava pro produkční provoz}
+
+	Tím že celá aplikace poběží na orchestračním systému Kubernetes, je nutné zprovoznit obě aplikace v Docker kontejnerech.
+	Následně nakonfigurovat Kubernetes, aby sám aplikace spustil a navázal mezi nimi spojení.
+
+		\subsubsection{Příprava Docker image}
+
+		Docker image je šablona, podle které se automatizovaně vytvářejí běžící kontejnery obsahující běžící aplikace.
+		Pro \ac{API} server aplikaci a front-endovou aplikaci je nutné tedy připravit separátní Docker image.
+		K tomu poslouží speciální soubor zvaný Dockerfile sloužící jako předloha pro vytvoření Docker image.
+		Dockerfile obsahuje všechny příkazy potřebné pro spuštění aplikace \cite{dockerfile_reference}.
+
+		Součástí nadstavby Spring frameworku Spring Boot je možné automatizovaně Docker image vytvořit bez manuální tvorby
+		Dockerfilu.
+		Tato funkcionalita vychází ze standardizované struktury aplikací postavené na Spring Boot knihovně.
+		Díky ní je Spring Boot schopen automatizovaně vytvořit optimalizovaný Docker image celé aplikace připravené k
+		použití.
+		Tato aplikace naštěstí nevybočuje ze standardizované struktury Spring Boot aplikací, a proto byla tato podpora využita.
+
+		V případě front-endové aplikace tato podpora není a bylo nutné Dockerfile připravit ručně.
+		Nicméně příprava front-endové aplikace pro provoz v Docker kontejneru byla jednodušší než by byla příprava \ac{API}
+		serverové aplikace.
+		Dockerfile obsahuje příkazy podobné tomu jak se aplikace spouští pro lokální vývoj.
+		Dockerfile nejdříve vytvoří cílový adresář pro aplikace a nainstaluje potřebné systémové aplikace pro sestavení
+		a běh aplikace.
+		Následně aplikaci sestaví do vytvořeného adresáře a aplikaci spustí na portu \lstinline{3000}.
+
+		\begin{lstlisting}[language=Dockerfile]
+FROM node:14.17.6-alpine
+
+# vytvoří adresář pro aplikaci
+RUN mkdir -p /usr/src/netreachme-web-app
+WORKDIR /usr/src/netreachme-web-app
+
+# nainstaluje potřebné systémové aplikace
+RUN apk update && apk upgrade
+RUN apk add git
+
+# sestaví aplikaci do vytvořeného adresáře
+COPY . /usr/src/netreachme-web-app/
+RUN npm install yarn
+RUN yarn install
+RUN yarn build
+
+# vystaví aplikaci na portu 3000
+EXPOSE 3000
+
+ENV NUXT_HOST=0.0.0.0
+ENV NUXT_PORT=3000
+
+# spustí aplikaci
+ENTRYPOINT yarn start --dotenv=.env.$ENV
+		\end{lstlisting}
+
+		\subsubsection{Nastavení Kubernetes}
+
+		S připravenými Docker imagi pro obě aplikace bylo možné zprovoznit Kubernetes systém.
+		V systému běží především implementované aplikace.
+		Společně s nimi se zde nachází i webový server nginx a databázový systém Elasticsearch.
+		Jediný primarní databáze PostgreSQL je provozována samostatně poskytovatelem DigitalOcean.
+		Není tak nutné se starat o ruční zálohovaní a výpadky.
+
+		\includegraphics{obrazky/architektura_produkce}\hfill
+		Ukázka putování HTTP požadavku infrastrukturou. % todo
+
+		Webový server slouží jako vstupní brána do celého systému a poskytuje nástroje pro zabazpěčení
+		zpracování požadavků.
+		Zároveň zahazuje neplatné požadavky ještě dřív než by mohli způsobit škody v samotných aplikacích.
+		Ten následně platné požadavky deleguje na serverovou část front-endové aplikace s požadavek na poskytnutí aplikace.
+		V případě, že jsou vyžadována data z API server, front-endová aplikace část požadavku deleguje právě na \ac{API}.
+		\ac{API} server si data může navíc vyžádata z primární databáze nebo vyhledávácí databáze.
+		Zpracovaný požadavek se nakonec vrací uživateli opět skrze nginx.
+
+		Obě aplikace a server nginx jsou nakonfigurované jako Deploymenty a Elasticsearch jako StatefulSet.
+		Deployment je entita Kubernetes systému popisující jak bude aplikace spuštěna \cite{deployements}.
+		Deploymenty se používají v případě kdy aplikace neudržuje důležitá data, o která by se v případě vypnutí přišlo
+		\cite{deployements}.
+		StatefulSety jsou jakousi nadstavbou nad Deploymenty a zaručují uržení stavů spuštěných aplikací. \cite{statefulsets}.
+		Právě z těchto důvodů mohou být implementované aplikace spouštěné jednodušími Deploymenty, protože všechna důležitá
+		data se nachází v databázi PostgreSQL.
+		Elasticsearch databáze je na proti tomu sama zdrojem dat a není vhodné, aby docházelo k její vypínání.
+
+		\begin{lstlisting}[language=YAML]
+apiVersion: apps/v1
+kind: Deployment
+spec:
+	replicas: 1
+	template:
+		metadata:
+			labels:
+				app: web-app
+		spec:
+			containers:
+			- image: cloud.canister.io:5000/quickcards/quickcard-web-app:1.0.0
+				name: web-app
+				env:
+					- name: ENV
+				value: prod
+				ports:
+					- containerPort: 3000
+# ... zbytek kódu vynechán pro přehlednost ... #
+		\end{lstlisting}
+		Ukázka konfigurace Kubernetes pro spuštění front-endové aplikace. % todo
+
+		O finální spuštění takto nakonfigurovaného Kubernetes systému a vytvoření SSL certifikátů pro bezpečnou komunikaci
+		se už postará poskytovatel Kubernetes serveru; v tomto případě DigitalOcean.
+		V tomto momentě jsou obě aplikace spuštěny a připraveny zpracovávat uživatelské požadavky.
 
 % ####################################
 \section{Závěr}
@@ -3272,4 +3598,5 @@ spring data jdbc
 % - vygenerovat poslední stránku https://ris2.uhk.cz/eVSKP/
 % - testovací dataset - sql dump
 % - žádné zkratky v názvech kapitol
+% - mention spriung boot
 GIT21Q4HUB100-7e075147
