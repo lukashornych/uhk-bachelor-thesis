@@ -29,10 +29,8 @@ vývoj a hlavně implementaci všech požadavků.
 % todo
 
 \section{Existující aplikace}
-% todo název
 
-Jak již bylo zmíněno, existuje spoustu webových aplikací, které by se dali považovat za konkurenční řešení implementované
-v této práci.
+Existuje spousta webových aplikací, které by se dali považovat za řešení popsané problematiky
 Nicméně žádná momentálně nekombinuje prvky sdílení kontaktních údajů, sociálních sítí a firemní struktury s plně
 fulltextovým vyhledáváním bez nutnosti registrace nebo rušení sociálními prvky jako jsou zprávy nebo feedy novinek
 náhodných osob a firem, případně ukládání subjektů do oblíbených s možností kategorizace či poznámek nebo globálnosti
@@ -40,48 +38,55 @@ platformy.
 U většiny takových aplikací se totiž spoléhá na navigaci na cílené subjekty pomocí přímých odkazů, které si daný subjekt
 vloží na své sociální sítě nebo vizitky.
 
-% TODO
+Zde byly popsány současné nejznámější existující aplikace pro porovnání s později navrhovaným a implementovaným řešením.
+
 	\subsection{Linktree}
-	- neumožňuje vyhledávat
-	- neumožňuje ukládat do oblíbených
-	- nemá hezké UI
-	- často pochybné odkazy
-	- spousta integrací do ostatních aplikací
-	- pokročilé statistiky
-	- produkty
+
+	Pravděpodobně nejrozšířenější takovou aplikací v zahraníčí je Linktree.
+	Ta se zabývá především zobrazováním odkazů na sociální sítě a rozsáhlím přízpůsobením.
+	Momentálně však neumožňuje fulltextově ani jinak vyhledávat jednotlivé uživatele nebo ukládat ostatní uživatele
+	do oblíbených.
+	Není ani jistota, že jednotlivé odkazy směřuje opravdu na skutečně sociální sítě, protože uživatelé si mohou ke každému
+	odkazu zvolit vlastní ikony.
+	Nezabývá se ani firemní hierarchií nebo otevírací dobou.
+	Na druhou stranu, poskytuje spoustu napojení na externí aplikace, především pak ty statistické nebo e-commercové.
 
 	\subsection{LinkedIn}
 
-	- vyžaduje registraci
-	- působí spíš jako samostatná sociální síť, ne jako rozcestník
-	- spam od cizích uživatelů a firem
-	- feed s reklamami
-	- složitě dohledatelná firemní struktur
-	- cílí na firmy a zaměstnance ne na osoby, umělce nebo eventy apod
+	Další významou aplikací je LinkedIn.
+	Ta však směřuje své zaměření spíše na firemní prostředí a pracovní zkušenosti uživatelů.
+	Informace navíc nejsou veřejně dostupné bez registrace.
+	Oproti Linktree ale obsahuje fulltextové vyhledávání.
+	Nevýhodou můžou být sociální prvky aplikace generující nevyžádané spojení s cizími uživateli a firmami nebo
+	reklami ostatních firem.
+	I přesto že se zaměřuje na firmy, není snadné dohledat firemní struktury nebo otevírací dobu.
 
-	\subsection{Firmy.cz}
-
-	- není globální
-	- soustředí se pouze na firmy
-
-	\subsection{Shorby}
-
-	- neumožňuje vyhledávat
-	- neumožňuje ukládat do oblíbených
-
-	\subsection{Zlaté stránky}
-
-	TODO
-
-	\subsection{Swopi}
-
-	TODO
 
 	\subsection{AllMyLinks}
 
-	TODO
+	Méně známou alternativou je služba AllMyLinks.
+	Ta nabízí velice podobné funkce jako Linktree.
+	Také nabízí pouze sdílení odkazů na sociální sítě.
+	Stejně jako Linktree neposkytuje pokročilou podporu o ověřování odkazů oproti sociálním sítím, což má za následek
+	nevěryhodnot odkazů a ošklivé uživatelské ikony.
 
-% ################################
+	\subsection{Swopi}
+
+	Swopi je další alternativou Linktree.
+	Navíc se ale zabývá výrobou a prodejem chytrých fyzických karet a štítků pro rychlé zobrazení uživatelského profilu.
+	Software je ale značně neintuitivní a neposkytuje více odkazů na jednu sociální síť.
+
+	\subsection{Firmy.cz}
+
+	Mezi české nepřímé alternativy by se dali zařadit i Firmy.cz, která se ale podobně jako LinkedIn zabývají
+	spíše firmami a jejich zobrazení na mapě.
+	Nabízí vyhledávání, otevírací dobu a základní kontakty, externí odkazy a firemní struktura jsou však značně omezené.
+	Služba je navíc cílená pouze na české publikum.
+
+	\subsection{Zlaté stránky}
+
+	Obdobou Firmy.cz trpící podobnými problémy je další česká služby Zlaté stránky
+
 
 \section{Návrh vlastní aplikace}
 
