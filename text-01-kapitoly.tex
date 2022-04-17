@@ -3078,16 +3078,170 @@ protected void configure(HttpSecurity http) throws Exception {
 
 			\paragraph{Přihlašování}
 
-			TODO email+heslo, externí ucty, propojování, session, rememberme?
+			Korektní implementace procesu přihlašování je pro aplikaci využívající uživatelské účty stěžejní.
+			Zabraňuje neoprávněným uživatelům vydávat se za jiné uživatele.
+			Standardním, dlouhá léta využívaným, přístupem je ověření kombinace emailové adresy/uživatelského jména
+			a hesla.
+			U tohoto přístupu kombinaci ověřuje přímo aplikace.
+			Druhým, stále více používaným, přístupem je přihlašování pomocí třetích stran.
+			Při tomto přístupu aplikace deleguje přihlašování na jiného poskytovatele uživatelských účtu, který následně
+			vrátí po přihlášení původní aplikaci informace o přihlášeném uživateli.
+			Aplikace se tak nemusí starat o ověřování hesla a podobně.
+			Takovýchto poskytovatelů existuje celá řada, což pomohlo vzniknout standardu OAuth2 standardizující proces
+			komunikaci mezi aplikací a poskytovatelem.
+			Díky tomu není potřeba pro každého poskytovatele implementovat odlišný proces.
 
-			aktivace uživatele?
-			obnova hesla?
+			Aby měli uživatelé volnost při výběru, jakým způsobem se chtějí přihlašovat, byly do této aplikace implementovány
+			oba způsoby.
+			Uživatel se tak může přihlásit a zaregistrovat buď pomocí běžné kombinace emailové adresy a hesla nebo pomocí
+			některých z poskytovatelů.
+			Momentálně jsou připraveni nejvýužívanější poskytovatelé Google, Github a Facebook, nicméně rozšíření o
+			další poskytovatele nepředstavuje příliš práce.
+			Zaregistrovaný uživatel si navíc může ke svému účtu připojit i další způsoby, tj. pokud se zaregistroval emailovou
+			adresou, může si připojit některého z poskytovatelů a obráceně.
+			Díky tomu si uživatel může při každém přihlášení vybrat, jakým způsobem se přihlásí.
 
-		\subsubsection{Unit testy}
+			Druhým řešeným problémem je, jak verifikovat přihlášeného uživatele při každém \ac{HTTP} požadavku na server
+			aniž by uživatel musel zadávat přihlašovací údaje při každém takovém požadavku.
+			Aplikace na serveru může buď udržovat v paměti sezení každého uživatele nebo vygenerovat uživateli token
+			obsahující informace o uživateli.
 
-		TODO
+			V případě, že aplikace využívá sezení, je na serveru spravován objekt se informací o přihlášeném uživateli.
+			Uživatel pomocí webového prohlížeče pak pouze předává ID daného sezení.
+			Server má tak plnou kontrolu nad daným sezením.
+			Bohužel server musí opatření proti krádeži těchto ID na úrovni webových prohlížečů
 
-	\subsection{Implementace FE aplikace}
+			Alternativou je vygenerování tokenu obsahující uživatelské informace.
+			Tento token je následně předán klientovi a ten musí zaručit, aby při každém požadavku předal vygenerovaný token.
+			Tento způsob převážně využíván pro komunikaci mezi servery, avšak začíná se používat i v aplikacích, kde
+			je aplikace rozdělena na \ac{GUI} část a \ac{API} část.
+			Díky tomuto přístupu server nemusí udržovat sezení všech přihlášených uživatelů.
+			Tím že ale token nemá pod správou server, není snadné takový token označit jako neplatný v případě odhlášení.
+			To jde řešit například ukládáním tokenů do databáze, nicméně správa tokenů se pak částečně přenáší zpět
+			na server a výhody nezávislosti na serveru mizí.
+			Řešení se tak přibližuje přístupu se sezeními, avšak za cenu sloužitější implementace.
+
+			V případě této aplikace proběhli nějaké experimenty s druhým typem ověřování, posléze se ale ukázalo, že
+			řešení je zbytečně složité a ne úplně spolehlivé.
+			Přihlašování bylo tedy přepracováno na řešení se sezeními, které Spring Security knihovna má již v základu
+			vyřešené na rozdíl od předchozího přístupu.
+			Díky tomu se celý proces zjednodušil a delegoval na externí knihovnu, na které pracují experti v oboru.
+			Bonusem bylo zjednodušení implementace přihlašování pomocí poskytovatelů třetích stran, protože
+			knihovna Spring Security má připravenou podporu pro tyto scénáře.
+
+			Jediným problémem bylo spojení interních uživatelských účtů a OAuth2 účtů.
+			Spring Security totiž pro každý způsob využívá jiné objekty.
+			Proto byl proces připravený knihovnou rozšířen o vlastní zakončení.
+			Toto zakončení je vyvoláno knihovnou po úspěšném přihlášení a dává možnost provést vlastní operace nad
+			přihlášeným uživatelem než se odpověď dostane ke koncovému uživateli.
+			Proces řeší i registraci nového uživatele, protože OAuth2 nerozlišuje mezi novým a existujícím uživatelem.
+			OAuth2 zajišťuje pouze poskytnutí dat o uživatelích.
+
+			Následující diagram popisuje zpracování nově přihlášeného OAuth2 uživatele.
+
+			\includegraphics{obrazky/proces_prihlaseni_oauth2}\hfill
+			Proces zpracování přihlášeného OAuth2 uživatele a transformace na interního uživatele. % todo
+
+		\subsubsection{Automatizované testování}
+
+		Automatizované testování umožňuje kód aplikace otestovat ještě před samotným spuštěním a testovat
+		kód průběžně při úpravách a rozšiřováních.
+		Díky tomuto testování je možné předejít velkému množství logických chyb již v počátku implementace.
+
+		Způsobů testování je více.
+		Tato aplikace využívá tzv. "unit" testování a integrační testování.
+		Unit testování izolovaně ověřuje předpokládané chování komponent systému bez ovlivnění chováním
+		ostatních komponent\cite{unit_testing}.
+		Opakem je integrační testování ověřující souhru více komponent najednou \cite{integration_testing}.
+
+		Služební třídy a pomocné třídy provádějící nějaké transformace (\ac{DTO} továrny, analyzátor šablon odkazů...)
+		jsou testovány izolovaně pomocí unit testů.
+		Pro každou metodu každé třídy je připraveno několik testů ověřující různé scénáře: běžné chování při různých datech,
+		chování při chybných datech a podobně.
+		Hlavní knihovnou zpřístupňující nástroje pro spouštění testů a ověřování výsledků je JUnit.
+		Aby bylo možné třídy testovat izolovaně, je potřeba simulovat chování ostatních komponent, se kterými testovaná
+		třída komunikuje.
+		K tomu je využita knihovna Mockito, která zároveň umožňuje zkoumat proběhlé interakce a vyhodnocovat testy
+		na základě toho.
+		\begin{lstlisting}[language=Java]
+@Test
+public void getMostUsedTags_ExpectedFoundCorrectOnes() {
+	// příprava simulace chování repozitáře poskytující data štítků pomocí Mockito knihovny
+	when(cardTagDaoMock.findMostUsed(3)).thenReturn(Set.of(
+			new CardTag(null, "dev"),
+			new CardTag(null, "nature"),
+			new CardTag(null, "tech")
+	));
+	// ověření, že služba vrací očekávané štítky pomocí JUnit knihovny
+	assertEquals(
+			Set.of("dev", "nature", "tech"),
+			cardTagService.getMostUsedTags(3)
+	);
+}
+		\end{lstlisting}
+		Ukázka Unit testu ověřující, že služba štítků vrací správné nejvyužívanější štítky. % todo
+
+		Třídy repozitářů a třídy poskytující \ac{REST} \ac{API} jsou spíše integračními testy spojující více
+		komponent k zajištění vypovídajících výsledků.
+
+		Při testování repozitářů je potřeba testovat \ac{SQL} dotazy oproti reálné databázi s daty.
+		K spuštění takových testů je tedy potřeba běžící testovací databáze a připravená testovací data.
+		Ta jsou do databáze nahrána před každým testem a smazána po každém testu.
+		Tím je zaručena izolovanost jednotlivých testů, aby nedocházelo k mylným výsledkům.
+
+		\begin{lstlisting}[language=Java]
+@After // vymaže všechna data z testovací databáze po každém testu
+public void clean() {
+	DbTestUtils.resetTables(
+			dataSource,
+			CardOffice.TABLE_NAME,
+			EmployeeCardData.TABLE_NAME,
+			Card.TABLE_NAME,
+			Account.TABLE_NAME
+	);
+}
+
+// test ověřující získaní karty z databáze
+@Test
+@Sql(scripts = "/tests/dao/card/insertMockCards.sql") // nahraje testovací data před spuštěním testu
+public void findById_WithoutDeletedAndNoCard_ExpectedEmpty() {
+	assertTrue(cardDao.findById(4, false).isEmpty());
+}
+		\end{lstlisting}
+		Ukázka integračních testů repozitáře karet. % todo
+
+		Testy \ac{REST} \ac{API} jsou kombinací integračních a unit testů.
+		Knihovna Spring poskytuje nástroje pro volání \ac{API} skrze \ac{URL} adresy simulující tak reálnou komunikaci
+		s \ac{API}.
+		Napojení na služební třídy už je řešeno simulací služebních tříd, aby nebylo nutné zprovozňovat všechny části
+		aplikace.
+
+		\begin{lstlisting}[langauge=Java]
+@Test
+@WithMockUser
+public void validateLink_InvalidLink_ExpectedFalse() {
+	when(cardLinkServiceMock.isLinkUrlValid(FACEBOOK_TEMPLATE.getId(), "twitter.com/lukin", true)).thenReturn(false);
+
+	final ValidateLinkRequestDto requestBody = new ValidateLinkRequestDto(FACEBOOK_TEMPLATE.getId(), "twitter.com/lukin");
+	final LinkValidationResultDto expectedResponseBody = new LinkValidationResultDto(false);
+
+	// simulace volání API pro validaci odkazu a ověření výsledku
+	mockMvc.perform(post("/api/cards/links/validate")
+					.accept(MediaType.APPLICATION_JSON)
+					.contentType(MediaType.APPLICATION_JSON)
+					.content(objectMapper.writeValueAsString(requestBody))
+					.with(csrf()))
+			.andDo(print())
+			.andExpect(status().isOk())
+			.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+			.andExpect(content().json(objectMapper.writeValueAsString(expectedResponseBody)));
+}
+		\end{lstlisting}
+		Ukázka testu volání API validující odkaz. % todo
+
+	\subsection{Implementace front-endové aplikace}
+
+
 
 	todo notifikace, vuex, komunikace s api, ssr, csrf .......
 

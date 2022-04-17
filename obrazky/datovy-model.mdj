@@ -71426,6 +71426,702 @@
 					]
 				}
 			]
+		},
+		{
+			"_type": "FCFlowchart",
+			"_id": "AAAAAAGANnMoER3iNG0=",
+			"_parent": {
+				"$ref": "AAAAAAFF+h6SjaM2Hec="
+			},
+			"name": "oauth",
+			"ownedElements": [
+				{
+					"_type": "FCFlowchartDiagram",
+					"_id": "AAAAAAGANnMoER3jWJk=",
+					"_parent": {
+						"$ref": "AAAAAAGANnMoER3iNG0="
+					},
+					"name": "FlowchartDiagram1",
+					"ownedViews": [
+						{
+							"_type": "FCTerminatorView",
+							"_id": "AAAAAAGANnNxfB9bxaA=",
+							"_parent": {
+								"$ref": "AAAAAAGANnMoER3jWJk="
+							},
+							"model": {
+								"$ref": "AAAAAAGANnNxfB9ZcU0="
+							},
+							"subViews": [
+								{
+									"_type": "LabelView",
+									"_id": "AAAAAAGANnNxfB9c58k=",
+									"_parent": {
+										"$ref": "AAAAAAGANnNxfB9bxaA="
+									},
+									"font": "Arial;13;0",
+									"left": 546,
+									"top": 354,
+									"width": 68.63720703125,
+									"height": 39,
+									"text": "OAuth2 uživatel přihlášen",
+									"wordWrap": true
+								}
+							],
+							"font": "Arial;13;0",
+							"left": 536,
+							"top": 344,
+							"width": 88.63720703125,
+							"height": 59,
+							"nameLabel": {
+								"$ref": "AAAAAAGANnNxfB9c58k="
+							}
+						},
+						{
+							"_type": "FCDecisionView",
+							"_id": "AAAAAAGANnQLwh9lmig=",
+							"_parent": {
+								"$ref": "AAAAAAGANnMoER3jWJk="
+							},
+							"model": {
+								"$ref": "AAAAAAGANnQLwR9jfQo="
+							},
+							"subViews": [
+								{
+									"_type": "LabelView",
+									"_id": "AAAAAAGANnQLwh9mxA0=",
+									"_parent": {
+										"$ref": "AAAAAAGANnQLwh9lmig="
+									},
+									"font": "Arial;13;0",
+									"left": 530.25,
+									"top": 496.25,
+									"width": 100.5,
+									"height": 80.5,
+									"text": "Existuje v databázi uživatel ekvivalentní OAuth2 uživateli?",
+									"wordWrap": true
+								}
+							],
+							"font": "Arial;13;0",
+							"left": 480,
+							"top": 456,
+							"width": 201,
+							"height": 161,
+							"nameLabel": {
+								"$ref": "AAAAAAGANnQLwh9mxA0="
+							}
+						},
+						{
+							"_type": "FCTerminatorView",
+							"_id": "AAAAAAGANnSD7B9x0/4=",
+							"_parent": {
+								"$ref": "AAAAAAGANnMoER3jWJk="
+							},
+							"model": {
+								"$ref": "AAAAAAGANnSD7B9v3Gw="
+							},
+							"subViews": [
+								{
+									"_type": "LabelView",
+									"_id": "AAAAAAGANnSD7B9yw44=",
+									"_parent": {
+										"$ref": "AAAAAAGANnSD7B9x0/4="
+									},
+									"font": "Arial;13;0",
+									"left": 826,
+									"top": 770,
+									"width": 76.63720703125,
+									"height": 26,
+									"text": "Uživatel přihlášen",
+									"wordWrap": true
+								}
+							],
+							"font": "Arial;13;0",
+							"left": 816,
+							"top": 760,
+							"width": 96.63720703125,
+							"height": 46,
+							"nameLabel": {
+								"$ref": "AAAAAAGANnSD7B9yw44="
+							}
+						},
+						{
+							"_type": "FCFlowView",
+							"_id": "AAAAAAGANnSmFh97e3I=",
+							"_parent": {
+								"$ref": "AAAAAAGANnMoER3jWJk="
+							},
+							"model": {
+								"$ref": "AAAAAAGANnSmFh95vb8="
+							},
+							"subViews": [
+								{
+									"_type": "EdgeLabelView",
+									"_id": "AAAAAAGANnSmFh98Iy4=",
+									"_parent": {
+										"$ref": "AAAAAAGANnSmFh97e3I="
+									},
+									"model": {
+										"$ref": "AAAAAAGANnSmFh95vb8="
+									},
+									"font": "Arial;13;0",
+									"left": 592,
+									"top": 616,
+									"width": 23.130859375,
+									"height": 13,
+									"alpha": 1.4341531029635248,
+									"distance": 161.50541786577935,
+									"hostEdge": {
+										"$ref": "AAAAAAGANnSmFh97e3I="
+									},
+									"edgePosition": 1,
+									"text": "Ano"
+								}
+							],
+							"font": "Arial;13;0",
+							"head": {
+								"$ref": "AAAAAAGANnSD7B9x0/4="
+							},
+							"tail": {
+								"$ref": "AAAAAAGANnQLwh9lmig="
+							},
+							"lineStyle": 2,
+							"points": "581:616;581:782;816:782",
+							"nameLabel": {
+								"$ref": "AAAAAAGANnSmFh98Iy4="
+							}
+						},
+						{
+							"_type": "FCFlowView",
+							"_id": "AAAAAAGANnS8BR+FPvU=",
+							"_parent": {
+								"$ref": "AAAAAAGANnMoER3jWJk="
+							},
+							"model": {
+								"$ref": "AAAAAAGANnS8BR+D+SI="
+							},
+							"subViews": [
+								{
+									"_type": "EdgeLabelView",
+									"_id": "AAAAAAGANnS8BR+Gwwg=",
+									"_parent": {
+										"$ref": "AAAAAAGANnS8BR+FPvU="
+									},
+									"model": {
+										"$ref": "AAAAAAGANnS8BR+D+SI="
+									},
+									"visible": false,
+									"font": "Arial;13;0",
+									"left": 593,
+									"top": 422,
+									"height": 13,
+									"alpha": 1.5707963267948966,
+									"distance": 15,
+									"hostEdge": {
+										"$ref": "AAAAAAGANnS8BR+FPvU="
+									},
+									"edgePosition": 1
+								}
+							],
+							"font": "Arial;13;0",
+							"head": {
+								"$ref": "AAAAAAGANnQLwh9lmig="
+							},
+							"tail": {
+								"$ref": "AAAAAAGANnNxfB9bxaA="
+							},
+							"lineStyle": 2,
+							"points": "579:402;579:456",
+							"nameLabel": {
+								"$ref": "AAAAAAGANnS8BR+Gwwg="
+							}
+						},
+						{
+							"_type": "FCDecisionView",
+							"_id": "AAAAAAGANnUdyx+O2PU=",
+							"_parent": {
+								"$ref": "AAAAAAGANnMoER3jWJk="
+							},
+							"model": {
+								"$ref": "AAAAAAGANnUdyx+MTco="
+							},
+							"subViews": [
+								{
+									"_type": "LabelView",
+									"_id": "AAAAAAGANnUdyx+P4yE=",
+									"_parent": {
+										"$ref": "AAAAAAGANnUdyx+O2PU="
+									},
+									"font": "Arial;13;0",
+									"left": 806.25,
+									"top": 488.25,
+									"width": 124.5,
+									"height": 96.5,
+									"text": "Existuje v databázi uživatel se stejnou emailovou adresou?",
+									"wordWrap": true
+								}
+							],
+							"font": "Arial;13;0",
+							"left": 744,
+							"top": 440,
+							"width": 249,
+							"height": 193,
+							"nameLabel": {
+								"$ref": "AAAAAAGANnUdyx+P4yE="
+							}
+						},
+						{
+							"_type": "FCFlowView",
+							"_id": "AAAAAAGANnV1Hx+a0EQ=",
+							"_parent": {
+								"$ref": "AAAAAAGANnMoER3jWJk="
+							},
+							"model": {
+								"$ref": "AAAAAAGANnV1Hx+YKJY="
+							},
+							"subViews": [
+								{
+									"_type": "EdgeLabelView",
+									"_id": "AAAAAAGANnV1Hx+b+Io=",
+									"_parent": {
+										"$ref": "AAAAAAGANnV1Hx+a0EQ="
+									},
+									"model": {
+										"$ref": "AAAAAAGANnV1Hx+YKJY="
+									},
+									"font": "Arial;13;0",
+									"left": 679,
+									"top": 513,
+									"width": 16.6181640625,
+									"height": 13,
+									"alpha": -3.710906026302311,
+									"distance": 29.68164415931166,
+									"hostEdge": {
+										"$ref": "AAAAAAGANnV1Hx+a0EQ="
+									},
+									"edgePosition": 1,
+									"text": "Ne"
+								}
+							],
+							"font": "Arial;13;0",
+							"head": {
+								"$ref": "AAAAAAGANnUdyx+O2PU="
+							},
+							"tail": {
+								"$ref": "AAAAAAGANnQLwh9lmig="
+							},
+							"lineStyle": 2,
+							"points": "680:536;744:536",
+							"nameLabel": {
+								"$ref": "AAAAAAGANnV1Hx+b+Io="
+							}
+						},
+						{
+							"_type": "FCProcessView",
+							"_id": "AAAAAAGANnWynR+mLkg=",
+							"_parent": {
+								"$ref": "AAAAAAGANnMoER3jWJk="
+							},
+							"model": {
+								"$ref": "AAAAAAGANnWynR+k5UY="
+							},
+							"subViews": [
+								{
+									"_type": "LabelView",
+									"_id": "AAAAAAGANnWynR+nP/U=",
+									"_parent": {
+										"$ref": "AAAAAAGANnWynR+mLkg="
+									},
+									"font": "Arial;13;0",
+									"left": 778,
+									"top": 682,
+									"width": 173,
+									"height": 26,
+									"text": "OAuth2 uživatel propojen s uživatelem v databázi",
+									"wordWrap": true
+								}
+							],
+							"font": "Arial;13;0",
+							"left": 768,
+							"top": 672,
+							"width": 193,
+							"height": 46,
+							"nameLabel": {
+								"$ref": "AAAAAAGANnWynR+nP/U="
+							}
+						},
+						{
+							"_type": "FCFlowView",
+							"_id": "AAAAAAGANnZL0B+yAtQ=",
+							"_parent": {
+								"$ref": "AAAAAAGANnMoER3jWJk="
+							},
+							"model": {
+								"$ref": "AAAAAAGANnZL0B+wRag="
+							},
+							"subViews": [
+								{
+									"_type": "EdgeLabelView",
+									"_id": "AAAAAAGANnZL0B+zOhY=",
+									"_parent": {
+										"$ref": "AAAAAAGANnZL0B+yAtQ="
+									},
+									"model": {
+										"$ref": "AAAAAAGANnZL0B+wRag="
+									},
+									"font": "Arial;13;0",
+									"left": 872,
+									"top": 632,
+									"width": 23.130859375,
+									"height": 13,
+									"alpha": 2.2896255166821176,
+									"distance": 21.2602916254693,
+									"hostEdge": {
+										"$ref": "AAAAAAGANnZL0B+yAtQ="
+									},
+									"edgePosition": 1,
+									"text": "Ano"
+								}
+							],
+							"font": "Arial;13;0",
+							"head": {
+								"$ref": "AAAAAAGANnWynR+mLkg="
+							},
+							"tail": {
+								"$ref": "AAAAAAGANnUdyx+O2PU="
+							},
+							"lineStyle": 2,
+							"points": "867:632;867:672",
+							"nameLabel": {
+								"$ref": "AAAAAAGANnZL0B+zOhY="
+							}
+						},
+						{
+							"_type": "FCFlowView",
+							"_id": "AAAAAAGANnZmEB+85rM=",
+							"_parent": {
+								"$ref": "AAAAAAGANnMoER3jWJk="
+							},
+							"model": {
+								"$ref": "AAAAAAGANnZmDR+6gOA="
+							},
+							"subViews": [
+								{
+									"_type": "EdgeLabelView",
+									"_id": "AAAAAAGANnZmEB+9Nnc=",
+									"_parent": {
+										"$ref": "AAAAAAGANnZmEB+85rM="
+									},
+									"model": {
+										"$ref": "AAAAAAGANnZmDR+6gOA="
+									},
+									"visible": false,
+									"font": "Arial;13;0",
+									"left": 877,
+									"top": 731,
+									"height": 13,
+									"alpha": 1.5707963267948966,
+									"distance": 15,
+									"hostEdge": {
+										"$ref": "AAAAAAGANnZmEB+85rM="
+									},
+									"edgePosition": 1
+								}
+							],
+							"font": "Arial;13;0",
+							"head": {
+								"$ref": "AAAAAAGANnSD7B9x0/4="
+							},
+							"tail": {
+								"$ref": "AAAAAAGANnWynR+mLkg="
+							},
+							"lineStyle": 2,
+							"points": "863:717;863:760",
+							"nameLabel": {
+								"$ref": "AAAAAAGANnZmEB+9Nnc="
+							}
+						},
+						{
+							"_type": "FCProcessView",
+							"_id": "AAAAAAGANnaSjx/F3ps=",
+							"_parent": {
+								"$ref": "AAAAAAGANnMoER3jWJk="
+							},
+							"model": {
+								"$ref": "AAAAAAGANnaSjx/DU9o="
+							},
+							"subViews": [
+								{
+									"_type": "LabelView",
+									"_id": "AAAAAAGANnaSjx/GyiQ=",
+									"_parent": {
+										"$ref": "AAAAAAGANnaSjx/F3ps="
+									},
+									"font": "Arial;13;0",
+									"left": 1018,
+									"top": 674,
+									"width": 141,
+									"height": 39,
+									"text": "Nový uživatel vytvořen na základě OAuth2 uživatele",
+									"wordWrap": true
+								}
+							],
+							"font": "Arial;13;0",
+							"left": 1008,
+							"top": 664,
+							"width": 161,
+							"height": 59,
+							"nameLabel": {
+								"$ref": "AAAAAAGANnaSjx/GyiQ="
+							}
+						},
+						{
+							"_type": "FCFlowView",
+							"_id": "AAAAAAGANnbgDx/RTH8=",
+							"_parent": {
+								"$ref": "AAAAAAGANnMoER3jWJk="
+							},
+							"model": {
+								"$ref": "AAAAAAGANnbgDx/P4S8="
+							},
+							"subViews": [
+								{
+									"_type": "EdgeLabelView",
+									"_id": "AAAAAAGANnbgDx/SssM=",
+									"_parent": {
+										"$ref": "AAAAAAGANnbgDx/RTH8="
+									},
+									"model": {
+										"$ref": "AAAAAAGANnbgDx/P4S8="
+									},
+									"font": "Arial;13;0",
+									"left": 991,
+									"top": 519,
+									"width": 16.6181640625,
+									"height": 13,
+									"alpha": -1.6826866835588474,
+									"distance": 89.56003573022959,
+									"hostEdge": {
+										"$ref": "AAAAAAGANnbgDx/RTH8="
+									},
+									"edgePosition": 1,
+									"text": "Ne"
+								}
+							],
+							"font": "Arial;13;0",
+							"head": {
+								"$ref": "AAAAAAGANnaSjx/F3ps="
+							},
+							"tail": {
+								"$ref": "AAAAAAGANnUdyx+O2PU="
+							},
+							"lineStyle": 2,
+							"points": "992:536;1088:536;1088:664",
+							"nameLabel": {
+								"$ref": "AAAAAAGANnbgDx/SssM="
+							}
+						},
+						{
+							"_type": "FCFlowView",
+							"_id": "AAAAAAGANnb9CR/bKV0=",
+							"_parent": {
+								"$ref": "AAAAAAGANnMoER3jWJk="
+							},
+							"model": {
+								"$ref": "AAAAAAGANnb9CR/ZsJM="
+							},
+							"subViews": [
+								{
+									"_type": "EdgeLabelView",
+									"_id": "AAAAAAGANnb9CR/cntA=",
+									"_parent": {
+										"$ref": "AAAAAAGANnb9CR/bKV0="
+									},
+									"model": {
+										"$ref": "AAAAAAGANnb9CR/ZsJM="
+									},
+									"visible": false,
+									"font": "Arial;13;0",
+									"left": 1087,
+									"top": 791,
+									"height": 13,
+									"alpha": 1.5707963267948966,
+									"distance": 15,
+									"hostEdge": {
+										"$ref": "AAAAAAGANnb9CR/bKV0="
+									},
+									"edgePosition": 1
+								}
+							],
+							"font": "Arial;13;0",
+							"head": {
+								"$ref": "AAAAAAGANnSD7B9x0/4="
+							},
+							"tail": {
+								"$ref": "AAAAAAGANnaSjx/F3ps="
+							},
+							"lineStyle": 2,
+							"points": "1088:722;1088:782;912:782",
+							"nameLabel": {
+								"$ref": "AAAAAAGANnb9CR/cntA="
+							}
+						}
+					]
+				},
+				{
+					"_type": "FCTerminator",
+					"_id": "AAAAAAGANnNxfB9ZcU0=",
+					"_parent": {
+						"$ref": "AAAAAAGANnMoER3iNG0="
+					},
+					"name": "OAuth2 uživatel přihlášen",
+					"ownedElements": [
+						{
+							"_type": "FCFlow",
+							"_id": "AAAAAAGANnS8BR+D+SI=",
+							"_parent": {
+								"$ref": "AAAAAAGANnNxfB9ZcU0="
+							},
+							"source": {
+								"$ref": "AAAAAAGANnNxfB9ZcU0="
+							},
+							"target": {
+								"$ref": "AAAAAAGANnQLwR9jfQo="
+							}
+						}
+					]
+				},
+				{
+					"_type": "FCDecision",
+					"_id": "AAAAAAGANnQLwR9jfQo=",
+					"_parent": {
+						"$ref": "AAAAAAGANnMoER3iNG0="
+					},
+					"name": "Existuje v databázi uživatel ekvivalentní OAuth2 uživateli?",
+					"ownedElements": [
+						{
+							"_type": "FCFlow",
+							"_id": "AAAAAAGANnSmFh95vb8=",
+							"_parent": {
+								"$ref": "AAAAAAGANnQLwR9jfQo="
+							},
+							"name": "Ano",
+							"source": {
+								"$ref": "AAAAAAGANnQLwR9jfQo="
+							},
+							"target": {
+								"$ref": "AAAAAAGANnSD7B9v3Gw="
+							}
+						},
+						{
+							"_type": "FCFlow",
+							"_id": "AAAAAAGANnV1Hx+YKJY=",
+							"_parent": {
+								"$ref": "AAAAAAGANnQLwR9jfQo="
+							},
+							"name": "Ne",
+							"source": {
+								"$ref": "AAAAAAGANnQLwR9jfQo="
+							},
+							"target": {
+								"$ref": "AAAAAAGANnUdyx+MTco="
+							}
+						}
+					]
+				},
+				{
+					"_type": "FCTerminator",
+					"_id": "AAAAAAGANnSD7B9v3Gw=",
+					"_parent": {
+						"$ref": "AAAAAAGANnMoER3iNG0="
+					},
+					"name": "Uživatel přihlášen"
+				},
+				{
+					"_type": "FCDecision",
+					"_id": "AAAAAAGANnUdyx+MTco=",
+					"_parent": {
+						"$ref": "AAAAAAGANnMoER3iNG0="
+					},
+					"name": "Existuje v databázi uživatel se stejnou emailovou adresou?",
+					"ownedElements": [
+						{
+							"_type": "FCFlow",
+							"_id": "AAAAAAGANnZL0B+wRag=",
+							"_parent": {
+								"$ref": "AAAAAAGANnUdyx+MTco="
+							},
+							"name": "Ano",
+							"source": {
+								"$ref": "AAAAAAGANnUdyx+MTco="
+							},
+							"target": {
+								"$ref": "AAAAAAGANnWynR+k5UY="
+							}
+						},
+						{
+							"_type": "FCFlow",
+							"_id": "AAAAAAGANnbgDx/P4S8=",
+							"_parent": {
+								"$ref": "AAAAAAGANnUdyx+MTco="
+							},
+							"name": "Ne",
+							"source": {
+								"$ref": "AAAAAAGANnUdyx+MTco="
+							},
+							"target": {
+								"$ref": "AAAAAAGANnaSjx/DU9o="
+							}
+						}
+					]
+				},
+				{
+					"_type": "FCProcess",
+					"_id": "AAAAAAGANnWynR+k5UY=",
+					"_parent": {
+						"$ref": "AAAAAAGANnMoER3iNG0="
+					},
+					"name": "OAuth2 uživatel propojen s uživatelem v databázi",
+					"ownedElements": [
+						{
+							"_type": "FCFlow",
+							"_id": "AAAAAAGANnZmDR+6gOA=",
+							"_parent": {
+								"$ref": "AAAAAAGANnWynR+k5UY="
+							},
+							"source": {
+								"$ref": "AAAAAAGANnWynR+k5UY="
+							},
+							"target": {
+								"$ref": "AAAAAAGANnSD7B9v3Gw="
+							}
+						}
+					]
+				},
+				{
+					"_type": "FCProcess",
+					"_id": "AAAAAAGANnaSjx/DU9o=",
+					"_parent": {
+						"$ref": "AAAAAAGANnMoER3iNG0="
+					},
+					"name": "Nový uživatel vytvořen na základě OAuth2 uživatele",
+					"ownedElements": [
+						{
+							"_type": "FCFlow",
+							"_id": "AAAAAAGANnb9CR/ZsJM=",
+							"_parent": {
+								"$ref": "AAAAAAGANnaSjx/DU9o="
+							},
+							"source": {
+								"$ref": "AAAAAAGANnaSjx/DU9o="
+							},
+							"target": {
+								"$ref": "AAAAAAGANnSD7B9v3Gw="
+							}
+						}
+					]
+				}
+			]
 		}
 	]
 }
