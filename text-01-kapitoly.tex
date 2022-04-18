@@ -1617,7 +1617,13 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 		Následně dva prvky porovnává na fyzikální páce, která musí zůstat v rovině i pokud jsou prvky jinak těžké pomocí
 		posunu jednotlivých prvků od sebe.
 		% todo citace obrázku https://uploads-ssl.webflow.com/5c72b8b72d05ce02c7987c46/5d066cd3d9b514108395ac6f_naprava-rovnovahy-1.png
-		\includegraphics[width=0.24\linewidth]{obrazky/rovnovaha_paka.png}\hfill
+
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=10cm]{obrazky/rovnovaha_paka}\hfill
+			\caption{Páka rovnováhy vzhledu. Zdroj: \cite{vizualni_rovnovaha}}
+		\end{figure}
+
 		Pokud je tedy nejaký prvek vizuálně těžší než druhý, je dobré lehčímu prvku přidat více bílého prostoru a odsunout
 		ho tak od těžšího prvku.
 		Tím vznikne rovnováha mezi prvky a celkově přívětivější rozhraní.
@@ -1638,8 +1644,11 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 		Většina barev je inspirována výše zmíněným Material Designem obsahující širokou paletu barev, kterou lze jednoduše
 		využít v jakémkoliv projektu.
 
-		\includegraphics[width=0.24\linewidth]{obrazky/paleta_barev.png}\hfill
-		Navržená paleta barev. % todo anotace
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=\linewidth]{obrazky/paleta_barev}\hfill
+			\caption{Navržená paleta barev. Zdroj: [autor]}
+		\end{figure}
 
 		Dalším velmi důležitým designovým prvkem jsou stíny pomáhající vizualizovat pomyslnou vzdálenost jednotlivých
 		prvků od uživatelova zraku.
@@ -1656,18 +1665,21 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 		Kombinace byla vybrána z důvodu zjednodušení vzhledu, protože použití pouze stínů by mohlo pro některé uživatele
 		být příliš rozptylující.
 
-		\begin{figure}[h]
+		\begin{figure}[H]
 			\centering
-			\includegraphics[width=12cm]{obrazky/ukazka_stinu_a_linek}
-			\caption{Ukázka kombinace stínů a linek v jednom bloku.}% todo anotace
+			\includegraphics[width=8cm]{obrazky/ukazka_stinu_a_linek}
+			\caption{Ukázka kombinace stínů a linek v jednom bloku. Zdroj: [autor]}
 		\end{figure}
 
 		Kromě linek a stínu je dobré myslet i na samotné okraje prvků, tj. zda-li budou mít zaoblené rohy a podobně.
 		Po vzoru Material Designu byly zvoleny zaoblené rohy o průměru 8px pro větší lehkost prvků.
 		Toto rozhodnutí je však celkem subjektivní a někteří uživatelé mohou preferovat ostré rohy.
 
-		\includegraphics[width=0.24\linewidth]{obrazky/blok_obsahu}\hfill
-		Ukázka zaoblených rohů. % todo anotace
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=8cm]{obrazky/blok_obsahu}\hfill
+			\caption{Ukázka zaoblených rohů. Zdroj: [autor]}
+		\end{figure}
 
 		Posledním pravidlem je jednotná signalizace výběru.
 		Tato část musí být obzvlášť konzistentní napříč aplikací a intuitivní pro koncové uživatele.
@@ -1679,11 +1691,17 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 		V takovém případě se použije jednoduchá linka pod či nad prvkem.
 		V případě osamocených prvků nebo víceřádkových prvků je použita linka kolem celého okraje prvku.
 
-		\includegraphics[width=0.24\linewidth]{obrazky/ukazka_vyberu_1}\hfill
-		Ukázka signalizace výběru v navigaci. % todo anotace
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=6cm]{obrazky/ukazka_vyberu_1}\hfill
+			\caption{Ukázka signalizace výběru v navigaci. Zdroj: [autor]}
+		\end{figure}
 
-		\includegraphics[width=0.24\linewidth]{obrazky/ukazka_vyberu_2}\hfill
-		Ukázka signalizace výběru konkrétního prvku. % todo anotace
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=4cm]{obrazky/ukazka_vyberu_2}\hfill
+			\caption{Ukázka signalizace výběru konkrétního prvku. Zdroj: [autor]}
+		\end{figure}
 
 		Na těchto principech je tedy možné navrhnout nějaké základní univerzální prvky pro tvorbu konkrétních stránek
 		a následně celý vzhled.
@@ -1697,7 +1715,11 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 
 			\paragraph{Blok obsahu}
 
-			\includegraphics[width=0.24\linewidth]{obrazky/blok_obsahu.png}\hfill
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=6cm]{obrazky/blok_obsahu}\hfill
+				\caption{Ukázka bloku obsahu. Zdroj: [autor]}
+			\end{figure}
 
 			Stránky jsou rozvrženy hlavně pomocí tzv. bloků obsahu označující jeden logický celek informací
 			na stránce.
@@ -1714,8 +1736,11 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 			V případě více logických celků na jedné stránce se použije více bloků řazených pod sebou a oddělených 24px
 			pro dostatečné oddělení rozlišných informací.
 
-			\includegraphics[width=0.24\linewidth]{obrazky/blok_obsahu_ukazka.png}\hfill
-			Ukázka využití bloku % todo styl anotace obrázku
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=\linewidth]{obrazky/blok_obsahu_ukazka}\hfill
+				\caption{Ukázka využití bloku obsahu. Zdroj: [autor]}
+			\end{figure}
 
 			Uvnitř bloku se může nacházet jakýkoliv obsah.
 			Nicméně je několik základních prvků, které se zde běžně nacházejí a je nutno aby byly konzistentní.
@@ -1733,7 +1758,11 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 
 			\paragraph{Lišta akcí}
 
-			\includegraphics[width=0.24\linewidth]{obrazky/lista_akci.png}\hfill
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=\linewidth]{obrazky/lista_akci}\hfill
+				\caption{Ukázka lišty akcí. Zdroj: [autor]}
+			\end{figure}
 
 			Kromě hlavní navigační lišty aplikace dostupné téměř na všech stránkách pro jednoduchou navigaci mezi
 			částmi aplikace, bylo nutné zavést ještě jeden typ lišt: lišta akcí.
@@ -1745,7 +1774,11 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 
 			\paragraph{Modální okno}
 
-			\includegraphics[width=0.24\linewidth]{obrazky/modalni_okno.png}\hfill
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=\linewidth]{obrazky/modalni_okno}\hfill
+				\caption{Ukázka modálního okna. Zdroj: [autor]}
+			\end{figure}
 
 			Modální okna představují bloky obsahu překrývající všechen ostatní obsah při zobrazí, aby se uživatel zaměřil
 			pouze na obsah uvnitř okna a nebyl rušen zbylým obsahem, který v danou chvíli není důležitý.
@@ -1770,15 +1803,25 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 			mezi sebou odsazeny 8px.
 			Celá patička je navíc od samotného obsahu taktéž odsazena 24px pro jasné rozdělení částí.
 
-			\includegraphics[width=0.24\linewidth]{obrazky/modalni_okno_informacni_ukazka.png}\hfill
-			Ukázka konkrétního informačního modální okna. % todo anotace
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=10cm]{obrazky/modalni_okno_informacni_ukazka}\hfill
+				\caption{Ukázka konkrétního informačního modální okna. Zdroj: [autor]}
+			\end{figure}
 
-			\includegraphics[width=0.24\linewidth]{obrazky/modalni_okno_akcni_ukazka.png}\hfill
-			Ukázka konkrétního akčního modálního okna. % todo anotace
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=10cm]{obrazky/modalni_okno_akcni_ukazka}\hfill
+				\caption{Ukázka konkrétního akčního modálního okna. Zdroj: [autor]}
+			\end{figure}
 
 			\paragraph{Kontextuální nabídka}
 
-			\includegraphics[width=0.24\linewidth]{obrazky/kontextualni_nabidka.png}\hfill
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=6cm]{obrazky/kontextualni_nabidka}\hfill
+				\caption{Ukázka kontextuální nabídky. Zdroj: [autor]}
+			\end{figure}
 
 			Jedná se malé menu zobrazující rozšířené možnosti nějaké akce.
 			Většinou se používá pro zobrazení vícero akcí možných nad nějakým objektem, pokud není v \ac{UI} dostatek
@@ -1786,15 +1829,25 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 			Nabídka podobně jako modální okno překrývá část obsahu pro zviditelnění, nicméně ji lze jednoduše zavřít
 			kliknutím mimo nabídku.
 
-			\includegraphics[width=0.24\linewidth]{obrazky/kontextualni_nabidka_seznam_ukazka.png}\hfill
-			Ukázka kontextuální nabídky akcí položky v seznamu. % todo anotace
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=8cm]{obrazky/kontextualni_nabidka_seznam_ukazka}\hfill
+				\caption{Ukázka kontextuální nabídky akcí položky v seznamu. Zdroj: [autor]}
+			\end{figure}
 
-			\includegraphics[width=0.24\linewidth]{obrazky/kontextualni_nabidka_vyberove_pole_ukazka.png}\hfill
-			Ukázka kontextuální nabídky položek výběrového pole. % todo anotace
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=8cm]{obrazky/kontextualni_nabidka_vyberove_pole_ukazka}\hfill
+				\caption{Ukázka kontextuální nabídky položek výběrového pole. Zdroj: [autor]}
+			\end{figure}
 
 			\paragraph{Sekce}
 
-			\includegraphics[width=0.24\linewidth]{obrazky/sekce.png}\hfill
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=\linewidth]{obrazky/sekce}\hfill
+				\caption{Ukázka sekce. Zdroj: [autor]}
+			\end{figure}
 
 			Pro stránky složené z více podstránek (např.: nastavení uživatelského účtu) je vhodné provázat tyto stránky
 			nějakou navigací pro jednoduchý přechod mezi dílčími stránkami.
@@ -1819,8 +1872,11 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 			Takové tlačítko má neutrální barvu a ve většině případech neobsahuje ani ikonu, aby nevyjadřovalo vysokou prioritu
 			a uživatel se zaměřil spíše na výraznější tlačítka.
 
-			\includegraphics[width=0.24\linewidth]{obrazky/tlacitko_s_malou_prioritou}\hfill
-			Ukázka tlačítka s malou prioritou. % todo anotace
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=4cm]{obrazky/tlacitko_s_malou_prioritou}\hfill
+				\caption{Ukázka tlačítka s malou prioritou. Zdroj: [autor]}
+			\end{figure}
 
 			Tlačítko s vysokou prioritou představuje primární akci, kterou by se uživatel měl vydat.
 			Taková tlačítka představují potvrzení nějaké akce, vytvoření nových objektů, přidání existujících objektů a
@@ -1829,8 +1885,11 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 			provést.
 			Tato tlačítka mají proto výraznou barvu a vystihující ikonu pro zpřehlednění a zpříjemnění celkového dojmu.
 
-			\includegraphics[width=0.24\linewidth]{obrazky/tlacitko_s_velkou_prioritou}\hfill
-			Ukázka tlačítka s vysokou prioritou. % todo anotace
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=4cm]{obrazky/tlacitko_s_velkou_prioritou}\hfill
+				\caption{Ukázka tlačítka s vysokou prioritou. Zdroj: [autor]}
+			\end{figure}
 
 			Pro případy kdy uživatel provádí nějakou akci s vysokou vážností jako je například nevratné smazání nějakého
 			objektu, vzniklo rozšíření tlačítka s vysokou prioritou.
@@ -1838,8 +1897,11 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 			Právě červená barva by měla uživatele přimět znovu zamyslet se nad prováděnou akcí, protože červená barva
 			je využívána jako symbol něčeho negativního.
 
-			\includegraphics[width=0.24\linewidth]{obrazky/tlacitko_s_velkou_prioritou_a_velkou_vaznosti}\hfill
-			Ukázka tlačítka provádějící nevratnou změnu. % todo anotace
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=4cm]{obrazky/tlacitko_s_velkou_prioritou_a_velkou_vaznosti}\hfill
+				\caption{Ukázka tlačítka provádějící nevratnou změnu. Zdroj: [autor]}
+			\end{figure}
 
 			\paragraph{Vstupní pole}
 
@@ -1864,14 +1926,20 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 			Mohou sloužit i pro zadávání hesel a v takovém případě zobrazují pouze zástupné znaky.
 			Obsahují však tlačítko pro přepnutí mezi zástupnými znaky a originálními pro kontrolu zadaného hesla.
 
-			\includegraphics[width=0.24\linewidth]{obrazky/textove_pole}\hfill
-			Ukázka textového pole s ikonou a nápovědou. % todo anotace
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=8cm]{obrazky/textove_pole}\hfill
+				\caption{Ukázka textového pole s ikonou a nápovědou. Zdroj: [autor]}
+			\end{figure}
 
 			Extenzí textového pole jsou pole pro zadání času a data.
 			Ty rozšiřují manuální zadávání o okénka pro pohodlný výběr bez nutnosti klávesnice.
 
-			\includegraphics[width=0.24\linewidth]{obrazky/datumove_pole}\hfill
-			Ukázka pole s výběrem data a času. % todo anotace
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=6cm]{obrazky/datumove_pole}\hfill
+				\caption{Ukázka pole s výběrem data a času. Zdroj: [autor]}
+			\end{figure}
 
 			Vzhledem k požadavku možnosti specifikovat geografické lokace karet bylo potřeba zavést i specifické pole
 			pro výběr bodu v mapě.
@@ -1880,16 +1948,22 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 			Na rozdíl od textového pole toto pole neumožňuje specifikovat ikonu ani akční tlačítko a obsahuje pouze
 			statický popisek kvůli stále zobrazené mapě do všech krajů.
 
-			\includegraphics[width=0.24\linewidth]{obrazky/pole_lokace}\hfill
-			Ukázka pole pro výběr geografického bodu v mapě. % todo anotace
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=8cm]{obrazky/pole_lokace}\hfill
+				\caption{Ukázka pole pro výběr geografického bodu v mapě. Zdroj: [autor]}
+			\end{figure}
 
 			Posledním méně používaným polem v této aplikaci je pole pro výběr obrázku.
 			Pole umožní výběr souboru ze souborového systému uživatele, který je následně nahrát a zobrazen jeho náhled
 			přímo v poli.
 			Vybraný obrázek je pak možné jednoduše změnit nebo úplně odstranit.
 
-			\includegraphics[width=0.24\linewidth]{obrazky/obrazkove_pole}\hfill
-			Ukázka pole s nahraným obrázkem. % todo anotace
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=5cm]{obrazky/obrazkove_pole}\hfill
+				\caption{Ukázka pole s nahraným obrázkem. Zdroj: [autor]}
+			\end{figure}
 
 			\paragraph{Seznam položek}
 
@@ -1904,14 +1978,23 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 			Seznamy akcí se kromě běžného zobrazení umí i seskupit v případě malého místa a schovat akce do kontextuální
 			nabídky, aby uživatel využívající malé zařízení nepřišel o možnost využívat všechny akce s minimálním omezením.
 
-			\includegraphics[width=0.24\linewidth]{obrazky/jednoduchy_seznam}\hfill
-			Ukázka jednoduchého seznamu podobných prvků. % todo anotace
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=8cm]{obrazky/jednoduchy_seznam}\hfill
+				\caption{Ukázka jednoduchého seznamu podobných prvků. Zdroj: [autor]}
+			\end{figure}
 
-			\includegraphics[width=0.24\linewidth]{obrazky/seznam}\hfill
-			Ukázka pokročilého seznamu prvků. % todo anotace
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=\linewidth]{obrazky/seznam}\hfill
+				\caption{Ukázka pokročilého seznamu prvků. Zdroj: [autor]}
+			\end{figure}
 
-			\includegraphics[width=0.24\linewidth]{obrazky/vnoreny_seznam}\hfill
-			Ukázka vnořeného seznamu uvnitř jiného seznamu. % todo anotace
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=\linewidth]{obrazky/vnoreny_seznam}\hfill
+				\caption{Ukázka vnořeného seznamu uvnitř jiného seznamu. Zdroj: [autor]}
+			\end{figure}
 
 			\paragraph{Stránkování}
 
@@ -1921,18 +2004,22 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 			Pokud je velké množství stránek, prvek nezobrazí všechny stránky, ale zobrazí pouze okolí vybrané stránky
 			a první a poslední stránky pro rychlou navigaci.
 
-			\includegraphics[width=0.24\linewidth]{obrazky/strankovani}\hfill
-			Ukázka stránkování. % todo anotace
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=4cm]{obrazky/strankovani}\hfill
+				\caption{Ukázka stránkování. Zdroj: [autor]}
+			\end{figure}
 
 		\subsubsection{Finální návrh}
 
-		% TODO možná konkrétní stránky? figma není úplně aktuální a řekl bych že ten finální design u nění asi úplně to
-		% podstatný, myšlenkové postupy už jsou vysvětleny v přechozích kapitolách
 		S pomocí výše navržených základních prvků a jejich variacemi bylo navrženo finální \ac{UI} všech stěžejních
 		stránek.
 
-		\includegraphics[width=0.24\linewidth]{obrazky/finalni_navrh}\hfill
-		Finální grafický návrh aplikačních stránek a prvků. % todo anotace
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=\linewidth]{obrazky/finalni_navrh}\hfill
+			\caption{Finální grafický návrh aplikačních stránek a prvků. Zdroj: [autor]}
+		\end{figure}
 
 		Tento postup s návrhem aplikace před samotnou aplikací se ukázal jako velmi efektivní oproti původnímu prototypu
 		pomohl nejen snadněji implementovat samotné \ac{GUI}, ale i navrhnout \ac{API} díky zřetelným požadavkům na
@@ -1987,8 +2074,11 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 		moduly účtů a karet.
 		Modul dál řeší i prémiový plán a předplatné.
 
-		\includegraphics[width=0.24\linewidth]{obrazky/datovy_model_ucet}\hfill
-		Datový model popisující uživatelské účty. % todo
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=\linewidth]{obrazky/datovy_model_ucet}\hfill
+			\caption{Datový model popisující uživatelské účty. Zdroj: [autor]}
+		\end{figure}
 
 		Jak je možno vidět z diagramu, účet má kromě základních přihlašovacích informací v pohodě buď běžné kombinace emailové adresy
 		a hesla nebo v podobě externích poskytovatelů externích uživatelských účtů, i spoustu
@@ -2037,8 +2127,11 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 		V jistých případech může mít přiřazený datum expirace, se kterým automaticky zanikne.
 		S tím se váže i stav expirace, která pomáhá upozorňovat uživatele na současný stav předplatného.
 
-		\includegraphics[width=0.24\linewidth]{obrazky/datovy_model_kupon}\hfill
-		Datový model kupónového systému. % todo
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=6cm]{obrazky/datovy_model_kupon}\hfill
+			\caption{Datový model kupónového systému. Zdroj: [autor]}
+		\end{figure}
 
 		Předplatné může vzniknout na základě zadání platného kupónu uživatelem, avšak systém kupónů je navržen obecně, aby
 		bylo možné ho v případě budoucích rozšíření jednoduše přepoužít i na aktivaci jiných funkcionalit než jen
@@ -2047,8 +2140,11 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 		Mimo to má definovanou platnost, aby bylo možné tvořit i tzv. "akční" kupóny pouze na dané období, maximální počet
 		možných aplikování různými uživateli a doba po jakou bude vytvořené předplatné platné.
 
-		\includegraphics[width=0.24\linewidth]{obrazky/datovy_model_karta}\hfill
-		Datový model karet a navázaných dat. % todo
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=\linewidth]{obrazky/datovy_model_karta}\hfill
+			\caption{Datový model karet a navázaných dat. Zdroj: [autor]}
+		\end{figure}
 
 		Nejhlavnějším prvkem v této aplikaci jsou samotné karty a jejich data.
 		Každá karta má v prvé řadě vždy nějakého vlastníka v podobně uživatelského účtu, který má jako jediný práva na
@@ -2132,8 +2228,11 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 		Model je zastřešen jednou třídou seskupující otevírací dobu jednotlivých dnů v týdnu.
 		Každý den má pak definovaný interval kdy má daná entita otevřena a interval přestávky.
 
-		\includegraphics[width=0.24\linewidth]{obrazky/datovy_model_oblibene_karty}\hfill
-		Datový model oblíbených karet uživatelských účtů.
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=\linewidth]{obrazky/datovy_model_oblibene_karty}\hfill
+			\caption{Datový model oblíbených karet uživatelských účtů. Zdroj: [autor]}
+		\end{figure}
 
 		Oblíbené karty pak umožňují k uživatelskému účtu přiřazovat cizí karty jako oblíbené pro soukromé uchování a
 		poznámkování.
@@ -2166,8 +2265,11 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 		Zatímco repozitáře se starají pouze o komunikaci s databází pomocí \ac{SQL} jazyka nějaké podpůrné knihovny,
 		služební třídy tyto informace předávají dál, upravují nebo validují podle potřeb požadavků.
 
-		\includegraphics[width=0.24\linewidth]{obrazky/sluzby_a_repozitare}\hfill
-		Zjednodušený model služeb a repozitářů. % todo
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=\linewidth]{obrazky/sluzby_a_repozitare}\hfill
+			\caption{Zjednodušený model služeb a repozitářů. Zdroj: [autor]}
+		\end{figure}
 
 		Momentální implementace služeb komunikuje mezi sebou převážně pomocí primárních klíčů jednotlivých entit, aby
 		bylo zaručeno, že entita se kterou služba manipuluje je vždy aktuální verzí reflektující stav databáze.
@@ -2191,8 +2293,6 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 		Pro momentální stav aplikace implementovaný model je dostačující, nicméně pro budoucí rozšíření by bylo nutné
 		model značně optimalizovat za pomocí \ac{DDD} vzorů, které se sice nedají vždy aplikovat na každý problém, avšak
 		ve většině případů tyto vzory pomáhají zpřehlednit model (záleží ale také na konkrétní implementaci vzorů).
-
-		% TODO už jen Konkrétní businessové řešené problémy
 
 		\subsubsection{Komunikace s databázových systémem}
 
@@ -2768,8 +2868,11 @@ jan_novak
 		index a vše ostatní už si zařídí sám Elasticsearch.
 		Tento způsob však nenabízí možnost nahrání upravených dat entit, pouze změnu konfigurace indexu.
 
-		\includegraphics{obrazky/proces_reindexace_na_urovni_es}\hfill
-		Ukázka procesu hromadné reindexace dat na úrovni Elasticsearch. % todo
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=5cm]{obrazky/proces_reindexace_na_urovni_es}\hfill
+			\caption{Ukázka procesu hromadné reindexace dat na úrovni Elasticsearch. Zdroj: [autor]}
+		\end{figure}
 
 		Druhým složitějším a časově náročnějším způsobem, který však umožňuje indexovat kompletně nová data, je
 		reindexace dat z primární databáze.
@@ -2778,8 +2881,11 @@ jan_novak
 		Tento proces je zdlouhavý právě kvůli nutnosti přesunutí dat mezi dvě kompletně oddělenými systémy přes mezičlánek,
 		kterým je aplikace.
 
-		\includegraphics{obrazky/proces_reindexace_z_db}\hfill
-		Ukázka procesu hromadné reindexace nových dat z primární databáze. % todo
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=5cm]{obrazky/proces_reindexace_z_db}\hfill
+			\caption{Ukázka procesu hromadné reindexace nových dat z primární databáze. Zdroj: [autor]}
+		\end{figure}
 
 		Každý index pak má svého správce obsahující napojení na korektní index a jeho nastavení, aby se nastavení nemohla
 		mezi indexy míchat.
@@ -2817,8 +2923,11 @@ accounts:
 		Implementace zahrnovala připravení datového modelu a analyzátoru uživatelem definovaných vlastností.
 		Analyzátor pak z načtených a výchozích hodnot sestaví finální objekty reprezentující aktuální nastavení.
 
-		\includegraphics{obrazky/datovy_model_nastaveni_aplikace}\hfill
-		Ukázka datového modelu nastavení aplikace. % todo
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=\linewidth]{obrazky/datovy_model_nastaveni_aplikace}\hfill
+			\caption{Ukázka datového modelu nastavení aplikace.}
+		\end{figure}
 
 		\subsubsection{Šablony odkazů sítí}
 
@@ -2903,8 +3012,11 @@ https://{userPart}.example.com
 			Limit byl zaveden, aby nemohlo dojít k potencionálnímu zacyklení validace.
 			Je ale nastaven dostatečně vysoký, aby nedocházelo k předčasným selhání validací.
 
-			\includegraphics{obrazky/proces_validace_odkazu}\hfill
-			Proces validace URL adresy odkazu. % todo
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=\linewidth]{obrazky/proces_validace_odkazu}\hfill
+				\caption{Proces validace URL adresy odkazu. Zdroj: [autor]}
+			\end{figure}
 
 			Bohužel ne u všechn URL adres lze validovat existence.
 			Některé stránky totiž mají pokročilou ochranu proti škodlivým strojovým botům a tato validace je tedy
@@ -2986,32 +3098,46 @@ https://{userPart}.example.com
 		Jak je možné vidět níže, \ac{API} pro uživatelské účty zahrnuje manipulaci s účtem přihlášeného uživatele a manipulaci
 		s oblíbenými kartami.
 
-		\includegraphics{obrazky/api_model_ucty}\hfill
-		Stromový přehled struktury API uživatelských účtů. % todo
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=\linewidth]{obrazky/api_model_ucty}\hfill
+			\caption{Stromový přehled struktury API uživatelských účtů. Zdroj: [autor]}
+		\end{figure}
 
 		Nejpodstatnější \ac{API} se zabývá manipulací karet a zároveň umožňuje získávat i další podržezané entity.
 		Mimo to nabízí i pomocné operace pro manipulaci s display ID.
 
-		\includegraphics{obrazky/api_model_karty}\hfill
-		Stromový přehled struktury API karet. % todo
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=\linewidth]{obrazky/api_model_karty}\hfill
+			\caption{Stromový přehled struktury API karet. Zdroj: [autor]}
+		\end{figure}
 
 		\ac{API} úložiště momentálně umožňuje pouze soubory nahrávat, protože systém pracuje pouze s věřejnými soubory, které
 		lze získat přímo z Cloudinary serverů.
 
-		\includegraphics{obrazky/api_model_uloziste}\hfill
-		Stromový přehled struktury API uložště. % todo
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=8cm]{obrazky/api_model_uloziste}\hfill
+			\caption{Stromový přehled struktury API uložiště. Zdroj: [autor]}
+		\end{figure}
 
 		Pro vyhledávání karet a míst existuje separátní vyhledávací \ac{API} pro přehlednost.
 
-		\includegraphics{obrazky/api_model_vyhledavani}\hfill
-		Stromový přehled struktury API vyhledávání karet. % todo
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=8cm]{obrazky/api_model_vyhledavani}\hfill
+			\caption{Stromový přehled struktury API vyhledávání karet. Zdroj: [autor]}
+		\end{figure}
 
 		Aplikace také nabízí interní administraci celé aplikaci pro správce.
 		Proto vzniklo i \ac{API} pro spouštění servisních operací a k správě zákulisních zdrojů (např.: kupóny).
 
-		\includegraphics{obrazky/api_model_adm}\hfill
-		Stromový přehled struktury API operací administrace. % todo
-
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=\linewidth]{obrazky/api_model_adm}\hfill
+			\caption{Stromový přehled struktury API operací administrace. Zdroj: [autor]}
+		\end{figure}
 
 			\paragraph{Objekty pro přenos dat}
 
@@ -3156,8 +3282,11 @@ protected void configure(HttpSecurity http) throws Exception {
 
 			Následující diagram popisuje zpracování nově přihlášeného OAuth2 uživatele.
 
-			\includegraphics{obrazky/proces_prihlaseni_oauth2}\hfill
-			Proces zpracování přihlášeného OAuth2 uživatele a transformace na interního uživatele. % todo
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=\linewidth]{obrazky/proces_prihlaseni_oauth2}\hfill
+				\caption{Proces zpracování přihlášeného OAuth2 uživatele a transformace na interního uživatele. Zdroj: [autor]}
+			\end{figure}
 
 		\subsubsection{Automatizované testování}
 
@@ -3367,8 +3496,11 @@ export default lang
 		Proto je dobré v rámci kvalitního \ac{UX} poskytnou uživatelům rychlou a cílenou zpětnou vazbu o chybně zadaných
 		datech.
 
-		\includegraphics{obrazky/nevalidni_pole_formulare}\hfill
-		Ukázka pole formuláře s textem v nevalidním formátu. % todo
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=8cm]{obrazky/nevalidni_pole_formulare}\hfill
+			\caption{Ukázka pole formuláře s textem v nevalidním formátu. Zdroj: [autor]}
+		\end{figure}
 
 		Pomocí knihovny Vuelidate bylo možné snadno implementovat zobrazování chyb přímo v konkrétních polích
 		hned jakmile uživatel vyplní dané pole.
@@ -3440,8 +3572,11 @@ submitForm () {
 		Tento způsob je výhodný v tom, že uživatel si upozornění všimne ať už je kdekoliv na stránce.
 		Zároveň při přechodu mezi modálními okny se upozornění neztratí.
 
-		\includegraphics{obrazky/upozorneni_chyba}\hfill
-		Ukázka upozornění na chybu vzniklou špatnými přihlašovacími údaji. % todo
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=6cm]{obrazky/upozorneni_chyba}\hfill
+			\caption{Ukázka upozornění na chybu vzniklou špatnými přihlašovacími údaji. Zdroj: [autor]}
+		\end{figure}
 
 		K implementaci upozornění byla využita knihovna \url{https://www.npmjs.com/package/vue-notification}{Vue.js notifications}
 		poskytující dostatečnou volnost přizpůsobení vzhledu a chování oproti ostatním podobným knihovnám.
@@ -3522,8 +3657,11 @@ ENTRYPOINT yarn start --dotenv=.env.$ENV
 		Jediný primarní databáze PostgreSQL je provozována samostatně poskytovatelem DigitalOcean.
 		Není tak nutné se starat o ruční zálohovaní a výpadky.
 
-		\includegraphics{obrazky/architektura_produkce}\hfill
-		Ukázka putování HTTP požadavku infrastrukturou. % todo
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=\linewidth]{obrazky/architektura_produkce}\hfill
+			\caption{Ukázka putování HTTP požadavku infrastrukturou. Zdroj: [autor]}
+		\end{figure}
 
 		Webový server slouží jako vstupní brána do celého systému a poskytuje nástroje pro zabazpěčení
 		zpracování požadavků.
@@ -3601,7 +3739,7 @@ S připraveným funkčním \ac{API} se zaměření přesunulo tvorbu front-endov
 komunikující s \ac{API} serverem.
 
 Všechny definované požadavky na aplikaci byly ve výsledku splněny a aplikace byla otestována na produkčním prostředí.
-Aplikace je dále otevřena k potencionálním budoucním rozšířením možností pro koncové uživatele.
+Aplikace je dále otevřena k potencionálním budoucím rozšířením možností pro koncové uživatele.
 
 % todo
 % - změnit vzhled FE
