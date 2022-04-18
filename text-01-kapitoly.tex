@@ -1,32 +1,69 @@
 \section{Úvod}
 
-% todo podle tohoto upravit ještě cíl projektu a abstrakci
-% todo cílem je taky udělat high level pohled na moderní vývoj web aplikací a jejich možných technologií a způsobů vývoje
+Tato bakalářská práce se bude zabývat tvorbou aplikace pro tvorbu a zobrazování vstupních stránek osob, firem a jiných
+institucí.
+Takových aplikací existuje mnoho, nicméně žádná nekombinuje širší možnost i sdílení různých informací.
+Proto jsem se rozhodl navrhnout a implementovat vlastní verzi v podobě responzivní webové aplikace, která bude
+kombinovat různé typy údajů s vyhledáváním.
 
-Cílem této bakalářské práce je navrhnout a hlavně implementovat webovou aplikaci fungující na všech standardních zařízení
-pro vzájemné sdílení a vyhledávání kontaktních a doplňujících údajů, sociálních sítí a firemní struktury mezi osobami, firmami,
-neziskovými organizacemi, umělci a jinými subjekty na jednom místě.
-Hlavním požadavkem je umožnit snadný a rychlý přístup ke všem informacím všem bez omezení jako je registrace nebo
-geografická lokace jedince.
-I přesto, že existuje spousta podobných webových aplikací, žádná nekombinuje všechny vlastnosti a funkce navrhované
-v této práci, nebo se zaměřuje na jinou cílovou skupinu.
-Cílem není pouze navrhnout a implementovat webovou aplikaci obsahující všechny navrhované funkce, velmi důležitým
-požadavkem je propracované uživatelské prostředí s důrazem na design a uživatelskou přívětivost při zachování kompatibility
-a přívětivosti aplikace na mobilních zařízeních i počítačích.
+Jednostránkové vstupní stránky jsou moderní cestou jak sdílet všechny své veřejné kontaktní a jiné údaje se
+svými zákazníky nebo sledovately.
+Představují jakosi digitální rozšířenou alternativu k bežných fyzickým vizitkám, které však postrádají interaktivnost
+spoustu důležitých údajů.
 
-% todo je to pouze rozcestník ne sociální síť se zprávami, feedem, statusy a podobně
-% digitální vizitky
+Dále se práce zaměří na analýzu implementačních technologií, hlavně pak na programovací jazyky a frameworky urychlující vývoj.
+Technologií v dnešní době existuje celá řada a každým dnem přibývají nové.
+Pro účely této práce se technologie rozdělí na front-endové a back-endové.
+Front-endové budou pomáhat tvořit responzivní a interaktivní uživatelské prostředí pro koncové uživatele.
+Back-endové na proti tomu budou tvořit konkrétní logiku aplikace na pozadí.
+To zahrnuje operace jako manipulaci s uživatelskými daty nebo jejich agregaci.
+Součástí této práce bude průzkum celosvětově využívaných technologií pro vývoj webových aplikací.
+V případě front-endu se bude jednat o nějaký z Javascriptových frameworků: Vue, React, Swelte nebo Angular.
+V rámci back-endu se práce zaměří na programovací jazyky Java, Javascript, C\#, PHP a další a také na
+podpůrné nástroje v podobě databázových systémů.
 
-Velmi důležitým krokem před samotnou implementací je zvolení vhodných technologií umožňující nejsnazší a nejrychlejší
-vývoj a hlavně implementaci všech požadavků.
+Po zvolení vhodných technologií bude následovat navržení uživatelského prostředí společně s interním
+datovým modelem a strukturou aplikace.
+Tento návrh bude vzápětí implementován a jednotlivé části jeho postupu popsány.
+
+Konečným krokem bude spuštění aplikace v produkčním prostředí přístupné veřejnosti s potřebnými zabezpečeními.
 
 \section{Cíl práce}
 
-% TODO
+V první řadě bude nezbytné zjistit jaké informace bude vhodné umožňovat uživatelům zobrazovat na jejich
+vstupních stránkách a jak s těmito informacemi nakládat napříč aplikací.
+Dále bude následovat analýza a provonání programovacích jazyků a frameworků společně s jejich výhodami a nevýhodami.
+Výsledný výběr bude kombinací požadavků aplikace a výhod jednotlivých technologií.
+
+Implementace pak bude vycházet z návrhu datového modelu a struktury aplikace.
+U jednotlivých řešených problémů bude problém popsán, navrženy možné postupy a samotná výsledná implementace.
+
+Primárním cílem je vytvořit funkční interaktivní webovou aplikaci umožňující intuitivně svým uživatelům
+tvořit, spravovat a sdílet své vstupní stránky mezi jinými uživateli.
+Aplikace by měla také podporovat všechny využívané rozměry zařízení, aby byl zaručen přístup k aplikaci z mobilních
+i desktopových zařízení s minimálním omezením pro uživatele.
+Rovněž by aplikace měla být jednoduše spustitelná a udržitelně provozována v produkčním prostředí.
 
 \section{Vstupní stránky pro osoby a instituce}
 
-% todo
+Vstupní stránky pro osoby a instituce jsou prezentační jednostránkové webové stránky.
+Tyto stránky slouží k představení daného subjektu/objektu koncovému uživateli, který hledá základní
+informace o daném subjektu.
+Kromě základních informací většinou obsahují všemožné kontaktní údaje a odkazy na sociální sítě pro
+získání mnohem detailnějších informací.
+Některé stránky umožňují reprezentovat i například firemní strukturu nebo lokaci.
+
+Možnosti informací, které lze definovat na takových stránkách nejsou jasně definované, spíše jsou
+určeny aplikací poskytující tyto služby.
+Kvůli tomu každá již existující aplikace zpřístupňuje jiné informace autorům jiným stylem.
+
+Tento typ stránek je velice vhodný pro sdílení svých osobních údajů a funguje jako takový rejstřík uživatelových
+informací.
+Vstupní stránky by se dalo popsat jako digitální rozšířené vizitky nejen pro firmy.
+
+Pro tvorbu takovýchto stránek existuje nepřeberné množství webových aplikací, kde lze
+tyto prezentace jednoduše tvořit.
+Ne všechny ale nabízí všechny zmíněné možnosti a je tak na autorovi, jakou webovou aplikaci zvolí.
 
 \section{Existující aplikace}
 
@@ -87,13 +124,10 @@ Zde byly popsány současné nejznámější existující aplikace pro porovnán
 
 	Obdobou Firmy.cz trpící podobnými problémy je další česká služby Zlaté stránky
 
-
 \section{Návrh vlastní aplikace}
 
-% todo aplikace místo řešení
-
-Jak již bylo nastíněno, navrhované řešení bude reprezentovat jakýsi rejstřík pro sdílení a vyhledávání základních informací
-subjektů a objektů, které uživatele dovedou k hledaným informacím.
+Implementovaná aplikace bude oproti konkurenčních řešení kombinovat více různých typů informací, aby tak pokryla
+většinu požadavků jak soukromých osob, tak firem nebo objektů.
 Základní obecnou jednotkou reprezentující takový subjekt či objekt bude karta; odvozenina z anglického překladu vizitky "business card".
 Každá karta tak bude jakousi digitální pokročilou náhradou klasických vizitek nevztahující se pouze na osoby a jejich
 hlavní kontaktní údaje.
@@ -108,8 +142,6 @@ nějaká hierarchie ostatních subjektů či objektů.
 	zjednodušení zpětného dohledání například kontaktních údajů.
 	Kromě obyčejného uchování oblíbených karet bude možné takové karty seskupovat do vlastních upravitelných složek pro
 	lepší organizaci a komentovat vlastními soukromými poznámkami.
-	Každá oblíbená karta tak bude příslušet nějaké složce a bude mít poznámku s pokročilým formátováním viditelnou pouze
-	autorovi poznámky.
 	Tyto funkce umožní uživatelům komunikujícím s velkým počtem subjektů vyznat se v kontaktních údajích a poznámkách
 	například s poslední komunikace nebo podrobností o daném subjektu bez nutnosti ručně takové informace spravovat v
 	textových editorech nebo papírových poznámkách.
@@ -117,7 +149,7 @@ nějaká hierarchie ostatních subjektů či objektů.
 	\subsection{Viditelnost karet}
 
 	Protože vyplnění takové karty může být zdlouhavý proces, i za předpokladu intuitivního \ac{UI}, je potřeba umožnit
-	uživatelům karty skrýt do té doby než budou připravené ke zveřejnění.
+	uživatelům karty skrýt do té doby, než budou připravené ke zveřejnění.
 	Zároveň ale takovou rozpracovanou kartu může uživatel chtít někomu vzdáleně ukázat například pro ověření správnosti informací
 	bez zveřejňování.
 	Karty tak budou moct mít dvě viditelnosti: veřejná a skrytá.
@@ -977,10 +1009,6 @@ Nejrozšířenějším takovým kandidátem je \noindent\ac{JS} dominující v s
 	% https://www.websiterating.com/email-marketing/mailchimp-vs-sendinblue/
 	Při výběru tak hlavně záleží jaké limity jsou pro projekt stěžejní, případně jestli projekt potřebuje nějaké speciální
 	marketingové nástroje.
-
-	\subsection{Nástroje pro správu kódu}
-
-	% todo verzovací nástroje a teamové nástroje
 
 	\subsection{Provoz v produkčním prostředí}
 
@@ -3539,10 +3567,38 @@ spec:
 % ####################################
 \section{Závěr}
 
-% TODO
-DDD
-digital ocean si občas prostě něco přenastaví pokud to není v souboru o čemž se jentak nedozvíš
-spring data jdbc
+Tato bakalářské práce se zabývala vývojem webové aplikace pro tvorbu, správu, zobrazení a sdílení vstupních stránek
+různých subjektů a objektů.
+Vývoj začal návrhem funkčních požadavků definující, které možnosti bude aplikace uživatelům poskytovat.
+Mezi hlavní patří tvorba veřejně dostupných vstupních stránek s kontaktními údaji, firemní hierarchií nebo geolokací,
+fulltextové vyhledávání a ukládání oblíbených stránek.
+
+Následovala analýza a provonání webových technologií a nástrojů vhodných pro samotnou implementaci.
+Výběr obsahoval programovací jazyky a frameworky pro vývoj uživatelského rozhraní a serverové aplikace, nástroje pro návrh
+rozhraní a podpůrné systémy.
+Mezi technologiemi pro implementaci uživatelského rozhraní se objevily frameworky Vue, React, Angular nebo Swelte.
+Z těchto byl vybrán framework Vue pro jeho jednoduchost a kvalitní dokumentaci pro začátečníky.
+U jazyků a frameworků pro vývoj serverové části obsahující veškerou logiku aplikace bylo rozhodování mezi Javou,
+C\#, PHP a Javascriptem.
+Kvůli velmi podobným výhodám napříč programovacími jazyky, byl vybrán jazyk Java společně s frameworkem Spring spíše podle
+osobních preferencích a předchozích znalostí.
+
+Další rozhodování se zabývalo výběrem vhodné primární databáze pro uchování uživatelských dat a nástrojem pro
+poskytnutí fulltextového vyhledávání.
+Výběr zahrnoval populární databáze PostgreSQL, MySQL, Oracle DB, MariaDB a MongoDB.
+Na základě požadavků aplikace se výběr zúžil pouze \ac{SQL} databáze z nichž byla vybrána PostgreSQL podle preferencí.
+Kromě primární databáze bylo nutné zvolit ještě separátní systém pro fulltextového vyhledávání.
+V tomto případě byl vybrán Elasticsearch pro jeho rozšířenost, univerzálnost a možnost lokálního provozu.
+
+Po zvolení všech potřebných technologií, byl v první řadě vytvořen návrh uživatelského rozhraní.
+Na zakladě toho byl navržen datový model a zvolen návrhový vzor \ac{DDD} pro strukturování
+kódu aplikace.
+Na základě modelu byl následně implementován \ac{API} server s veškerou business logikou.
+S připraveným funkčním \ac{API} se zaměření přesunulo tvorbu front-endové části podle návrhu uživateslkého rozhraní
+komunikující s \ac{API} serverem.
+
+Všechny definované požadavky na aplikaci byly ve výsledku splněny a aplikace byla otestována na produkčním prostředí.
+Aplikace je dále otevřena k potencionálním budoucním rozšířením možností pro koncové uživatele.
 
 % todo
 % - změnit vzhled FE
