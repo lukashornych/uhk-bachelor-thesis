@@ -199,6 +199,7 @@
   % Seznam obrazku a tabulek (pokud prace obsahuje velke mnozstvi obrazku, tak se to hodi)
   % List of figures and list of tables (if the thesis contains a lot of pictures, it is good)
 
+  \addcontentsline{toc}{section}{Seznam obrázků}
   \ifczech
   \renewcommand\listfigurename{Seznam obrázků}
   \fi
@@ -208,12 +209,10 @@
   {\hypersetup{hidelinks}\listoffigures}
   \thispagestyle{empty}
 
-  \ifczech
-  \renewcommand\listtablename{Seznam tabulek}
-  \fi
-  \ifslovak
-  \renewcommand\listtablename{Zoznam tabuliek}
-  \fi
+  \newpage
+
+  \addcontentsline{toc}{section}{Seznam ukázek kódů}
+  \lstlistoflistings
 
   \newpage
 

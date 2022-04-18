@@ -862,7 +862,8 @@
 %\fi
 
 \ifczechslovak
-  \renewcommand{\lstlistingname}{Výpis} %Výpis místo Listing
+  \renewcommand{\lstlistingname}{Ukázka kódu} %Výpis místo Listing
+  \renewcommand{\lstlistlistingname}{Seznam ukázek kódů}
 \fi
 
 
