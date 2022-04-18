@@ -147,7 +147,7 @@ nějaká hierarchie ostatních subjektů či objektů.
 		\item geografická lokace
 		\item hlavní otevírací doba
 		\item kanceláře, pobočky
-	\end
+	\end{itemize}
 
 	Pro rychlé vizuální rozpoznaní karty bude mít autor k dispozici možnost nahrát vlastní fotografii nebo avatar s logem.
 	Fotografie nebo avatar dokáže dostatečně odlišit jednotlivé karty bez nutnosti čtení názvu nebo popisku ke zjistění o
@@ -165,7 +165,7 @@ nějaká hierarchie ostatních subjektů či objektů.
 		\item Je to osoba, firma, událost, dílo nebo předmět?
 		\item Čím daný subjekt či objekt zabývá v profesní nebo soukromé sféře?
 		\item Proč je daný subjekt či objekt zajímavý?
-	\end
+	\end{itemize}
 	Popisek bude mít omezenou velikost a nebude povinný, nicméně silně doporučovaný.
 
 	Základními kontaktními údaji se v případě těchto karet rozumí: telefonní číslo, hlavní emailová adresa, hlavní
@@ -1223,7 +1223,7 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 	síťovou komunikaci.
 	Z tohoto důvodu již nějakou dobu výměně strukturovaných dat dominuje jazyk \ac{JSON}, který je značně stručnější a
 	čitelnější a hlavně jednodušší na zpracování.
-	Na tomto jazyka staví právě vzory \ac{REST} a \ac{GraphQL}.
+	Na tomto jazyka staví právě vzory \ac{REST} a GraphQL.
 	\ac{REST} staví na principu poskytování jednotlivých ucelených dat v předem specifikované formě a objemu v
 	podobě jednotlivých "resource", které lze získat nebo zapsat a to vše bez návaznosti mezi jednotlivými požadavky
 	\cite{restfulapi}.
@@ -1505,7 +1505,7 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 	Tato verze stavěla na starším způsobu tvorby webových aplikací se sestavováním jednotlivých stránek již na serveru pomocí
 	šablon.
 	Neexistovalo tak rozdělení na front-endovou \ac{GUI} aplikace a \ac{API} server aplikace předávající si data mezi sebou
-	pomocí \ac{REST} \ac{AC}.
+	pomocí \ac{REST} \ac{API}.
 	Místo toho existovala pouze jedna standardní webová aplikace poskytující již sestavené stránky pomocí dat z databáze.
 	Aplikace však zahrnovala střípky \ac{REST} \ac{API} se snahou udělat \ac{GUI} více dynamické např.: při editaci poznámek
 	oblíbených karet.
@@ -2163,7 +2163,7 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 
 		% TODO už jen Konkrétní businessové řešené problémy
 
-		\subseciton{Komunikace s databázových systémem}
+		\subsubsection{Komunikace s databázových systémem}
 
 		Prvním problémem k řešení při implementaci již samotné business logiky třídách služeb a repozitářů je výběr
 		přístupu mapování objektů do databázové struktury.
@@ -2242,49 +2242,22 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 		Na základě definovaných metod a \ac{SQL} kódu pak MyBatis dynamicky vygeneruje konkrétní třídy zajišťující tuto
 		logiku.
 		Zde je možné vidět reprezentativní ukázku části repozitáře pro práci uživatelskými účty.
+
 		\begin{lstlisting}[language=Java]
 @Mapper
 public interface AccountDao {
-
-	// Získání uživatelského účtu z databáze společně s vnořeným předplatným a kolekcí rolí.
-	// Entita je pak automaticky namapována MyBatisem díky stejnému pojmenování sloupců tabulek a atributů třídy.
-	@Results({
-		@Result(property = "id", column = "id"),
-		@Result(property = "authorities", column = "id", many = @Many(select = "findAllRoles")),
-		@Result(property = "subscription", column = "id", one = @One(select = "findSubscriptionByAccountId"))
+	@Select({
+		"select *",
+		"from " + Account.TABLE_NAME,
+		"where email = #{email}"
 	})
-	@Select("select * from " + Account.TABLE_NAME + " where email = #{email}")
 	Optional<Account> findByEmail(String email);
-
-	// Uložení nového uživatelského účtu do databáze.
-	// MyBatis zároveň zpětně doplní do objektu účtu automaticky vygenerované unikátní ID databází.
-	@Insert({
-		"insert into " + Account.TABLE_NAME + " (email, password, state, createdOn, changedOn, passwordChangedOn, googleExternalId, gitHubExternalId, facebookExternalId)",
-		"values (#{email}, #{password}, #{state}, #{createdOn}, #{changedOn}, #{passwordChangedOn}, #{googleExternalId}, #{gitHubExternalId}, #{facebookExternalId})"
-	})
-	@Options(useGeneratedKeys = true, keyProperty = "id")
-	void saveNew(Account account);
-
-	// Uložení již existujícího uživatelského účtu do databáze.
-	// Přepisují se pouze hodnoty, které se mohou měnit.
-	@Update({
-		"update " + Account.TABLE_NAME,
-		"set",
-		"   email = #{email},",
-		"   password = #{password},",
-		"   state = #{state},",
-		"   changedOn = #{changedOn},",
-		"   passwordChangedOn = #{passwordChangedOn},",
-		"   googleExternalId = #{googleExternalId},",
-		"   gitHubExternalId = #{gitHubExternalId},",
-		"   facebookExternalId = #{facebookExternalId}",
-		"where id = #{id}"
-	})
-	void saveUpdated(Account account);
-
-	/* ... zbytek kódu byl vynechán pro přehlednost ... */
 }
 		\end{lstlisting}
+
+		% todo
+ 		Získání uživatelského účtu z databáze společně s vnořeným předplatným a kolekcí rolí.
+		Entita je pak automaticky namapována MyBatisem díky stejnému pojmenování sloupců tabulek a atributů třídy.
 
 		\subsubsection{Validace entit}
 
@@ -2320,8 +2293,6 @@ public class CardLinkGroup {
 	@NotNull
 	@Size(min = 1)
 	private List<@Valid CardLink> links;
-
-	/* ... zbytek kódu byl vynechán pro přehlednost ... */
 }
 		\end{lstlisting}
 		Tato třída obsahuje vlastní třídní pravidlo pro validaci \ac{URL} adres vnořených odkazů na základě definované šablony,
@@ -2331,9 +2302,9 @@ public class CardLinkGroup {
 		Tyto validace pak mají vlastní Java anotace tvářící se jako běžná pravidla, mají však vlastní implementaci
 		validátoru ověřující validovaný objekt.
 		Zde je vidět ukázka validátoru ověřující neměnitelné atributy upravené karty oproti její původní verzi:
+
 		\begin{lstlisting}[language=Java]
 public class UpdatedCardValidator implements ConstraintValidator<UpdatedCard, Card> {
-	/* ... */
 	@Override
 	public boolean isValid(Card updatedCard, ConstraintValidatorContext context) {
 		final Optional<Card> originalCard = cardService.getCard(updatedCard.getId(), true);
@@ -2349,6 +2320,7 @@ public class UpdatedCardValidator implements ConstraintValidator<UpdatedCard, Ca
 	}
 }
 		\end{lstlisting}
+
 		Pokud se nějaký takový atribut změnil o proti původní verzi změnil, validace selže a neumožní uživateli
 		uložit novou verzi entity.
 
@@ -2397,14 +2369,21 @@ public enum StorageType {
 		Cloudinary naštěstí takový metadata podporuje.
 		Každý uložený soubor je pak popsán následující třídou obsahující všechny potřebné informace o souboru pro zobrazení
 		a validaci:
+
 		\begin{lstlisting}[language=Java]
 public class StorageFile {
     private final StorageType storageType;
-    private final long ownerId; // ID uživatelského účtu, který tento soubor nahrál
-    private final String publicId; // ID soubor v Cloudinary uložišti
-    private final String url; // veřejná URL adresa, na které je obrázek možné zobrazit
+    private final long ownerId;
+    private final String publicId;
+    private final String url;
 }
 		\end{lstlisting}
+
+		% todo popis
+		ID uživatelského účtu, který tento soubor nahrál
+		ID soubor v Cloudinary uložišti
+		veřejná URL adresa, na které je obrázek možné zobrazit
+
 		Autor a typ úložiště slouží momentálně hlavně k jednoduché validaci zvoleného obrázku při ukládání karty, kdy
 		se validuje jestli majitel karty je zároveň majitelem obrázku a zda-li se jedná skutečně o profilový obrázek.
 		Tyto validace existují, aby nebylo možné někým záměrně využít obrázek někoho jiného nebo soubor, který k tomu
@@ -2412,22 +2391,26 @@ public class StorageFile {
 
 		Finální uložení se pak už skládá pouze z načtení binárních dat obrázku a sestavení výše zmíněných metadat a zavolání \ac{API}
 		služby:
+
 		\begin{lstlisting}[language=Java]
-// sestavení metadat
 final long authenticatedAccountId = accountService.getAuthenticatedAccount().getId();
 final Map<String, Object> params = buildFileUploadParams(storageType, authenticatedAccountId);
 
-// načtení souboru
 final BufferedInputStream bis = new BufferedInputStream(file.getInputStream());
 final byte[] fileBytes = bis.readAllBytes();
 
-// nahrání souboru do Cloudinary
 cloudinary.uploader().upload(fileBytes, params);
 		\end{lstlisting}
+
+		% todo
+		sestavení metadat
+		načtení souboru
+		nahrání souboru do Cloudinary
 
 		Získání popisného souboru z Cloudinary je podobně jednoduché jako uložení.
 		\ac{API} umožňuje získat data o jednotlivých souborech pomocí interního ID a požadavek lze obohatit o dodatečné požadavky.
 		V případě této aplikace se výsledek obohacuje o metadata.
+
 		\begin{lstlisting}[language=Java]
 final Map<String, Object> params = new HashMap<>();
 params.put("metadata", true);
@@ -2441,6 +2424,7 @@ return Optional.of(new StorageFile(
 	(String) response.get("secure_url")
 ));
 		\end{lstlisting}
+
 		Popisující soubor obecně používá na místech, kde nejsou potřeba konkrétní binární data souboru, ale pouze
 		informace o něm.
 		Binární data jsou většinou potřeba pouze v případě zobrazení souborů v \ac{GUI} nikoliv přímo v aplikaci díky
@@ -2488,6 +2472,7 @@ https://res.cloudinary.com/id_uloziste/image/upload/t_256x256/id_souboru
 
 		Každá šablona má v systému unikátní ID, takže byla tvořena jednoduchá enumerace pro explicitní mapování
 		šablon ke kryptickým identifikátorům.
+
 		\begin{lstlisting}[language=Java]
 public enum EmailTemplate {
     NEW_ACCOUNT_CONFIRMATION(1),
@@ -2503,10 +2488,9 @@ public enum EmailTemplate {
     ACCOUNT_SUBSCRIPTION_EXPIRATION_FINAL_ACTION(11);
 
     private final long id;
-
-    /* ... zbytek kódu byl vynechán pro přehlednost ... */
 }
 		\end{lstlisting}
+
 		Díky této enumeraci je pak v aplikaci jasné jaká šablona bude použita.
 		Dále může šablona využívat parametry místo konkrétního textu, které jsou při zpracování šablony nahrazeny
 		parametry požadavku.
@@ -2515,6 +2499,7 @@ public enum EmailTemplate {
 		Odeslání konkrétního emailu už je pak jednoduché a vyžaduje pouze specifikování emailové adresy adresáta,
 		šablonu emailu a volitelně i parametry šablony.
 		Aplikace pak už pouze sestaví požadavek o odeslání emailu a předá ho \ac{API}.
+
 		\begin{lstlisting}[language=Java]
 public CreateSmtpEmail sendTransactionalEmail(@NonNull String to, @NonNull EmailTemplate template, Properties templateArguments) {
 	final SendSmtpEmail sendSmtpEmail = new SendSmtpEmail();
@@ -2545,26 +2530,16 @@ public CreateSmtpEmail sendTransactionalEmail(@NonNull String to, @NonNull Email
 		Spring umožňuje do systému publikovat aplikační události a definovat pozorovatele, kteří naslouchají na konkrétní
 		vzniklé aplikační události a mohou na ně reagovat vykonáním libovolných operací.
 		Samotná aplikační událost je pouze jednoduchý objekt nesoucí kontextové data reprezentovaná událostí.
+
 		\begin{lstlisting}[language=Java]
 public class CardUpdatedEvent extends ApplicationEvent {
     private final Card originalCard;
     private final Card updatedCard;
 
-    public CardUpdatedEvent(Object source, @NonNull Card originalCard, @NonNull Card updatedCard) {
-        super(source);
-        this.originalCard = originalCard;
-        this.updatedCard = updatedCard;
-    }
-
-    public Card getOriginalCard() {
-        return originalCard;
-    }
-
-    public Card getUpdatedCard() {
-        return updatedCard;
-    }
+    /* ... */
 }
 		\end{lstlisting}
+
 		Příkladem může být událost vyvolaná jako následek uložení upravené karty.
 		Událost tedy reprezentuje úpravu karty a může sebou nést danou upravnou kartu, kterou pozorovatel může
 		využít pro provedení svých operací.
@@ -2572,7 +2547,7 @@ public class CardUpdatedEvent extends ApplicationEvent {
 public class CardUpdatedEventListener {
     @EventListener
     public void processCardUpdatedEvent(@NonNull CardUpdatedEvent event) {
-        /* operace nad událostí */
+        /* ... */
     }
 }
 		\end{lstlisting}
@@ -2640,9 +2615,7 @@ public void processAccountNewEmailRequestedEvent(@NonNull AccountNewEmailRequest
 		prostřednictvím které lze jednoduše nahrávat entity do indexu k indexaci.
 
 		\begin{lstlisting}[language=Java]
-// vytvoření entity
 final SearchableCard cardToIndex = searchableCardFactory.create(card);
-// nahrání entity do Elasticsearch indexu, který ji automaticky zanalyzuje
 final IndexResponse cardResponse = esClient.index(i -> i
 		.index(SearchableCard.INDEX_ALIAS)
 		.id(String.valueOf(card.getId()))
@@ -2650,8 +2623,12 @@ final IndexResponse cardResponse = esClient.index(i -> i
 		\end{lstlisting}
 		Ukázka indexace jedné karty do Elasticsearch databáze. % todo
 
+		% todo
+		vytvoření entity
+		nahrání entity do Elasticsearch indexu, který ji automaticky zanalyzuje
+
 		Podobně jednoduše lze entity fulltextově vyhledávat napříč vícero atributy entit
-		\begin{lstlisting}[langauge=Java,label={lst:Ukázka fulltextového vyhledání indexovaných karet pomocí několika atributů.}]
+		\begin{lstlisting}[language=Java]
 final SearchResponse<SearchableCard> response = esClient.search(
 		_0 -> _0
 				.index(SearchableCard.INDEX_ALIAS)
@@ -2692,13 +2669,11 @@ final SearchResponse<SearchableCard> response = esClient.search(
 		\begin{lstlisting}[language=Java,label{lst=Ukázka indexovatelné varianty karty.}]
 public class SearchableCard {
 
-	// metadata pouze pro následné zobrazení entity
     String displayId;
     String avatarId;
     Set<CardLinkDto> links;
     CardOpeningHoursDto openingHours;
 
-	// atributy, podle kterých lze fulltextově vyhledávat
     String name;
     String website;
     String contactEmail;
@@ -2710,9 +2685,13 @@ public class SearchableCard {
     Set<String> tags;
     Set<String> officeNames;
 
-    /* ... zbytek kódu byl vynechán pro přehlednost ... */
+    /* ... */
 }
 		\end{lstlisting}
+
+% todo
+metadata pouze pro následné zobrazení entity
+atributy, podle kterých lze fulltextově vyhledávat
 
 		Na ukázce varianty karty připravené pro indexaci je možné vidět právě zmiňované zjednodušení a agregace dat.
 		První řadě třída obsahuje pouze část originálních dat, která jsou relevantní pro vyhledávání.
@@ -2727,9 +2706,9 @@ public class SearchableCard {
 		Tento řetězec je následně očištěn částí \ac{URL} adres jako jsou: část cesty nebo dotazovací parametry.
 
 		\begin{lstlisting}[label={lst=Ukázka transformace URL adresy na profilové ID.}]
-// možná originální URL adresa zadaná uživatelem
+// URL adresa
 https://example.com/profile/jan_novak?detail
-// vytažené profilové ID
+// ID
 jan_novak
 		\end{lstlisting}
 
@@ -2786,7 +2765,7 @@ jan_novak
 		V modernějších aplikacích postavených na frameworku Spring se ale tento formát postupně nahrazuje flexibilnějším
 		\ac{YAML} umožňující lépe definovat celé objekty a hodnoty jejich atributů podobně jako jazyk \ac{JSON}.
 
-		\begin{lstlisting}[language=YAML]
+		\begin{lstlisting}
 accounts:
 	deletion:
 		process-accounts-deletion-requests-every: 300
@@ -2824,15 +2803,19 @@ accounts:
 		\begin{lstlisting}[language=Java]
 public class CardLinkTemplate {
     String id;
-    Set<String> names; // názvy podle kterých lze šablony vyhledat v uživatelské administraci
-    Set<String> urlTemplates; // validní URL adresy
-    Set<CardLinkTemplateCategory> categories; // kategorie, ve kterých lze šablonu vyhledat
-    boolean ignoreExistenceValidation; // zda se má validovat existence odkazu s touto šablonou
-
-    /* ... zbytek kódu byl vynechán pro přehlednost ... */
+    Set<String> names;
+    Set<String> urlTemplates;
+    Set<CardLinkTemplateCategory> categories;
+    boolean ignoreExistenceValidation;
 }
 		\end{lstlisting}
 		Ukázka možných nastavení pro každou šablonu sítí. % TODO
+
+		% todo
+		názvy podle kterých lze šablony vyhledat v uživatelské administraci
+		validní URL adresy
+		kategorie, ve kterých lze šablonu vyhledat
+		zda se má validovat existence odkazu s touto šablonou
 
 			\paragraph{Šablony URL adres}
 
@@ -2846,28 +2829,19 @@ public class CardLinkTemplate {
 			Šablony jsou pak následně zanalyzovány a vytvoří se z nich Regex výrazy, pomocí kterých dokáže Java zjistit
 			zdá daný textový řetězec odpovídá nějakému výrazu.
 			Regex je výrazový jazyk skládající se ze speciálních znaků definující pravidla porvnávání \cite{regex}.
-			Systém momentálně podporuje sekvence \lstinline{*} a \lstinline{userPart}.
-			Sekvence \lstlisting{*} říká, že se na tomto místě může nacházet jakýkoliv znak vyjma hostové části \ac{URL}
+			Systém momentálně podporuje sekvence \lstinline{*} a \lstinline!{userPart}!.
+			Sekvence \lstinline{*} říká, že se na tomto místě může nacházet jakýkoliv znak vyjma hostové části \ac{URL}
 			adresy, kde se mohou pod touto sekvencí skrývat pouze písmena a pomlčky.
-			Sekvence \lstlisting{userPart} může obsahovat stejné znaky jako \lstlisting{*} sekvence, avšak textové
+			Sekvence \lstinline!{userPart}! může obsahovat stejné znaky jako \lstinline{*} sekvence, avšak textové
 			řetězec označený touto sekvenci v cílové \ac{URL} adresa má speciální význam.
 			Nachází se v něm totiž právě zmiňované profilové ID.
 			Díky tomuto označení je pak systém schopen určit, kde se profilové ID nachází a vytáhnou jej.
 
 			\begin{lstlisting}
-// ukázková šablona URL adresy
 https://*.example.com/{userPart}
-// vyhovující URL adresy
-https://shop.example.com/jan_novak
-https://profile.example.com/pepa_pavel
-
-// ukázková šablona URL adresy
 https://{userPart}.example.com
-// vyhovující URL adresy
-https://jan-novak.example.com
-https://pepa-pavel.example.com
 			\end{lstlisting}
-			Ukázka šablon URL adres a jejich vyhovujících konkrétních URL adres. % todo
+			Ukázka šablon URL adres. % todo
 
 			Systém navíc obsahuje různé validace aplikované při analyzování šablon, aby se do aplikace nemohli načíst
 			nevalidní šablony.
@@ -3071,15 +3045,22 @@ public interface DtoFactory<E, D> {
 @Override
 protected void configure(HttpSecurity http) throws Exception {
         http
-            .mvcMatchers(HttpMethod.GET, "/api/search/cards").permitAll() // tuto URL adresu mohou využívat i nepřihlášení uživatelé
-            .mvcMatchers(HttpMethod.GET, "/api/search/places").permitAll() // tuto URL adresu mohou využívat i nepřihlášení uživatelé
-            .mvcMatchers("/api/adm/**").hasRole("ADMIN") // URL adresy s tímto vzorem mohou využít jen uživatelé s rolí ADMIN
-            .mvcMatchers("/api/**").authenticated() // všechny ostatní URL adresy začínající "/api" prefixem využadují přihlášeného uživatele
-            .anyRequest().denyAll() // ostatní URL adresy nemůže využít nikdo
-        /* ... zbytek kódu byl vynechán pro přehlednost ... */
+            .mvcMatchers(HttpMethod.GET, "/api/search/cards").permitAll()
+            .mvcMatchers(HttpMethod.GET, "/api/search/places").permitAll()
+            .mvcMatchers("/api/adm/**").hasRole("ADMIN")
+            .mvcMatchers("/api/**").authenticated()
+            .anyRequest().denyAll()
+        /* ... */
 }
 			\end{lstlisting}
 			Ukázka části nastavení zabezpečení pomocí knihovny Spring Security. % todo
+
+			% todo
+			tuto URL adresu mohou využívat i nepřihlášení uživatelé
+			tuto URL adresu mohou využívat i nepřihlášení uživatelé
+			URL adresy s tímto vzorem mohou využít jen uživatelé s rolí ADMIN
+			všechny ostatní URL adresy začínající "/api" prefixem využadují přihlášeného uživatele
+			ostatní URL adresy nemůže využít nikdo
 
 			\paragraph{Přihlašování}
 
@@ -3168,16 +3149,15 @@ protected void configure(HttpSecurity http) throws Exception {
 		třída komunikuje.
 		K tomu je využita knihovna Mockito, která zároveň umožňuje zkoumat proběhlé interakce a vyhodnocovat testy
 		na základě toho.
+
 		\begin{lstlisting}[language=Java]
 @Test
 public void getMostUsedTags_ExpectedFoundCorrectOnes() {
-	// příprava simulace chování repozitáře poskytující data štítků pomocí Mockito knihovny
 	when(cardTagDaoMock.findMostUsed(3)).thenReturn(Set.of(
 			new CardTag(null, "dev"),
 			new CardTag(null, "nature"),
 			new CardTag(null, "tech")
 	));
-	// ověření, že služba vrací očekávané štítky pomocí JUnit knihovny
 	assertEquals(
 			Set.of("dev", "nature", "tech"),
 			cardTagService.getMostUsedTags(3)
@@ -3185,6 +3165,10 @@ public void getMostUsedTags_ExpectedFoundCorrectOnes() {
 }
 		\end{lstlisting}
 		Ukázka Unit testu ověřující, že služba štítků vrací správné nejvyužívanější štítky. % todo
+
+		% todo
+		příprava simulace chování repozitáře poskytující data štítků pomocí Mockito knihovny
+		ověření, že služba vrací očekávané štítky pomocí JUnit knihovny
 
 		Třídy repozitářů a třídy poskytující \ac{REST} \ac{API} jsou spíše integračními testy spojující více
 		komponent k zajištění vypovídajících výsledků.
@@ -3195,7 +3179,7 @@ public void getMostUsedTags_ExpectedFoundCorrectOnes() {
 		Tím je zaručena izolovanost jednotlivých testů, aby nedocházelo k mylným výsledkům.
 
 		\begin{lstlisting}[language=Java]
-@After // vymaže všechna data z testovací databáze po každém testu
+@After
 public void clean() {
 	DbTestUtils.resetTables(
 			dataSource,
@@ -3206,14 +3190,18 @@ public void clean() {
 	);
 }
 
-// test ověřující získaní karty z databáze
 @Test
-@Sql(scripts = "/tests/dao/card/insertMockCards.sql") // nahraje testovací data před spuštěním testu
+@Sql(scripts = "/tests/dao/card/insertMockCards.sql")
 public void findById_WithoutDeletedAndNoCard_ExpectedEmpty() {
 	assertTrue(cardDao.findById(4, false).isEmpty());
 }
 		\end{lstlisting}
 		Ukázka integračních testů repozitáře karet. % todo
+
+		% todo
+		vymaže všechna data z testovací databáze po každém testu
+		test ověřující získaní karty z databáze
+		nahraje testovací data před spuštěním testu
 
 		Testy \ac{REST} \ac{API} jsou kombinací integračních a unit testů.
 		Knihovna Spring poskytuje nástroje pro volání \ac{API} skrze \ac{URL} adresy simulující tak reálnou komunikaci
@@ -3221,16 +3209,11 @@ public void findById_WithoutDeletedAndNoCard_ExpectedEmpty() {
 		Napojení na služební třídy už je řešeno simulací služebních tříd, aby nebylo nutné zprovozňovat všechny části
 		aplikace.
 
-		\begin{lstlisting}[langauge=Java]
+		\begin{lstlisting}[language=Java]
 @Test
 @WithMockUser
 public void validateLink_InvalidLink_ExpectedFalse() {
-	when(cardLinkServiceMock.isLinkUrlValid(FACEBOOK_TEMPLATE.getId(), "twitter.com/lukin", true)).thenReturn(false);
-
-	final ValidateLinkRequestDto requestBody = new ValidateLinkRequestDto(FACEBOOK_TEMPLATE.getId(), "twitter.com/lukin");
-	final LinkValidationResultDto expectedResponseBody = new LinkValidationResultDto(false);
-
-	// simulace volání API pro validaci odkazu a ověření výsledku
+	/* ... */
 	mockMvc.perform(post("/api/cards/links/validate")
 					.accept(MediaType.APPLICATION_JSON)
 					.contentType(MediaType.APPLICATION_JSON)
@@ -3266,7 +3249,7 @@ public void validateLink_InvalidLink_ExpectedFalse() {
 		To je zajištěno přidáním \ac{CSRF} tokenu do speciální hlavičky \ac{HTTP} požadavku ještě před odesláním požadavku.
 		Pokud token v aplikaci ještě neexistuje, je odeslán paralelní požadavek na \ac{API} server pro vygenerování tokenu.
 
-		\begin{lstlisting}[language=JavaScript]
+		\begin{lstlisting}
 $http.onRequest(async (request) => {
 	if (!csrfAllowedMethods.includes(request.method)) {
 		await addCsrfTokenToRequest(store, $http, request)
@@ -3300,14 +3283,13 @@ $http.onRequest(async (request) => {
     "button": {
       "add": "Add",
       "apply": "Apply",
-  /* ... zbytek kódu byl vynechán pro přehlednost ... */
+  /* ... */
 }
 		\end{lstlisting}
 		Ukázka souboru s mapováním klíčů na texty pro anglický jazyk. % todo
 
 		\begin{lstlisting}[language=HTML]
 <button>
-	<!-- klíč textu, který při vykreslení bude nahrazen konkrétním textem -->
 	{{ $t('general.button.apply') }}
 </button
 		\end{lstlisting}
@@ -3321,14 +3303,11 @@ $http.onRequest(async (request) => {
 		Z tohoto důvodu pro každý jazyk vznikl \ac{JS} soubor, který posbírá všechny překladové materiály a poskládá z nich
 		výsledný \ac{JSON} dokument se všemi překladovými texty.
 
-		\begin{lstlisting}[language=JavaScript]
-// načtení univerzálních textů v požadovaném JSON formátu. Tyto texty jsou stejné pro všechny jazyky.
+		\begin{lstlisting}
 import cardLinkTemplates from '../universal/card-link-templates.json'
 
-// načtení běžných překladových textů v požadovaném JSON formátu
 import lang from './en/en.json'
 
-// načtení HTML dokumentů s texty pro informační stránky
 import helpAboutContent from './en/help/about-content.help'
 import helpCookiesContent from './en/help/cookies-content.help'
 import helpPrivacyContent from './en/help/privacy-content.help'
@@ -3336,7 +3315,6 @@ import helpTermsContent from './en/help/terms-content.help'
 import helpSupportBasicContent from './en/help/support-basic-content.help'
 import helpSupportSecurityContent from './en/help/support-security-content.help'
 
-// doplnění načtených textů to hlavního JSON dokumentu
 lang.card.link.template = cardLinkTemplates
 lang.help.about.content = helpAboutContent
 lang.help.cookies.content = helpCookiesContent
@@ -3345,7 +3323,6 @@ lang.help.terms.content = helpTermsContent
 lang.help.support.basic.content = helpSupportBasicContent
 lang.help.support.security.content = helpSupportSecurityContent
 
-// vystavení výsledného sestaveného JSON dokumentu
 export default lang
 		\end{lstlisting}
 		Ukázka sestavení JSON dokumentu se všemi překladovými texty. % todo
@@ -3369,18 +3346,9 @@ export default lang
 		Toho bylo využito například u validace \ac{URL} adresy odkazu na sociální síť, kdy je potřeba se dotázat \ac{API},
 		které adresu zvaliduje.
 
-		\begin{lstlisting}[language=JavaScript]
+		\begin{lstlisting}
 export const displayId = function (cardId) {
 	return async function (displayId) {
-		if (!helpers.req(displayId)) {
-		    return true
-		}
-
-		if (!displayIdFormat(displayId)) {
-		    return true
-		}
-
-		// provolání API s URL adresou pro ověření, API vrátí zda je validní či nikoliv
 		const requestBody = { cardId, displayId }
 		try {
 	  		return (await this.$http.$post('cards/validate-display-id', requestBody)).valid
@@ -3400,8 +3368,7 @@ export const displayId = function (cardId) {
 		zobrazena chyba.
 		V případě běžných uživatelů by se tedy na server vůbec chybná data neměla dostat.
 
-		\begin{lstlisting}[language=JavaScript]
-// definice pravidel polí
+		\begin{lstlisting}
 validations () {
 	return {
 		card: {
@@ -3420,17 +3387,19 @@ validations () {
 	}
 }
 
-// poslední validace a odeslání formuláře
 submitForm () {
-	// naposled zvalidovat data ve formuláři, pokud budou nevalidní, chyby se zrovna zobrazí
 	this.$v.$touch()
-
 	if (!this.$v.$invalid) {
-		/* ... formulář je validní, formulář je možné odeslat ... */
+		/* ... */
 	}
 }
 		\end{lstlisting}
 		Ukázka definice pravidel polí a odeslání formuláře. % todo
+
+		% todo
+		definice pravidel polí
+		poslední validace a odeslání formuláře
+		naposled zvalidovat data ve formuláři, pokud budou nevalidní, chyby se zrovna zobrazí
 
 		\subsubsection{Upozornění v UI}
 
@@ -3457,20 +3426,13 @@ submitForm () {
 		Malou výjimkou jsou chybové zprávy, kde existují dvě metody: jedna s možností vložení vlastního textu, druhá
 		zobrazující generickou chybu.
 
-		\begin{lstlisting}[language=JavaScript]
-// obecná metoda vystavená knihovnou
-this.$notify({
-    type: 'success', // nebo error nebo info
-    title: this.$t('general.success.done')
-})
-
-// pomocné implementované metody
+		\begin{lstlisting}
 this.$notifySuccess('general.success.added')
 this.$notifyInfo('general.info.linkCopied')
 this.$notifyError('general.error.invalidData')
 this.$notifyError()
 		\end{lstlisting}
-		Porovnání obecné metody pro vystavení upozornění a pomocných metod. % todo
+		Implementované pomocné metody pro vystavení různých typů upozornění. % todo
 
 	\subsection{Příprava pro produkční provoz}
 
@@ -3499,30 +3461,25 @@ this.$notifyError()
 		a běh aplikace.
 		Následně aplikaci sestaví do vytvořeného adresáře a aplikaci spustí na portu \lstinline{3000}.
 
-		\begin{lstlisting}[language=Dockerfile]
+		\begin{lstlisting}
 FROM node:14.17.6-alpine
 
-# vytvoří adresář pro aplikaci
 RUN mkdir -p /usr/src/netreachme-web-app
 WORKDIR /usr/src/netreachme-web-app
 
-# nainstaluje potřebné systémové aplikace
 RUN apk update && apk upgrade
 RUN apk add git
 
-# sestaví aplikaci do vytvořeného adresáře
 COPY . /usr/src/netreachme-web-app/
 RUN npm install yarn
 RUN yarn install
 RUN yarn build
 
-# vystaví aplikaci na portu 3000
 EXPOSE 3000
 
 ENV NUXT_HOST=0.0.0.0
 ENV NUXT_PORT=3000
 
-# spustí aplikaci
 ENTRYPOINT yarn start --dotenv=.env.$ENV
 		\end{lstlisting}
 
@@ -3554,7 +3511,7 @@ ENTRYPOINT yarn start --dotenv=.env.$ENV
 		data se nachází v databázi PostgreSQL.
 		Elasticsearch databáze je na proti tomu sama zdrojem dat a není vhodné, aby docházelo k její vypínání.
 
-		\begin{lstlisting}[language=YAML]
+		\begin{lstlisting}
 apiVersion: apps/v1
 kind: Deployment
 spec:
@@ -3572,7 +3529,6 @@ spec:
 				value: prod
 				ports:
 					- containerPort: 3000
-# ... zbytek kódu vynechán pro přehlednost ... #
 		\end{lstlisting}
 		Ukázka konfigurace Kubernetes pro spuštění front-endové aplikace. % todo
 
