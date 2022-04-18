@@ -882,7 +882,8 @@
   columns=fullflexible,
   showstringspaces=false,
   commentstyle=\color{gray}\upshape,
-  captionpos=b
+  captionpos=b,
+  tabsize=2
 }
 
 \lstdefinestyle{csh}{language=[Sharp]C,
