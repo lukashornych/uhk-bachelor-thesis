@@ -127,25 +127,6 @@
   \thispagestyle{empty}
   {\hypersetup{hidelinks}\tableofcontents}
 
-  % Seznam obrazku a tabulek (pokud prace obsahuje velke mnozstvi obrazku, tak se to hodi)
-  % List of figures and list of tables (if the thesis contains a lot of pictures, it is good)
-
-%  \ifczech
-%    \renewcommand\listfigurename{Seznam obrázků}
-%  \fi
-%  \ifslovak
-%    \renewcommand\listfigurename{Zoznam obrázkov}
-%  \fi
-%   {\hypersetup{hidelinks}\listoffigures}
-%   \thispagestyle{empty}
-%
-%  \ifczech
-%    \renewcommand\listtablename{Seznam tabulek}
-%  \fi
-%  \ifslovak
-%    \renewcommand\listtablename{Zoznam tabuliek}
-%  \fi
-
   % vynechani stranky v oboustrannem rezimu
   % Skip the page in the two-sided mode
   \iftwoside
@@ -215,6 +196,27 @@
     \cleardoublepage
   \fi
 
-  \includegraphics{obrazky/zadani}\hfill
+  % Seznam obrazku a tabulek (pokud prace obsahuje velke mnozstvi obrazku, tak se to hodi)
+  % List of figures and list of tables (if the thesis contains a lot of pictures, it is good)
+
+  \ifczech
+  \renewcommand\listfigurename{Seznam obrázků}
+  \fi
+  \ifslovak
+  \renewcommand\listfigurename{Zoznam obrázkov}
+  \fi
+  {\hypersetup{hidelinks}\listoffigures}
+  \thispagestyle{empty}
+
+  \ifczech
+  \renewcommand\listtablename{Seznam tabulek}
+  \fi
+  \ifslovak
+  \renewcommand\listtablename{Zoznam tabuliek}
+  \fi
+
+  \newpage
+
+  \includepdf[pages=-, offset=20 -50, width=20cm]{obrazky/zadani.png}
 
 \end{document}
