@@ -1245,49 +1245,32 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 
 		\subsubsection{Kritéria pro výběr technologií}
 
-		Jak již bylo zmíněno, vyvíjený projekt bude webovou aplikací potencionálně dostupnou ve všem moderních prohlížečích.
-		Stěžejním kritériem je vybraný přístup s využitím dynamických komponent a tudíž aplikace bude rozdělena
-		na front-endovou aplikaci a \ac{API} server.
-		Toto kritérium zásadním způsobem omezuje možnosti vybratelných technologií, protože ne všechny webové technologie
-		a programovací jazyky tento přístup podporují a mají pro něj připravené nástroje.
-		Důležité je i omezení pouze na moderní prohlížeče, protože pokud by byl požadavek podporovat i několik let staré,
-		již nepodporované prohlížeče používající jen malé procentu uživatelů, možnosti výběru technologií by to značně
+		Jak již bylo zmíněno, vyvíjený projekt bude webovou aplikací potencionálně dostupnou ve všech moderních prohlížečích.
+		Stěžejním kritériem je vybraný přístup s využitím dynamických komponent, a tudíž aplikace bude rozdělena
+		na front-endovou aplikaci a back-endový \ac{API} server.
+		Důležité je omezení pouze na moderní prohlížeče, protože pokud by byl požadavek na podporu i několik let starých,
+		již nepodporovaných prohlížečů používaných jen malým procentem uživatelů, možnosti výběru technologií by to značně
 		ovlivnilo a omezilo.
-		Nebylo by možné použít novější technologie značně usnadňující vývoj a bylo by nutné dělat mnohem více kompromisů
-		při výběru technologií a především při samotném vývoji.
-		Webová aplikace, jak již bylo zmíněno, se bude zabývat možností tvorby, zveřejňování a vyhledávání
-		karet obsahující veřejně dostupné a vyhledatelné informace, např.: odkazy na sociální sítě,
-		kontaktní údaje nebo popis daného subjektu.
+		Nebylo by možné použít novější technologie značně usnadňující vývoj a bylo by nutné dělat mnohem více kompromisů,
+		především při samotném vývoji.
 
-		Hlavním požadavkem je vytvořit webovou aplikaci, která se bude chováním a interakcí co nejvíce přibližovat
-		k nativní aplikaci jak pro osobní počítače, tak pro mobilní zařízení zároveň (podle typu zařízení, na kterém aplikace
-		v danou chvíli poběží) bez nutnosti instalace takové aplikace, aby byl poskytnut co možná nejrychlejší přístup
-		k informacím v dané aplikaci.
-		Kromě odpadající nutnosti instalovat aplikaci tento přístup přináší i značné urychlení vývoje v porovnání s
-		nativními aplikacemi.
-		Pro každou platformu by totiž musela být tvořena separátní aplikace od začátku vícekrát znovu a znovu.
-		Výjimkou jsou programovací jazyky a frameworky umožňující tvorbu opravdových aplikací běžících na několika
-		platformách zároveň, podobně jako webové aplikace.
-		I tak se ale tyto aplikace musí instalovat a distribuovat separátně.
-
-		Dalším velmi důležitým aspektem pro aplikaci poskytující spoustu vyhledatelných informací je možnost nastavit
-		kvalitní SEO, aby se daná aplikace dostala do předních žebříčků při vyhledávání uživateli skrze internetové
+		Dalším velmi důležitým aspektem pro aplikaci zveřejňující spoustu vyhledatelných informací je možnost nastavit
+		kvalitní \ac{SEO}, aby se daná aplikace dostala do předních žebříčků při vyhledávání skrze internetové
 		vyhledávače.
-		\noindent\Ac{SEO} je tedy technika pro optimalizaci webových stránek pro internetové vyhledávače jako např.
-		Google, Bing nebo DuckDuckGo, tak aby byly schopné co nejlépe pochopit a kategorizovat informace poskytnuté
-		danou stránkou a předat dané informace koncovému uživateli. \cite{what_is_seo}
+		\Ac{SEO} je tedy technika pro optimalizaci webových stránek, tak aby byly vyhledávače schopné co
+		nejlépe pochopit a kategorizovat informace poskytnuté
+		danou stránkou. \cite{what_is_seo}
 
 		\subsubsection{Vybrané technologie}
 
 			\paragraph{Návrh UI a UX}
 
-			Prvním nástrojem při návrhu aplikace, jak již bylo zmíněno, měl být grafický editor pro náčrt struktury a vzhledu.
+			Prvním nástrojem při návrhu aplikace by měl být grafický editor pro náčrt struktury a vzhledu.
 			Vzhledem k tomu, že všechny dostupné nástroje obsahují podobné základní funkce, byl vybrán editor Figma díky
-			schopnosti běhu v prohlížeči a tím odpadající nutnosti vlastnit zařízení s operačním systémem Windows nebo macOS.
-			Program je navíc bezplatný i pro základní kolaboraci mezi členy v týmu v případě potřeby.
-			Figma je tak ideální volbou i pro začátečníky bez zkušeností ostatních grafických editorů.
+			schopnosti běhu v prohlížeči, a tím odpadající nutnosti vlastnit zařízení s operačním systémem Windows nebo macOS.
+			Program je navíc bezplatný i pro základní kolaboraci mezi členy v týmu.
 
-			\paragraph{Technologie pro vývoj GUI}
+			\paragraph{Technologie pro vývoj uživatelského prostředí}
 
 			Vzhledem k tomu, že cílem je vytvořit webovou aplikaci, která poběží v standardních webových prohlížečích,
 			nelze se úplně vyhnout základním front-endovým technologiím \Ac{HTML}, \Ac{CSS} a \ac{JS}.
@@ -1295,93 +1278,66 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 
 			V případě \Ac{CSS} byl vybrán preprocesor \Ac{SASS}, pro jeho širokou komunitu a funkce.
 			Tento preprocesor umožní přehlednější kód a tím rychlejší vývoj.
-			Kvůli výše zmíněné potřebě zobrazovat různé typy odkazů na profilových kartách, \ac{SASS} navíc umožní
+			Kvůli výše zmíněné potřebě zobrazovat různé typy odkazů na kartách, \ac{SASS} umožní
 			do jisté míry automatizovat repetitivní a nepřehledné \ac{CSS} třídy pro velké množství barevných kombinací
 			(každá sociální síť používá jiné barevné kombinace ve svém designu).
 
 			V případě tvorby interaktivního \Ac{GUI} je výběr složitější.
-			Je možno využít jak základního \ac{JS}, tak frameworků či knihoven usnadňující tvorbu reaktivních komponent.
-			Alternativou může být jazyk C\# s pomocí technologie Blazor, díky kterému je možné se úplně od ekosystému
-			\ac{JS} odstínit za cenu menší komunity a vyspělosti.
-			Ze studijních účelů byl vybrán \ac{JS}, především pro hlubší pochopení tohoto jazyka, protože je používán v současné
-			době téměř každou webovou stránkou či aplikací a pravděpodobně tomu tak ještě dlouhou dobu bude.
+			Je možno využít jak základního \ac{JS}, tak frameworků či knihoven.
+			Alternativou může být jazyk C\# s technologií Blazor, díky které je možné se úplně od ekosystému
+			\ac{JS} odstínit.
+			Ze studijních účelů byl vybrán jazyk \ac{JS}, především pro hlubší pochopení tohoto jazyka, neboť je používán v současné
+			době téměř každou webovou stránkou či aplikací.
 			Jako nadstavba jazyka pro zrychlení vývoje byl vybrán framework Vue díky jeho velmi dobré dokumentaci, snazšího
 			pochopení a možnosti programovat přímo v jazyku \ac{JS}.
-			Vue (a stejně tak ostatní takové nadstavby) sám o sobě ale nedisponuje zrovna dobrými prostředky pro \Ac{SEO},
-			což je dáno delegací sestavení výsledné stránky až na front-endový \ac{JS}.
-			Kvůli tomu vyhledávače při strojovém procházení takových stránek nevidí výslednou stránku a nemohou tak
-			vyextrahovat potřebné informace.
-			Řešením může být vykreslení takové stránky již na serveru a prohlížeči poslat již připravenou stránku, kterou
-			následně převezme samotný Vue.
-			Tuto techniku poskytují již hotovou serverové frameworky Nuxt.js nebo Next.js.
-			Protože byl ale vybrán Vue, lze vybrat pouze Nuxt.js mající tuto techniku jako jednu z jeho hlavních výhod.
-			Kromě lepších nástrojů pro \ac{SEO}, sestavení stránky na serveru zrychlí prvotní vykreslení stránky
-			koncovým uživatelům, protože daná stránka přijde ze serveru již sestavená.
+			Vue (a stejně tak ostatní takové nadstavby) sám o sobě ale nedisponuje zrovna dobrými prostředky pro \Ac{SEO}.
+			Tuto techniku poskytují serverové frameworky Nuxt.js nebo Next.js.
+			Protože byl ale vybrán Vue, lze vybrat pouze Nuxt.js.
+			Kromě lepších nástrojů pro \ac{SEO}, sestavení stránky na serveru zrychlí prvotní vykreslení stránky pro
+			koncové uživatele.
 
-			\paragraph{Technologie pro vývoj API}
+			\paragraph{Technologie pro vývoj API serveru}
 
-			Co se týče technologií pro vývoj serverové aplikace fungující jako \ac{API} poskytující data, tam je výběr spíše
-			otázka preferencí a předchozích znalostí daného vývojáře s programovacími jazyky a frameworky.
+			Co se týče technologií pro vývoj serverové aplikace fungující jako \ac{API} poskytující data, je výběr spíše
+			otázka preferencí a předchozích znalostí vývojáře.
 			Všechny zmiňované totiž nabízí alespoň základní nástroje pro tvorbu \ac{API} aplikace.
-			Některé však nabízí i komplexní podporu pro tvorbu \ac{API}.
-			Tím, že byl již vybrán serverový framework Nuxt.js pro podporu \Ac{SEO}, by bylo možné jednoduše použít Node.js,
-			na kterém Nuxt.js běží v kombinaci např. s frameworkem Express.js a vystavit \Ac{REST} \ac{API} přímo pomocí něj.
-			Ekvivalentní alternativou pro tvorbu samotného \Ac{REST} \ac{API} je použití např. jazyka Java, C\#, \ac{JS}
-			nebo \Ac{PHP}.
+			Z důvodu že byl vybrán serverový framework Nuxt.js pro podporu \Ac{SEO}, by bylo možné jednoduše použít Node.js,
+			na kterém Nuxt.js běží v kombinaci s frameworkem Express.js, a vystavit tak \Ac{REST} \ac{API} přímo pomocí něj.
+			Ekvivalentní alternativou je použití jazyka Java, C\# nebo \Ac{PHP}.
 			Ze studijních důvodů a vývojářovy předchozí znalosti byl vybrán právě jazyk Java společně s frameworkem
-			Spring poskytující pokročilé nástroje potřebné pro tvorbu jednoduchého i komplexního \Ac{REST} \ac{API} a jeho
-			automatizované testování bez nutnosti řešit licenční poplatky jako v případě Java EE.
-			Kromě podpory pro \ac{REST} \ac{API}, ekosystém Spring přichází například s vlastní knihovnou pro správu
-			zabezpečení dat a komunikace pomocí práv a různých doporučených taktik v různých oblastech pro znemožnění zcizení
-			identit a podobně.
-			Knihovna je má navíc taktéž podporu pro \ac{REST} \ac{API} a díky tomu lze jednodušeji zabezpečit celou aplikaci.
-			I když je knihovna poměrně rozsáhlá a náročná na pochopení, bezpečnost webu je mnohem složitější a při vývoji
-			kompletně vlastního řešení bezpečnosti se mnohem jednodušeji může stát, že vývojář zapomene na podstatnou část a ohrozí tak
-			data uživatelů o proti použití knihovny řešící všechny tyto problémy systematicky a často automaticky.
-			Není však problém knihovnu kdykoliv celkem jednoduše rozšířit o vlastní požadavky, dělající z knihovny
-			nenahraditelný nástroj.
-
-			% todo asi by bylo fajn tady zmínit i ORM, ale db se řeší až dál
-			% možná i další stěžejní knihovny?
+			Spring.
+			Kromě podpory pro \ac{REST} \ac{API}, ekosystém Spring přichází například s vlastní knihovnou pro
+			zabezpečení dat.
 
 			\paragraph{Databázový systém jako zdroj dat}
 
 			Pro uchovávání uživatelských dat je nutné vybrat vhodný databázový systém.
 			Pro účely tohoto projektu by se daly použít jak \ac{SQL} databáze tak i \ac{NoSQL} databáze.
-			Projekt nevyžaduje specifické náročné analytické agregace dat, které by bylo možné poskytnou pouze nějakou z
-			\ac{SQL} databází, dalo by se tak uvažovat o \ac{NoSQL} databázi MongoDB pro ulehčení mapovaní objektů na
-			\ac{JSON} dokumenty.
-			Nicméně navrhované řešení počítá s určitou hierarchií karet, což už není by v případě MongoDB mohl být značný
-			problém, pokud jednotlivé karty, i když v hierarchii, musí být dostupné na stejné úrovni pro koncové uživatele
-			\cite{why_you_should_never_use_mongodb}.
+			Projekt nevyžaduje specifické náročné analytické agregace dat, dalo by se tak uvažovat o \ac{NoSQL} databázi
+			MongoDB pro ulehčení mapovaní objektů na\ac{JSON} dokumenty.
+			Nicméně navrhované řešení počítá s určitou hierarchií karet, což už by v případě MongoDB mohl být značný
+			problém \cite{why_you_should_never_use_mongodb}.
 			Projekt bude sice vyžadovat zprvu pouze poměrně jednoduchou jednoúrovňovou hierarchii, i tak by ale docházelo ke
-			zbytečně duplicitě dat kvůli požadavku na ukládání i podřízených karet do oblíbených nebo požadavku a na vyhledávání
-			všech karet pomocí jednoho vyhledávače.
+			zbytečné duplicitě dat.
 			Z těchto důvodů padla volba na některou z \ac{SQL} databází.
-			Mezi bezplatnými databázemi by se dala vybrat například PostgreSQL, MySQL nebo MariaDB a všechny byly schopny
+			Z bezplatných databází by se dala vybrat například PostgreSQL, MySQL nebo MariaDB, a všechny byly schopny
 			poskytnou potřebné funkce pro vývoj navrhovaného řešení.
-			Proto finální výběr byl tak spíše preferencí podle programátorových předchozích znalostí s bezchybnou funkčností,
-			dostupnými funkcemi a vyspělostí databázového systému PostgreSQL.
+			Proto finální výběr byl tak spíše preferencí databázového systému PostgreSQL.
 
 			\paragraph{Databázový systém pro fulltextové vyhledávání}
 
-			% todo
+			U systému pro vyhledávání dat je rozhodování celkem jednoduché, avšak jedná se o preferenci, protože
+			požadavky tohoto projektu splňují všechny zmíněné databáze.
+			Z výše zmíněných systémů byl vybrán Elasticsearch kvůli rozsáhlé komunitě a možnosti provozovat jej svépomocí.
 
 			\paragraph{Souborové úložiště}
 
-			Dalším důležitým úložištěm dat je úložiště uživatelských souborů.
-			V tomto případě se jedná především o obrázky a možnosti jednoduché tvorby jejich variant pro optimalizaci \ac{UI}.
-			Jak již bylo zmíněno v analýze, možností s největší kontrolou nad daty by bylo vyvinou vlastní řešení s pomocí
-			různých knihoven.
-			Takové řešení by bylo ale poměrně pracné a i přes velký investovaný čas by nemuselo poskytovat všechny funkce
-			poskytující ostatní řešení.
-			Protože cílem tohoto projektu není vyvinou optimální souborové úložiště ani uchovávat přísně tajná data, je
-			vhodnější využít hotového řešení a vývojové prostředky investovat do samotné aplikace.
-			Vhodné řešení by tak mělo poskytovat kromě \ac{CDN} hlavně tvořič variant.
-			Takových služeb je vícero a mnohdy jsou svými poskytujícími funkcemi ekvivalentní a výběr je tedy opět spíše
-			preferencí.
-			Vybrána byla služba Cloudinary především díky její rozšířenosti mezi ostatními uživateli poskytující všechny
-			požadované funkce pro tento projekt a navíc bezplatně.
+			Dalším důležitým úložištěm dat je úložiště uživatelských souborů, v tomto případě se jedná především o obrázky.
+			Implementovat vlastní řešení by bylo poměrně pracné a i přes velký investovaný čas, by nemuselo poskytovat všechny funkce
+			co ostatní řešení.
+			Vhodné řešení by mělo poskytovat kromě \ac{CDN} hlavně tvořič variant.
+			Takových služeb je vícero a mnohdy jsou svými funkcemi ekvivalentní, výběr je tedy opět spíše preferencí.
+			Vybrána byla bezplatná služba Cloudinary především díky její rozšířenosti mezi ostatními uživateli.
 
 			\paragraph{Transakční emaily a rozesílky}
 
@@ -1389,185 +1345,119 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 			o důležitých událostech spojených se změnou v daném účtu, případně o jiných důležitých událostech jako změna podmínek
 			aplikace a podobně.
 
-			Transakční emaily jsou tedy emaily odesílané konkrétnímu uživateli připravené na míru danému účtu, nikoliv
-			hromadné rozesílky v podobě reklam nebo obecných novinek aplikace.
 			Opět jako v případě souborového úložiště lze připravit vlastní implementaci zpracovávání šablon emailů a jejich
-			odesílání pomocí knihovny JavaMail starající se pouze o samotné odeslání a doručení emailu.
-			Avšak u emailů kromě samotného odesílání řešit dynamické šablony (podobně jako u šablon stránek) a připravit
-			takovou infrastrukturu, aby emaily skutečně byly doručovány a nepadali do spamu.
-			Na proti tomu většina nástrojů zmíněných v analýze poskytuje poměrně jednoduché \ac{API} pro odesílání emailů
-			s již připravenou infrastrukturou pro tvorbu šablon a jednoduchou možnost nastavit odesílání emailů tak aby
-			byly správně doručovány.
-			Na druhou stranu bezplatné plány jsou omezené na počet možných odeslaných emailů za nějakou dobu a za větší limity
-			se musí logicky platit.
-			Avšak přináší tato řešení záruku určité spolehlivosti doručitelnosti emailů díky používaným serverům s dobrou pověstí
+			odesíláním pomocí knihovny JavaMail, která se stará pouze o odeslání emailů.
+			Avšak u emailů je nutnost řešit i šablony (podobně jako u šablon stránek) a doručitelnost.
+			To už by zabralo nemalou část vývojového času.
+
+			Většina nástrojů zmíněných v analýze poskytuje poměrně jednoduché \ac{API} pro odesílání emailů
+			s již připravenou infrastrukturou pro tvorbu šablon a jednoduchou možnost nastavit odesílání emailů, tak, aby
+			byly správně doručeny.
+			Na druhou stranu bezplatné plány jsou omezené na počet možných odeslaných emailů za nějakou dobu, a za větší limity
+			se musí platit.
+			Avšak tato řešení přináší záruku určité spolehlivosti doručitelnosti emailů díky serverům s dobrou pověstí
 			u emailových serverů, které jen tak daný email nezahodí do nevyžádané pošty.
-			Navíc pro případ speciálních požadavků na správu emailů aplikací existují služby jako je SparkPost zaměřující
-			se pouze na spolehlivé doručení emailů bez nadbytečných nástrojů.
-			V případě této aplikace je důraz především na jednoduchost tvorby šablon a odesílání transakčních emailů bez
-			speciálních požadavků.
-			To umožňuje využít zvolenou služby SendinBlue poskytující intuitivní editor šablon emailů, jednoduché \ac{API}
-			pro odesílání emailů s parametry pro šablony a navíc podporuje i rozesílky v případě budoucího rozvoje.
+			V případě této aplikace je kladen důraz především na jednoduchost tvorby šablon a odesílání transakčních emailů.
+			Z toho důvodu byla vybrána služba SendinBlue poskytující intuitivní editor šablon emailů, jednoduché \ac{API}
+			pro odesílání emailů s parametry, a navíc podporuje i rozesílky.
 
 			\paragraph{Provoz aplikace}
 
-			Poslední částí skládanky je samotný provoz ve vývojovém lokálním prostředí, produkčního prostředí a případně
-			i v dalších, například: testovacích prostředí.
+			Poslední částí skládanky je samotný provoz v několika prostředích.
 
 			Jak již bylo v analýze nástrojů a poskytovatelů zmíněno, možností jak webovou aplikaci provozovat je mnoho: od
-			manuálního nastavování a spouštění až po částečnou automatizaci v podobě kontejnerů.
-			Protože se jedná o nový projekt nemá moc smysl se vydávat starou metodou manuálního nastavování a spouštění všeho.
-			Místo toho se vyplatí jít cestou kontejnerizace, protože umožňuje jednoduché nahození podpůrných systémů
-			(např.: databáze), na kterých aplikace stojí, a zároveň umožňuje připravit izolované kontejnery samotné aplikace
-			podle vyvinutých verzí což poměrně zjednodušuje celý proces sestavovaní aplikace ze zdrojového kódu a přenos
-			spustitelné aplikace na cílené prostředí mimo lokálního.
-			Jako bonus je možné jednoduše spouštět historické verze aplikace (např.: pro ověření nějaké funcionality nebo chyby)
-			bez nutnosti transformovat zdrojový kód do nějaké
-			předchozí verze a následného sestavení pro samotné spuštění.
-			Staré verze navíc mohou obsahovat jiné a zastaralé postupy sestavování dané aplikace a nemusí být jednoduché
-			přenastavit vývojové prostředí pro tuto skutečnost.
-			Kromě zjednodušeného přenosu mezi prostředími se zjednoduší i přenos aplikace i mezi členy případného týmu.
-			Nevýhodou je znalost dalšího nástroje pro sestavování takových kontejnerů a jejich následné spuštění, u většiny
+			manuálního nastavování a spouštění až kompletní automatizaci.
+			Protože se jedná o nový projekt nemá moc smysl se vydávat starou metodou manuálního nastavování všeho.
+			Místo toho se pro tento projekt vyplatí jít cestou kontejnerizace, protože umožňuje jednoduché nahození a propojení
+			všech dílčích aplikací, na kterých aplikace stojí.
+			Bonusem je zjednodušení celého procesu sestavovaní aplikace ze zdrojového kódu a přenos
+			na cílené prostředí.
+			Nevýhodou může být nutnost znalosti dalšího nástroje pro sestavování takových kontejnerů a jejich následné spuštění, u většiny
 			projektů je ale tato nevýhoda mnohonásobně překročena zrychlením a zjednodušením vývoje.
 
-			Pro jednoduché projekty lze využít ještě jednodušší variantu v podobě sdílení zdrojového kódu s poskytovatelem
-			prostředí a poskytoval sám automatizovaně zajistí sestavení a spuštění aplikace na cílovém prostředí.
-			Avšak taková aplikace musí splňovat určitou standardizovanou strukturu a neumožňuje spuštění více aplikací tvořicí
-			jeden systém.
-			Navíc vývojář přijde o schopnost jednoduše spouštět historické verze aplikací a zjednodušeného sdílení mezi členy
-			v týmu.
-
-			V rámci tohoto projektu je potřeba spouštět dvě aplikace: front-endové \ac{GUI} a serverové \ac{API}.
-			Tyto části spolu musí umět komunikovat a tvářit se navenek jako celek.
-			Právě na tento scénář je vhodné využít kontejnerů a nějakého orchestrálního nástroje jako Kubernetes.
-			Tento nástroj umožní poměrně jednoduše čitelně definovat jaké aplikace v jakých verzích se mají spouštět, jaká mají
-			práva a jak mezi sebou budou po sítí komunikovat.
-			Je požadavkem aby \ac{GUI} a \ac{API} mezi sebou mohli komunikovat pouze v rámci interní sítě uvnitř jednoho serveru
-			a pro koncové uživatelé zobrazoval pouze funkční celek v podobě interaktivního \ac{GUI}.
-			Kubernetes s tímto přístupem počítá a automaticky zajišťuje potřebnou interní komunikaci a v základu žádnou komunikaci
-			nepustí ven ani dovnitř serveru.
-			Je pak na vývojáři, případně administrátorovi, aby explicitně definoval jakým způsobem bude systém komunikovat s
-			okolním světem pomocí jednoduchých pravidel.
-
-			Výběrem systému Kubernetes pro provoz částí implementovaného systému zužuje výběr možných poskytovatelů pouze na
-			nutné minimum.
-			Sice v dnešní době již většina poskytovatelů nabízí servery Kubernetes, nicméně často lišší cenou daného řešení.
-			% todo nějaké srovnání cen
-			Mezi dlouhodobě nejlevnější mezi nejoblíbenějšími patří poskytovatelé DigitalOcean a Linode.
+			Výběrem systému Kubernetes pro provoz se výběr možných poskytovatelů zužuje.
+			Sice v dnešní době již většina poskytovatelů nabízí servery Kubernetes, nicméně často se liší cenou daného řešení.
+			Mezi dlouhodobě nejlevnější patří poskytovatelé DigitalOcean a Linode.
 			Oba poskytují široké možnosti konfigurace, přívětivou cenu, rozsáhlou dokumentaci, základní monitoring hardwaru
 			a ochotnou podporu.
-			Z vlastních zkušenosti byla dána přednost DigitalOcean díky jednoduší konfiguraci celého Kubernetes systému
-			zejména pak při nastavování bezpečnostních funkcí a celkového propojení s danou Kubernetes konfigurací běžících
-			webových aplikací.
-			DigitalOcean navíc jeden z nejpopulárnějších poskytovatelů a tak kromě oficiální dokumentaci a podpory lze
-			najít spousta komunitních materiálů.
+			Z vlastních zkušeností byla dána přednost DigitalOceanu díky jednodušší konfiguraci celého Kubernetes systému,
+			zejména pak při nastavování bezpečnostních funkcí.
+			DigitalOcean je navíc jeden z nejpopulárnějších poskytovatelů, a tak kromě oficiální dokumentaci a podpory lze
+			najít spoustu komunitních materiálů.
 
-			Finálním nástrojem je monitorovací systém automatizovaně kontrolující produkční prostředí jestli aplikace
-			stále běží a je dostupná pro koncové uživatele.
-			Těchto externích nástrojů je celá řada a většina těch co poskytují bezplatné plány nabízí podobné funkce a
-			a konkrétní volba je tak spíše otázkou preferencí nebo předchozích zkušeností s nějakou z dostupných služeb.
-			Pro tento konkrétní projekt byla vybrána služby Checkly díky poměrně široké nabídce funkcí, zejména pak
-			možnost monitorovat webové dotazy, dotazy přímo na \ac{API}, expiraci SSL certifikátu pro šifrovanou
-			komunikaci a možnost upozorňovat programátora či správce pomocí emailu nebo komunikačních aplikací
-			(např.: Discord), což je vhodné zejména pro vývojové týmy, kde případné upozornění vidí všichni.
-
-	Jak je vidět, výběr konkrétních technologií je poměrně náročný úkol, zejména pak pokud programátor nemá praktické
-	zkušenosti s vývojem různých typů aplikací a technologií, aby dokázal spolehlivě určit vhodné technologie před samou
-	implementací.
-	Avšak pořádná analýza před samotných vývojem může několika násobně zrychlit vývoj, i pokud se některé, ne tolik
-	stěžejní, technologie v průběhu vývoje změní.
+			Finálním nástrojem je externí monitorovací systém.
+			Pro tento konkrétní projekt byla vybrána služba Checkly díky poměrně široké nabídce funkcí, zejména pak
+			možnost monitorovat webové dotazy, dotazy přímo na \ac{API}, expiraci SSL certifikátu a možnost napojení na
+			komunikační aplikace (např.: Discord).
 
 	\subsection{Prototyp}
 
-	Prvotní verze aplikace byla sice taktéž postavená na frameworku Spring společně \ac{ORM} frameworkem Hibernate pro
+	Prvotní verze aplikace byla postavená na frameworku Spring společně \ac{ORM} frameworkem Hibernate pro
 	přístup k databázovému systému MySQL.
 	Tato verze stavěla na starším způsobu tvorby webových aplikací se sestavováním jednotlivých stránek již na serveru pomocí
 	šablon.
-	Neexistovalo tak rozdělení na front-endovou \ac{GUI} aplikace a \ac{API} server aplikace předávající si data mezi sebou
-	pomocí \ac{REST} \ac{API}.
-	Místo toho existovala pouze jedna standardní webová aplikace poskytující již sestavené stránky pomocí dat z databáze.
-	Aplikace však zahrnovala střípky \ac{REST} \ac{API} se snahou udělat \ac{GUI} více dynamické např.: při editaci poznámek
-	oblíbených karet.
-	Aplikace tak měla vlastně dvě části: hlavní kde byly šablony a přístupové třídy k datům hluboce propojeny a vedlejší
-	poskytující omezená data pomocí \ac{API}.
-	Nicméně i přes to že se jednalo o rannou fázi aplikace s minimem funkcí, začalo být postupně znát, že vytvořit
-	plně dynamickou aplikaci chovající se podobně jako nativní aplikace by bylo při nejmenším kostrbaté.
-	Pro rozšíření \ac{API} by se navíc samotná business logika musela k tomu přizpůsobit a být více modulární.
-	Šablony stránek navíc byly tvořeny bez jakéhokoliv vzhledu \ac{UX} návrhu a obsahovaly pouze nejnutnější prvky pro
+	Neexistovalo tak rozdělení na front-endovou aplikaci a \ac{API} server.
+	Aplikace však zahrnovala střípky \ac{REST} \ac{API} se snahou udělat \ac{GUI} více dynamické.
+	Aplikace tak měla dvě části: hlavní, v níž byly šablony a business logika hluboce propojeny, a vedlejší
+	poskytující část dat pomocí \ac{API}.
+	Nicméně i přes to, že se jednalo o rannou fázi aplikace s minimem funkcí, začalo být postupně znát, že vytvořit
+	plně dynamickou aplikaci chovající se podobně jako nativní aplikace, by bylo při nejmenším kostrbaté.
+	Pro rozšíření \ac{API} by se musel business logika přizpůsobit a být více modulární.
+	Šablony stránek byly tvořeny bez jakéhokoliv vzhledu a \ac{UX} návrhu, a obsahovaly pouze nejnutnější prvky pro
 	interakci.
 	To však pro aplikaci vyžadující intuitivní \ac{UI} není vhodné a mohlo by se stát, že při implementaci finálního vzhledu
-	by se podstatná část jednak šablon, ale samotných stránek mohla zásadně změnit což by vyžadovalo velký zásah pro již
+	by se podstatná část stránek mohla zásadně změnit, což by vyžadovalo velký zásah do již
 	existujícího kódu.
 
-	Právě kvůli těmto obavám a možnostech moderních technologií byl kompletně změněn přístup k vývoji a bylo potřeba začít
+	Právě kvůli těmto obavám a možnostem moderních technologií byl kompletně změněn přístup k vývoji, a bylo potřeba začít
 	od nuly s analýzou technologií a možností.
-	Část původního kódu se sice přepoužila, nicméně původní kód byl po analýze natolik přepracovat, že se dá uvažovat
+	Část původního kódu se sice přepoužila, nicméně původní kód byl po analýze natolik přepracován, že se dá uvažovat
 	spíše o nové aplikaci.
-	Nově tedy bylo rozhodnuto řádně zanalyzovat využívané styly a postupy vývoje webových aplikací společně s populárními
-	technologiemi pro dané styly.
-	Následně bylo potřeba navrhnout alespoň prototyp \ac{UI} a \ac{UX} pro lepší orientaci a explicitního definování
-	funkcionálních požadavků a způsobu interakce uživatele s aplikací.
-	Po této komplexní analýze a návrhu bylo již možné začít implementovat přepracovanou verzi aplikace.
 
 	\subsection{UI a UX}
 
- 	Zejména pro explicitní definování funkcionálních požadavků a způsobu interakce uživatele s aplikací byl před samotnou
-	implementací věnován čas návrhu právě \ac{UI} a \ac{UX}.
-	Tento krok navíc umožnil *něco(zobrazit)* vizi finální aplikace a zhodnotit designová rozhodnutí přímo v grafickém
-	editoru.
-	Právě grafický editor Figma napomohl zhotovit téměř kompletní grafický návrh jednotlivých prvků a stránek a uceleně
-	definovat designový jazyk budoucí aplikace.
-	Díky tomuto návrhu bylo možné postupně vypilovat grafické prvky, styly a strukturu na jednom místě díky systému
-	znovu použitelných komponent, kdy se změny promítly do celého návrhu.
-	Bylo tak možné lépe nahlédnout na designový jazyk jako celek použitý v různých scénářích a upravit ho tak, aby byl
-	dostatečně univerzální pro co možná nejširší skupinu úloh.
+ 	Zejména pro explicitní definování funkčních požadavků a způsobu interakce uživatele s aplikací, byl před samotnou
+	implementací věnován čas návrhu \ac{UI} a \ac{UX}.
+	Byl tedy připraven kompletní grafický návrh prvků a stránek webové aplikace.
+	Díky tomuto návrhu bylo možné postupně vypilovat grafické prvky, styly a strukturu.
+	Bylo možné lépe nahlédnout na designový jazyk použitý v různých scénářích a upravit ho tak, aby byl
+	dostatečně univerzální.
 
-	Kromě samotného rozvržení struktury a vytvoření nadhledu nad aplikací, právě příprava a vypilování designového jazyka
-	bylo jedním s velkých benefitů návrhu \ac{UI} v grafickém editoru.
 	Designový jazyk je soubor pravidel, schémat a stylů grafického designu, kterým se řídí vývoj veškerých prvků \ac{UI}.
-	Tento jazyk má především zajistit jednotnost designu napříč celou aplikací pro poskytnutí intuitivnějšího rozhraní,
-	tak aby uživatel nemusel stejnou věc dělat kompletně jinak v různých částech aplikace.
-	To by totiž přineslo značnou frustraci koncovému uživateli což by mohlo vést úbytku využívání.
+	Tento jazyk má zajistit jednotnost designu napříč celou aplikací pro poskytnutí intuitivnějšího rozhraní a zamezení
+	frustrace uživatelů.
 	Z tohoto důvodu je nutné věnovat návrhu designového jazyka nějaký čas a zamýšlet se nad všemi možnými scénáři používání
 	prvků.
 
-	% TODO DL z dropboxu
-	Design jazyk si bere velkou inspiraci \href{https://material.io/}{Material Design 2} definující jakýsi soubor
+	Design jazyk si bere velkou inspiraci z \href{https://material.io/}{Material Design 2}, jenž definuje jakýsi soubor
 	základních rozvržení, velikostí prvků, barev a podobně.
-	Nicméně navržený design jazyk se v některých prvcích rozchází kvůli potřebám tohoto projektu a není proto pravidlem,
-	že Material Design 2 striktně kopíruje, spíše slouží jako výchozí bod pro nové prvky, které ještě nebyly navrženy
-	design jazyku.
-	I tvůrci Material Designu berou tyto materiály jako výchozí bod a počítají s tím, že daný projekt si ho přizpůsobí
-	tak aby co nejlépe vystihoval danou aplikaci.
-	Z Material Designu si bere hlavně \href{https://material.io/design/layout/spacing-methods.html#baseline-grid}{velikosti a odsazení}
-	mezer a prvků a základní pravidla jako pozicování tlačítek, rozvržení seznamů, modální okna a podobně.
+	Navržený design jazyk se však v některých prvcích rozchází, a není proto pravidlem,
+	že Material Design 2 striktně kopíruje.
+	I tvůrci Material Designu berou tyto materiály jako výchozí bod, a počítají s tím, že daný projekt si ho přizpůsobí,
+	tak, aby co nejlépe vystihoval danou aplikaci.
+	Z Material Designu si bere hlavně \href{https://material.io/design/layout/spacing-methods.html#baseline-grid}{velikosti}
+	mezer a prvků a základní pravidla, jako jsou pozicování tlačítek, rozvržení seznamů, modální okna a podobně.
 
 		\subsubsection{Rozvržení prvků a grafická pravidla}
 
 		Rozvržení prvků by mělo být maximálně přehledné a intuitivní.
-		Mezi hlavní pravidla patří nezatěžování stránek příliš mnoha informacemi a zobrazit koncovému uživateli pouze to
-		co je skutečně nutné.
-		Pokud je nutno zobrazit velké množství informací, je lepší rozdělit jednu stránku na více přehlednějších, aby
-		uživatel nebyl přehlcen a neztratil lehce pozornost.
-		Další podstatným pravidlem je zakomponování tzv. bílého prostoru kolem prvk.
-		Bílý prostor znamená prostor kolem prvků oddělující jednotlivé prvky od sebe prázdnotou.
-		Prvky tak poté nejsou na sobě tak nalepené a uživatel se dokáže lépe orientovat a užívat si používání aplikace.
-		Neméně důležité je vizuálně navést uživatele co na dané stránce může vše provést bez zbytečných překážek a
-		složitostí.
-		Díky tomu je pravděpodobnější že uživatel dosáhne svého cíle bez frustrace, opuštění aplikace nebo vyhledání
+		Mezi hlavní pravidla patří nezatěžování stránek příliš mnoha informacemi, které mnohdy nejsou potřebné.
+		Pokud je nutnost zobrazit velké množství informací, je lepší rozdělit jednu stránku na více přehlednějších.
+
+		Dalším podstatným pravidlem je zakomponování tzv. bílého prostoru kolem prvků.
+		Bílý prostor je prostor kolem prvků jenž odděluje jednotlivé prvky prázdnotou.
+		Prvky tak nejsou na sobě tak nalepené a uživatel se dokáže lépe orientovat v \ac{UI}.
+		Neméně důležité je vizuálně navést uživatele, co na dané stránce může vše provádět.
+		Díky tomu je pravděpodobnější, že uživatel dosáhne svého cíle bez frustrace, opuštění aplikace nebo vyhledání
 		pomoci.
-		To také může velice přispět k návratnosti uživatele do aplikace.
-		Pro intuitivnost prostředí a spokojenost uživatele je dále nutné udržovat konzistenci grafických pravidel a prvků
-		napříč celou aplikací, aby uživatele jen tak něco nepřekvapilo s čím by se neuměl poradit.
-		Konzistence zaručí efektivnější a příjemnější práci s danou aplikací.
-		\cite{create_great_ux}
+		Pro spokojenost uživatele je dále nutné udržovat konzistenci grafických pravidel a prvků
+		napříč celou aplikací, aby uživatele jen tak něco nepřekvapilo. \cite{create_great_ux}
 
 		Zajímavou a užitečnou pomůckou pro návrh rozvržení prvků je princip vizuální rovnováhy.
-		Vizuální rovnováha staví na pomyslené vizuální váze prvků, kde určité vlastnosti, jako konstrast nebo složitost,
-		určují jakosi váhu prvku.
-		Následně dva prvky porovnává na fyzikální páce, která musí zůstat v rovině i pokud jsou prvky jinak těžké pomocí
-		posunu jednotlivých prvků od sebe.
-		% todo citace obrázku https://uploads-ssl.webflow.com/5c72b8b72d05ce02c7987c46/5d066cd3d9b514108395ac6f_naprava-rovnovahy-1.png
+		Vizuální rovnováha staví na pomyslné vizuální váze prvků, v níž určité vlastnosti, jako je kontrast nebo složitost,
+		váhu navyšují.
+		Následně dva prvky porovnává na páce, která musí zůstat v rovině.
+		V případě, že jsou prvky jinak těžké využívá se odsazením prvků od sebe (bílý prostor). \cite{vizualni_rovnovaha}
 
 		\begin{figure}[H]
 			\centering
@@ -1575,25 +1465,12 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 			\caption{Páka rovnováhy vzhledu. Zdroj: \cite{vizualni_rovnovaha}}
 		\end{figure}
 
-		Pokud je tedy nejaký prvek vizuálně těžší než druhý, je dobré lehčímu prvku přidat více bílého prostoru a odsunout
-		ho tak od těžšího prvku.
-		Tím vznikne rovnováha mezi prvky a celkově přívětivější rozhraní.
-		\cite{vizualni_rovnovaha}
+		Rozvržení prvků ale není vše, a je potřeba myslet i na samotný design.
 
-		Rozvržení prvků ale není vše a je potřeba myslet i na samotný design.
-		Je potřeba definovat jasná pravidla a styly, aby byla zajištěna konzistence.
+		\paragraph{Paleta barev}
 
-		Nejdůležitější částí designu je správně připravená paleta barev.
-		Bylo potřeba připravit spolu kompatibilní barvy použitelné napříč aplikací.
-		Hlavní část palety obsahuje obecné barvy: hlavní prezentovanou barvu použitou na místech, která musí být
-		patřičně zvýrazněna a barvy pro různé texty jako hlavní text, nadpis, podnadpis nebo popisek.
-		Dále paleta obsahuje paletu obecných základních barev pro případ například uživatelských úprav některých objektů.
-		Důležitými barvami jsou i barvy pro označování polí formuláře, zejména pak jejich správnosti při validaci
-		hodnot.
-		Paleta obsahuje i ostatní méně obecné barvy a je samozřejmě možné ji v budoucnu rozšiřovat, avšak je potřeba se
-		vždy zamyslet jestli je nová barva skutečně nutná a zda-li je kompatibilní s již použitými barvami.
-		Většina barev je inspirována výše zmíněným Material Designem obsahující širokou paletu barev, kterou lze jednoduše
-		využít v jakémkoliv projektu.
+		Důležitou částí designu je správně připravená paleta barev, jenž bude použita napříč aplikací.
+		Ta definuje jak obecné barvy prvků, jako jsou texty, bloky, tlačítka, tak i ty méně obecné.
 
 		\begin{figure}[H]
 			\centering
@@ -1601,20 +1478,22 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 			\caption{Navržená paleta barev. Zdroj: [autor]}
 		\end{figure}
 
+		\paragraph{Stíny a linky}
+
 		Dalším velmi důležitým designovým prvkem jsou stíny pomáhající vizualizovat pomyslnou vzdálenost jednotlivých
 		prvků od uživatelova zraku.
-		Díky stínům je totiž možné u více překrývajících se prvků jasně ilustrovat uživateli, které prvky jsou více v
+		Díky stínům je možné více se překrývajících prvků jasně ilustrovat uživateli, které prvky jsou více v
 		popředí než ostatní.
-		Tím lze zároveň poměrně efektivně odlišit jednotlivé bloky od sebe.
 		Způsobů používání stínu je mnoho.
-		Pro tento projekt byl vybrán způsob, kdy stín se snaží simulovat reální stín generovaný jedním světelným zdrojem.
-		Na takové stíny jsou uživatelé zvyklí z reálného světa a je pro ně jednodušší pochopit oddělení prvků.
-		Velmi používané je i využití linek kolem jednotlivých prvků pro oddělení bloků, případně se kombinuje obojí.
-		Ve skutečnosti i tento projekt používá kombinaci linek a stínů.
-		Stíny jsou v tomto případě použity hlavně pro bloky ucelených informací a prvků které mají vyšší prioritu než
-		ostatní v rámci jednoho bloku a linky jsou použity pro standardní prvky uvnitř bloků.
-		Kombinace byla vybrána z důvodu zjednodušení vzhledu, protože použití pouze stínů by mohlo pro některé uživatele
-		být příliš rozptylující.
+		Pro tento projekt byl vybrán způsob, kdy se stín snaží simulovat reální stín generovaný světelným zdrojem.
+		Na takové stíny jsou totiž uživatelé zvyklí z reálného světa.
+		Velmi používané je i využití linek kolem jednotlivých prvků pro oddělení bloků.
+
+		Tento projekt využívá kombinace linek a stínů.
+		Stíny jsou v použity pro bloky ucelených informací a prvky, které mají vyšší prioritu než
+		ostatní, a linky jsou použity pro prvky uvnitř bloků.
+		Kombinace byla vybrána z důvodu zjednodušení vzhledu, protože použití pouze stínů by mohlo být pro některé uživatele
+		příliš rozptylující.
 
 		\begin{figure}[H]
 			\centering
@@ -1622,7 +1501,9 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 			\caption{Ukázka kombinace stínů a linek v jednom bloku. Zdroj: [autor]}
 		\end{figure}
 
-		Kromě linek a stínu je dobré myslet i na samotné okraje prvků, tj. zda-li budou mít zaoblené rohy a podobně.
+		\paragraph{Okraje}
+
+		Kromě linek a stínu je dobré myslet i na samotné okraje prvků, tedy jesli budou mít zaoblené rohy či nikoliv.
 		Po vzoru Material Designu byly zvoleny zaoblené rohy o průměru 8px pro větší lehkost prvků.
 		Toto rozhodnutí je však celkem subjektivní a někteří uživatelé mohou preferovat ostré rohy.
 
@@ -1632,12 +1513,13 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 			\caption{Ukázka zaoblených rohů. Zdroj: [autor]}
 		\end{figure}
 
-		Posledním pravidlem je jednotná signalizace výběru.
-		Tato část musí být obzvlášť konzistentní napříč aplikací a intuitivní pro koncové uživatele.
-		Uživatel musí být schopen jednoznačně určit jaký prvek ze všech možných je vybraný ať už se jedná o navigaci
-		nebo výběr položky ve formuláři.
-		Velice používaným způsem jak tuto signalizaci řešit je jednoduchá linka zobrazená u vybraného prvku.
-		V rámci této aplikace byly navrženy dvě varianty: varianta pro pás prvků a varianta pro samostatné prvky.
+		\paragraph{Signalizace výběru}
+
+		Posledním pravidlem je zobrazování signalizace výběru.
+		Tato část musí být pro koncové uživatele obzvlášť konzistentní a intuitivní napříč aplikací.
+		Uživatel musí být schopen jednoznačně určit jaký prvek ze všech možných je vybraný.
+		Velice používaným způsobem jak tuto signalizaci řešit je jednoduchá linka zobrazená u vybraného prvku.
+		V rámci této aplikace byly navrženy dvě varianty: varianta pro pás prvků a varianta pro osamocené prvky.
 		Varianta pro pás prvků se použije v případě pásu prvků, u kterých nemůže dojít k přetečení na více řádků.
 		V takovém případě se použije jednoduchá linka pod či nad prvkem.
 		V případě osamocených prvků nebo víceřádkových prvků je použita linka kolem celého okraje prvku.
@@ -1654,38 +1536,21 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 			\caption{Ukázka signalizace výběru konkrétního prvku. Zdroj: [autor]}
 		\end{figure}
 
-		Na těchto principech je tedy možné navrhnout nějaké základní univerzální prvky pro tvorbu konkrétních stránek
-		a následně celý vzhled.
-
 		\subsubsection{Strukturální prvky}
 
-		Strukturálními prvky jsou myšlené takové prvky, které slouží jako základní stavební prvky pro jednotné
-		rozvržení stránek a oddělení prvků uceleným způsobem.
-		Tyto prvky tak slouží jako prvky obalovací a bez vnořených interaktivních prvků nedávají samostatně smyl
-		a jsou především pomůckou pro tvoření stránek.
+		Strukturálními prvky jsou myšlené takové prvky, které slouží jako základní stavební kameny pro jednotné
+		rozvržení stránek.
 
 			\paragraph{Blok obsahu}
 
-			\begin{figure}[H]
-				\centering
-				\includegraphics[width=6cm]{obrazky/blok_obsahu}\hfill
-				\caption{Ukázka bloku obsahu. Zdroj: [autor]}
-			\end{figure}
-
 			Stránky jsou rozvrženy hlavně pomocí tzv. bloků obsahu označující jeden logický celek informací
 			na stránce.
-			Blok obsahu vždy obaluje nějaký konkrétní obsah: dlouhý text, seznam položek, editor a cokoliv dalšího.
-			Blok obsahuje hlavičku obsahující nadpis popisující logický celek informací, co se bude v bloku nacházet
-			a k čemu slouží, a lištu tlačítek dávající smysl pro celý logický celek seřazenou zprava od nejdůležitějších
-			akcí.
-			Samotný obsah těla už je pak záležitostí konkrétního použití, avšak pravidlem je jednotné odsazení 24px od
-			okrajů bloku.
-			Krajním případem je využití bloku bez hlavičky na speciálních stránkách s vlastním nadpisem, kde blok
-			představuje logický celek informací platných pro celou stránku (příkladem mohou být stránky s popisem
-			funkcí aplikace uživateli).
-
-			V případě více logických celků na jedné stránce se použije více bloků řazených pod sebou a oddělených 24px
-			pro dostatečné oddělení rozlišných informací.
+			Blok obsahu vždy obaluje nějaký konkrétní obsah: dlouhý text, seznam položek, editor nebo cokoliv dalšího.
+			Blok obsahuje hlavičku s nadpisem a lištou tlačítek, která dávají smysl pro celý logický celek.
+			Samotný obsah těla už je pak záležitostí konkrétního využití bloku, avšak pravidlem je jednotné odsazení 24px od
+			okrajů.
+			Krajním případem je využití bloku bez hlavičky na speciálních stránkách s vlastním nadpisem, u nichž blok
+			představuje logický celek informací platných pro celou stránku.
 
 			\begin{figure}[H]
 				\centering
@@ -1693,21 +1558,12 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 				\caption{Ukázka využití bloku obsahu. Zdroj: [autor]}
 			\end{figure}
 
-			Uvnitř bloku se může nacházet jakýkoliv obsah.
-			Nicméně je několik základních prvků, které se zde běžně nacházejí a je nutno aby byly konzistentní.
-			Jedná se především o seznamy prvků, textová pole a vnitřní logické celky.
-			Seznamy prvků definují vlastní odsazení a proto jsou výjimkou nepoužívající standardní vnitřní odsazení
-			bloku.
-			Dobrým pravidlem je omezit množství seznamů v jednom bloku na jeden, protože více seznamů může představovat
-			značné zmatení uživatele.
-			Textová pole vlastní odsazení nemají, nicméně pokud takových polí je v jednom bloku více, musí být oddělena
-			mezi sebou 16px a horizontálně zobrazovat maximálně dvě pole.
-			Ve některých případech je nutné logický celek rozdělit ještě na dílčí celky, většinou pomocí speciálních
-			tlačítek odkazujících na jiné stránky.
-			Ty po vzoru bloků mají stín pro odlišení od běžných prvků a mezi sebou mají prostor 16px stejně jako
-			textová pole.
-
 			\paragraph{Lišta akcí}
+
+			Kromě hlavní navigační lišty aplikace bylo nutné zavést ještě jeden typ lišty: lišta akcí.
+			Díky ní je možné na určitých stránkách zobrazit sekundární lištu s nadpisem a dodatečnými akcemi, jenž se stahují
+			k obsahu celé stránky.
+			Takovými stránkami jsou většinou stránky zobrazující detail určitého objektu, se kterým lze manipulovat.
 
 			\begin{figure}[H]
 				\centering
@@ -1715,44 +1571,25 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 				\caption{Ukázka lišty akcí. Zdroj: [autor]}
 			\end{figure}
 
-			Kromě hlavní navigační lišty aplikace dostupné téměř na všech stránkách pro jednoduchou navigaci mezi
-			částmi aplikace, bylo nutné zavést ještě jeden typ lišt: lišta akcí.
-			Díky ní je možné na určitých stránkách zobrazit sekundární lištu s nadpisem a dodatečnými akcemi vztahující
-			se k obsahu stránky jako celku.
-			Takovými stránkami jsou většinou stránky zobrazující detail určitého jednoho objektu, který lze například
-			smazat nebo upravit, ale zároveň je potřeba zobrazit vnořená data (příkladem může být editor jedné karty).
-			Navíc může obsahovat i sekundární navigaci spojenou s konkrétním objektem.
-
 			\paragraph{Modální okno}
 
-			\begin{figure}[H]
-				\centering
-				\includegraphics[width=\linewidth]{obrazky/modalni_okno}\hfill
-				\caption{Ukázka modálního okna. Zdroj: [autor]}
-			\end{figure}
-
-			Modální okna představují bloky obsahu překrývající všechen ostatní obsah při zobrazí, aby se uživatel zaměřil
-			pouze na obsah uvnitř okna a nebyl rušen zbylým obsahem, který v danou chvíli není důležitý.
-			Jedná se především o potvrzení určité akce vyvolané uživatelem nebo zobrazení detailu nějakého dílčího prvky.
-			Modální okno se může zobrazit pouze jako reakce na uživatelskou akci, nesmí dojít k samovolnému zobrazování
-			náhodných oken, protože to vede k frustraci uživatele.
-			Každé okno má hlavičku a případně i patičku, avšak obsah se mění podle typu okna.
-			Tato aplikace rozlišuje dva primární typy oken: informační okno a akční okno.
-			Informační okno slouží pouze k zobrazení již existujících dat a nevyžaduje od uživatele žádnou akci.
-			Lze ho zavřít buď křížkem v hlavičce nebo kliknutím mimo okno a neobsahuje patičku.
+			Modální okna představují bloky obsahu, které při zobrazení překrývají všechen ostatní obsah, pro zdůraznění
+			důležitosti.
+			Jedná se především o potvrzení určitých akcí nebo zobrazení detailu nějakého objektu.
+			Každé okno má hlavičku, a případně i patičku, avšak obsah se mění podle typu okna.
+			Tato aplikace rozlišuje dva primární typy oken: informační a akční okno.
+			Informační okno slouží k zobrazení již existujících dat a nevyžaduje od uživatele žádnou akci.
+			Lze ho zavřít buď křížkem v hlavičce nebo kliknutím mimo okno, a neobsahuje patičku.
 			Akční okno akci vyžaduje a uživatel musí vždy nějakou akci zvolit, nelze okno zavřít pouhým kliknutím mimo okno.
-			Takové okno má v hlavičce pouze nadpis a obsahuje patičku se všemi možnými akcemi, které uživatel může provést.
-			Akce jsou většinou dvě a jsou seřazeny zprava od té nejdůležitější.
-			Příkladem takových akcí může být potvrzení vytvoření objektu a zrušení akce.
-			U tohoto typu okna se navíc předpokládá, že bude obsahovat kromě statických i nějaký formulář, který musí
-			uživatel vyplnit, není to však pravidlem.
-			Tlačítko nejdůležitější akce by mělo být patřičně odlišeno od běžných tlačítek, aby bylo zřejmé co se po
+			Takové okno má v hlavičce pouze nadpis a obsahuje patičku se všemi dostupnými akcemi.
+			Příkladem takových akcí může být potvrzení vytvoření objektu nebo zrušení operace.
+			Tlačítko nejdůležitější akce je patřičně odlišeno od běžných tlačítek, aby bylo zřejmé, co se po
 			uživateli chce.
 
 			Okna mají podobná pravidla odsazení jednotlivých vnitřních prvků jako bloky obsahu.
 			Obsah by měl být odsazen 24px od okrajů okna (až na výjimky s vlastním odsazením) a akční tlačítka jsou
 			mezi sebou odsazeny 8px.
-			Celá patička je navíc od samotného obsahu taktéž odsazena 24px pro jasné rozdělení částí.
+			Celá patička je navíc pro jasné rozdělení částí rovněž odsazena 24px.
 
 			\begin{figure}[H]
 				\centering
@@ -1768,17 +1605,9 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 
 			\paragraph{Kontextuální nabídka}
 
-			\begin{figure}[H]
-				\centering
-				\includegraphics[width=6cm]{obrazky/kontextualni_nabidka}\hfill
-				\caption{Ukázka kontextuální nabídky. Zdroj: [autor]}
-			\end{figure}
-
 			Jedná se malé menu zobrazující rozšířené možnosti nějaké akce.
-			Většinou se používá pro zobrazení vícero akcí možných nad nějakým objektem, pokud není v \ac{UI} dostatek
-			místa pro všechny akce nebo pro výběr konkrétní položky výběrového pole ve formuláři.
-			Nabídka podobně jako modální okno překrývá část obsahu pro zviditelnění, nicméně ji lze jednoduše zavřít
-			kliknutím mimo nabídku.
+			Většinou se používá, pokud není v \ac{UI} dostatek
+			místa pro všechny dostupné akce, nebo pro výběr konkrétní položky z výběrového pole ve formuláři.
 
 			\begin{figure}[H]
 				\centering
@@ -1786,42 +1615,20 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 				\caption{Ukázka kontextuální nabídky akcí položky v seznamu. Zdroj: [autor]}
 			\end{figure}
 
-			\begin{figure}[H]
-				\centering
-				\includegraphics[width=8cm]{obrazky/kontextualni_nabidka_vyberove_pole_ukazka}\hfill
-				\caption{Ukázka kontextuální nabídky položek výběrového pole. Zdroj: [autor]}
-			\end{figure}
-
-			\paragraph{Sekce}
-
-			\begin{figure}[H]
-				\centering
-				\includegraphics[width=\linewidth]{obrazky/sekce}\hfill
-				\caption{Ukázka sekce. Zdroj: [autor]}
-			\end{figure}
-
-			Pro stránky složené z více podstránek (např.: nastavení uživatelského účtu) je vhodné provázat tyto stránky
-			nějakou navigací pro jednoduchý přechod mezi dílčími stránkami.
-			K tomu slouží extenze bloku obsahu o postranní menu sloužící právě pro navigaci souvisejících stránek.
-			Díky viditelnému menu je jasně viditelné jako sekce jsou uživateli dostupné a co tak uživatel může vše dělat.
-
 		\subsubsection{Prvky pro interakci}
 
-		Po prvcích strukturující obsah je možné navrhnout již prvky, se kterými bude uživatel přímo či nepřímo interagovat.
+		Po prvcích strukturující obsah je možné navrhnout prvky, se kterými bude uživatel přímo či nepřímo interagovat.
 
 			\paragraph{Tlačítko}
 
 			Nejhlavnějším takovým prvkem je tlačítko.
 			To umožňuje uživatelům vyvolávat akce, potvrzovat akce nebo se nechat přesměrovat na jiné stránky.
 			Tlačítek je v aplikaci spousta a každé dělá trochu něco jiného.
-			Lze je ale zařadit do pár kategorií a navrhnout tak pár typů tlačítek evokující jejich prioritu a vážnost akce,
-			se kterou jsou spojeni.
-			Všechny tlačítka byla rozdělena na tlačítka s nízkou prioritou, tlačítka s vysokou prioritou a tlačítka s vysokou
-			prioritou a vysokou vážností akce.
+			Lze je ale zařadit do pár kategorií, a navrhnout tak několik obecných typů tlačítek.
+			Všechny tlačítka byla rozdělena na tlačítka s nízkou prioritou, vysokou prioritou a vysokou vážností akce.
 
-			Tlačítko s nízkou prioritou reprezentuje vedlejší akci, kterou sice uživatel může provést, ale není hlavním cílem.
-			Takové tlačítko má neutrální barvu a ve většině případech neobsahuje ani ikonu, aby nevyjadřovalo vysokou prioritu
-			a uživatel se zaměřil spíše na výraznější tlačítka.
+			Tlačítko s nízkou prioritou reprezentuje vedlejší akci, kterou sice uživatel může provést, ale jeho není hlavním cílem.
+			Takové tlačítko má neutrální barvu a ve většině případech neobsahuje ani ikonu
 
 			\begin{figure}[H]
 				\centering
@@ -1832,9 +1639,8 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 			Tlačítko s vysokou prioritou představuje primární akci, kterou by se uživatel měl vydat.
 			Taková tlačítka představují potvrzení nějaké akce, vytvoření nových objektů, přidání existujících objektů a
 			podobně.
-			Měli by být proto patřičně zvýrazněna a uživatele podvědomě navést kam má kliknout pokud v danou akci chce
-			provést.
-			Tato tlačítka mají proto výraznou barvu a vystihující ikonu pro zpřehlednění a zpříjemnění celkového dojmu.
+			Měla by být proto patřičně zvýrazněna a uživatele podvědomě navádět.
+			Z tohoto důvodu mají tlačítka výraznou barvu a vystihující ikonu.
 
 			\begin{figure}[H]
 				\centering
@@ -1842,11 +1648,9 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 				\caption{Ukázka tlačítka s vysokou prioritou. Zdroj: [autor]}
 			\end{figure}
 
-			Pro případy kdy uživatel provádí nějakou akci s vysokou vážností jako je například nevratné smazání nějakého
+			Pro případy, kdy uživatel provádí nějakou akci s vysokou vážností, jako je například nevratné smazání nějakého
 			objektu, vzniklo rozšíření tlačítka s vysokou prioritou.
-			Tlačítko se lišší pouze v červené barvě evokující dojem závažné akce.
-			Právě červená barva by měla uživatele přimět znovu zamyslet se nad prováděnou akcí, protože červená barva
-			je využívána jako symbol něčeho negativního.
+			Tlačítko se liší pouze v červené barvě evokující dojem závažné akce.
 
 			\begin{figure}[H]
 				\centering
@@ -1856,26 +1660,17 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 
 			\paragraph{Vstupní pole}
 
-			Vstupní pole různých druhu jsou společně s tlačítky nejdůležitějšími prvky jakékoliv aplikace.
-			Vstupní pole umožňují uživatelům předat data aplikaci v různých formátech podle požadované informace.
+			Vstupní pole různých druhů jsou společně s tlačítky nejdůležitějšími prvky jakékoliv aplikace.
+			Vstupní pole umožňují uživatelům předat data aplikaci v různých formátech.
 			Vzniklo proto několik základních typů vstupních polí, které lze jednoduše kombinovat uvnitř v formulářů.
-			Mezi ně patří: textové pole, výběrové pole, pole pro výběr času a data, pole pro nahrání obrázku a pole pro
+			Mezi ně patří: textová pole, výběrová pole, pole pro výběr času a data, pole pro nahrání obrázku a pole pro
 			výběr geografické lokace.
-			Vstupní pole využívají linek namísto stínu, protože sami o sobě nereprezentují celek ale pouze část celého
-			bloku.
-			Pole mají popisek pro identifikaci účelu konkrétního pole, ikonu a mohou mít i akční tlačítko pro jednoduchou
-			akci nad danou zadanou hodnotou.
-			U většiny polí je navíc popisek plovoucí, kdy pokud pole nemá žádnou hodnotu, nahradí ji popisek, pokud však
-			nějaká hodnota byla zadána, popisek se zmenší a posune stranou, aby zůstal stále viditelný, ale nepřekážel.
-			Pole jsou také schopna změnit svoji barvu a zobrazit popis chyb, pokud je zadaná hodnota nevalidní.
-			Pokud je hodnota validní nebo žádná ještě neexistuje, je možné na místo chyby pod pole vepsat nápovědu k danému
-			poli pro koncového uživatele v případě nejasných polí nebo potřebě dodatečných informací v podobě například
-			požadovaného formátu.
+			Vstupní pole využívají linek namísto stínů, protože reprezentují pouze část celého bloku.
+			Pole mají popisek pro identifikaci účelu konkrétního pole, ikonu a mohou mít i akční tlačítko.
+			Pod pole je navíc možné vepsat nápovědu.
 
-			Textové pole slouží pro zadávání různých krátkých i dlouhých textů, mají vždy popisek a mohou mít ikonu a
+			Textová pole slouží pro zadávání krátkých i dlouhých textů, mají vždy popisek a mohou mít ikonu a
 			akční tlačítko.
-			Mohou sloužit i pro zadávání hesel a v takovém případě zobrazují pouze zástupné znaky.
-			Obsahují však tlačítko pro přepnutí mezi zástupnými znaky a originálními pro kontrolu zadaného hesla.
 
 			\begin{figure}[H]
 				\centering
@@ -1892,12 +1687,9 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 				\caption{Ukázka pole s výběrem data a času. Zdroj: [autor]}
 			\end{figure}
 
-			Vzhledem k požadavku možnosti specifikovat geografické lokace karet bylo potřeba zavést i specifické pole
-			pro výběr bodu v mapě.
-			Pole zobrazuje automaticky mapu světa, kterou je možné hýbat a přibližovat ji a vybírat konkrétní body.
-			Vybraný bod lze také jednoduše smazat/resetovat.
-			Na rozdíl od textového pole toto pole neumožňuje specifikovat ikonu ani akční tlačítko a obsahuje pouze
-			statický popisek kvůli stále zobrazené mapě do všech krajů.
+			Vzhledem k požadavku specifikovat geografické lokace karet, bylo potřeba zavést i specifická pole
+			pro výběr bodů v mapě.
+			Pole zobrazuje mapu světa, se kterou je možné hýbat, přibližovat ji a vybírat konkrétní body.
 
 			\begin{figure}[H]
 				\centering
@@ -1918,22 +1710,10 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 
 			\paragraph{Seznam položek}
 
-			Velmi využívaným prvkem je seznam jakýchkoliv položek.
-			Seznam může být jednoduchý pouze pro jednoduché zobrazení několika podobných položek nebo může umožňovat
-			spravovat objekty stejného typu pomocí přidělených akcí a dodatečných informací.
-			Samotný seznam je pouze obalovací prvek, až prvky konkrétních položek obsahují pokročilé možnosti.
-			Každá položka může obsahovat ikonu nebo obrázek, text, seznam akcí nebo dokonce i vnořený seznam dílčích
-			položek stahujících se k dané nadřazené položce.
-			Nicméně vnořené seznamy jsou omezeny pouze na jednu úroveň kvůli zachování přehlednosti, více úrovní navíc
-			běžně není potřeba a u takového scénáře by bylo na zvážení zda-li je vícenásobné vnoření tím správným řešením.
-			Seznamy akcí se kromě běžného zobrazení umí i seskupit v případě malého místa a schovat akce do kontextuální
-			nabídky, aby uživatel využívající malé zařízení nepřišel o možnost využívat všechny akce s minimálním omezením.
-
-			\begin{figure}[H]
-				\centering
-				\includegraphics[width=8cm]{obrazky/jednoduchy_seznam}\hfill
-				\caption{Ukázka jednoduchého seznamu podobných prvků. Zdroj: [autor]}
-			\end{figure}
+			Velmi využívaným prvkem je seznam položek.
+			Každá položka může obsahovat ikonu nebo obrázek, text, seznam akcí, nebo dokonce i vnořený další seznam.
+			Akce položek se kromě běžného zobrazení umí v případě malého místa seskupit a schovat do kontextuální
+			nabídky, aby uživatel využívající malé zařízení nepřišel o možnost využívat všechny akce.
 
 			\begin{figure}[H]
 				\centering
@@ -1941,19 +1721,10 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 				\caption{Ukázka pokročilého seznamu prvků. Zdroj: [autor]}
 			\end{figure}
 
-			\begin{figure}[H]
-				\centering
-				\includegraphics[width=\linewidth]{obrazky/vnoreny_seznam}\hfill
-				\caption{Ukázka vnořeného seznamu uvnitř jiného seznamu. Zdroj: [autor]}
-			\end{figure}
-
 			\paragraph{Stránkování}
 
-			Při velkém množství položek v jednom seznamu je běžně používaný systém stránkování, kdy se položky rozdělí
-			do stránek s omezeným počtem prvků pro jednodušší navigaci po stránce bez nutnosti příliš pohybovat myší.
-			Prvek stránkování umožňuje přepínat mezi konkrétními stránkami nebo se přepínat mezi předchozí a následující.
-			Pokud je velké množství stránek, prvek nezobrazí všechny stránky, ale zobrazí pouze okolí vybrané stránky
-			a první a poslední stránky pro rychlou navigaci.
+			Při velkém množství položek v jednom seznamu se využívá systém stránkování.
+			Prvek stránkování umožňuje přepínat mezi konkrétními stránkami, nebo se přepínat mezi předchozí a následující stránkou.
 
 			\begin{figure}[H]
 				\centering
@@ -1963,7 +1734,7 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 
 		\subsubsection{Finální návrh}
 
-		S pomocí výše navržených základních prvků a jejich variacemi bylo navrženo finální \ac{UI} všech stěžejních
+		S pomocí výše navržených prvků a jejich variacemi, bylo navrženo finální \ac{UI} všech stěžejních
 		stránek.
 
 		\begin{figure}[H]
@@ -1972,11 +1743,8 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 			\caption{Finální grafický návrh aplikačních stránek a prvků. Zdroj: [autor]}
 		\end{figure}
 
-		Tento postup s návrhem aplikace před samotnou aplikací se ukázal jako velmi efektivní oproti původnímu prototypu
-		pomohl nejen snadněji implementovat samotné \ac{GUI}, ale i navrhnout \ac{API} díky zřetelným požadavkům na
-		manipulaci s daty.
-		\ac{API} tak bylo částečně navrženo právě podle designového návrhu, protože návrh mimo jiné umožnil realizovat
-		vizi požadavků na \ac{UI} i funkce aplikace.
+		Tento postup se ukázal jako velmi efektivní oproti původnímu prototypu, protože
+		pomohl snadněji implementovat samotné \ac{GUI} a navrhnout \ac{API} díky zřetelným funkčním požadavkům.
 
 	\subsection{Implementace API serveru}
 
