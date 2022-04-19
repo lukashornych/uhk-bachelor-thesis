@@ -965,6 +965,10 @@
 % Left aligned column with a fixed width
 \newcolumntype{L}[1]{>{\RaggedRight\hspace{0pt}}p{#1}}
 
+% Přehození vypisování zkratek
+\newcommand{\acr}[1]{\acs{#1} (\acl{#1})}
+%\acsetup{first-style=reversed}
+
 \endinput
 %%
 %% End of file `fitthesis.cls'.
