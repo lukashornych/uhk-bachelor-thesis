@@ -969,6 +969,12 @@
 \newcommand{\acr}[1]{\acs{#1} (\acl{#1})}
 %\acsetup{first-style=reversed}
 
+\newcommand*{\captionsource}[2]{%
+    \caption[{#1}]{%
+    #1 Zdroj: #2%
+    }%
+}
+
 \endinput
 %%
 %% End of file `fitthesis.cls'.
