@@ -3013,26 +3013,31 @@ ENTRYPOINT yarn start --dotenv=.env.$ENV
 
 Tato bakalářské práce se zabývala vývojem webové aplikace pro tvorbu, správu, zobrazení a sdílení vstupních stránek
 různých subjektů a objektů.
-Vývoj začal analýzou podobných webových aplikace a zjištěním, co jaká aplikace svým uživatelům poskytuje, a jak.
-Následoval návrh vlastní webové aplikace, která kombinuje prvky vícero konkurenčních aplikací a vlastních prvků do jednoho balíčku.
-Mezi ty hlavní patří tvorba veřejně dostupných vstupních stránek s kontaktními údaji, odkazy na sociální sítě, firemními hierarchiemi nebo geolokacemi,
-fulltextovým vyhledáváním a ukládáním oblíbených stránek.
+Vývoj začal analýzou podobných webových aplikace a zjištěním, co jaká aplikace svým uživatelům poskytuje.
+Následoval návrh vlastní webové aplikace, která kombinuje vlastní prvky a prvky vícero konkurenčních aplikací do jednoho balíčku.
+Mezi ty hlavní prvky patří tvorba veřejně dostupných vstupních stránek s kontaktními údaji, odkazy na sociální sítě, firemními hierarchiemi nebo geolokacemi.
+Dále pak umožňuje fulltextově vyhledávat a ukládat cizí stránky do oblíbených.
 Nedílnou součástí návrhu bylo i vymyšlení, jak se bude pracovat s uživatelskými účty, a jak by mohl být projekt později
 financován.
-Bylo zvolena, že uživateslké účtu budou sloužit pouze pro definování vlastníků karet a ukládání cizích karet do oblíbených.
-Z možných typů financování (prodej produktů, zobrazování reklama, prémiové plány) byly vybrány právě prémiové plány.
+Bylo zvoleno, že uživatelské účtu budou sloužit pouze pro definování vlastníků karet a ukládání cizích karet do oblíbených.
+Z možných typů financování (prodej produktů, zobrazování reklam, prémiové plány) byly vybrány právě prémiové plány.
 Ty oproti reklamám neomezují uživatelské prostředí a není možné je vypnout doplňkem prohlížeče.
 Oproti prodeji produktů zase nepředstavují tak vysokou zátěž na vývoj.
 
-Následovala analýza a porovnání webových technologií a nástrojů vhodných pro samotnou implementaci.
+Následovala analýza a porovnání webových technologií a nástrojů implementaci.
 Výběr obsahoval programovací jazyky a frameworky pro vývoj uživatelského rozhraní a serverové aplikace, nástroje pro návrh
-rozhraní a podpůrné systémy, jako jsou databáze, úložiště souborů, systémy pro odesílání emailů a nástroje pro provoz
+rozhraní, a podpůrné systémy, jako jsou databáze, úložiště souborů, systémy pro odesílání emailů a nástroje pro provoz
 v produkčním prostředí.
 
+Po analýze dostupných technologií, byla v první řadě zvolena architektura aplikace, od které se odvíjel výběr technologií a vývoj.
+Pro zajištění vysoké interaktivnosti byla zvolena architektura, která rozděluje aplikace na front-endovou \ac{JS} aplikaci a back-endový
+\ac{API} server.
+Pro komunikaci v rámci této architektury byl zvolen vzor \ac{REST} pro jeho rozšířenost a vyspělost.
+
+Díky zvolení architektury aplikace bylo možné vybrat konkrétní technologie.
 Pro implementaci samotného vzhledu stránek byl využit framework \ac{SASS} pro zjednodušení vývoje stylů stránek.
 Mezi technologiemi pro implementaci interaktivnosti uživatelského rozhraní se objevily frameworky Vue, React, Angular a Swelte.
 Z těchto byl vybrán framework Vue pro jeho jednoduchost a kvalitní dokumentaci pro začátečníky.
-
 U jazyků a frameworků pro vývoj serverové části obsahující veškerou business logiku aplikace, se rozhodovalo mezi Javou,
 C\#, PHP a Javascriptem.
 Kvůli velmi podobným výhodám napříč programovacími jazyky, byl vybrán jazyk Java společně s frameworkem Spring, spíše podle
@@ -3040,34 +3045,31 @@ osobních preferencích a předchozích znalostí.
 
 Další rozhodování se zabývalo výběrem vhodné primární databáze pro uchování uživatelských dat a nástrojem pro
 poskytnutí fulltextového vyhledávání.
-Výběr zahrnoval populární databáze PostgreSQL, MySQL, Oracle DB, MariaDB a MongoDB.
-Na základě požadavků aplikace se výběr zúžil pouze \ac{SQL} databáze z nichž byla vybrána PostgreSQL podle preferencí.
+Výběr primární databáze zahrnoval populární kandidáty PostgreSQL, MySQL, Oracle DB, MariaDB a MongoDB.
+Na základě požadavků aplikace se výběr zúžil pouze \ac{SQL} databáze z nichž byla vybrána PostgreSQL, podle preferencí.
 Kromě primární databáze bylo nutné zvolit ještě separátní systém pro fulltextového vyhledávání.
 V tomto případě byl vybrán Elasticsearch pro jeho rozšířenost, univerzálnost a možnost lokálního provozu.
 
-Pro vyhledávání těchto dat byla zvolena databáze Elasticsearch díky jeho rozšířenosti a možnosti provozu na lokálním stroji.
+Souborové úložiště ani systém pro odesílání emailů nebyly implementovány ručně, místo toho byly zvoleny externí služby.
+V případě souborového úložiště se jedná Cloudinary (poskytující \ac{CDN} a tvořič variant obrázků), a případě
+emailů byla zvolena služba SendinBlue.
 
-Souboré úložiště ani systém pro odesílní emailů nebyly implementovány ručně, místo toho byly zvoleny externí služby.
-V případě souborového úložiště se jedná Cloudinary, a případě emailů byl zvolen SendinBlue.
-
-Nakonec pro provoz aplikace byl zvolen systém Kubernetes a poskytovatel DigitalOcean.
+Nakonec, pro provoz aplikace byl zvolen systém Kubernetes a poskytovatel DigitalOcean.
 Kuberenetes z důvodu volnosti konfigurace více aplikací bez nutnosti spravovat celý server.
+DigitalOcean pak kvůli nízkým cenám a celkové pověsti poskytovatele.
 
-Po zvolení všech potřebných technologií, byla v první řadě zvolena architektura aplikace, od které se odvíjel výběr technologií a vývoj.
-Pro zajištění vysoké interaktivnosti byla zvolena architektura rozdělení na front-endovou \ac{JS} aplikace a back-endový
-\ac{API} server.
-Pro komunikaci v této architektuře byl zvolen vzor \ac{REST} pro jeho rozšířenost a vyspělost.
-Následoval návrh uživatelského rozhraní, podle kterého byl navržen datový model a zvolen návrhový vzor \ac{DDD} pro strukturování
+Následoval návrh uživatelského rozhraní, podle kterého byl navržen i datový model a zvolen návrhový vzor \ac{DDD} pro strukturování
 kódu aplikace.
-Na základě modelu byla nejdříve implementována business logika, jenž byla v zápětí obalena \ac{REST} \ac{API}.
+Na základě modelu byla nejdříve implementována business logika, jenž byla vzápětí obalena \ac{REST} \ac{API}.
 Business logika zahrnovala mimo jiné implementaci přístupu k databázi pomocí knihovny MyBatis, validaci entit, napojení
-na souborý systém, propojení aplikačních událostí s emailových systémem, dále pak vyhledávání karet a míst, konfiguraci
-sociálních sítí nebo prémiové plány.
-Implementaci \ac{API} zase zahrnovala jeho návrh, zabezpěčení a transformaci doménových entity na přenosné datové objekty.
-S připraveným funkčním \ac{API} se zaměření přesunulo tvorbu front-endové části podle návrhu uživatelského rozhraní.
+na souborový systém a propojení aplikačních událostí s emailových systémem.
+Dále pak zahrnovala i implementaci vyhledávání karet a míst, konfiguraci sociálních sítí nebo implementaci prémiových plánů.
+Implementace \ac{API} zase zahrnovala jeho návrh, zabezpečení pomocí knihovny Spring Security a transformaci
+doménových entity na přenosné datové objekty.
+S připraveným funkčním \ac{API} se zaměření přesunulo na tvorbu front-endové části podle návrhu uživatelského rozhraní.
 
 Všechny definované požadavky na aplikaci byly ve výsledku splněny a aplikace byla otestována na produkčním prostředí.
-Aplikace je dále otevřena k potencionálním budoucím rozšířením možností pro koncové uživatele.
+Aplikace je dále otevřena k potencionálním budoucím rozšířením.
 
 % todo
 % - změnit vzhled FE
