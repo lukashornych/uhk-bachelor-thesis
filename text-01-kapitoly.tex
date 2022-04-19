@@ -1414,7 +1414,7 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 	Část původního kódu se sice přepoužila, nicméně původní kód byl po analýze natolik přepracován, že se dá uvažovat
 	spíše o nové aplikaci.
 
-	\subsection{UI a UX}
+	\subsection{Uživatelské prostředí}
 
  	Zejména pro explicitní definování funkčních požadavků a způsobu interakce uživatele s aplikací, byl před samotnou
 	implementací věnován čas návrhu \ac{UI} a \ac{UX}.
@@ -2366,12 +2366,11 @@ jan_novak
 			\caption{Ukázka procesu hromadné reindexace dat na úrovni Elasticsearch. Zdroj: [autor]}
 		\end{figure}
 
-		Druhým složitějším a časově náročnějším způsobem, který však umožňuje indexovat kompletně nová data, je
+		Druhým složitějším a časově náročnějším způsobem, který umožňuje indexovat kompletně nová data, je
 		reindexace dat z primární databáze.
-		Tento způsob vyžaduje hromadné stažený entit z primární databáze, jejich transformaci do indexovatelných entit
-		a konečně hromadnou indexaci pomocí \ac{API}.
-		Tento proces je zdlouhavý právě kvůli nutnosti přesunutí dat mezi dvě kompletně oddělenými systémy přes mezičlánek,
-		kterým je aplikace.
+		Tento způsob obsahuje hromadné stažení entit z primární databáze, jejich transformaci do indexovatelných entit
+		a hromadnou indexaci pomocí \ac{API}.
+		Tento proces je zdlouhavý, právě kvůli nutnosti přesunutí dat mezi dvěma kompletně oddělenými systémy.
 
 		\begin{figure}[H]
 			\centering
@@ -2379,20 +2378,20 @@ jan_novak
 			\caption{Ukázka procesu hromadné reindexace nových dat z primární databáze. Zdroj: [autor]}
 		\end{figure}
 
-		Každý index pak má svého správce obsahující napojení na korektní index a jeho nastavení, aby se nastavení nemohla
-		mezi indexy míchat.
+		Každý index svou spravující třídu, která obsahuje napojení na korektní index v databázi a jeho nastavení.
 
 		\subsubsection{Nastavení aplikace}
 
-		Nedílnou součástí větší aplikace běžící ve více prostředích jsou rozdílná nastavená na každém takovém prostředí.
-		Nastavení každé aplikace je vysoce individuální a záleží čistě na požadavckých aplikace jaké nastavení potřebuje
-		se změnou prostředí změnit.
+		Nedílnou součástí větší aplikace jsou rozdílná nastavená každého provozního prostředí.
+		Nastavení každé aplikace je vysoce individuální a záleží čistě na požadavcích aplikace.
 		U většiny aplikací se nachází alespoň nastavení připojení k primární databázi, která je pro každého prostředí
 		odlišná, aby nedocházelo k poškození dat (např.: mezi vývojovým a produkčním prostředím).
-		Dalšími otázkami jsou formát zápisu nastavení a přístup k nastavení z kódu aplikace.
-		V případě Java aplikací se často využívá tzv. "properties" souborů obsahující nastavení v podobě klíč-hodnota.
-		V modernějších aplikacích postavených na frameworku Spring se ale tento formát postupně nahrazuje flexibilnějším
-		\ac{YAML} umožňující lépe definovat celé objekty a hodnoty jejich atributů podobně jako jazyk \ac{JSON}.
+
+		Tato nastavení musí být dostupná v aplikace, a je tak nutné definovat jak se budou nastavená zapisovat a jak se
+		zpřístupní kódu.
+		V případě Java aplikací se často využívá "properties" souborů, které obsahují nastavení v podobě klíč-hodnota.
+		V modernějších aplikacích postavených na frameworku Spring se tento formát postupně nahrazuje flexibilnějším
+		\ac{YAML} jazykem, jenž umožňuje lépe definovat celé objekty a hodnoty jejich atributů podobně.
 
 		\begin{lstlisting}[caption={Ukázka části nastavení aplikace v YAML konfiguračním souboru. Zdroj: [autor]}]
 accounts:
@@ -2404,15 +2403,12 @@ accounts:
 		\end{lstlisting}
 
 		Spring tyto soubory umí zpracovat a poskytnout jednotlivé hodnoty atributů programátorovi.
-		Nicméně používání tohoto způsobu pro získaní nastavení napříč aplikací je jednak náchylné k chybovosti a
-		především zesložiťuje úpravu struktury nastavení.
-		Navíc pokud struktura nastavení je komplexní a očekává se její průběžné rozšířování.
+		Nicméně používání tohoto způsobu pro získaní nastavení napříč aplikací je náchylné k chybovosti a
+		zesložiťuje úpravu struktury nastavení.
 
 		Proto byla vytvořena tenká abstrakce nad Springovými nástroji vystavující jasně definovavé třídy a jejich atributy
 		reflektující nastavení celé aplikace.
-		Konkrétní naplněné objekty lze následně pomocí Springu získat skrze celou aplikaci.
-		Implementace zahrnovala připravení datového modelu a analyzátoru uživatelem definovaných vlastností.
-		Analyzátor pak z načtených a výchozích hodnot sestaví finální objekty reprezentující aktuální nastavení.
+		Implementace zahrnovala připravení datového modelu a načítače hodnot z \ac{YAML} souborů.
 
 		\begin{figure}[H]
 			\centering
@@ -2424,41 +2420,28 @@ accounts:
 
 		Aby bylo možné uživatelům poskytnou komfort v podobě předdefinovaných sociálních sítí společně s validací \ac{URL} adres,
 		bylo potřeba vytvořit robustní systém.
-		Byl proto vytvořen systém šablon, kde každá šablona definuje vlastnosti jedné sítě.
+		Proto byl vytvořen systém šablon, v němž každá šablona definuje vlastnosti jedné sítě.
 		Každý konkrétní odkaz pak má přiřazenou jednu šablonu, na základě které je možné adresu validovat a
 		zobrazit uživateli správnou ikonu a název sítě.
-		Šablona má tak v první řadě hlavně unikátní identifikátor, oficiální název a ikonu.
-		Dále má kolekci možných názvů a zkratek pro potřeby pohodlného vyhledávání.
-		Nejdůležitějšími daty pro validaci jsou šablony \ac{URL} adres a příznak zda se má validovat konkrétní \ac{URL} adresa odkazu.
-
-%		\begin{lstlisting}[language=Java, ]
-%public class CardLinkTemplate {
-%    String id;
-%    Set<String> names;
-%    Set<String> urlTemplates;
-%    Set<CardLinkTemplateCategory> categories;
-%    boolean ignoreExistenceValidation;
-%}
-%		\end{lstlisting}
-%		Ukázka možných nastavení pro každou šablonu sítí. % TODO
+		Definice šablon jsou načítány z \ac{YAML} souboru v rámci celého nastavení aplikace.
 
 			\paragraph{Šablony URL adres}
 
 			Šablony \ac{URL} adres slouží pro specifikování vzoru povolených \ac{URL} adres dané sítě.
-			Tím je zaručeno, že odkaz vede skutečně na ověřenou sít a jen se tak netváří.
-			Zároveň to umožňuje získat u \ac{URL} adresy ID uživatelského profilu na cílové síti pro možnosti fulltextového
-			vyhledávání karet podle těchto identifikátorů.
+			Tím je zaručeno, že odkaz vede skutečně na ověřenou síť.
+			Zároveň to umožňuje získat ID profilů z \ac{URL} adresy odkazu fulltextového
+			vyhledávání karet.
 
-			S pomocí speciálních vyhrazených sekvencí znaků je tak možné definovat poměrně velké množství kombinací
+			S pomocí speciálních vyhrazených sekvencí znaků je možné definovat poměrně velké množství kombinací
 			šablon.
-			Šablony jsou pak následně zanalyzovány a vytvoří se z nich Regex výrazy, pomocí kterých dokáže Java zjistit
-			zdá daný textový řetězec odpovídá nějakému výrazu.
-			Regex je výrazový jazyk skládající se ze speciálních znaků definující pravidla porvnávání \cite{regex}.
+			Šablony jsou při načtení zanalyzovány a jsou z nich vytvořeny Regex výrazy.
+			Regex je výrazový jazyk skládající se ze speciálních znaků definující pravidla porovnávání \cite{regex}.
+			Díky tomu je možné jednoduše zjišťovat, jestli textové řetězce vyhovují nějakému výrazu.
 			Systém momentálně podporuje sekvence \lstinline{*} a \lstinline!{userPart}!.
-			Sekvence \lstinline{*} říká, že se na tomto místě může nacházet jakýkoliv znak vyjma hostové části \ac{URL}
+			Sekvence \lstinline{*} říká, že se na tomto místě může nacházet jakýkoliv znak, vyjma hostové části \ac{URL}
 			adresy, kde se mohou pod touto sekvencí skrývat pouze písmena a pomlčky.
 			Sekvence \lstinline!{userPart}! může obsahovat stejné znaky jako \lstinline{*} sekvence, avšak textové
-			řetězec označený touto sekvenci v cílové \ac{URL} adresa má speciální význam.
+			řetězec označené touto sekvencí mají speciální význam.
 			Nachází se v něm totiž právě zmiňované profilové ID.
 			Díky tomuto označení je pak systém schopen určit, kde se profilové ID nachází a vytáhnou jej.
 
@@ -2467,34 +2450,33 @@ https://*.example.com/{userPart}
 https://{userPart}.example.com
 			\end{lstlisting}
 
-			Systém navíc obsahuje různé validace aplikované při analyzování šablon, aby se do aplikace nemohli načíst
+			Systém obsahuje různé validace aplikované při analyzování šablon, aby se do aplikace nemohli načíst
 			nevalidní šablony.
 			Momentálně definovanými pravidly URL šablon jsou následující:
 			\begin{itemize}
 				\item právě jedna sekvence \lstinline{userPart},
 				\item oddělovač mezi jednotlivými sekvencemi,
-				\item šablona je po záměně sekvencí validní URL adresa.
+				\item šablona je po záměně sekvencí náhodnými slovy validní \ac{URL} adresa.
 			\end{itemize}
 
 			\paragraph{Validace odkazů}
 
-			Na základě nakonfigurovaných šablon URL odkazů je možné konkrétní odkazy validovat.
 			Standardní validace se skládá ze dvou hlavních částí.
-			První část řeší jestli \ac{URL} adresa odpovídá předpokládané šabloně sítí.
+			První část řeší, jestli \ac{URL} adresa odpovídá předpokládané \ac{URL} šabloně.
 			Předpokládaná šablona je určena nadřazenou skupinou odkazů.
-			Validátor se pak pokusí nalést existující šablonu z předané URL adresy.
-			Pokud je tento předpoklad splněn a zároveň se má validovat existence adresy, přechází validátor do druhé části.
-			Druhá část se zabývá validací existence \ac{URL} adresy, tj. zda URL adresa odkazuje na nějakou existujicí
+			Validátor se pak pokusí pro předanou adresu nalézt existující šablonu.
+			Pokud je tento předpoklad splněn, a zároveň se má validovat existence adresy, přechází validátor do druhé části.
+			Druhá část se zabývá validací existence \ac{URL} adresy, tedy, zda URL adresa odkazuje na nějakou existujicí
 			webovou stránku.
-			Toto se ověřuje simulováním \ac{HTTP} požadavku webového prohlížeče a z odpovědi se zjistí, že buď stránka
-			existuje, stránka neexistuje nebo URL adresa přesměrovává na jinou stránku.
-			V prvních dvou případech validace končí.
-			V tom posledním se proces opakuje s novou vrácenou URL adresou.
+			Toto se ověřuje simulováním \ac{HTTP} požadavku webového prohlížeče, a z odpovědi se zjistí, že buď stránka
+			existuje, stránka neexistuje nebo \ac{URL} adresa přesměrovává na jinou stránku.
+			V prvních dvou případech validace končí jasným výsledkem: validní, nevalidní.
+			V tom posledním se proces opakuje s novou vrácenou \ac{URL} adresou.
 			I u této adresy se kontroluje šablona a existence.
-			Takto se proces opakuje do té doby než validátor dostane jasnou odpověď existence nebo vyprší interně stanovený
+			Takto se proces opakuje do té doby, než validátor nedostane jasnou odpověď existence, nebo vyprší interně stanovený
 			limit přesměrování.
 			Limit byl zaveden, aby nemohlo dojít k potencionálnímu zacyklení validace.
-			Je ale nastaven dostatečně vysoký, aby nedocházelo k předčasným selhání validací.
+			Je ale nastaven dostatečně vysoký, aby nedocházelo k předčasným selhání.
 
 			\begin{figure}[H]
 				\centering
@@ -2502,149 +2484,141 @@ https://{userPart}.example.com
 				\caption{Proces validace URL adresy odkazu. Zdroj: [autor]}
 			\end{figure}
 
-			Bohužel ne u všechn URL adres lze validovat existence.
-			Některé stránky totiž mají pokročilou ochranu proti škodlivým strojovým botům a tato validace je tedy
-			vyhodnocena některými jako škodlými bot.
-			Byly provedeny optimalizace v podobě úpravy \ac{HTTP} hlaviček, aby se validace tvářila jako webový prohlížeč
+			Bohužel ne u všech \ac{URL} adres lze validovat existenci.
+			Některé stránky mají pokročilou ochranu proti škodlivým strojovým botům, které tento validátor označí za
+			škodlivého bota.
+			Byly provedeny optimalizace v podobě úpravy \ac{HTTP} hlaviček, aby se validace tvářila jako webový prohlížeč,
 			a u některých stránek to skutečně pomohlo, jiné jsou ale pečlivější.
 			Proto se zavedl příznak přímo do definice šablon, který tuto validaci existence vypíná.
-			Naštestí se jedná o nižší procenta stránek a pro bezpečnost uživatelů je stěžejní pouze první část validace.
+			Naštěstí se jedná o nižší procenta stránek, a pro bezpečnost uživatelů je stěžejní pouze první část validace.
 
 		\subsubsection{Prémiový plán a předplatné}
 
-		Prémiový plán odemyká uživateli prémiové funkce, které jsou běžně uzamknuté.
-		S tím souvisí pojem předplatného popisující stav aktuálního plánu uživatele.
-		Prémiový plán lze momentálně aktivovat pouze aplikování kupónu, nicméně systém by měl počítat s budoucím rozšíření
-		o možnost předplácet si plán na dobu neurčitou.
-
-		Bez aktivovaného prémiového plánu, uživatel může vytvořit maximálně dvě karty a to navíc bez firemní hierarchie.
-		Limity se ale můžou s přibývajícími funkcemi v budoucnu měnit a systém by s tím měl počítat.
-
 		Proces aktivace prémiového plánu začíná aktivováním platného kupónu.
 		Na základě této aktivace je uživateli přiřazena speciální role a vytvořen nový popisný objekt předplatného
-		definující datum expirace.
+		obsahující datum expirace.
 		Datum expirace je vypočítán z doby platnosti kupónu.
-		Každý kupón definuje po jakou dobu bude předplatné aktivní a při aktivace se tato doba přičte k aktuálnímu datumu.
+		Každý kupón definuje, po jakou dobu bude předplatné aktivní, a při aktivaci se tato doba přičte k aktuálnímu datu.
 		V tuto chvíli uživatel může využívat všechny prémiové funkce.
-		Pokud v tuto chvíli uživatel aplikoval další jiný kupón, datum expirace by změnil podle nového kupónu.
+		Pokud by v tuto chvíli uživatel aplikoval další kupón, datum expirace by se změnil podle nového kupónu.
 
-		V případě placeného předplatného by objekt předplatného zprvu neměl datum expiraci.
-		Ta by se nastavila automaticky až při neprovedené následující platbě.
+		V případě placeného předplatného by objekt předplatného zprvu datum expirace neměl.
+		Ta by se nastavila automaticky, až při neprovedené následující platbě.
 
 		Systém tedy při vytváření a ukládání karet musí vždy validovat zda daná karta neobsahuje prémiový obsah.
-		Pokud ano, musí zkontrolovat, zda-li uživatel má příslušnou roli.
+		Pokud ano, musí zkontrolovat, zdali uživatel má příslušnou roli.
 		V případě, že by neměl, je celý požadavek zaříznut a uživateli je vrácena chyba.
 
 		Nejkomplikovanější částí celého systému je expirace předplatného.
-		Problém spočívá v existenci prémiového obsahuje.
-		Pokud uživatel v době expirace nemá prémiový obsah na svém účtu, je situace jednoduchá a předplatné se zruší.
-		Pokud však uživatel prémiový obsah na svém účtu má v době expirace, je potřeba definovat způsob jakým se
-		s takovými daty naloží.
-		Uživatel pak v takovém případě má tři možnosti.
-		Tou nejjednodušší je upozornění ignorovat a v takovém případě se po nějaké době všechny karty uživatele skryjí
-		a veřejnost je na ně již nepodívá.
+		Problém spočívá v existenci prémiového obsahu.
+		Pokud uživatel v době expirace nemá na svém účtu prémiový obsah, je situace jednoduchá a předplatné se zruší okamžitě.
+		Pokud však uživatel v době expirace má na svém účtu prémiový obsah, je potřeba s těmito daty nějak naložit.
+		Uživatel tak dostane tři možnosti.
+		Tou nejjednodušší je upozornění ignorovat, a v takovém případě se po nějaké době všechny karty uživatele skryjí
+		a veřejnost se na ně už nepodívá.
 		Druhou možností je prémiový obsah pomocí speciálního formuláře odstranit, aby bylo možné zrušit předplatné.
 		Poslední možností je prodloužení předplatného.
 		V tomto případě uživateli všechen obsah zůstane a může prémiové funkce nadále využívat.
 
-		Celý proces začíná nějakou dobou před samotnou expirací.
-		Uživatel je dopředu upozorněn na blížící se expiraci emailem.
+		Celý proces začíná nějakou dobou před expirací.
+		Uživatel je dopředu emailem upozorněn na blížící se expiraci.
 		Pokud uživatel do té doby nesmaže všechen prémiový obsah, v den expirace přijde druhý email s informací o
-		proběhlé expiraci a možnosti, které uživatel může provést.
-		Pokud bude uživatel ignorovat toto upozornění, během několika dnů mu přijde druhé stejné upozornění.
-		V případě, že uživatel ignoruje i toto poslední varování, všechna data uživatele jsou během několika dnů
+		proběhlé expiraci, a možnostmi, které uživatel může provést.
+		Pokud bude uživatel ignorovat toto upozornění, během několika dní mu přijde druhé upozornění.
+		V případě, že uživatel ignoruje i toto poslední varování, všechna data uživatele jsou během několika dní
 		automaticky skryta.
-		Uživateli už jen přijde informativní email o skrytí dat.
+		Uživateli už jen o skrytí dat přijde informativní email.
 
-		Zvolený přístup se jeví jako dostatečně flexibilní a pokrývající všemožné scénáře požadované aplikací.
+		Zvolený přístup se jeví jako dostatečně flexibilní a pokrývá všemožné scénáře požadované aplikací.
 
 		\subsubsection{REST API}
 
 		K zajištění komunikace mezi front-endovou \ac{GUI} aplikací a aplikací \ac{API} serveru, server
-		vysvavuje právě \ac{REST} \ac{API}.
-		Díky němu je možné vytvářet, ukládat a získávat entity a spouště různé akce.
+		vystavuje právě \ac{REST} \ac{API}.
+		Díky němu je možné vytvářet, ukládat a získávat entity, a spouštět různé akce.
 
 		\ac{REST} \ac{API} obecně pracuje s tzv. zdroji.
 		Každý zdroj představuje jeden typ pojmenovatelné informace.
-		Tím může být třeba entita, obrázek, dokument nebo kolekce.
-		Jednotlivé zdroje jsou pak vystaveny na přesně daných \ac{URL} adresách a pomocí \ac{HTTP} metod (GET, POST, PUT...)
+		Tím může být entita, obrázek, dokument, nebo třeba kolekce.
+		Jednotlivé zdroje jsou pak vystaveny na přesně daných \ac{URL} adresách, a pomocí \ac{HTTP} metod (GET, POST, PUT...)
 		je možné s těmito zdroji provádět operace.
-		Operacemi jsou většinou následující: získání konkrétního zdroje nebo kolekce, vytvoření nového zdroje na základě
-		předaných dat nebo úprava již existující zdroje opět na základě předaných dat.
-		Nejrozšířenějším jazykem pro popis zdrojů je \ac{JSON}, díky kterému je možné objekty aplikace poměrně jednoduše
+		Operace jsou většinou následující: získání konkrétního zdroje nebo jeho kolekce, vytvoření nového zdroje nebo
+		úprava již existujícího zdroje.
+		Nejrozšířenějším jazykem pro popis zdrojů je \ac{JSON}, díky kterému je možné objekty aplikace jednoduše
 		mapovat na \ac{JSON} dokumenty. \cite{restfulapi}
 
-		Implementované \ac{API} v běžných scénářích (získání, vytvoření, úprava zdrojů) respektuje doporučovaná pravidla.
-		Nicméně v krajních případech je potřeba provádět i jiné, většinou servisní, operace, které tyto pravidla porušují.
-		Toto je však poměrně běžná praxe, a pokud takto není navržena větší část \ac{API}, tak to většinou nepředstavuje
-		problém.
+			\paragraph{Struktura API}
 
-		Jak je možné vidět níže, \ac{API} pro uživatelské účty zahrnuje manipulaci s účtem přihlášeného uživatele a manipulaci
-		s oblíbenými kartami.
+			Implementované \ac{API} v běžných scénářích (získání, vytvoření a úprava zdrojů) respektuje doporučovaná pravidla.
+			Nicméně v krajních případech je potřeba provádět i jiné, většinou servisní, operace, které tyto pravidla porušují.
+			Toto je však poměrně běžná praxe, a pokud takto není navržena větší část \ac{API}, nepředstavuje je to velký
+			problém.
 
-		\begin{figure}[H]
-			\centering
-			\includegraphics[width=\linewidth]{obrazky/api_model_ucty}\hfill
-			\caption{Stromový přehled struktury API uživatelských účtů. Zdroj: [autor]}
-		\end{figure}
+			Jak je možné vidět níže, \ac{API} pro uživatelské účty zahrnuje manipulaci s účtem přihlášeného uživatele a manipulaci
+			s oblíbenými kartami.
 
-		Nejpodstatnější \ac{API} se zabývá manipulací karet a zároveň umožňuje získávat i další podržezané entity.
-		Mimo to nabízí i pomocné operace pro manipulaci s display ID.
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=\linewidth]{obrazky/api_model_ucty}\hfill
+				\caption{Stromový přehled struktury API uživatelských účtů. Zdroj: [autor]}
+			\end{figure}
 
-		\begin{figure}[H]
-			\centering
-			\includegraphics[width=\linewidth]{obrazky/api_model_karty}\hfill
-			\caption{Stromový přehled struktury API karet. Zdroj: [autor]}
-		\end{figure}
+			Nejpodstatnější \ac{API} se zabývá manipulací karet, a zároveň umožňuje získávat i další podřzené entity.
+			Mimo to nabízí i pomocné operace pro manipulaci s display ID.
 
-		\ac{API} úložiště momentálně umožňuje pouze soubory nahrávat, protože systém pracuje pouze s věřejnými soubory, které
-		lze získat přímo z Cloudinary serverů.
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=\linewidth]{obrazky/api_model_karty}\hfill
+				\caption{Stromový přehled struktury API karet. Zdroj: [autor]}
+			\end{figure}
 
-		\begin{figure}[H]
-			\centering
-			\includegraphics[width=8cm]{obrazky/api_model_uloziste}\hfill
-			\caption{Stromový přehled struktury API uložiště. Zdroj: [autor]}
-		\end{figure}
+			\ac{API} úložiště momentálně umožňuje pouze soubory nahrávat, protože systém pracuje pouze s věřejnými soubory, které
+			lze získat přímo z Cloudinary serverů.
 
-		Pro vyhledávání karet a míst existuje separátní vyhledávací \ac{API} pro přehlednost.
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=8cm]{obrazky/api_model_uloziste}\hfill
+				\caption{Stromový přehled struktury API uložiště. Zdroj: [autor]}
+			\end{figure}
 
-		\begin{figure}[H]
-			\centering
-			\includegraphics[width=8cm]{obrazky/api_model_vyhledavani}\hfill
-			\caption{Stromový přehled struktury API vyhledávání karet. Zdroj: [autor]}
-		\end{figure}
+			Pro přehlednost vyhledávání karet a míst existuje separátní vyhledávací \ac{API}.
 
-		Aplikace také nabízí interní administraci celé aplikaci pro správce.
-		Proto vzniklo i \ac{API} pro spouštění servisních operací a k správě zákulisních zdrojů (např.: kupóny).
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=8cm]{obrazky/api_model_vyhledavani}\hfill
+				\caption{Stromový přehled struktury API vyhledávání karet. Zdroj: [autor]}
+			\end{figure}
 
-		\begin{figure}[H]
-			\centering
-			\includegraphics[width=\linewidth]{obrazky/api_model_adm}\hfill
-			\caption{Stromový přehled struktury API operací administrace. Zdroj: [autor]}
-		\end{figure}
+			Aplikace také nabízí interní administraci pro správce.
+			Proto vzniklo i \ac{API} pro spouštění servisních operací a k správě zákulisních zdrojů (např.: kupóny).
+
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=\linewidth]{obrazky/api_model_adm}\hfill
+				\caption{Stromový přehled struktury API operací administrace. Zdroj: [autor]}
+			\end{figure}
 
 			\paragraph{Objekty pro přenos dat}
 
 			V rámci komunikace mezi konzumentem \ac{API} a serverem je nezbytné přenášet objekty reprezentující data
 			aplikace.
-			K tomu by šlo přímo využít datových tříd z business logiky.
-			Bohužel některé tyto třídy obsahují data, která by se neměla dostat ven ze serveru.
+			K tomu by šlo využít přímo doménových tříd.
+			Bohužel některé tyto třídy obsahují data, která by se neměla dostat mimo server.
 			Nejtypičtějšími takovými daty jsou hesla uživatelů.
-			Nicméně někdy je také nezbytné poskytnout agregované atributy, které však nemají své místo v originálních datech.
-			Právě z těchto důvodů \ac{API} využívá tzv. objektů pro přenost dat \ac{DTO}.
+			Někdy je také nezbytné poskytnout agregované atributy, které však nemají své místo v originálních datech.
+			Právě z těchto důvodů \ac{API} využívá tzv. objektů pro přenost dat neboli \ac{DTO}.
 			Tyto datové objekty slouží obecně pro přenos daty mezi procesy.
 			V tomto případě přenáší data mezi \ac{API} serverem a front-endovou aplikací.
 
-			\ac{API} tak na venek pracuje pouze s \ac{DTO} objekty reflektující doménové objekty.
-			Speciálním případem jsou \ac{DTO} objekty nemající ekvivalentní doménový objekt a slouží tak pouze pro jednorázové
-			předání dat.
-			Většinou se používají pro specifikování požadavků front-endové aplikace na zvolenou operace nebo jako
+			\ac{API} tak na venek pracuje pouze s \ac{DTO} objekty, které reflektují doménové objekty.
+			Speciálním případem jsou \ac{DTO} objekty jenž slouží pouze pro jednorázové předání dat.
+			Většinou se používají pro specifikování požadavků front-endové aplikace na zvolenou operaci, nebo jako
 			objekty nesoucí výsledek nějaké operace.
 
 			Pro transformaci mezi doménovými objekty a \ac{DTO} objekty vznikla jednoduchá podpora pro standardizovanou
 			a centralizovanou transformaci.
-			Slouží k tomu továrnové třídy dědící z obecného rozhraní zpřístupňující metodu pro transformaci z doménového
-			objektu na \ac{DTO} objekt a metodu pro obráceno transformaci.
+			Slouží k tomu továrnové třídy dědící z obecného rozhraní, v němž se nacházejí metody pro transformaci z doménového
+			objektu na \ac{DTO} objekt a naopak.
 
 			\begin{lstlisting}[language=Java, caption={Ukázka obecného rozhraní třídy pro transformaci mezi doménovými objekty a DTO objekty. Zdroj: [autor]}]
 public interface DtoFactory<E, D> {
@@ -2653,33 +2627,28 @@ public interface DtoFactory<E, D> {
 }
 			\end{lstlisting}
 
-			Transformace z \ac{DTO} objektu na doménový objekty je specifická v tom, že pro transformaci používá zároveň
+			Transformace z \ac{DTO} objektu na doménový objekt je specifická v tom, že pro transformaci používá zároveň
 			i originální doménový objekt z databáze.
-			Díky tomu je možné zajistit, že výsledný objekt bude mít změněné pouze ty atributy, které jsou povolené.
+			Díky tomu je možné zajistit, že výsledný objekt bude mít změněné pouze ty atributy, u nichž je to povolené.
 
-			Rozhraní továrny je generické a proto pro každou transformovatelnou entitu je potřeba implementovat konkrétní
-			transformaci.
-			Každá entita má vlastní doménovou třídu a vlastní \ac{DTO} třídu a především jiná data a jiný způsob transformace.
+			Rozhraní továrny je generické, a proto pro každá doménová entita má vlastní implementaci.
 
 			\paragraph{Zabezpečení}
 
 			Zabezpečení je velmi důležitou součástí aplikace pro znemožnění zneužití dat útočníky.
-			Je nezbytné zajistit, aby se neoprávnění uživatelé nedostali k datům, které jim nepřísluší a aby nemohl
+			Je nezbytné zajistit, aby se neoprávnění uživatelé nedostali k datům, které jim nepřísluší, a aby nemohli
 			poškodit cizí data.
 			Těmito problémy se zabývá především společnost OWASP poskytující kvalitní materiály o bezpečnosti programátorům.
-			Avšak řešit všechny existující problémy svépomoci by zabralo spoustu času a bez dlouholetých znalostí v
+			Avšak řešit všechny existující problémy svépomocí by zabralo spoustu času, a bez dlouholetých znalostí v
 			oblasti bezpečnosti, by implementovaný systém nemusel být ani správně zabezpečený.
-			Navíc nové hrozby stále vznikají a udržovat bezpečnostní systém paralelně s rozšiřováním aplikace by vyžadovalo
-			celý tým vývojářů.
 
-			Naštěstí framework Spring zahrnuje i knihovnu Spring Security pro zabezpečení celé webové aplikace.
-			Tato knihovna jednak automaticky zajišťuje doporučené bezpečnostní praktiky a jednak poskytuje programátorovi
+			Naštěstí framework Spring zahrnuje i knihovnu Spring Security.
+			Tato knihovna jednak automaticky zajišťuje doporučené bezpečnostní praktiky, a jednak poskytuje programátorovi
 			nástroje pro tvorbu přihlašování a práv uživatelů.
-			Knihovna obsahuje předpřipravené nástroje pro běžné postupy přihlašování a implementaci práv.
-			Programátor si však tyto nástroje může relativně snadno rozšířit nebo implementovat vlastní.
+			Programátor si navíc tyto nástroje může relativně snadno rozšířit nebo implementovat vlastní.
 
 			Specificky pro tuto aplikaci bylo definováno jaké \ac{URL} adresy \ac{API} vyžadují přihlášení a specifické
-			role a výchozí přihlašovací proces byl rozšířen o externí poskytovatele a vlastní správu účtů.
+			role, a výchozí přihlašovací proces byl rozšířen o externí poskytovatele a vlastní správu účtů.
 
 			\begin{lstlisting}[language=Java, caption={Ukázka části nastavení zabezpečení API pomocí knihovny Spring Security. Zdroj: [autor]}]
 @Override
@@ -2702,60 +2671,58 @@ protected void configure(HttpSecurity http) throws Exception {
 			a hesla.
 			U tohoto přístupu kombinaci ověřuje přímo aplikace.
 			Druhým, stále více používaným, přístupem je přihlašování pomocí třetích stran.
-			Při tomto přístupu aplikace deleguje přihlašování na jiného poskytovatele uživatelských účtu, který následně
-			vrátí po přihlášení původní aplikaci informace o přihlášeném uživateli.
+			Při tomto přístupu aplikace deleguje přihlašování na jiného poskytovatele uživatelských účtů, který následně
+			vrátí aplikaci informace o přihlášeném uživateli.
 			Aplikace se tak nemusí starat o ověřování hesla a podobně.
-			Takovýchto poskytovatelů existuje celá řada, což pomohlo vzniknout standardu OAuth2 standardizující proces
-			komunikaci mezi aplikací a poskytovatelem.
+			Takovýchto poskytovatelů existuje celá řada, což přispělo vzniku standardu OAuth2, který standardizuje celý proces
+			komunikace mezi aplikací a poskytovatelem.
 			Díky tomu není potřeba pro každého poskytovatele implementovat odlišný proces.
 
 			Aby měli uživatelé volnost při výběru, jakým způsobem se chtějí přihlašovat, byly do této aplikace implementovány
 			oba způsoby.
-			Uživatel se tak může přihlásit a zaregistrovat buď pomocí běžné kombinace emailové adresy a hesla nebo pomocí
+			Uživatel se tak může přihlásit a zaregistrovat, buď pomocí běžné kombinace emailové adresy a hesla, nebo pomocí
 			některých z poskytovatelů.
-			Momentálně jsou připraveni nejvýužívanější poskytovatelé Google, Github a Facebook, nicméně rozšíření o
+			Momentálně jsou připraveni nejvyužívanější poskytovatelé Google, Github a Facebook, nicméně rozšíření o
 			další poskytovatele nepředstavuje příliš práce.
-			Zaregistrovaný uživatel si navíc může ke svému účtu připojit i další způsoby, tj. pokud se zaregistroval emailovou
+			Zaregistrovaný uživatel si pak může ke svému účtu připojit i další způsoby, tedy, pokud se zaregistroval emailovou
 			adresou, může si připojit některého z poskytovatelů a obráceně.
 			Díky tomu si uživatel může při každém přihlášení vybrat, jakým způsobem se přihlásí.
 
-			Druhým řešeným problémem je, jak verifikovat přihlášeného uživatele při každém \ac{HTTP} požadavku na server
-			aniž by uživatel musel zadávat přihlašovací údaje při každém takovém požadavku.
+			Druhým řešeným problémem je, jak verifikovat přihlášeného uživatele při každém následujícím \ac{HTTP} požadavku na server,
+			aniž by musel uživatel pokaždé zadávat přihlašovací údaje.
 			Aplikace na serveru může buď udržovat v paměti sezení každého uživatele nebo vygenerovat uživateli token
 			obsahující informace o uživateli.
 
-			V případě, že aplikace využívá sezení, je na serveru spravován objekt se informací o přihlášeném uživateli.
+			V případě, že aplikace využívá sezení, je na serveru spravován objekt s informacemi o přihlášeném uživateli.
 			Uživatel pomocí webového prohlížeče pak pouze předává ID daného sezení.
 			Server má tak plnou kontrolu nad daným sezením.
-			Bohužel server musí opatření proti krádeži těchto ID na úrovni webových prohlížečů
+			Bohužel server musí zajistit opatření proti krádeži těchto ID.
 
 			Alternativou je vygenerování tokenu obsahující uživatelské informace.
-			Tento token je následně předán klientovi a ten musí zaručit, aby při každém požadavku předal vygenerovaný token.
-			Tento způsob převážně využíván pro komunikaci mezi servery, avšak začíná se používat i v aplikacích, kde
+			Tento token je následně předán klientovi, a ten musí zaručit předání vygenerovaného tokenu severu.
+			Tento způsob je převážně využíván pro komunikaci mezi servery, avšak začíná se používat i v aplikacích, kde
 			je aplikace rozdělena na \ac{GUI} část a \ac{API} část.
-			Díky tomuto přístupu server nemusí udržovat sezení všech přihlášených uživatelů.
-			Tím že ale token nemá pod správou server, není snadné takový token označit jako neplatný v případě odhlášení.
+			Díky tomuto přístupu server nemusí udržovat sezení přihlášených uživatelů.
+			Tím že server nemá token pod svojí správou, není snadné takový token označit jako neplatný, třeba v případě odhlášení.
 			To jde řešit například ukládáním tokenů do databáze, nicméně správa tokenů se pak částečně přenáší zpět
-			na server a výhody nezávislosti na serveru mizí.
-			Řešení se tak přibližuje přístupu se sezeními, avšak za cenu sloužitější implementace.
+			na server, a výhody nezávislosti na serveru mizí.
+			Řešení se tak přibližuje přístupu se sezeními, avšak za cenu složitější implementace.
 
-			V případě této aplikace proběhli nějaké experimenty s druhým typem ověřování, posléze se ale ukázalo, že
+			V případě této aplikace proběhl experiment s druhým typem ověřování, posléze se ale ukázalo, že
 			řešení je zbytečně složité a ne úplně spolehlivé.
-			Přihlašování bylo tedy přepracováno na řešení se sezeními, které Spring Security knihovna má již v základu
-			vyřešené na rozdíl od předchozího přístupu.
-			Díky tomu se celý proces zjednodušil a delegoval na externí knihovnu, na které pracují experti v oboru.
-			Bonusem bylo zjednodušení implementace přihlašování pomocí poskytovatelů třetích stran, protože
-			knihovna Spring Security má připravenou podporu pro tyto scénáře.
+			Přihlašování bylo tedy přepracováno na řešení se sezeními, které má již knihovna Spring Security v základu
+			vyřešené, což neplatilo o předchozím přístupu.
+			Díky tomu se celý proces zjednodušil a delegoval se na externí knihovnu, na které pracují experti v oboru.
+			Bonusem bylo zjednodušení implementace přihlašování pomocí poskytovatelů třetích stran, protože pro tyto scénáře
+			má knihovna Spring Security připravenou podporu.
 
 			Jediným problémem bylo spojení interních uživatelských účtů a OAuth2 účtů.
 			Spring Security totiž pro každý způsob využívá jiné objekty.
 			Proto byl proces připravený knihovnou rozšířen o vlastní zakončení.
-			Toto zakončení je vyvoláno knihovnou po úspěšném přihlášení a dává možnost provést vlastní operace nad
+			Toto zakončení je vyvoláno knihovnou po úspěšném přihlášení poskytovatelem, a dává možnost provést vlastní operace nad
 			přihlášeným uživatelem než se odpověď dostane ke koncovému uživateli.
 			Proces řeší i registraci nového uživatele, protože OAuth2 nerozlišuje mezi novým a existujícím uživatelem.
-			OAuth2 zajišťuje pouze poskytnutí dat o uživatelích.
-
-			Následující diagram popisuje zpracování nově přihlášeného OAuth2 uživatele.
+			OAuth2 pouze zajišťuje poskytnutí uživatelských dat.
 
 			\begin{figure}[H]
 				\centering
@@ -2767,13 +2734,13 @@ protected void configure(HttpSecurity http) throws Exception {
 
 		Automatizované testování umožňuje kód aplikace otestovat ještě před samotným spuštěním a testovat
 		kód průběžně při úpravách a rozšiřováních.
-		Díky tomuto testování je možné předejít velkému množství logických chyb již v počátku implementace.
+		Díky tomuto testování je možné předejít velkému množství logických chyb, již v počátku implementace.
 
 		Způsobů testování je více.
-		Tato aplikace využívá tzv. "unit" testování a integrační testování.
-		Unit testování izolovaně ověřuje předpokládané chování komponent systému bez ovlivnění chováním
-		ostatních komponent\cite{unit_testing}.
-		Opakem je integrační testování ověřující souhru více komponent najednou \cite{integration_testing}.
+		Tato aplikace využívá unit testování a integračního testování.
+		Unit testování izolovaně ověřuje předpokládané chování komponent systému vlivu
+		ostatních komponent \cite{unit_testing}.
+		Opakem je integrační testování, jenž ověřuje souhru více komponent najednou \cite{integration_testing}.
 
 		Služební třídy a pomocné třídy provádějící nějaké transformace (\ac{DTO} továrny, analyzátor šablon odkazů...)
 		jsou testovány izolovaně pomocí unit testů.
@@ -2782,8 +2749,7 @@ protected void configure(HttpSecurity http) throws Exception {
 		Hlavní knihovnou zpřístupňující nástroje pro spouštění testů a ověřování výsledků je JUnit.
 		Aby bylo možné třídy testovat izolovaně, je potřeba simulovat chování ostatních komponent, se kterými testovaná
 		třída komunikuje.
-		K tomu je využita knihovna Mockito, která zároveň umožňuje zkoumat proběhlé interakce a vyhodnocovat testy
-		na základě toho.
+		K tomu je využita knihovna Mockito, která zároveň umožňuje zkoumat proběhlé interakce, a na základě toho vyhodnocovat testy.
 
 		\begin{lstlisting}[language=Java, caption={Testu ověřující, že služba štítků vrací správné nejvyužívanější štítky z nasimulovaného repozitáře. Zdroj: [autor]}]
 @Test
@@ -2800,18 +2766,18 @@ public void getMostUsedTags_ExpectedFoundCorrectOnes() {
 }
 		\end{lstlisting}
 
-		Třídy repozitářů a třídy poskytující \ac{REST} \ac{API} jsou spíše integračními testy spojující více
-		komponent k zajištění vypovídajících výsledků.
+		Třídy repozitářů a třídy poskytující \ac{REST} \ac{API} jsou spíše integračními testy spojujícími více
+		komponent k zajištění výsledků.
 
 		Při testování repozitářů je potřeba testovat \ac{SQL} dotazy oproti reálné databázi s daty.
-		K spuštění takových testů je tedy potřeba běžící testovací databáze a připravená testovací data.
-		Ta jsou do databáze nahrána před každým testem a smazána po každém testu.
+		K spuštění takových testů je tedy potřeba běžící testovací databáze s připravenými testovacími daty.
+		Ta jsou do databáze nahrávána před každým testem a mazána po každém testu.
 		Tím je zaručena izolovanost jednotlivých testů, aby nedocházelo k mylným výsledkům.
 
 		Testy \ac{REST} \ac{API} jsou kombinací integračních a unit testů.
-		Knihovna Spring poskytuje nástroje pro volání \ac{API} skrze \ac{URL} adresy simulující tak reálnou komunikaci
+		Knihovna Spring poskytuje nástroje pro volání \ac{API} skrze \ac{URL} adresy, které simulují reálnou komunikaci
 		s \ac{API}.
-		Napojení na služební třídy už je řešeno simulací služebních tříd, aby nebylo nutné zprovozňovat všechny části
+		Napojení na služební třídy je ale řešeno simulací, aby nebylo nutné zprovozňovat všechny části
 		aplikace.
 
 		\begin{lstlisting}[language=Java, caption={Ukázka testu volání API validující odkaz. Zdroj: [autor]}]
@@ -2833,7 +2799,7 @@ public void validateLink_InvalidLink_ExpectedFalse() {
 
 	\subsection{Implementace front-endové aplikace}
 
-	Front-endová aplikace zpřístupňující \ac{GUI} koncovým uživatelům pro \ac{REST} \ac{API} byla postavena na frameworku
+	Front-endová aplikace zpřístupňující \ac{GUI} koncovým uživatelům byla postavena na frameworku
 	Nuxt obalující knihovnu Vue.
 	Díky tomu je zajištěna reaktivnost komponent a prvotní vykreslení stránek na serveru.
 	Zaměření tak padlo na konkrétní problémy řešené domény.
@@ -2841,16 +2807,16 @@ public void validateLink_InvalidLink_ExpectedFalse() {
 		\subsubsection{Komunikace s API serverem}
 
 		Prvním stavebním kamenem je možnost komunikovat s vyvinutým \ac{API}.
-		Opět existuje spousta ověřených knihoven řešící pohodlnou komunikace.
-		Nuxt přichází se svou vlastní, která má jednoduché \ac{API} a byla tedy zvolena ta.
+		Opět existuje spousta ověřených knihoven řešící problémy komunikace.
+		Nuxt přichází se svou vlastní, která má jednoduché \ac{API}, a proto byla zvolena.
 		Díky integraci s Nuxt frameworkem bylo možné jednoduše centralizovaně přednastavit knihovnu pro všechna volání \ac{API}.
 		Hlavní takovou konfigurací byla správa chyb z volání \ac{API}.
-		Ta řeší obecné chyby jako nepřihlášený uživatel nebo nedostačená práva uživatele.
-		Zároveň řeší aby v každém požadavku byl zahrnut platný \noindent\ac{CSRF} token.
-		\ac{CSRF} token zabraňuje útočníkům provádět operace pod účet jiného uživatele pomocí podvodných stránek \cite{csrf}.
+		Ta řeší obecné chyby, jako je nepřihlášený uživatel nebo nedostatečná práva uživatele.
+		Zároveň řeší, aby v každém požadavku byl zahrnut platný \ac{CSRF} token.
+		\ac{CSRF} token zabraňuje útočníkům provádět operace pod účtem jiného uživatele pomocí podvodných stránek \cite{csrf}.
 		Token je poskytován \ac{API} serverem na vyžádání.
 		Front-endová aplikace však musí zaručit jeho získání a následné uložení pro další požadavky.
-		To je zajištěno přidáním \ac{CSRF} tokenu do speciální hlavičky \ac{HTTP} požadavku ještě před odesláním požadavku.
+		Předání tokenu zpět \ac{API} serveru je zajištěno přidáním tokenu před odesláním \ac{HTTP} požadavku do speciální hlavičky.
 		Pokud token v aplikaci ještě neexistuje, je odeslán paralelní požadavek na \ac{API} server pro vygenerování tokenu.
 
 		\begin{lstlisting}[caption={Ukázka vložení CSRF tokenu do každého požadavku putujícího na API server. Zdroj: [autor]}]
@@ -2866,35 +2832,34 @@ $http.onRequest(async (request) => {
 		Dalším důležitým stavebním prvkem je tzv. centrální zdroj informací.
 		Ten představuje centralizované místo pro ukládání a získávání dočasných dat napříč celou aplikací.
 		Je zde možné například uložit informace o přihlášeném uživateli nebo výše zmíněný \ac{CSRF} token.
-		K tomu slouží knihovna Vuex řešící uchování dat a záznam změn dat v čase.
+		K tomu slouží knihovna Vuex řešící uchování dat a záznam změn v čase.
 		Díky ní je pak uživatelský účet jednoduše přístupný ze všech komponent bez nutnosti opakovaného provolávání
 		\ac{API} serveru.
 
 		\subsubsection{Lokalizace textů}
 
 		Lokalizace textů se zabývá zobrazováním textů prvků \ac{UI} v konkrétním jazyce uživatele.
-		Díky tomu různí uživatelé mluvící odlišnými jazyky mohou bez problému aplikaci využívat jejich nativním jazyce.
-		Tuto problematiku je dobré řešit hned na počátku implementace potencionálně vícejazykové aplikace.
+		Díky tomu různí uživatelé mluvící odlišnými jazyky mohou bez problému aplikaci využívat v jejich nativním jazyce.
 
-		Knihovna i18n of tvůrců frameworku Nuxt tuto problematiku řeší.
-		Konkrétně zajišťuje nahrazování klíčů konkrétními texty v komponentech a automatické přepínání použitého jazyka
+		Tuto problematiku řeší například knihovna i18n od tvůrců frameworku Nuxt.
+		Konkrétně zajišťuje nahrazování klíčů konkrétními texty v komponentech, a automatické přepínání použitého jazyka
 		podle webové prohlížeče.
 
-		Problém ale nastal při tvorbě informačních stránek (nápověda, podmínky použítí...).
-		U těchto stránek je obsah zapsán jako jeden velký \ac{HTML} soubor pro podporu formátování, nikoliv
+		Problém ale nastal při tvorbě informačních stránek (nápověda, podmínky použití...).
+		U těchto stránek je obsah zapsán jako jeden velký \ac{HTML} soubor pro podporu formátování, nikoli
 		jako dílčí texty.
-		Knihovna totiž očekává všechny texty zapsané v jednom \ac{JSON} dokumentu.
-		Do těchto dokumentů tedy bylo potřeba nějakým způsobem vložit i ty \ac{HTML} dokumenty.
+		Knihovna však očekává všechny texty zapsané v jednom \ac{JSON} dokumentu.
+		Do těchto dokumentů bylo potřeba nějakým způsobem vložit i ty \ac{HTML} dokumenty.
 		Z tohoto důvodu pro každý jazyk vznikl \ac{JS} soubor, který posbírá všechny překladové materiály a poskládá z nich
-		výsledný \ac{JSON} dokument se všemi překladovými texty.
+		výsledný \ac{JSON} dokument.
 
 		\subsubsection{Validace formulářových polí}
 
 		Validace uživatelsky vložených dat je důležitá především pro zaručení správnosti uložených dat.
 		Ne všichni uživatelé jsou však podvodníci chtějící poškodit data.
-		Většina uživatelů zadávají očekávaná data, nicméně je velká pravděpodobnost, že se nějaký uživatel omylem upíše
+		Většina uživatelů zadává očekávaná data, nicméně je velká pravděpodobnost, že se nějaký uživatel omylem upíše
 		a udělá nechtěnou chybu.
-		Proto je dobré v rámci kvalitního \ac{UX} poskytnou uživatelům rychlou a cílenou zpětnou vazbu o chybně zadaných
+		Proto je dobré v rámci kvalitního \ac{UX} poskytnout uživatelům rychlou a cílenou zpětnou vazbu o chybně zadaných
 		datech.
 
 		\begin{figure}[H]
@@ -2903,11 +2868,11 @@ $http.onRequest(async (request) => {
 			\caption{Ukázka pole formuláře s textem v nevalidním formátu. Zdroj: [autor]}
 		\end{figure}
 
-		Pomocí knihovny Vuelidate bylo možné snadno implementovat zobrazování chyb přímo v konkrétních polích
-		hned jakmile uživatel vyplní dané pole.
+		Pomocí knihovny Vuelidate bylo implementováno zobrazování chyb přímo v konkrétních polích hned,
+		jakmile uživatel vyplní dané pole.
 		Knihovna řeší celý mechanismus validace hodnot polí a poskytování výpisu všech chyb ve formuláři.
-		Zároveň přichází s obecnými validátory, ale programátor může implementovat vlastní.
-		Toho bylo využito například u validace \ac{URL} adresy odkazu na sociální síť, kdy je potřeba se dotázat \ac{API},
+		Zároveň přichází s obecnými validátory, ale programátor může implementovat i vlastní.
+		Toho bylo využito především u validace \ac{URL} adres odkazů na sociální síťě, u nichž je potřeba se dotázat \ac{API},
 		které adresu zvaliduje.
 
 		\begin{lstlisting}[caption={Ukázka implementace vlastního validátoru využívající API k validaci hodnoty. Zdroj: [autor]}]
@@ -2923,21 +2888,20 @@ export const displayId = function (cardId) {
 }
 		\end{lstlisting}
 
-		S připravenými dílčími validátory je pak možné definovat pravidla pro jednotlivá pole ve formuláři.
-		Tyto pravidla jsou následně aplikována na jednotlivá pole, která sledují změnu hodnoty a informují o tom změnách
-		a případných chybách formulář.
-		Díky reaktivnosti Vue je pak možné chybu zobrazit hned jakmile vznikne.
-		Následně při odeslání formuláře uživatelem, je validace provedena ještě jednou a buď je formulář odeslán nebo
+		S připravenými dílčími validátory je pak možné definovat pravidla pro jednotlivá pole ve formulářích.
+		Tato pravidla jsou následně aplikována na jednotlivá pole, která sledují změny hodnot.
+		Díky reaktivnosti Vue je pak možné chybu zobrazit hned, jakmile vznikne.
+		Při odeslání formuláře je validace provedena ještě jednou, a buď je formulář odeslán nebo je
 		zobrazena chyba.
 		V případě běžných uživatelů by se tedy na server vůbec chybná data neměla dostat.
 
 		\subsubsection{Upozornění v UI}
 
-		Pokud v aplikace vznikne nějaká událost o které by měl být uživatel okamžitě informován (chyba, úspěšnost operace...).
-		To je v tomto případě vyřešeno vyskakujícími upozorněnými po vzoru upozorněních využitých v mobilních operačních
+		Pokud v aplikaci vznikne nějaká událost (chyba, úspěšnost operace...), je nutné o tom informovat uživatele.
+		To je v tomto případě vyřešeno vyskakujícími upozorněnými po vzoru mobilních operačních
 		systémech.
 		Tento způsob je výhodný v tom, že uživatel si upozornění všimne ať už je kdekoliv na stránce.
-		Zároveň při přechodu mezi modálními okny se upozornění neztratí.
+		Zároveň při přechodu mezi modálními okny se upozornění neztrácí.
 
 		\begin{figure}[H]
 			\centering
@@ -2946,15 +2910,15 @@ export const displayId = function (cardId) {
 		\end{figure}
 
 		K implementaci upozornění byla využita knihovna \url{https://www.npmjs.com/package/vue-notification}{Vue.js notifications}
-		poskytující dostatečnou volnost přizpůsobení vzhledu a chování oproti ostatním podobným knihovnám.
+		poskytující dostatečnou volnost přizpůsobení vzhledu a chování, oproti ostatním podobným knihovnám.
 		Je navíc na míru tvořena pro knihovnou Vue.
-		Knihovna poskytuje jednoduché \ac{API} pro vystavování upozornění pomocí specifikování typ zprávy (chyba, úspěch, info...)
+		Knihovna poskytuje jednoduché \ac{API} pro vystavování upozornění pomocí specifikování typu zprávy (chyba, úspěch, info...) a
 		samotné zprávy.
-		Pro velkou aplikaci, kde je nutné na spoustě místech taková upozornění vystavovat je nevhodné duplikovat
-		pokaždé celou specifikaci upozornění.
+		Pro velkou aplikaci, kde je nutné na spoustě místech taková upozornění vystavovat, je nevhodné pokaždé duplikovat
+		celou specifikaci upozornění.
 		Stejně jako komponenty i upozornění využívají překladových textů.
-		Tato kombinace tak značně zvyšuje riziko chybovosti délky kódu.
-		Vznikla proto jednoduchá abstrakce zpřístupňující pomocné metody dostupné skrze celou aplikaci.
+		Tato kombinace tak značně zvyšuje riziko chybovosti kódu.
+		Vznikla proto jednoduchá abstrakce zpřístupňující pomocné metody, které jsou dostupné celou aplikací.
 		Pro každý používaný typ zprávy (chyba, úspěch, info) existuje právě jedna metoda vyžadující pouze klíč překladového textu.
 		Malou výjimkou jsou chybové zprávy, kde existují dvě metody: jedna s možností vložení vlastního textu, druhá
 		zobrazující generickou chybu.
@@ -2968,30 +2932,27 @@ this.$notifyError()
 
 	\subsection{Příprava pro produkční provoz}
 
-	Tím že celá aplikace poběží na orchestračním systému Kubernetes, je nutné zprovoznit obě aplikace v Docker kontejnerech.
+	Tím že celá aplikace poběží v orchestračním systému Kubernetes, je nutné zprovoznit obě aplikace v Docker kontejnerech.
 	Následně nakonfigurovat Kubernetes, aby sám aplikace spustil a navázal mezi nimi spojení.
 
 		\subsubsection{Příprava Docker image}
 
-		Docker image je šablona, podle které se automatizovaně vytvářejí běžící kontejnery obsahující běžící aplikace.
+		Docker image je šablona, podle které se automatizovaně vytvářejí běžící kontejnery s aplikacemi.
 		Pro \ac{API} server aplikaci a front-endovou aplikaci je nutné tedy připravit separátní Docker image.
-		K tomu poslouží speciální soubor zvaný Dockerfile sloužící jako předloha pro vytvoření Docker image.
+		K tomu poslouží speciální soubor zvaný Dockerfile, sloužící jako předloha pro vytvoření Docker image.
 		Dockerfile obsahuje všechny příkazy potřebné pro spuštění aplikace \cite{dockerfile_reference}.
 
 		Součástí nadstavby Spring frameworku Spring Boot je možné automatizovaně Docker image vytvořit bez manuální tvorby
 		Dockerfilu.
-		Tato funkcionalita vychází ze standardizované struktury aplikací postavené na Spring Boot knihovně.
-		Díky ní je Spring Boot schopen automatizovaně vytvořit optimalizovaný Docker image celé aplikace připravené k
-		použití.
-		Tato aplikace naštěstí nevybočuje ze standardizované struktury Spring Boot aplikací, a proto byla tato podpora využita.
+		Spring Boot tedy zajistí vytvoření optimalizovaného Docker image celé aplikace.
 
 		V případě front-endové aplikace tato podpora není a bylo nutné Dockerfile připravit ručně.
-		Nicméně příprava front-endové aplikace pro provoz v Docker kontejneru byla jednodušší než by byla příprava \ac{API}
+		Nicméně příprava front-endové aplikace pro provoz v Docker kontejneru byla jednodušší, než by byla příprava \ac{API}
 		serverové aplikace.
-		Dockerfile obsahuje příkazy podobné tomu jak se aplikace spouští pro lokální vývoj.
-		Dockerfile nejdříve vytvoří cílový adresář pro aplikace a nainstaluje potřebné systémové aplikace pro sestavení
+		Dockerfile obsahuje příkazy podobné tomu, jak se aplikace spouští pro lokální vývoj.
+		Dockerfile nejdříve vytvoří cílový adresář pro aplikaci, následně nainstaluje potřebné systémové aplikace pro sestavení
 		a běh aplikace.
-		Následně aplikaci sestaví do vytvořeného adresáře a aplikaci spustí na portu \lstinline{3000}.
+		Nakonec aplikaci sestaví do vytvořeného adresáře a spustí na portu \lstinline{3000}.
 
 		\begin{lstlisting}[caption={Dockerfile spouštějící front-endovou aplikaci v Dockeru. Zdroj: [autor]}]
 FROM node:14.17.6-alpine
@@ -3017,11 +2978,10 @@ ENTRYPOINT yarn start --dotenv=.env.$ENV
 
 		\subsubsection{Nastavení Kubernetes}
 
-		S připravenými Docker imagi pro obě aplikace bylo možné zprovoznit Kubernetes systém.
-		V systému běží především implementované aplikace.
-		Společně s nimi se zde nachází i webový server nginx a databázový systém Elasticsearch.
-		Jediný primarní databáze PostgreSQL je provozována samostatně poskytovatelem DigitalOcean.
-		Není tak nutné se starat o ruční zálohovaní a výpadky.
+		Na základě připravených Docker imagí pro obě aplikace byl zprovozněn systém Kubernetes.
+		V systému se kromě implementovaných aplikací nachází i webový server nginx a databázový systém Elasticsearch.
+		Jediný databázový systém PostgreSQL je provozován samostatně poskytovatelem DigitalOcean.
+		Není tak nutné se starat o ruční zálohovaní nebo výpadky.
 
 		\begin{figure}[H]
 			\centering
@@ -3029,25 +2989,23 @@ ENTRYPOINT yarn start --dotenv=.env.$ENV
 			\caption{Ukázka putování HTTP požadavku infrastrukturou. Zdroj: [autor]}
 		\end{figure}
 
-		Webový server slouží jako vstupní brána do celého systému a poskytuje nástroje pro zabazpěčení
-		zpracování požadavků.
-		Zároveň zahazuje neplatné požadavky ještě dřív než by mohli způsobit škody v samotných aplikacích.
-		Ten následně platné požadavky deleguje na serverovou část front-endové aplikace s požadavek na poskytnutí aplikace.
-		V případě, že jsou vyžadována data z API server, front-endová aplikace část požadavku deleguje právě na \ac{API}.
-		\ac{API} server si data může navíc vyžádata z primární databáze nebo vyhledávácí databáze.
-		Zpracovaný požadavek se nakonec vrací uživateli opět skrze nginx.
+		Webový server slouží jako vstupní brána do celého systému a poskytuje nástroje pro zabezpěčení požadavků.
+		Zároveň zahazuje neplatné požadavky ještě dřív, než by mohli způsobit škody v samotných aplikacích.
+		Následně platné požadavky deleguje na serverovou část front-endové aplikace s požadavkem na poskytnutí webových stránek.
+		V případě, že jsou vyžadována data z API serveru, front-endová aplikace část požadavku deleguje právě na \ac{API}.
+		\ac{API} server si navíc data může vyžádat z primární databáze nebo vyhledávací databáze.
+		Zpracovaný požadavek se nakonec vrací uživateli, opět skrze nginx.
 
-		Obě aplikace a server nginx jsou nakonfigurované jako Deploymenty a Elasticsearch jako StatefulSet.
-		Deployment je entita Kubernetes systému popisující jak bude aplikace spuštěna \cite{deployements}.
-		Deploymenty se používají v případě kdy aplikace neudržuje důležitá data, o která by se v případě vypnutí přišlo
+		Obě aplikace a server nginx jsou nakonfigurované jako Deploymenty, jediný Elasticsearch je nastaven jako StatefulSet.
+		Deployment je entita Kubernetes systému popisující, jak bude aplikace spuštěna \cite{deployements}.
+		Deploymenty se používají v případě, kdy aplikace neudržuje důležitá data, o která by se v případě vypnutí přišlo
 		\cite{deployements}.
-		StatefulSety jsou jakousi nadstavbou nad Deploymenty a zaručují uržení stavů spuštěných aplikací. \cite{statefulsets}.
-		Právě z těchto důvodů mohou být implementované aplikace spouštěné jednodušími Deploymenty, protože všechna důležitá
-		data se nachází v databázi PostgreSQL.
-		Elasticsearch databáze je na proti tomu sama zdrojem dat a není vhodné, aby docházelo k její vypínání.
+		StatefulSety jsou jakousi nadstavbou nad Deploymenty, a zaručují udržení stavů spuštěných aplikací. \cite{statefulsets}.
+		Právě z těchto důvodů mohou být implementované aplikace spuštěné jednoduššími Deploymenty, protože všechna důležitá
+		data ukládají do PostgreSQL.
+		Elasticsearch databáze je naproti tomu sama zdrojem dat a není vhodné, aby docházelo k jejímu vypínání.
 
-		O finální spuštění takto nakonfigurovaného Kubernetes systému a vytvoření SSL certifikátů pro bezpečnou komunikaci
-		se už postará poskytovatel Kubernetes serveru; v tomto případě DigitalOcean.
+		O finální spuštění takto nakonfigurovaného systému a vytvoření SSL certifikátů se stará poskytovatel; v tomto případě DigitalOcean.
 		V tomto momentě jsou obě aplikace spuštěny a připraveny zpracovávat uživatelské požadavky.
 
 % ####################################
@@ -3055,18 +3013,29 @@ ENTRYPOINT yarn start --dotenv=.env.$ENV
 
 Tato bakalářské práce se zabývala vývojem webové aplikace pro tvorbu, správu, zobrazení a sdílení vstupních stránek
 různých subjektů a objektů.
-Vývoj začal návrhem funkčních požadavků definující, které možnosti bude aplikace uživatelům poskytovat.
-Mezi hlavní patří tvorba veřejně dostupných vstupních stránek s kontaktními údaji, firemní hierarchií nebo geolokací,
-fulltextové vyhledávání a ukládání oblíbených stránek.
+Vývoj začal analýzou podobných webových aplikace a zjištěním, co jaká aplikace svým uživatelům poskytuje, a jak.
+Následoval návrh vlastní webové aplikace, která kombinuje prvky vícero konkurenčních aplikací a vlastních prvků do jednoho balíčku.
+Mezi ty hlavní patří tvorba veřejně dostupných vstupních stránek s kontaktními údaji, odkazy na sociální sítě, firemními hierarchiemi nebo geolokacemi,
+fulltextovým vyhledáváním a ukládáním oblíbených stránek.
+Nedílnou součástí návrhu bylo i vymyšlení, jak se bude pracovat s uživatelskými účty, a jak by mohl být projekt později
+financován.
+Bylo zvolena, že uživateslké účtu budou sloužit pouze pro definování vlastníků karet a ukládání cizích karet do oblíbených.
+Z možných typů financování (prodej produktů, zobrazování reklama, prémiové plány) byly vybrány právě prémiové plány.
+Ty oproti reklamám neomezují uživatelské prostředí a není možné je vypnout doplňkem prohlížeče.
+Oproti prodeji produktů zase nepředstavují tak vysokou zátěž na vývoj.
 
-Následovala analýza a provonání webových technologií a nástrojů vhodných pro samotnou implementaci.
+Následovala analýza a porovnání webových technologií a nástrojů vhodných pro samotnou implementaci.
 Výběr obsahoval programovací jazyky a frameworky pro vývoj uživatelského rozhraní a serverové aplikace, nástroje pro návrh
-rozhraní a podpůrné systémy.
-Mezi technologiemi pro implementaci uživatelského rozhraní se objevily frameworky Vue, React, Angular nebo Swelte.
+rozhraní a podpůrné systémy, jako jsou databáze, úložiště souborů, systémy pro odesílání emailů a nástroje pro provoz
+v produkčním prostředí.
+
+Pro implementaci samotného vzhledu stránek byl využit framework \ac{SASS} pro zjednodušení vývoje stylů stránek.
+Mezi technologiemi pro implementaci interaktivnosti uživatelského rozhraní se objevily frameworky Vue, React, Angular a Swelte.
 Z těchto byl vybrán framework Vue pro jeho jednoduchost a kvalitní dokumentaci pro začátečníky.
-U jazyků a frameworků pro vývoj serverové části obsahující veškerou logiku aplikace bylo rozhodování mezi Javou,
+
+U jazyků a frameworků pro vývoj serverové části obsahující veškerou business logiku aplikace, se rozhodovalo mezi Javou,
 C\#, PHP a Javascriptem.
-Kvůli velmi podobným výhodám napříč programovacími jazyky, byl vybrán jazyk Java společně s frameworkem Spring spíše podle
+Kvůli velmi podobným výhodám napříč programovacími jazyky, byl vybrán jazyk Java společně s frameworkem Spring, spíše podle
 osobních preferencích a předchozích znalostí.
 
 Další rozhodování se zabývalo výběrem vhodné primární databáze pro uchování uživatelských dat a nástrojem pro
@@ -3076,12 +3045,26 @@ Na základě požadavků aplikace se výběr zúžil pouze \ac{SQL} databáze z 
 Kromě primární databáze bylo nutné zvolit ještě separátní systém pro fulltextového vyhledávání.
 V tomto případě byl vybrán Elasticsearch pro jeho rozšířenost, univerzálnost a možnost lokálního provozu.
 
-Po zvolení všech potřebných technologií, byl v první řadě vytvořen návrh uživatelského rozhraní.
-Na zakladě toho byl navržen datový model a zvolen návrhový vzor \ac{DDD} pro strukturování
+Pro vyhledávání těchto dat byla zvolena databáze Elasticsearch díky jeho rozšířenosti a možnosti provozu na lokálním stroji.
+
+Souboré úložiště ani systém pro odesílní emailů nebyly implementovány ručně, místo toho byly zvoleny externí služby.
+V případě souborového úložiště se jedná Cloudinary, a případě emailů byl zvolen SendinBlue.
+
+Nakonec pro provoz aplikace byl zvolen systém Kubernetes a poskytovatel DigitalOcean.
+Kuberenetes z důvodu volnosti konfigurace více aplikací bez nutnosti spravovat celý server.
+
+Po zvolení všech potřebných technologií, byla v první řadě zvolena architektura aplikace, od které se odvíjel výběr technologií a vývoj.
+Pro zajištění vysoké interaktivnosti byla zvolena architektura rozdělení na front-endovou \ac{JS} aplikace a back-endový
+\ac{API} server.
+Pro komunikaci v této architektuře byl zvolen vzor \ac{REST} pro jeho rozšířenost a vyspělost.
+Následoval návrh uživatelského rozhraní, podle kterého byl navržen datový model a zvolen návrhový vzor \ac{DDD} pro strukturování
 kódu aplikace.
-Na základě modelu byl následně implementován \ac{API} server s veškerou business logikou.
-S připraveným funkčním \ac{API} se zaměření přesunulo tvorbu front-endové části podle návrhu uživateslkého rozhraní
-komunikující s \ac{API} serverem.
+Na základě modelu byla nejdříve implementována business logika, jenž byla v zápětí obalena \ac{REST} \ac{API}.
+Business logika zahrnovala mimo jiné implementaci přístupu k databázi pomocí knihovny MyBatis, validaci entit, napojení
+na souborý systém, propojení aplikačních událostí s emailových systémem, dále pak vyhledávání karet a míst, konfiguraci
+sociálních sítí nebo prémiové plány.
+Implementaci \ac{API} zase zahrnovala jeho návrh, zabezpěčení a transformaci doménových entity na přenosné datové objekty.
+S připraveným funkčním \ac{API} se zaměření přesunulo tvorbu front-endové části podle návrhu uživatelského rozhraní.
 
 Všechny definované požadavky na aplikaci byly ve výsledku splněny a aplikace byla otestována na produkčním prostředí.
 Aplikace je dále otevřena k potencionálním budoucím rozšířením možností pro koncové uživatele.
@@ -3096,10 +3079,5 @@ Aplikace je dále otevřena k potencionálním budoucím rozšířením možnost
 % - zajištění přístupu ke službám třetích stran?
 % - smazat statistiky
 % - připravit český návod pro rozjetí lokálně všeho komplet, asi i s hosts a tak
-% - popisky i ke blokům kodu
-% - autoři obrátků a kodu i když to je autor
-% - vygenerovat poslední stránku https://ris2.uhk.cz/eVSKP/
 % - testovací dataset - sql dump
-% - žádné zkratky v názvech kapitol
-% - mention spriung boot
 %GIT21Q4HUB100-7e075147
