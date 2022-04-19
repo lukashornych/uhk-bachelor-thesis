@@ -1750,47 +1750,41 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 
 		\subsubsection{Datový model}
 
-		Úkol API serveru je poskytovat a zpracovávat data ať už textová v pobobě \ac{JSON} dokumentů nebo binární v podobě
+		Úkol \ac{API} serveru je poskytovat a zpracovávat data, ať už textová v podobě \ac{JSON} dokumentů, nebo binární v podobě
 		obrázků.
-		Tyto funkce pro samotné API bude zprostředkovávat implementovaná business logika starající se, aby všechna data
-		byla správně zpracována.
-		Je ale stěžejní se na počátku zamyslet a vybrat styl a navrhnout model jakým bude business logika implementována.
-		Stěžejní je to z důvodu budoucí čitelnosti kódu a možnostech rozšíření o nové funkce, protože při špatném
-		návrhu může být složité aplikace rozšířit a kód se tak může stávat postupně nečitelným.
+		Tyto funkce pro samotné API bude zprostředkovávat implementovaná business logika starající se o to, aby všechna data
+		byla správně zpracována a uložena.
+		Je ale stěžejní se na počátku zamyslet, vybrat styl a navrhnout model, jakým bude business logika implementována.
+		Stěžejní je to z důvodu budoucí čitelnosti kódu a možnostech rozšíření o nové funkce.
 
-		Vzhledem k tomu, že byl vybrán jazyk Java, který je primárně objektově orientovaný programovací jazyk, business
-		logika bude využívat právě objektově orientovaného programování \ac{OOP}.
-		\ac{OOP} je velice populární a většinově používané obecné programovací paradigma využívané spousty programovacími
-		jazyky.
-		Toto paradigma využívá objekty pro reprezentaci celého systému (aplikace).
-		Každý objekt má nějaké své vlastnosti a operace, které může buď využívat vnitřně nebo poskytnou k využití ostatním
+		Vzhledem k tomu, že byl vybrán jazyk Java, který je primárně objektově orientovaným programovací jazykem, business
+		logika bude využívat právě principů \ac{OOP}.
+		\ac{OOP} je velice populární a většinově používané programovací paradigma využívané spoustou programovacích
+		jazyků.
+		Toto paradigma využívá objekty pro sestavení systému.
+		Každý objekt má nějaké své vlastnosti a operace, které může buď využívat vnitřně nebo poskytnout ostatním
 		objektům.
 		Hlavní myšlenka \ac{OOP} je popisovat reálné objekty (člověk, pes, budova, událost...) těmi virtuálními ve zjednodušené
-		formě, kdy popisujeme jen tu část reálného objektu, která nás zajímá.
-		Tyto objekty pak v systému mezi sebou komunikují pomocí zpráv a předávají si data, tak aby dosáhli výsledku
-		očekávaného od celého systému.
-		Každý objekt v systému má svou předlohu zvanou třída definující pro každý objekt jako vlastnosti a operace daný objekt
-		může obsahovat a objekt je pak už konkrétní instance obsahující konkrétní data.
-		Kromě tříd ještě existují rozhraní a abstraktní třídy, které můžou mezi sebou dědit vlastnosti a operace a z nich
-		následně vznikají konkrétní třídy.
-		Rozhraní a abstraktní třídy definují obecnou předlohu operací, tzv. kontrakt, který dědící třída musí splňovat, což
-		následně umožňuje využít techniku polymorfismus, tj. provádět operace na základě obecného rozhraní bez nutnosti
-		vědět konkrétní a třídu a její chování.
+		formě, v níž popisujeme jen tu část reálného objektu, která nás zajímá.
+		Tyto objekty pak v systému mezi sebou komunikují pomocí zpráv a předávají si data tak, aby dosáhly výsledku.
+		Každý objekt v systému má svou předlohu zvanou třída jenž definuje podporované vlastnosti a operace.
+		Kromě tříd ještě existují rozhraní a abstraktní třídy, které můžou mezi sebou dědit vlastnosti a operace.
+		Rozhraní a abstraktní třídy definují obecnou předlohu operací, tzv. kontrakt, které dědící třída musí splňovat, což
+		následně umožňuje využít techniku polymorfismus, tedy provádět operace na základě obecného rozhraní bez nutnosti
+		znát konkrétní třídu.
 		\cite{oop}
 
 		Právě díky \ac{OOP} bylo možné poměrně věrně reprezentovat objekty využívané jednotlivými stránkami v logické,
 		přehledné a jasně definované struktuře.
-		Model navrhovaného systému původně vycházel z modelu použitém v prototypu, avšak po hlubší analýze požadavků byl
-		značně přepracován.
-		Nový model byl pro přehlednost interně rozdělen na několik modulů podle jejich zaměření, nicméně všechny moduly
-		mezi sebou i tak komunikují, ale nejsou spolu hluboce provázány.
-		Momentálně se datový model skládá z modulu pro správu uživatelských účtů, modulu pro správu karet, modulu pro správu
-		kupónů pro prémiové plány a podpůrného modulu.
+		Model byl pro přehlednost interně rozdělen na několik modulů podle zaměření, nicméně všechny moduly
+		mezi sebou i tak komunikují.
+		Momentálně se datový model skládá z modulu pro správu uživatelských účtů, modulu pro správu karet, modulu pro správu a
+		kupónů.
 
-		Modul uživatelských účtů je zodpovědný za vytváření, uchování, úpravu a mazání jednotlivých účtů a jejich dat
-		každého jednoho uživatele.
-		S tím je spojena i správa oblíbených karet a poznámek, které jsou vždy na konkrétního uživatele a propojují
-		moduly účtů a karet.
+		\paragraph{Model uživatelských účtů}
+
+		Modul uživatelských účtů je zodpovědný za vytváření, uchování, úpravu a mazání jednotlivých účtů.
+		S tím je spojena i správa oblíbených karet a poznámek, které jsou vázány na konkrétního uživatele.
 		Modul dál řeší i prémiový plán a předplatné.
 
 		\begin{figure}[H]
@@ -1799,52 +1793,46 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 			\caption{Datový model popisující uživatelské účty. Zdroj: [autor]}
 		\end{figure}
 
-		Jak je možno vidět z diagramu, účet má kromě základních přihlašovacích informací v pohodě buď běžné kombinace emailové adresy
-		a hesla nebo v podobě externích poskytovatelů externích uživatelských účtů, i spoustu
-		doplňujících rozšiřujících tak možnosti.
+		Jak je možno vidět z diagramu, účet má kromě základních přihlašovacích informací i spoustu
+		doplňujících dat.
 
 		V první řadě, každý účet má přiřazený vždy nějaký stav.
 		Při vytvoření má nový účet stav \emph{Created} vyjadřující nový a zatím neaktivovaný účet.
 		Tento účet nelze využívat.
-		Po aktivaci účtu se změní stav na \emph{Active}, který říká, že účet je již aktivovaný a tedy plně použitelný.
-		Poslední stav \emph{TemporarilyDeleted} označuje účet dočasně smazaný, což znamená, že je naplánováno jeho permanentní
+		Po aktivaci se změní stav účtu na \emph{Active}, který říká, že účet je již aktivovaný, a tedy plně použitelný.
+		Poslední stav \emph{TemporarilyDeleted} označuje dočasné smazaný účet, což znamená, že je naplánováno jeho permanentní
 		smazání.
-		Do tohoto stavu se účet dostane na uživatelovu žádost o smazání svého účtu a zajišťuje, že uživatel může v omezené
-		lhůtě svůj účet zase obnovit, pokud by si žádost rozmyslel.
+		To umožňuje uživatelům v omezené lhůtě svůj účet obnovit.
 
-		Další velmi důležitou komponentou je systém ověřovacích tokenů sloužící k potvrzování různých uživatelských akcí, kde
+		Další velmi důležitou komponentou je systém ověřovacích tokenů sloužících k potvrzování akcí, kde
 		je potřeba ověřit, že akci provádí skutečný uživatel nikoliv podvodník.
 		Tokeny jsou pseudo náhodně generované unikátní textové řetězce přiřazené vždy k jednomu určitému uživateli.
-		Typ tokenu pak říká co daný token ověřuje.
-		Ověřovanou akcí může být aktivace nového účtu, změna emailové adresy nebo zapomenuté heslo.
-		Tyto tokeny jsou zasílány uživateli na jeho emailovou adresu což zaručí, že přístup k danému tokenu má pouze skutečný
-		vlastník (emailová adresa slouží jako zdroj věrohodnosti).
+		Typ tokenu pak říká, co daný token ověřuje.
+		Ověřitelnou akcí může být aktivace nového účtu, změna emailové adresy nebo zapomenuté heslo.
 		V případě tokenu pro změnu emailové adresy se nová emailová adresy se ukládá mimo samotný účet k danému tokenu.
-		Díky tomu je možné emailovou adresu změnit až ve chvíli kdy byl token skutečně ověřen a zároveň je možné držet
-		historii všech změn emailů pro zpětné dohledání v případě například odcizení účtu.
+		Díky tomu je možné emailovou adresu změnit, až ve chvíli, kdy byl token ověřen, a zároveň je možné v případě
+		odcizení účtu zobrazit historii všech změn.
 
-		Systém dále na několika místech pracuje s tzv. rolemi udávajícími obecná práva daného uživatele.
+		Systém dále pracuje s rolemi udávajícími obecná práva uživatele.
 		Každé obecné roli jsou přiřazena nějaká práva v systému (čtení, modifikace...), a pokud uživatel má takovou roli
 		přiřazenou, automatický dědí její práva.
 		Toto je poměrně jednoduchý a efektivní systém práv.
 		Momentálně systém pracuje s administrátorskou rolí a prémiovou rolí.
 		Administrátorská role uděluje uživateli práva pro přístup do interní administrační části
-		aplikace, pomocí které je možné spravovat samotný provoz aplikace.
-		Tato role je určená výhradně pro správce aplikace, nikoliv pro běžné uživatele a je přiřazována ručně specifických
-		uživatelům.
-		Druhou rolí je role prémiová, která již určená pro běžné uživatele je a odemyká jim prémiové funkce aplikace.
+		aplikace, pomocí které je možné spravovat provoz aplikace.
+		Druhou rolí je role prémiová, která je určena pro běžné uživatele, a odemyká jim prémiové funkce aplikace.
 		Tato role vzniká automaticky při vytvoření předplatného a zaniká s jeho expirací.
 
-		Pro zmiňované plánované smazání účtu se uchovává požadavek s informací o jaký účet se jedná a kdy dojde k permanentnímu
-		smazání daného účtu společně s jeho daty.
-		Tyto požadavky jsou následně pravidelně kontrolovány zda-li již by měl daný účet být smazán.
+		Pro plánované mazání účtů se uchovává požadavek s informací o tom, jaký účet bude smazán, a kdy dojde k permanentnímu
+		smazání společně s jeho daty.
 
-		Poslední hlavní částů uživatelských účtů jsou komponenty pro prémiové funkce.
+		Poslední hlavní částí uživatelských účtů jsou komponenty pro prémiové funkce.
 		Jedná se především o popisný objekt předplatného.
-		Ten vzniká při přechodu na prémiový plán a jeho říká, že účet je má předplacený prémiový plán a má proto práva pro
-		jinak uzamknuté funkce.
-		V jistých případech může mít přiřazený datum expirace, se kterým automaticky zanikne.
+		Ten vzniká aktivací prémiovýho plánu a říká, že účet má práva na prémiové funkce.
+		V jistých případech může mít přiřazený i datum expirace, se kterým automaticky zanikne.
 		S tím se váže i stav expirace, která pomáhá upozorňovat uživatele na současný stav předplatného.
+
+		\paragraph{Model kupónů}
 
 		\begin{figure}[H]
 			\centering
@@ -1852,12 +1840,13 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 			\caption{Datový model kupónového systému. Zdroj: [autor]}
 		\end{figure}
 
-		Předplatné může vzniknout na základě zadání platného kupónu uživatelem, avšak systém kupónů je navržen obecně, aby
-		bylo možné ho v případě budoucích rozšíření jednoduše přepoužít i na aktivaci jiných funkcionalit než jen
-		prémiové plány.
-		Každý kupón musí mít unikátní kód, buď pseudo náhodně vygenerovaný nebo zadaný správcem.
-		Mimo to má definovanou platnost, aby bylo možné tvořit i tzv. "akční" kupóny pouze na dané období, maximální počet
-		možných aplikování různými uživateli a doba po jakou bude vytvořené předplatné platné.
+		Předplatné může vzniknout na základě zadání platného kupónu, avšak systém kupónů je navržen obecně, aby
+		bylo možné ho v případě budoucích rozšíření jednoduše přepoužít i na aktivaci jiných funkcionalit, ne jen
+		pro prémiové plány.
+		Každý kupón musí mít unikátní kód, buď vygenerovaný nebo zadaný správcem.
+		Mimo to má definovanou platnost, maximální počet možných aplikování a dobu po jakou bude vytvořené předplatné platné.
+
+		\paragraph{Model karet}
 
 		\begin{figure}[H]
 			\centering
@@ -1866,86 +1855,75 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 		\end{figure}
 
 		Nejhlavnějším prvkem v této aplikaci jsou samotné karty a jejich data.
-		Každá karta má v prvé řadě vždy nějakého vlastníka v podobně uživatelského účtu, který má jako jediný práva na
+		Každá karta má v prvé řadě vždy nějakého vlastníka, který má jako jediný práva na
 		úpravu.
 
-		Samotná karta je rozpadnuta do několika částí pro potřebnou modulárnost udávanou více typy karet a různorodostí
-		navázaných dat.
-		Srdcem je jednoduchá třída popisující pouze obecné metadata, která jsou potřeba pro všechny typy karet.
+		Samotná karta je rozpadnuta do několika částí pro podporu více typů karet.
+		Srdcem je jednoduchá třída popisující pouze obecná metadata, která jsou potřeba pro všechny typy karet.
 		V této třídě je tedy zahrnut vlastník, typ, viditelnost, stav, veřejné jméno, tzv. "display ID" a další metadata.
 		Display ID je unikátní textové ID karty určené primárně pro koncové uživatele.
 		Toto ID je totiž zobrazováno v \ac{URL} adrese konkrétní karty a má za cíl umožnit jednoduše sdílet karty bez nutnosti
 		znát kryptické náhodně generované číselné identifikátory.
-		Toto ID je může být definováno ručně uživatelem podle jeho libosti (musí však splňovat unikátnost) nebo pseudo
-		náhodně generováno aplikací (vhodné pro skryté karty).
+		Toto ID může být definováno ručně uživatelem nebo generováno aplikací (vhodné pro skryté karty).
 		Typ karty definuje jak s danou kartou lze pracovat a jaká data poskytuje.
 		Momentálními typy jsou obecná karta a karta zaměstnance, avšak tento systém dovoluje poměrně jednoduché rozšiřování
 		o nové typy karet.
-		Obecné karty je možné tvořit uživateli přímo a obsahují největší množství informací, protože nedefinují konkrétní
-		využití.
+		Obecné karty je možné tvořit uživateli přímo a podporují všechny typy údajů.
 		Původně byl tento typ rozdělen ještě na osobní a firemní kartu, nicméně jediný rozdíl bylo omezení podporovaných dat
-		v osobních kartách, protože v tomto typu nedávali smysl.
-		Tento přístup však přinášel mnoho duplicit a zároveň znemožňoval uživatelům osobních karet využívat funkce
-		firemních karet, které ale za určitých okolností dávají smysl i u osobních karet (např.: pro OSVČ).
+		v osobních kartách.
+		Tento přístup však přinášel mnoho duplicit, a zároveň znemožňoval uživatelům osobních karet využívat funkce
+		firemních karet, jenž za určitých okolností dávaly smysl i u osobních karet (např.: pro OSVČ).
 		Právě kvůli těmto nevýhodám a žádným jasným výhodám, byly tyto dva typy sjednoceny, především pro pohodlí
 		koncových uživatelů.
-		Karty zaměstnanců se pak tvoří nepřímo jako hierarchické děti obecné karty přímo v editaci nadřazené karty a
+		Karty zaměstnanců se pak tvoří nepřímo jako hierarchičtí potomci obecných karet v editaci nadřazené karty, a
 		obsahují specifická data pouze pro zaměstnance.
-		Posledním důležitým metadatem je viditelnost specifikující kdo může danou kartu vidět.
+		Posledním důležitým metadatem je viditelnost specifikující, kdo může danou kartu vidět.
 		Veřejné karty může navštívit a vyhledat kdokoliv.
-		Skryté může navštívit pouze uživatel disponující konkrétní \ac{URL} adresou odkazující na dano kartu.
-		Privátní kartu pak už slouží pouze pro autora karty.
+		Skryté může navštívit pouze uživatel disponující konkrétní \ac{URL} adresou odkazující na danou kartu.
+		Privátní karta pak už slouží pouze pro autora karty.
 
-		Každé kartě lze přiřadit libovolné množství štítků pro jakousi kategorizaci dané karty.
-		Štítky jsou uživatelsky definované a můžou tak obsahovat cokoliv, a jsou znovupoužitelné, takže více karet může
-		být označeno stejným jedním štítkem.
+		Každé kartě lze přiřadit libovolné množství štítků pro kategorizaci.
+		Štítky jsou uživatelsky definované, a můžou tak obsahovat cokoliv.
+		Navíc jsou znovupoužitelné, takže více karet může být označeno stejným štítkem.
 
 		Pro definování informací o kartě existuje koncept napojených dat.
-		Tyto data reprezentuje soubor informací, které daný typ karty podporuje zadat.
-		Každý typ karty má svoji implementaci těchto dat definující podporované informace pro daný typ.
-		Je pak business logice aplikace aby dokázala s daty správně pracovat podle typu karty, který je vždy specifikovaný mezi
-		základními metadata karty.
+		Tyto data reprezentují soubor údajů, které daný typ karty podporuje.
+		Každý typ karty má svoji implementaci těchto dat.
+		Je pak na business logice aplikace, aby dokázala s daty správně pracovat.
 		Tato obecnost umožňuje jednoduše vytvářet nové typy karet s úplně odlišnými daty, aniž by se data musela míchat
 		a být nepřehledná.
 
-		Pro většinu reálných obecných karet pak pravděpodobně nejdůležitějšími daty budou \ac{URL} odkazy na externí webové stránky,
+		Pro většinu karet pak pravděpodobně budou nejdůležitějšími daty \ac{URL} odkazy na externí webové stránky,
 		především na sociální sítě.
-		Ty z karet dělají jakési rozcestníky pro objevení profilů subjektů na sociálních sítích, které koncové uživatele zajímají.
+		Ty z karet dělají jakési rozcestníky pro objevení profilů subjektů na sociálních sítích.
 		Každý jeden odkaz má originální cílovou \ac{URL} adresu, popisek a pořadí mezi ostatními odkazy na stejné úrovni.
-		Popisek slouží především pro odlišení více odkazů vedoucí na stejnou webovou stránku, nicméně uživatel může popisek
-		využít libovolně.
-		\ac{URL} adresa je ta hlavní informace a z důvodu bezpečnosti musí být validována oproti zvolené šabloně sítě.
-		Díky tomu není možné vytvořit odkaz pod jednou sítí ale odkazovat na podvodnou.
-		Jednotlivé odkazy jsou pak seskupovány do skupin odkazů vycházející ze stejné šablony a určují typ šablony pro vše
-		vnořené odkazy.
+		Popisek slouží především pro odlišení více odkazů vedoucí na stejnou webovou stránku.
+		\ac{URL} adresa je hlavní informace a z důvodu bezpečnosti musí být validována oproti zvolené šabloně sítě.
+		Díky tomu není možné vytvořit odkaz pod jednou sítí, ale odkazovat na podvodnou.
+		Jednotlivé odkazy jsou pak seskupovány do skupin odkazů vycházející ze stejné šablony.
 		I přes to, že skupiny zastřešují vždy nějaký soubor sítí stejného typu, může existovat více skupin vycházející ze
 		stejné šablony.
 		To umožňuje poměrně velkou flexibilitu struktury odkazů a neomezuje uživatele na jeden odkaz pro jednu síť (což je
 		nevýhoda některých konkurenčních řešení).
-		Jednotlivé šablony jsou reprezentovány separátními konfiguračními třídami udržující definovanou aktuální konfiguraci
-		dané šablony pro potřeby business logiky.
-		Z návrhu vyplývá potřeba definovat názvy podle kterých lze šablony vyhledat uživateli a platné šablony \ac{URL} odkazů
+		Jednotlivé šablony jsou reprezentovány separátními konfiguračními třídami.
+		Z návrhu vyplývá potřeba definovat názvy, podle kterých lze šablony vyhledat, a platné šablony \ac{URL} odkazů
 		oproti kterým se validují konkrétní cílové \ac{URL} adresy.
-		Podpora pro možnost definovat více názvu, i přes to že webové stránky mají většinou pouze jeden oficiální název,
-		vyplývá z faktu, že mezi uživateli jsou většinou nějaké zažité zkratky názvů daných stránek a očekávají najití
-		správné šablony i pod neoficiální zkratkou.
-		Stejně jako názvů může být i více šablon \ac{URL} adres, protože většina webových stránek podporuje více domén třetího řádu
-		a je tak nutné definovat všechny, protože není jasné jakou \ac{URL} adresu uživatel zrovna zadá.
-		Každá taková šablona je pak zařazena do jedné nebo více kategorií sloužící čistě pro jednodušší vyhledávání uživateli
-		a momentálně nemá žádné jiné interní využití.
+		Stejně jako názvů, může být i více šablon \ac{URL} adres, protože většina webových stránek podporuje více domén třetího řádu,
+		a je tak nutné definovat všechny, protože není jasné jakou \ac{URL} adresu uživatel zadá.
+		Každá taková šablona je pak zařazena do jedné nebo více kategorií sloužící čistě pro jednodušší vyhledávání.
 
 		Pro firmy poměrně užitečnou informací může být jejich hierarchie poboček a zaměstnancům, zejména u větších společností.
 		Proto každá obecná karta může mít libovolné množství přiřazených poboček/kanceláří/prodejen, kde každá má své jméno
-		a geografickou lokaci pro snadné nalezení uživateli na mapě.
-		Ke každé takové pobočce je možné přiřadit zaměstnanecké karty reprezentující jednotlivé zaměstnance setrvávájící
-		na dané pobočce.
-		Kromě zaměstnanců může mít pobočka přiřazenou i vlastní otevírací dobu.
+		a geografickou lokaci.
+		Ke každé takové pobočce je možné přiřadit zaměstnanecké karty.
+		Kromě zaměstnanců může mít pobočka i vlastní otevírací dobu.
 
-		Velmi důležitou informací pro potencionální zákazníky je aktuální otevírací doba, ať už se jedná o samotnou kartu nebo
-		jen pobočku.
+		Velmi důležitou informací pro potencionální zákazníky je aktuální otevírací doba.
 		Byl proto navržen obecný model otevírací doby, který lze navázat na jakoukoliv jinou entitu.
 		Model je zastřešen jednou třídou seskupující otevírací dobu jednotlivých dnů v týdnu.
-		Každý den má pak definovaný interval kdy má daná entita otevřena a interval přestávky.
+		Každý den má pak definovaný interval, kdy má daná entita otevřeno, kdy má přestávku.
+
+		\paragraph{Model oblíbených karet}
 
 		\begin{figure}[H]
 			\centering
@@ -1953,36 +1931,33 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 			\caption{Datový model oblíbených karet uživatelských účtů. Zdroj: [autor]}
 		\end{figure}
 
-		Oblíbené karty pak umožňují k uživatelskému účtu přiřazovat cizí karty jako oblíbené pro soukromé uchování a
-		poznámkování.
-		Každý účet tak může označit libovolný počet karet jako oblíbené, což danému uživateli umožní rychlý přístup
+		Oblíbené karty umožňují k uživatelskému účtu přiřazovat cizí karty jako oblíbené.
+		Každý účet může jako oblíbené označit libovolný počet karet, což danému uživateli umožní rychlý přístup
 		k požadovaných informacím.
-		Každá oblíbená karta může mít navíc jednu textovou poznámku s formátováním pro uživatelské poznámky.
+		Každá oblíbená karta navíc může mít jednu textovou poznámku s formátováním.
 		Oblíbené karty je pak možné seskupovat do složek definovaných uživatelem pro lepší orientaci.
-		Složky, poznámky ani oblíbené karty však nevidí nikdo jiný než autor a každý uživatel má tak vlastní sadu těchto dat.
+		Složky, poznámky ani oblíbené karty však nevidí nikdo jiný než autor.
 
 		\subsubsection{Práce s datovým modelem}
 
-		Práci s datovým modelem zastřešuje právě již několikrát zmíněná business logika, která s ním manipuluje k dosažení
-		cíle uživatelů.
-		Struktura business logiky si bere inspiraci z návrhového vzoru domain-driven design \ac{DDD}, který se zabývá
-		navrhováním přehledné, znovu použitelné a hlavně jednoduše rozšiřitelné struktury řešící zadané businessové požadavky
+		Práci s datovým modelem zastřešuje právě již několikrát zmíněná business logika.
+		Struktura business logiky si bere inspiraci z návrhového vzoru \ac{DDD}, který se zabývá
+		navrhováním přehledné, znovu použitelné a hlavně jednoduše rozšiřitelné struktury, řešící zadané businessové požadavky
 		projektu.
-		Tento vzor pohlíží na problematiku jako na doménu problému a staví hlavně na konceptu tzv. služeb,
-		což jsou speciální třídy objektového programování, které
-		neudržují vnitřní stav, ale poskytují právě služby manipulující s datovými objekty \cite{ddd_quickly}.
-		Jednotlivé služby by se měli vždy zabývat pouze jedním typem dat kvůli přehlednosti a ostatní data delegovat na
+		Tento vzor pohlíží na problematiku jako na doménu, a staví hlavně na konceptu služeb,
+		což jsou speciální třídy, které
+		neudržují vnitřní stav, ale poskytují služby manipulující s datovými objekty \cite{ddd_quickly}.
+		Jednotlivé služby by se měli vždy zabývat pouze jedním typem dat kvůli přehlednosti, a ostatní data delegovat na
 		ostatní služby \cite{ddd_quickly}.
 		Druhým podstatným stavebním blokem jsou repozitáře zajišťující předávání dat mezi aplikací a databázovým systémem
 		\cite{ddd_quickly}.
-		\ac{DDD} obsahuje spoustu dalších konceptů, nicméně ty byly při implementaci využity jen vzdáleně a ve výsledku
-		nereflektují návrhový vzor.
-		Implementovaná business logika tak má několik službových tříd a repozitářů.
+		\ac{DDD} obsahuje spoustu dalších konceptů, nicméně ty byly při implementaci využity jen vzdáleně.
+		Implementovaná business logika má tak několik službových tříd a repozitářů.
 		Pro každou separátní část modelu existuje manipulující služební třída a jeden repozitář starající se především o
-		načítání a ukládání společně s validací do databáze.
+		načítání a ukládání dat do databáze.
 		Konzumující logika si pak může vybrat přesně s jakými daty chce pracovat.
-		Zatímco repozitáře se starají pouze o komunikaci s databází pomocí \ac{SQL} jazyka nějaké podpůrné knihovny,
-		služební třídy tyto informace předávají dál, upravují nebo validují podle potřeb požadavků.
+		Zatímco repozitáře se starají pouze o komunikaci s databází pomocí \ac{SQL} jazyka,
+		služební třídy tyto informace předávají dál, upravují nebo validují.
 
 		\begin{figure}[H]
 			\centering
@@ -1991,107 +1966,90 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 		\end{figure}
 
 		Momentální implementace služeb komunikuje mezi sebou převážně pomocí primárních klíčů jednotlivých entit, aby
-		bylo zaručeno, že entita se kterou služba manipuluje je vždy aktuální verzí reflektující stav databáze.
-		Nicméně tento přístup značně zesložiťuje závislost jednotlivých tříd na jiné třídy, což vede k složitějšímu
+		bylo zaručeno, že entita, se kterou služba manipuluje je vždy aktuální verzí reflektující stav databáze.
+		Nicméně tento přístup značně zesložiťuje závislost tříd na jiné třídy, což vede k složitějšímu
 		instanciování a testování tříd.
 
-		Bohužel, při postupném rozšiřování aplikačních požadavků se ukázalo, že rozpad logických celků entit není při větší
-		komplexitě úplně vhodný a i když funguje bez problémů, jeho testování a nastavování už ideální není.
-		I pro samotné získání celého logické celku (např.: karta společně se všemi navázanými daty) znamená provolání
-		několika služeb a následné ruční sestavení výsledného celku, což vyžaduje zbytečnou vysokou provázanost několika tříd,
-		která znemožňuje jednoduché rozšiřování a testování, protože při změně je mnohdy potřeba přepsat podstatnou část
-		tříd využívající právě tyto služby.
-
+		Bohužel, při postupném rozšiřování aplikačních požadavků se ukázalo, že rozpad logických celků entit není úplně
+		vhodný, a i když funguje bez problémů, jeho testování a nastavování je složité.
 		Tento problém však řeší právě návrhový vzor \ac{DDD} svými entitami a hodnotovými objekty.
 		Podle tohoto vzoru by se mělo pracovat s logickými celky jako s jednou entitou, aby se předešlo výše zmíněné složitosti
 		rozpadlosti služebních tříd.
 		Další podstatnou výhodou této provázanosti je zaručení konzistentnosti dílčích entit.
-		Tento problém implementovaný přístup řeší také, a to pomocí validací, nicméně složitost opět rapidně stoupá kvůli
-		nutnosti stále se dotazovat na stav nadřazených entit na více místech.
+		Implementovaný přístup tento problém také řeší, a to pomocí validací, nicméně kvůli
+		nutnosti se stále dotazovat na stav nadřazených entit složitost rapidně stoupá.
 		\cite{ddd_quickly}
-		Pro momentální stav aplikace implementovaný model je dostačující, nicméně pro budoucí rozšíření by bylo nutné
-		model značně optimalizovat za pomocí \ac{DDD} vzorů, které se sice nedají vždy aplikovat na každý problém, avšak
-		ve většině případů tyto vzory pomáhají zpřehlednit model (záleží ale také na konkrétní implementaci vzorů).
+		Pro momentální stav aplikace je implementovaný model dostačující, nicméně pro budoucí rozšíření by bylo nutné
+		model značně optimalizovat pomocí \ac{DDD} vzorů.
 
 		\subsubsection{Komunikace s databázových systémem}
 
-		Prvním problémem k řešení při implementaci již samotné business logiky třídách služeb a repozitářů je výběr
-		přístupu mapování objektů do databázové struktury.
+		Prvním problémem k řešení při implementaci již samotné business logiky mapování objektů do databázové struktury.
 
-		V případě, že by aplikace využívala nějakou z \ac{NoSQL} databází s podporou \ac{JSON} dokumentů, bylo by toto
+		V případě, že by aplikace využívala nějakou z \ac{NoSQL} databází s podporou \ac{JSON} dokumentů, by bylo toto
 		mapování poměrně jednoduché.
-		Jedinou složitost by pravděpodobně představovalo mapování hierarchických karet, protože například MongoDB pouze
-		značně omezené propojování mezi jednotlivými kolekcemi.
+		Jedinou složitost by pravděpodobně představovalo mapování hierarchických karet.
 
 		V případě vybrané \ac{SQL} databáze je ale problém složitější, protože tyto databáze pracují s tabulkami místo objekty.
-		Na první pohled se může zdát, že by to neměl být velký problém, protože sloupce tabulek jsou podobné vlastnostem
-		objektům a \ac{SQL} databáze jsou dělané pro propojování navzájem čehokoliv.
-		Bohužel problém spočívá právě v překladu mezi relačním modelem a objekty.
-		Složitost je hlavně v načítání a ukládání komplexních složených entity z více objektů a kolekcí, hlavně pak
-		kolekcí 1:N.
-		Jazyk \ac{SQL} totiž neumožňuje jednoduše vrátit více řádků z jiných tabulek a tak není možné najednou
-		vrátit objekty jiných tříd, kde jedna třída se mapuje na jednu tabulku.
-		Stejný problém je i v případě ukládání dat, protože \ac{SQL} umožňuje ukládání pouze řádků do jedné tabulky.
-		Horší to je ještě v případě ukládání již existujících dat, kdy \ac{SQL} neumožňuje hromadné úpravy.
+		Na první pohled se může zdát, že by to neměl být velký problém, protože sloupce tabulek jsou podobné atributům
+		objektů.
+		Složitost je hlavně v načítání a ukládání komplexních entity složených z více objektů a kolekcí, hlavně pak
+		kolekcí 1:N (případně M:N).
+		Jazyk \ac{SQL} totiž neumožňuje jednoduše vrátit více řádků z jiných tabulek, a tak není možné najednou
+		vrátit objekty různých tříd tvořící jeden celek.
+		Stejný problém je i v případě ukládání dat, při němž \ac{SQL} umožňuje ukládat pouze řádky do jedné tabulky.
+		Ještě horší je to v případě ukládání již existujících dat, protože \ac{SQL} neumožňuje hromadné úpravy.
 
-		Naštěstí existuje několik knihoven a nástrojů pro, které tyto problémy více či méne řeší za programátora.
-		Je možné vše implementovat ručně pomocí knihoven, které pouze zastřešují \ac{SQL} komunikaci a už neřeší
-		právě to mapování.
-		Nicméně kromě hodně specifických projektů, je tento přístup zbytečně složitý (zvýšený čas a nepřehledný kód)
-		a knihovny navíc mnohdy tyto problémy řeší efektivněji.
+		Naštěstí existuje několik knihoven a nástrojů, které tyto problémy řeší za programátora.
+		Je však možné vše implementovat ručně, to je ale zdlouhavé a zbytečné.
 		Mezi nejpoužívanější knihovny patří Hibernate a MyBatis.
 		Poměrně novou zajímavou alternativou je Spring Data JDBC, bohužel tato knihovna v době vývoje nebyla příliš
-		rozšířená a neosvědčená.
+		rozšířená a neosvědčená na to, aby se dostala do výběru.
 
 		Hibernate a MyBatis mají dost rozdílné přístupy k řešení výše zmíněných problémů.
-		Zatím co Hibernate se snaží být plným \ac{ORM} frameworkem a odstínit programátora pokud možno od jakéhokoliv
-		\ac{SQL} jazyka \cite{hibernate_docs}, MyBatis je lehčí alternativa, která poskytuje spíše nástroje pro mapování a dotazování, ale
+		Zatím co Hibernate se snaží být plným \ac{ORM} frameworkem a odstínit programátora od jakéhokoli
+		\ac{SQL} jazyka \cite{hibernate_docs}, MyBatis je lehčí alternativa, která poskytuje pouze nástroje pro mapování a dotazování, ale
 		nezatěžuje programátora všemi nízkoúrovňovými problémy \cite{mybatis_getting_started}.
 		Další velký rozdíl jakým knihovny pracují s entitami na pozadí.
 		Hibernate využívá mezičlánku mezi repozitářem a databází, kde jsou dočasně entity uloženy \cite{hibernate_docs}.
-		Díky tomu je Hibernate schopen poskytovat mezipamět pro entity při vícenásobném stahování a při ukládání
-		se data nepromítají hned ale až na konci transakce \cite{hibernate_docs}.
-		Kvůli tomu se tak repozitář chová spíše jako paměťové úložiště, kde má programátor okamžitý přístup k objektům.
-		Bohužel to má i svá úskalí a to nejen v celkové komplexitě knihovny kvůli vysoké abstraktnosti, která může navíc
-		i přístup k datům do jisté míry zpomalovat, právě díky té abstraktnosti.
-		Úskalí se skrývá, hlavně pro tento projekt, v sdílení instancí reprezentujících jednu entitu při vícenásobném
+		Díky tomu je Hibernate schopen poskytovat mezipamět pro entity při vícenásobném dotahování, a při ukládání
+		se data nepromítají hned, ale až na konci transakce \cite{hibernate_docs}.
+		Kvůli tomu se tak repozitář chová spíše jako paměťové úložiště, v němž má programátor okamžitý přístup k objektům.
+		Bohužel to má i svá úskalí, a to nejen v celkové komplexitě knihovny.
+		Úskalí se skrývá, hlavně pro tento projekt, ve sdílení instancí jedné entitu při vícenásobném
 		dotažení entity z databáze.
-		Tento přístup zamezuje porovnávání originální verze entity a nové upravené (většinou přijaté skrze \ac{API} k
-		uložení), protože interně ji Hibernate považuje za jednu instanci.
-		Hibernate sice má dobré nástroje pro validaci dat entit, ty však validují pouze aktuální hodnoty v objektu a
-		není možné porovnat hodnoty z již uloženou entitou v databázi.
-		To je v případě kdy má vlastnosti, které se nesmí změnit poměrně limitující.
-		Instance entity sice lze vyjmout z Hibernatu, je to však poměrně složité a těžkopádné a tím se zesložiťuje
-		celá business logika.
+		Tento přístup zamezuje porovnávání originální verze entity a nové upravené (většinou přijaté skrze \ac{API}),
+		protože interně ji Hibernate považuje za jednu instanci.
+		Hibernate sice má dobré nástroje pro validaci entit, ty však validují pouze aktuální hodnoty v objektech, ale
+		není možné porovnat hodnoty s původními verzemi entit.
+		To je v případě, kdy má entita vlastnosti, které se nesmí změnit, poměrně limitující.
+		Instance entity sice lze vyjmout z Hibernatu, to je však poměrně složité.
 		MyBatis tento neduh nemá a vrací vždy novou instanci entity.
-		MyBatis se obecně nesnaží řešit vše a díky tomu jeho abstrakce je mnohem menší a snazší na pochopení.
+		MyBatis se nesnaží řešit vše, a díky tomu je jeho abstrakce mnohem jednodušší.
 		To ovšem znamená, že programátor musí odvést více práce při mapování a psát \ac{SQL} dotazy.
-		Musí také ručně řešit ukládání složených entit, což Hibernate na proti tomu řeší.
+		Musí také ručně řešit ukládání složených entit, což Hibernate řeší sám.
 
 		I když by se mohlo zdát, že Hibernate je ultimátním nástrojem pro 99\% projektů, existuje mnoho materiálů
-		zkušených programátorů využívajících Hibernate spoustu let, kteří si nemyslí, že Hibernate je ideálním nástrojem.
-		Jeho komplexnost abstrakce totiž může přinést spoustu problémů, které na první pohled nemusí někoho napadnout.
-		Mezi největší problémy patří nejednoznačné chyby mapování, nutnost přizpůsobit databázový model zvyklostem Hibernatu
-		(který nesplňuje běžné doporučované postupy), náhodné chyby s dodatečným dotahováním dat nebo nejednoznačné operace
+		zkušených programátorů využívajících Hibernate spoustu let, kteří si nemyslí, že Hibernate je ideálním nástrojem
+		pro všechny projekty.
+		Jeho komplexnost totiž může přinést spoustu problémů, které na první pohled nemusí někoho napadnout.
+		Mezi největší problémy patří nejednoznačné zobrazenové chyby, nutnost přizpůsobit databázový model Hibernatu
+		(který nesplňuje běžné doporučované postupy), náhodné chyby s odsunutým dotahováním dat nebo nejednoznačné operace
 		v \ac{API} knihovny.
-		Na druhou stranu spousta uživatelů této knihovny jsou spokojeni s odstíněním \ac{SQL} jazyka a problémů jako
-		mapování kolekcí a podobně. \cite{bad_hibernate}
+		Na druhou stranu spousta uživatelů si míru abstrakce pochvaluje. \cite{bad_hibernate}
 
-		Záleží tedy hodně na konkrétním projektu a zkušenostech implementátorů jakou knihovnu zvolit.
-		Pro tuto aplikaci byl z počátku zvolen Hibernate právě díky jeho odstínění od problémů mapování a poměrně
-		jednoduché konfigurace složitějších entit.
-		Bohužel se posléze začal projevovat již zmiňovaný problém validací verzí entit.
+		Při výběru tedy hodně záleží tedy hodně na konkrétním projektu a zkušenostech implementátorů.
+		Pro tuto aplikaci byl z počátku zvolen Hibernate, právě díky jeho abstrakci mapování.
+		Bohužel se posléze začal projevovat již zmiňovaný problém s validací entit.
 		Po dodatečné analýze padlo rozhodnutí nahradit Hibernate MyBatisem.
 		Za cenu prvotní transformace, MyBatis zjednodušil práci s entitami a hledání chyb bylo přímočařejší.
-		MyBatis navíc podporuje konfiguraci pomocí \ac{XML} souborů nebo pomocí Java anotací přívo v Java rozhraních.
+		MyBatis navíc podporuje konfiguraci pomocí \ac{XML} souborů, nebo pomocí Java anotací přímo v Java rozhraních.
 		Pro zjednodušení a držení logiky na jednom místě byl vybrán přístup s Java anotacemi.
-		Ten se ukázal jako dostačující ve většině případů, avšak výjimky se našli, kdy složitost použitého \ac{SQL} kódu
-		byla na hraně přehlednosti v rámci Java rozhraních.
-		Momentálně tedy existuje pro každý typ entity třída reprezentující repozitář obsahující metody obalené \ac{SQL}
-		dotazy definující chování metody.
-		Na základě definovaných metod a \ac{SQL} kódu pak MyBatis dynamicky vygeneruje konkrétní třídy zajišťující tuto
-		logiku.
-		Zde je možné vidět reprezentativní ukázku části repozitáře pro práci uživatelskými účty.
+		Ten se ukázal jako dostačující, avšak našli se výjimky, kdy složitost použitého \ac{SQL} kódu
+		byla na hraně přehlednosti.
+		Momentálně tedy existuje pro každý typ entity třída reprezentující repozitář, která obsahuje metody obalené \ac{SQL}
+		dotazy.
+		Zde je možné vidět reprezentativní ukázku části repozitáře pro práci s uživatelskými účty.
 
 		\begin{lstlisting}[language=Java,caption={Ukázka získání uživatelského účtu z databáze MyBatisem. Zdroj: [autor]}]
 @Mapper
@@ -2109,25 +2067,19 @@ public interface AccountDao {
 
 		Validace entit je velice důležitá, pokud uživatelé mohou data upravovat zvenčí.
 		Díky ní se do databáze dostanou jen validní data.
-		Tato aplikace využívá dva typy validace, každou pro validování něčeho jiného.
-		První a hlavní validací je běžně využívaná validace formátu hodnot v entitách.
-		Tato validace je ta jednodušší protože je jasně předem daný formát hodnot a navíc existují knihovny, které
-		značně zjednodušují práci.
-		Co se týče formátu hodnot, tím může být ku příkladu maximální délka textového řetězce, omezení pouze na velká
-		písmena nebo maximální číselná hodnota.
-		Druhým typem využívané validace v implementované aplikaci je validace, že určité hodnoty se u upravených entit
-		nezměnily oproti původní verzi.
-		Takovými hodnotami jsou většinou stavy entity nebo různé datumy.
-		Příkladem může být stav karty, kdy smazaný karta již nesmí přejít do stavu aktivní karty, protože nemá potřebná data.
-		Dalším příkladem je datum vytvoření entity, který se nesmí změnit jinak by postrádal svůj účel nebo typ karty,
-		protože systém nepodporuje změnu typu karty (technicky náročné, protože každý typ karty obsahuje úplně jiný data
-		a má jiný účel).
+		Tato aplikace využívá dvou typů validací, každou pro validování něčeho jiného.
+		První a hlavní validací je validace hodnot v entitách.
+		Tato validace je ta jednodušší, protože je jasně předem daný formát hodnot, a navíc pro tuto problematiku existují knihovny.
+		Druhým typem využívané validace je validace hodnoty oproti původní verzi.
+		Takovými hodnotami jsou většinou stavy entit nebo různé datumy.
+		Příkladem může být stav karty, kde smazaná karta již nesmí přejít do stavu aktivní karty, protože nemá potřebná data.
+		Dalším příkladem je datum vytvoření entity, který se nesmí změnit jinak by postrádal svůj účel.
 
-		Pro tento projekt byla využita knihovna Hibernate Validator zabývající se především prvním typem validací
-		využívající Java anotace pro specifikování jednotlivých pravidel.
-		Pravidla se můžou stahovat buď na celou třídu nebo na konkrétní atributy třídy.
-		Knihovna sama o sobě poskytuje rozsáhlou sadu běžných pravidel, avšak umožňuje jednoduché implementování vlastních
-		pravidel.
+		Pro tento projekt byla využita knihovna Hibernate Validator zabývající se především prvním typem validací.
+		K definici pravidel využívá Java anotace.
+		Pravidla se můžou stahovat buď na celou třídu nebo jen na konkrétní atributy.
+		Knihovna sama o sobě poskytuje rozsáhlou sadu běžných pravidel, avšak umožňuje jednoduché rozšíření o vlastní
+		pravidla.
 		Takto může vypadat třída s definovanými pravidly.
 
 		\begin{lstlisting}[language=Java, caption={Ukázka třídy s validačními pravidly pomocí Java anotací. Zdroj: [autor]}]
@@ -2143,9 +2095,8 @@ public class CardLinkGroup {
 }
 		\end{lstlisting}
 
-		Díky rozšířitelnosti této knihovny je možné poměrně jednoduše implementovat i druhý typ validací.
-		Tyto validace pak mají vlastní Java anotace tvářící se jako běžná pravidla, mají však vlastní implementaci
-		validátoru ověřující validovaný objekt.
+		Díky rozšířitelnosti této knihovny je možné jednoduše implementovat i druhý typ validací.
+		Tyto validace pak mají vlastní Java anotace a validátor ověřující validovaný objekt.
 
 		\begin{lstlisting}[language=Java, caption={kázka validátoru ověřující neměnitelné atributy upravené karty oproti její původní verzi. Zdroj: [autor]}]
 public class UpdatedCardValidator implements ConstraintValidator<UpdatedCard, Card> {
@@ -2169,41 +2120,26 @@ public class UpdatedCardValidator implements ConstraintValidator<UpdatedCard, Ca
 		uložit novou verzi entity.
 
 		Po nastavení pravidel entitám je již možné provádět samotnou validaci.
-		K tomu v knihovně Hibernate Validator slouží jedna centrální třída reprezentující validátor příjímající
-		entitu označenou pravidly a vrací kolekcí nalezených porušení pravidel.
-		Je pak už na programátorovi jak s touto kolekcí naloží.
-		V případě této aplikace, kód vyhodí výjimkou, která se následně v \ac{API} přeloží na chybu.
+		K tomu v knihovně Hibernate Validator slouží jedna centrální třída validátoru.
+		Ta přijímá validovanou entitu a vrací kolekci chyb, které jsou následně přeloženy na chyby \ac{API}.
 
 		\subsubsection{Úložiště souborů}
 
-		Jak již bylo nastíněno, aplikace nebude implementovat vlastní souborové úložiště s generováním variant obrázků.
-		Místo toho bude využívat externí službu Cloudinary, která zajistí uchování souborů, generování variant obrázků
-		a \ac{CDN} pomocí \ac{REST} \ac{API} zajišťující komunikaci mezi aplikací a službou.
-		Cloudinary navíc poskytuje knihovnu obalující \ac{REST} \ac{API} přímo do Java tříd, takže se není potřeba zabývat
-		komunikací čistým \ac{REST} \ac{API}.
-		Aplikace bude \ac{API} využívat k ukládání souborů a získávání uložených souborů pro interní validace.
+		Jak již bylo nastíněno, aplikace nebude implementovat vlastní souborové úložiště.
+		Místo toho bude využívat externí službu Cloudinary.
+		Cloudinary poskytuje \ac{API}, které bude aplikace využívat k ukládání souborů a jejich získání pro
+		interní validace.
 		Získávání variant obrázku do \ac{GUI} bude zajišťovat přímo front-endová aplikace.
 
 		Cloudinary poskytuje jeden velký adresář pro všechny soubory, což je při více typů souborů nevhodné.
 		Naštěstí podporuje vnořené adresáře.
-		Právě kvůli tomu vznikl koncept předem definovaných tzv. typů uložišť, kde každý typ definuje cestu
+		Z tohoto důvodu vznikl koncept typů uložišť, kde každý typ definuje cestu
 		relativního kořenového adresáře, typ ukládaných souborů a interní ID.
 		Momentálně existuje pouze jedno úložiště a to pro profilové obrázky karet
 
-		\begin{lstlisting}[language=Java, caption={Ukázka definových typů uložišť. Zdroj: [autor]}]
-public enum StorageType {
-    CARDS_AVATARS("cards-avatars", "cards/avatars", "image");
-
-    private final String id;
-    private final String folderPath;
-    private final String resourceType;
-}
-		\end{lstlisting}
-
 		Aby bylo možné zpětně jednoduše identifikovat autora a typ úložiště uloženého souboru, je potřeba ke každému
 		souboru definovat dodatečná metadata.
-		Cloudinary naštěstí takový metadata podporuje.
-		Každý uložený soubor je pak popsán následující třídou obsahující všechny potřebné informace o souboru pro zobrazení
+		Každý uložený soubor je popsán následující třídou obsahující všechny potřebné informace o souboru pro zobrazení
 		a validaci:
 
 		\begin{lstlisting}[language=Java, caption={Třída popisující uložený soubor v Cloudinary uložišti. Zdroj: [autor]}]
@@ -2220,17 +2156,14 @@ public class StorageFile {
 		Tyto validace existují, aby nebylo možné někým záměrně využít obrázek někoho jiného nebo soubor, který k tomu
 		není určený.
 
-		Finální uložení se pak už skládá pouze z načtení binárních dat obrázku a sestavení výše zmíněných metadat a zavolání \ac{API}
+		Finální uložení se skládá pouze z načtení binárních dat, sestavení metadat a zavolání \ac{API}
 		služby.
-
 		Získání popisného souboru z Cloudinary je podobně jednoduché jako uložení.
-		\ac{API} umožňuje získat data o jednotlivých souborech pomocí interního ID a požadavek lze obohatit o dodatečné požadavky.
-		V případě této aplikace se výsledek obohacuje o metadata.
+		\ac{API} umožňuje získat data o jednotlivých souborech pomocí interního ID.
 
-		Popisující soubor obecně používá na místech, kde nejsou potřeba konkrétní binární data souboru, ale pouze
+		Popisující soubor se obecně používá na místech, kde nejsou potřeba konkrétní binární data souboru, pouze
 		informace o něm.
-		Binární data jsou většinou potřeba pouze v případě zobrazení souborů v \ac{GUI} nikoliv přímo v aplikaci díky
-		odstínění generování variant.
+		Binární data jsou potřeba pouze v případě zobrazení souborů v \ac{GUI}.
 
 		Konkrétní binární data souborů pro zobrazení například v \ac{GUI} aplikace je možné získat přímo ze serverů
 		Cloudinary pomocí speciální \ac{URL} adresy obsahující identifikaci úložiště, identifikaci konkrétního souboru a
@@ -2248,49 +2181,31 @@ https://res.cloudinary.com/id_uloziste/image/upload/t_256x256/id_souboru
 
 		\subsubsection{Transakční emaily}
 
-		Aby bylo možné upozorňovat uživatele na nečekané údalosti vzniklé v aplikaci nebo zaslání informací uživateli,
-		je potřeba nějaký komunikační kanál.
-		Jak již bylo zmíněno, tím budou emailové zprávy.
-		Cílem je tedy vytvořit systém odesílající předem definované zprávy přiřazené konkrétním událostem.
-		Stejně jako v případě souborového úložiště, aplikace nebude implementovat vlastní řešení, ale využije externích
-		služeb.
-		Vlastní řešení by znamenalo značnou zátěž na implementaci aplikace a i tak by bylo nutné napojit odesílání
-		emailů na ověřeného odesílatele emailů, aby emaily nekončily uživatelům v nevyžádané poště.
-		Proto bylo zvoleno využít externí službu SendinBlue, která poskytne vše potřebné již připravené skrz \ac{API}
-		s existující Java knihovnou.
-		V aplikaci už je pak nutné pouze připravit propojení mezi tímto \ac{API} a událostmi v aplikaci.
+		Cílem je vytvořit systém umožňující odesílat předem definované zprávy na základě aplikačních událostí.
+		Tím že aplikace bude využívat externí službu SendinBlue, v aplikaci bylo nutné připravit pouze propojení
+		\ac{API} a aplikačními událostmi.
 
 		Pro odesílaní emailů je nejdříve nutné připravit šablony zpráv, aby bylo co odesílat.
-		Ty lze připravit buď ručně pomocí šablonovacího jazyk (např.: FreeMarker) a odeslat pomocí \ac{API} do externí
-		služby nebo v případě SendinBlue lze využít integrovaného klikacího editoru umožňujícího jednoduše připravit
-		šablony pomocí předpřipravených prvků.
-		Obsah emailů se vytváří v jazyce \ac{HTML}, nicméně podpora zobrazování ostylovaného \ac{HTML} obsahu v
+		K tomu byl využit integrovaný klikací editor, protože
+		podpora zobrazování ostylovaného \ac{HTML} obsahu v
 		emailových klientech je poměrně omezená a velice se liší mezi jednotlivými klienty.
-		Kvůli tomu je časově náročné připravit šablonu fungující na všech populárních klientech a to navíc ve dvouch
+		Kvůli tomu je časově náročné připravit šablonu fungující na všech populárních klientech, a to navíc ve dvou
 		verzích: desktopové a mobilní.
-		Tyto problémy do jisté míry řeší právě interaktivní editor, avšak za cenu nižších možností přizpůsobení vzhledu
-		a struktury.
-		Výhodou je, že SendinBlue poskytuje oba přístupy a není problém použít jeden nebo druhý.
-		Právě proto padla volba na interaktivní editor, který ušetří v začátku spoustu času a v budoucnu je možné
-		přejít na vlastní šablony.
 
-		Každá šablona má v systému unikátní ID, takže byla tvořena jednoduchá enumerace pro explicitní mapování
-		šablon ke kryptickým identifikátorům.
-
+		Každá šablona má v systému unikátní ID, takže byla tvořena jednoduchá mapovací enumerace
 		Díky této enumeraci je pak v aplikaci jasné jaká šablona bude použita.
 		Dále může šablona využívat parametry místo konkrétního textu, které jsou při zpracování šablony nahrazeny
 		parametry požadavku.
 		Těmi může být cokoliv, například emailová adresa adresáta nebo expirační datum nějaké entity.
 
-		Odeslání konkrétního emailu už je pak jednoduché a vyžaduje pouze specifikování emailové adresy adresáta,
-		šablonu emailu a volitelně i parametry šablony.
-		Aplikace pak už pouze sestaví požadavek o odeslání emailu a předá ho \ac{API}.
+		Odeslání konkrétního emailu už je pak jednoduché a vyžaduje pouze specifikování adresáta,
+		šablony emailu a parametry, a odeslání požadavku do \ac{API} služby.
 
-		Jak bylo nastíněno, systém bude odesílat emaily automaticky jako reakci na vzniklé události v aplikaci.
+		Jak bylo nastíněno, systém bude odesílat emaily automaticky, jako reakci na vzniklé události v aplikaci.
 		Události jsou v tomto případě reprezentování aplikačními událostmi z frameworku Spring.
-		Spring umožňuje do systému publikovat aplikační události a definovat pozorovatele, kteří naslouchají na konkrétní
-		vzniklé aplikační události a mohou na ně reagovat vykonáním libovolných operací.
-		Samotná aplikační událost je pouze jednoduchý objekt nesoucí kontextové data reprezentovaná událostí.
+		Spring umožňuje do systému publikovat aplikační události a definovat pozorovatele, kteří těmto událostem
+		naslouchají a mohou na ně reagovat.
+		Samotná aplikační událost je pouze jednoduchý objekt nesoucí kontextová data reprezentovaná událostí.
 
 		\begin{lstlisting}[language=Java, caption={Ukázka aplikační události. Zdroj: [autor]}]
 public class CardUpdatedEvent extends ApplicationEvent {
@@ -2302,7 +2217,7 @@ public class CardUpdatedEvent extends ApplicationEvent {
 		\end{lstlisting}
 
 		Příkladem může být událost vyvolaná jako následek uložení upravené karty.
-		Událost tedy reprezentuje úpravu karty a může sebou nést danou upravnou kartu, kterou pozorovatel může
+		Událost reprezentuje úpravu karty a nese sebou upravenou kartu, kterou pozorovatel může
 		využít pro provedení svých operací.
 
 		\begin{lstlisting}[language=Java, caption={Ukázka pozorovatele vystavených aplikačních událostí. Zdroj: [autor]}]
@@ -2316,55 +2231,46 @@ public class CardUpdatedEventListener {
 
 		Právě tento přístup využívá modul odesílání emailů.
 		Modul má do systému vystavené vlastní posluchače na konkrétní aplikační události (změna emailu uživatele, změna hesla,
-		vypršení platnosti předplatného...) vytvářející požadavky pro odesílání správných emailů.
-		Tento přístup vhodný, protože moduly uživatelských účtů, karet a podobně vůbec nevědí o modulu emailů a nevzniká
+		vypršení platnosti předplatného...), kteří odesílají požadavky na odeslání emailů do \ac{API}.
+		Tento přístup je vhodný, protože moduly vůbec nevědí o modulu emailů, a nevzniká
 		tak fyzické propojení znepřehledňující kód.
-		Navíc je pomocí aplikačních události jednoduché přidávat nové události a jejich posluchače.
+		Navíc je jednoduché přidávat nové události a jejich posluchače.
 
 		\subsubsection{Vyhledávání karet a míst}
 
-		Fulltextové vyhledávání je komplexní operace, který vyžaduje analýzu textů a přípravu vyhledatelných dat.
-		Tyto data musí být při vyhledávání korektně párována s uživatelkou frází, tak aby systém vrátil co nejrelevantnější
-		výsledky.
-		Naštěstí existují nástroje zabývající se touto problematikou.
-		Vybraným nástrojem pro tuto aplikaci je populární a všestranný databázový systém Elasticsearch.
-		Ten umí spoustu věcí, avšak pro tento projekt je důležitá problematika fulltextového vyhledávání.
-		Tuto problematiku Elasticsearch schovává před programátorem a programátorovi stačí pouze popsat
-		vyhledatelné entity a při vyhledávání definovat pouze požadavky.
+		Fulltextové vyhledávání je komplexní operace, která vyžaduje analýzu textů a přípravu vyhledatelných dat.
 
 		I přes míru abstrakce je potřeba znát základní koncepty fulltextového vyhledávání.
 		Fulltextové vyhledávání pracuje s tzv. analyzátory, kteří analyzují text a generují z něj index relevantních
-		slov podle určených pravidel.
-		Tento proces je aplikovat na vyhledatelné dokumenty i na vyhledávací frázi zadanou uživatelem.
-		Vygenerované indexy se při vyhledávání porovnávají a podle určitých kritérií, databáze vyhodnotí relevantnost
-		dokumentu pro vyhledávanou frázi. \cite{index_search_analysis}
+		slov.
+		Tento proces je aplikován na vyhledatelné dokumenty, i na uživatelské vyhledávací fráze.
+		Vygenerované indexy se při vyhledávání porovnávají, a podle určitých kritérií databáze vyhodnotí relevantnost
+		dokumentů pro vyhledávanou frázi. \cite{index_search_analysis}
 
 		Každý analyzér se skládá z filtrů znaků, tokenizérů a filtrů tokenů.
 		Filtry znaků v analyzovaném textu upravují jednotlivé znaky.
 		Znaky mohou přidávat, odebírat nebo nahrazovat jinými (např.: odstranění diakritiky).
 		Poté je takto upravený text předán tokenizérům, kteří text rozdělí na kolekci tokenů.
-		Token může představovat cokoliv co dává v kontextu aplikace smysl, nicméně většinou token přestavuje jedno
-		slovo věty.
+		Token může představovat cokoliv co dává v kontextu aplikace smysl, nicméně většinou přestavuje jedno
+		slovo.
 		Tyto tokeny můžou být ještě upraveny pomocí filtrů tokenů.
-		Ty podobně jako filtry znaků umožňují přidávání, úpravu a mazání tokenů.
-		Těmi mohou být: filtr pro odmazání generických slov bez přidaného významu (např.: spojky), filtr pro odstranění
-		diakritiky nebo filtr pro převedení tokenů na malá písmena, aby nezáleželo na tvaru zadaného slova oproti slovu
-		v dokumentu.
-		Výsledné tokeny pak tvoří index, nad kterým lze již vyhledávat.
+		Ty umožňují přidávat, upravovat a mazat tokeny.
+		Konkrétními filtry mohou být: filtr pro odmazání generických slov bez přidaného významu (např.: spojky), filtr pro odstranění
+		diakritiky nebo filtr pro převedení tokenů na malá písmena.
+		Výsledné tokeny pak tvoří index, nad kterým již lze vyhledávat.
 		\cite{analyzer_anatomy}
 
-		Elasticsearch pracuje s tzv. indexy, což jsou kolekce indexovaných \ac{JSON} dokumentů entit stejného typu.
+		Elasticsearch pracuje s tzv. indexy, což jsou kolekce dokumentů entit stejného typu.
 		Tyto dokumenty pak lze vyhledávat pomocí dotazovacího jazyka.
-		Každý index má kromě samotných dat i konfiguraci jak s daty pracovat.
-		Kromě obecných konfiguračních hodnot obsahuje hlavně strukturu dokumentů, aby databáze mohla efektivně vyhledávat
-		nad uloženými daty.
-		Tato definice zahrnuje v první řadě určení datových typů jednotlivých hodnot entit.
-		Od datového typu se pak odvíjí další dostupné konfigurační hodnoty.
+		Každý index má kromě samotných dat i konfiguraci, jak s daty pracovat.
+		Kromě obecných konfiguračních hodnot obsahuje hlavně strukturu dokumentů, aby databáze byla schopna efektivně vyhledávat.
+		Tato definice zahrnuje v první řadě určení datových typů jednotlivých atribuů entit.
+		Od datového typu se pak odvíjí další konfigurační hodnoty.
 		Nejdůležitějším takovým nastavením pro fulltextové vyhledávání je specifikování analyzérů pro textové hodnoty.
-		Specifikované analyzéry by měli odpovídat analyzéru použitému při vyhledávání pro kompatibilitu indexů tokenů.
+		Specifikované analyzéry by měli odpovídat analyzéru použitému při vyhledávání.
 
 		Elasticsearch pro práci s těmito indexy a dokumenty poskytuje Java knihovnu reflektující jeho \ac{REST} \ac{API},
-		prostřednictvím které lze jednoduše nahrávat entity do indexu k indexaci.
+		prostřednictvím, které lze jednoduše nahrávat entity do indexů.
 
 		\begin{lstlisting}[language=Java, caption={Ukázka indexace jedné karty do Elasticsearch databáze. Zdroj: [autor]}]
 final SearchableCard cardToIndex = searchableCardFactory.create(card);
@@ -2374,7 +2280,7 @@ final IndexResponse cardResponse = esClient.index(i -> i
 		.document(cardToIndex));
 		\end{lstlisting}
 
-		Hlavní řešený problémy tak spočívají spíše v v přípravě entit a správě indexů a jejich konfigurace.
+		Hlavní řešený problémy spočíval v přípravě entit a správě indexů.
 		Tuto problematiku totiž Elasticsearch knihovna řeší ve formě dílčích operací, nikoliv však jako celek.
 		Bylo potřeba vyřešit indexaci a vyhledávání karet a geografických míst.
 		Karty musí být uživatel schopen vyhledat fulltextově skrze vícero atributů (název, popisek, odkazy...) a geografická
@@ -2383,10 +2289,10 @@ final IndexResponse cardResponse = esClient.index(i -> i
 		První jednodušší problematikou je příprava entit.
 		Mohlo by se zdát, že tento problém nastane spíše v nestandardním projektu, avšak data využívaná k vyhledávání
 		jsou trochu jiná než ta hlavní.
-		V případě karet je nebytné komplexní strukturu všech navázaných dat značně zjednodušit, proto by jinak Elasticsearch
-		nebyl schopen tolik zanořená data správně analyzovat.
-		Některé atributy je zase potřeba zagregovat do jiné formy.
-		V případě geografických míst je na proti tomu nutné zagregovat více různých dat a paradoxně struktury míst lehce
+		V případě karet je nebytné komplexní strukturu dat značně zjednodušit, protože by jinak Elasticsearch
+		nebyl schopen zanořená data správně analyzovat.
+		Některé atributy je zase potřeba agregovat do jiné formy.
+		V případě geografických míst je na proti tomu nutné zagregovat více různých dat, a paradoxně strukturu míst lehce
 		zesložitit, aby obsahovala vše co uživatel potřebuje.
 
 		\begin{lstlisting}[language=Java, caption={Ukázka indexovatelné varianty karty. Obsahuje metadata a vyhledatelné data. Zdroj: [autor]}]
@@ -2412,17 +2318,16 @@ public class SearchableCard {
 }
 		\end{lstlisting}
 
-		Na ukázce varianty karty připravené pro indexaci je možné vidět právě zmiňované zjednodušení a agregace dat.
-		První řadě třída obsahuje pouze část originálních dat, která jsou relevantní pro vyhledávání.
-		Následně je možné vidět, že karta obsahuje data z různých typů karet nebo jen části vnořených entit (z poboček jsou
+		Na ukázce karty připravené pro indexaci je možné vidět právě zmiňované zjednodušení a agregaci dat.
+		Třída obsahuje část nepostradatelných originálních dat a část agregovaných dat vnořených entit (z poboček jsou
 		zde pouze jejich názvy).
 
 		Ukázkovým příkladem agregace je pak kolekce profilových ID odkazů.
-		Originální karta má totiž přístup pouze k cílovým \ac{URL} adresám odkazům a je tak na aplikaci, aby z těchto dat
+		Originální karta má totiž přístup pouze k cílovým \ac{URL} adresám, a je tak na aplikaci, aby z těchto dat
 		vytáhla ID profilů uživatelů.
-		K tomu využívá šablony \ac{URL} adres z šablon sítí a standardizovaného formátu \ac{URL} adres.
+		K tomu využívá šablony \ac{URL} adres a standardizovaného formátu \ac{URL} adres.
 		Pomocí \ac{URL} šablony je možné získat část \ac{URL} adresy, která je specifická pro uživatele a obsahuje profilové ID.
-		Tento řetězec je následně očištěn částí \ac{URL} adres jako jsou: část cesty nebo dotazovací parametry.
+		Tento řetězec je následně očištěn částmi \ac{URL} adres, jako jsou: část cesty nebo dotazovací parametry.
 
 		\begin{lstlisting}[caption={Ukázka transformace URL adresy na profilové ID. Zdroj: [autor]}]
 // URL adresa
@@ -2431,29 +2336,28 @@ https://example.com/profile/jan_novak?detail
 jan_novak
 		\end{lstlisting}
 
-		Tyto transformovací operace zajišťují speciální třídy tzv. továrny, které vezmou originální entity a vytvoří
-		z ní indexovatelnou entitu.
-		Takové entity již lze předat \ac{API} k indexaci.
+		Tyto transformovací operace zajišťují speciální třídy zvané továrny, které vezmou originální entity a vytvoří
+		z ní indexovatelné verze.
 
-		Dalším složitějším problémem je změna struktury dat a změna konfigurace již existujících indexů.
+		Dalším, již složitějším problémem, je změna struktury dat a změna konfigurace již existujících indexů.
 		Je předpokládatelné, že entity se v průběhu vývoje budou měnit a rozšiřovat.
 		Bohužel tím že Elasticsearch je spíše vyhledávacím strojem než klasickou databází, neposkytuje nástroje pro editaci
-		dílčích data již indexovaných entit jako tomu je v případě \ac{SQL}.
-		Stejně tak má omezené nástroje pro úpravu konfigurace indexu a není proto možné jednoduše změnit například
+		dílčích dat, jako tomu je v případě \ac{SQL}.
+		Stejně tak má omezené nástroje pro úpravu konfigurace indexu, a není proto možné jednoduše změnit například
 		použitý analyzátor.
-		Naštěstí Elasticsearch nabízí alespoň možnost vzít dokumenty z jednoho indexu a zindexovat je do jiného pomocí jeho
+		Naštěstí Elasticsearch nabízí alespoň možnost vzít dokumenty z jednoho indexu a nahrát je jiného pomocí nové
 		konfigurace.
-		To ovšem stále neřeší stav kdy se změnila struktura entit nebo formát jednotlivých atributů entit.
-		Bylo proto nezbytné vytvořit systém správy těchto dat, který by zajistil reindexaci všech entit dvěma způsoby.
-		Oba způsoby mají podobnou základní strukturu, ale liší se v samotné přípravě dat.
+		To ovšem stále neřeší stav, kdy se změní struktura entit nebo formát jednotlivých atributů.
+		Bylo proto nezbytné vytvořit systém, který by zajistil reindexaci všech entit oběma způsoby.
+		Oba způsoby mají podobnou základní strukturu, ale liší se v přípravě dat.
 		Proces nejdřív vytvoří nový prázdný index s novým nastavením.
 		Následně se některým ze způsobů indexují data do nového indexu.
-		Po dokončené indexaci je možné přesunout unifikovaný identifikátor indexu na nový index a starý index premanentně
+		Po dokončené indexaci je možné přesunout unifikovaný identifikátor indexu na nový index, a starý index permanentně
 		smazat.
 
 		Prvním jednodušším a rychlejším způsobem je reindexace na úrovni Elasticsearch.
 		Pro tento případ má Elasticsearch připravené jednoduché \ac{API}, kde programátor pouze specifikuje starý a nový
-		index a vše ostatní už si zařídí sám Elasticsearch.
+		index, a vše ostatní už si zařídí sám Elasticsearch.
 		Tento způsob však nenabízí možnost nahrání upravených dat entit, pouze změnu konfigurace indexu.
 
 		\begin{figure}[H]
