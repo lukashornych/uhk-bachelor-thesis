@@ -975,6 +975,14 @@
     }%
 }
 
+\newcommand{\cntcapfigure}[4]{
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=#2]{obrazky/#1}\hfill
+        \captionsource{#3}{#4}
+    \end{figure}
+}
+
 \endinput
 %%
 %% End of file `fitthesis.cls'.
