@@ -2707,7 +2707,7 @@ $http.onRequest(async (request) => {
 		Toho bylo využito především u validace \ac{URL} adres odkazů na sociální síťě, u nichž je potřeba se dotázat \ac{API},
 		které adresu zvaliduje.
 
-		\begin{lstlisting}[caption={Ukázka implementace vlastního validátoru využívající API k validaci hodnoty. Zdroj: [autor]}]
+		\begin{lstlisting}[caption={Ukázka implementace vlastního validátoru využívající API k validaci hodnoty. Zdroj: [fsdf]}]
 return async function (displayId) {
 	const requestBody = { cardId, displayId }
 	try {
@@ -2717,6 +2717,19 @@ return async function (displayId) {
 	}
 }
 		\end{lstlisting}
+
+%\begin{program}
+%	\begin{verbatim}
+%
+%class HelloWorldApp {
+%  public static void main(String[] args) {
+%    //Display the string
+%    System.out.println("Hello World!");
+%  }
+%}
+%	\end{verbatim}
+%	\caption{The Hello World! program in Java. Zdroj: [autor]}
+%\end{program}
 
 		S připravenými dílčími validátory je pak možné definovat pravidla pro jednotlivá pole ve formulářích.
 		Tato pravidla jsou následně aplikována na jednotlivá pole, která sledují změny hodnot.

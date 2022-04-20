@@ -866,6 +866,9 @@
   \renewcommand{\lstlistlistingname}{Seznam ukázek kódů}
 \fi
 
+%\floatstyle{plain}
+%\newfloat{program}{h}{lop}
+%\floatname{program}{Ukázka kódu}
 
 % BEGIN Jan Pluskal (ipluskal) listings
 
