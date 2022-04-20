@@ -1993,25 +1993,6 @@ public class CardLinkGroup {
 
 		Díky rozšířitelnosti této knihovny je možné jednoduše implementovat i druhý typ validací.
 		Tyto validace pak mají vlastní Java anotace a validátor ověřující validovaný objekt.
-
-		\begin{lstlisting}[language=Java, caption={kázka validátoru ověřující neměnitelné atributy upravené karty oproti její původní verzi. Zdroj: [autor]}]
-public class UpdatedCardValidator implements ConstraintValidator<UpdatedCard, Card> {
-	@Override
-	public boolean isValid(Card updatedCard, ConstraintValidatorContext context) {
-		final Optional<Card> originalCard = cardService.getCard(updatedCard.getId(), true);
-		/* ... */
-		if (originalCard.get().getState().equals(CardState.DELETED)) {
-			return false;
-		}
-		if (!updatedCard.getType().equals(originalCard.get().getType())) {
-			return false;
-		}
-		/* ... */
-		return true;
-	}
-}
-		\end{lstlisting}
-
 		Pokud se nějaký takový atribut změnil o proti původní verzi změnil, validace selže a neumožní uživateli
 		uložit novou verzi entity.
 
@@ -2648,8 +2629,7 @@ public void validateLink_InvalidLink_ExpectedFalse() {
 					.with(csrf()))
 			.andDo(print())
 			.andExpect(status().isOk())
-			.andExpect(content().contentType(MediaType.APPLICATION_JSON))
-			.andExpect(content().json(objectMapper.writeValueAsString(expectedResponseBody)));
+			.andExpect(content().contentType(MediaType.APPLICATION_JSON));
 }
 		\end{lstlisting}
 
@@ -2728,14 +2708,12 @@ $http.onRequest(async (request) => {
 		které adresu zvaliduje.
 
 		\begin{lstlisting}[caption={Ukázka implementace vlastního validátoru využívající API k validaci hodnoty. Zdroj: [autor]}]
-export const displayId = function (cardId) {
-	return async function (displayId) {
-		const requestBody = { cardId, displayId }
-		try {
-	  		return (await this.$http.$post('cards/validate-display-id', requestBody)).valid
-		} catch (e) {
-		    this.$notifyError()
-		}
+return async function (displayId) {
+	const requestBody = { cardId, displayId }
+	try {
+		return this.$http.$post('cards/validate-display-id', requestBody).valid
+	} catch (e) {
+		this.$notifyError()
 	}
 }
 		\end{lstlisting}
