@@ -2147,7 +2147,7 @@ public class CardUpdatedEventListener {
 		Elasticsearch pro práci s těmito indexy a dokumenty poskytuje Java knihovnu reflektující jeho \ac{REST} \ac{API},
 		prostřednictvím které lze jednoduše nahrávat entity do indexů.
 
-		\begin{lstlisting}[language=Java, caption={Ukázka indexace jedné karty do Elasticsearch databáze. Zdroj: [autor]}]
+		\begin{lstlisting}[language=Java, caption={Indexace jedné karty do Elasticsearch databáze. Zdroj: [autor]}]
 final SearchableCard cardToIndex = searchableCardFactory.create(card);
 final IndexResponse cardResponse = esClient.index(i -> i
 		.index(SearchableCard.INDEX_ALIAS)
@@ -2170,7 +2170,7 @@ final IndexResponse cardResponse = esClient.index(i -> i
 		V případě geografických míst je naproti tomu nutné zagregovat více různých dat, a paradoxně strukturu míst lehce
 		zesložitit, aby obsahovala vše co uživatel potřebuje.
 
-		\begin{lstlisting}[language=Java, caption={Ukázka indexovatelné karty. Obsahuje metadata a vyhledatelná data. Zdroj: [autor]}]
+		\begin{lstlisting}[language=Java, caption={Indexovatelná karta. Obsahuje metadata a vyhledatelná data. Zdroj: [autor]}]
 public class SearchableCard {
     String displayId;
     String avatarId;
@@ -2235,7 +2235,7 @@ jan_novak
 		index, a vše ostatní už si zařídí sám Elasticsearch.
 		Tento způsob však nenabízí možnost nahrání upravených dat entit, pouze změnu konfigurace indexu.
 
-		\cntcapfigure{proces_reindexace_na_urovni_es}{5cm}{Ukázka procesu hromadné reindexace dat na úrovni Elasticsearch.}{[autor]}
+		\cntcapfigure{proces_reindexace_na_urovni_es}{5cm}{Proces hromadné reindexace dat na úrovni Elasticsearch.}{[autor]}
 
 		Druhým složitějším a časově náročnějším způsobem, který umožňuje indexovat kompletně nová data, je
 		reindexace dat z primární databáze.
@@ -2243,7 +2243,7 @@ jan_novak
 		a hromadnou indexaci pomocí \ac{API}.
 		Tento proces je zdlouhavý, právě kvůli nutnosti přesunutí dat mezi dvěma kompletně oddělenými systémy.
 
-		\cntcapfigure{proces_reindexace_z_db}{5cm}{Ukázka procesu hromadné reindexace nových dat z primární databáze.}{[autor]}
+		\cntcapfigure{proces_reindexace_z_db}{5cm}{Proces hromadné reindexace nových dat z primární databáze.}{[autor]}
 
 		Každý index má svou spravující třídu, která obsahuje napojení na korektní index v databázi a jeho nastavení.
 
@@ -2279,7 +2279,7 @@ accounts:
 		reflektující nastavení celé aplikace.
 		Implementace zahrnovala připravení datového modelu a načítače hodnot z \ac{YAML} souborů.
 
-		\cntcapfigure{datovy_model_nastaveni_aplikace}{\linewidth}{Ukázka datového modelu nastavení aplikace.}{[autor]}
+		\cntcapfigure{datovy_model_nastaveni_aplikace}{\linewidth}{Datového model nastavení aplikace.}{[autor]}
 
 		\subsubsection{Šablony odkazů sítí}
 
@@ -2460,7 +2460,7 @@ https://{userPart}.example.com
 			Slouží k tomu továrnové třídy dědící z obecného rozhraní, v němž se nacházejí metody pro transformaci z doménového
 			objektu na \ac{DTO} objekt a naopak.
 
-			\begin{lstlisting}[language=Java, caption={Ukázka obecného rozhraní třídy pro transformaci mezi doménovými a DTO objekty. Zdroj: [autor]}]
+			\begin{lstlisting}[language=Java, caption={Obecné rozhraní třídy pro transformaci mezi doménovými a DTO objekty. Zdroj: [autor]}]
 public interface DtoFactory<E, D> {
     D createDto(E entity);
     E updateEntity(E originalEntity, D dto);
@@ -2586,7 +2586,7 @@ protected void configure(HttpSecurity http) throws Exception {
 		třída komunikuje.
 		K tomu je využita knihovna Mockito, která zároveň umožňuje zkoumat proběhlé interakce, a na základě toho vyhodnocovat testy.
 
-		\begin{lstlisting}[language=Java, caption={Ukázka testu ověřující, že služba štítků vrací správné nejvyužívanější štítky z nasimulovaného repozitáře. Zdroj: [autor]}]
+		\begin{lstlisting}[language=Java, caption={Testu ověřující, že služba štítků vrací správné nejvyužívanější štítky z nasimulovaného repozitáře. Zdroj: [autor]}]
 @Test
 public void getMostUsedTags_ExpectedFoundCorrectOnes() {
 	when(cardTagDaoMock.findMostUsed(3)).thenReturn(Set.of(
@@ -2653,7 +2653,7 @@ public void validateLink_InvalidLink_ExpectedFalse() {
 		Předání tokenu zpět \ac{API} serveru je zajištěno přidáním tokenu před odesláním \ac{HTTP} požadavku do speciální hlavičky.
 		Pokud token v aplikaci ještě neexistuje, je odeslán paralelní požadavek na \ac{API} server pro vygenerování tokenu.
 
-		\begin{lstlisting}[caption={Ukázka vložení CSRF tokenu do každého požadavku putujícího na API server. Zdroj: [autor]}]
+		\begin{lstlisting}[caption={Vkládání CSRF tokenu do každého požadavku putujícího na API server. Zdroj: [autor]}]
 $http.onRequest(async (request) => {
 	if (!csrfAllowedMethods.includes(request.method)) {
 		await addCsrfTokenToRequest(store, $http, request)
@@ -2704,7 +2704,7 @@ $http.onRequest(async (request) => {
 		Toho bylo využito především u validace \ac{URL} adres odkazů na sociální síťě, u nichž je potřeba se dotázat \ac{API},
 		které adresy zvaliduje.
 
-		\begin{lstlisting}[caption={Ukázka implementace vlastního validátoru využívající API k validaci hodnoty. Zdroj: [autor]}]
+		\begin{lstlisting}[caption={Vlastního validátor využívající API k validaci hodnoty. Zdroj: [autor]}]
 return async function (displayId) {
 	const requestBody = { cardId, displayId }
 	try {
@@ -2759,7 +2759,7 @@ return async function (displayId) {
 		Malou výjimkou jsou chybové zprávy, kde existují dvě metody: jedna s možností vložení vlastního textu, druhá
 		zobrazující generickou chybu.
 
-		\begin{lstlisting}[caption={Implementované pomocné metody pro vystavení různých typů upozornění. Zdroj: [autor]}]
+		\begin{lstlisting}[caption={Pomocné metody pro vystavení různých typů upozornění. Zdroj: [autor]}]
 this.$notifySuccess('general.success.added')
 this.$notifyInfo('general.info.linkCopied')
 this.$notifyError('general.error.invalidData')
@@ -2819,7 +2819,7 @@ ENTRYPOINT yarn start --dotenv=.env.$ENV
 		Jediný databázový systém PostgreSQL je provozován samostatně poskytovatelem DigitalOcean,
 		není tak nutné se starat o ruční zálohovaní nebo výpadky.
 
-		\cntcapfigure{architektura_produkce}{\linewidth}{Ukázka putování HTTP požadavku infrastrukturou.}{[autor]}
+		\cntcapfigure{architektura_produkce}{\linewidth}{Putování HTTP požadavku infrastrukturou.}{[autor]}
 
 		Webový server slouží jako vstupní brána do celého systému a poskytuje nástroje pro zabezpečení požadavků.
 		Zároveň zahazuje neplatné požadavky ještě dřív, než by mohli způsobit škody v samotných aplikacích.
