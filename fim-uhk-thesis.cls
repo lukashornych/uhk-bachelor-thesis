@@ -458,17 +458,17 @@
 
 %\vfill
 
- \ifczech
- \mktxt@b{16}{\@keywords@CS}\noindent\@tkeywords@CS
- \else
-   \ifslovak
-     \mktxt@b{16}{\@keywords@SK}\noindent\@tkeywords@CS
-   \else
-     \mktxt@b{16}{\@keywords@EN}\noindent\@tkeywords@EN
-   \fi
- \fi
-
- \vfill
+% \ifczech
+% \mktxt@b{16}{\@keywords@CS}\noindent\@tkeywords@CS
+% \else
+%   \ifslovak
+%     \mktxt@b{16}{\@keywords@SK}\noindent\@tkeywords@CS
+%   \else
+%     \mktxt@b{16}{\@keywords@EN}\noindent\@tkeywords@EN
+%   \fi
+% \fi
+%
+% \vfill
 
 % \iftoggle{czech_used}{
 % \mktxt@b{16}{\@keywords@EN}\noindent\@tkeywords@EN

@@ -36332,7 +36332,7 @@
 									"left": 642,
 									"top": 802,
 									"width": 173,
-									"height": 26,
+									"height": 13,
 									"text": "Hromadně nová data indexovat ",
 									"wordWrap": true
 								}
@@ -46649,7 +46649,7 @@
 										"$ref": "AAAAAAGAMi8CmjH9C5g="
 									},
 									"edgePosition": 1,
-									"text": "URL adresa byla přesměrovává na jinou URL adresu",
+									"text": "URL adresa byla přesměrováva na jinou URL adresu",
 									"wordWrap": true
 								}
 							],
@@ -47008,7 +47008,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGAMiyIejGwAAw="
 							},
-							"name": "URL adresa byla přesměrovává na jinou URL adresu",
+							"name": "URL adresa byla přesměrováva na jinou URL adresu",
 							"source": {
 								"$ref": "AAAAAAGAMiyIejGwAAw="
 							},
@@ -51534,7 +51534,8 @@
 									"_parent": {
 										"$ref": "AAAAAAGAMq/qk0coIUM="
 									},
-									"name": "couponGenerateRequest"
+									"name": "couponGenerateRequest",
+									"type": ""
 								},
 								{
 									"_type": "UMLParameter",
@@ -72149,6 +72150,18 @@
 								"$ref": "AAAAAAGAOAQ9Nys7d2c="
 							},
 							"subViews": [
+								{
+									"_type": "LabelView",
+									"_id": "AAAAAAGATMtmayHqOo0=",
+									"_parent": {
+										"$ref": "AAAAAAGAOAQ9OCs9OwM="
+									},
+									"font": "Arial;13;0",
+									"left": 58,
+									"top": 269,
+									"width": 87.4326171875,
+									"height": 13
+								},
 								{
 									"_type": "LabelView",
 									"_id": "AAAAAAGAOAQ9OCtDbqk=",
