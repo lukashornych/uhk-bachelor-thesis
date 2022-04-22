@@ -162,7 +162,7 @@
 \def\@authorfield@EN{Field of study}
 \def\@annotation@CS{Anotace}
 \def\@annotation@SK{Anotace}
-\def\@annotation@EN{Anotation}
+\def\@annotation@EN{Annotation}
 \def\@keywords@CS{Klíčová slova}
 \def\@keywords@SK{Kľúčové slová}
 \def\@keywords@EN{Keywords}
@@ -416,15 +416,11 @@
 \newcommand\makeannotation{%
 \thispagestyle{empty}\null%
 
-\ifczech
 \mktxt@b{16}{\@annotation@CS}\noindent\@tannotation@CS
-\else
-  \ifslovak
-    \mktxt@b{16}{\@annotation@SK}\noindent\@tannotation@CS
-  \else
-    \mktxt@b{16}{\@annotation@EN}\noindent\@tannotation@EN
-  \fi
-\fi
+
+\vspace{1cm}
+
+\mktxt@b{16}{\@annotation@EN}\noindent\@tannotation@EN
 
 \vspace{2cm}
 
@@ -514,13 +510,21 @@
   \mktxt@b{16}{\ifczech\@tdecl@CS\else\@tdecl@EN\fi}
 \fi
 
-\noindent\@declaration
+\@declaration
 
-  \begin{flushright}
-      \makebox[4cm]{\dotfill} \\
-      \@author\\
-      \@date
-  \end{flushright}
+\vspace{2cm}
+
+\noindent\begin{minipage}{0.5\textwidth}
+    \begin{flushleft}
+        V Hradci Králové dne \@date
+    \end{flushleft}
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
+    \begin{flushright}
+        \centering
+        \@author
+    \end{flushright}
+\end{minipage}
 
 \newpage
 \thispagestyle{empty}%
@@ -536,14 +540,10 @@
 \else
   \mktxt@b{16}{\ifczech\@tackn@CS\else\@tackn@EN\fi}
 \fi
-\noindent\@acknowledgment
+\@acknowledgment
 \fi
 
 %===================================================
-
-\newpage
-\thispagestyle{empty}%
-\mbox{}
 
 \newpage
 
@@ -671,8 +671,7 @@
 
 %=================================================================================
 
-% do not want declaration
-%\makedeclaration
+\makedeclaration
 
 \makeannotation
 \clearpage
