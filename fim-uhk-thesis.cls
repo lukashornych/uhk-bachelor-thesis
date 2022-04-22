@@ -420,7 +420,11 @@
 
 \vspace{1cm}
 
-\mktxt@b{16}{\@annotation@EN}\noindent\@tannotation@EN
+\mktxt@b{16}{\@annotation@EN}
+\vspace{0.75cm}
+\mktxt@b{14}{Title: \@title@EN}
+\vspace{0.75cm}
+\noindent\@tannotation@EN
 
 \vspace{2cm}
 
