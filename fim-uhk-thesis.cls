@@ -869,9 +869,10 @@
   \renewcommand{\lstlistlistingname}{Seznam ukázek kódů}
 \fi
 
-%\floatstyle{plain}
-%\newfloat{program}{h}{lop}
-%\floatname{program}{Ukázka kódu}
+\floatstyle{plain}
+\newfloat{codeblock}{h}{lop}
+\floatname{codeblock}{Ukázka kódu}
+\newcommand{\listofcodeblocks}{\listof{codeblock}{Seznam ukázek kódů}}
 
 % BEGIN Jan Pluskal (ipluskal) listings
 
