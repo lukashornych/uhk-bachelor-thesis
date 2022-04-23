@@ -990,6 +990,8 @@
     \end{figure}
 }
 
+\newcommand{\nlparagraph}[1]{\paragraph{#1}\mbox{}\\}
+
 \endinput
 %%
 %% End of file `fitthesis.cls'.
