@@ -30,11 +30,11 @@ Konečným krokem bude spuštění aplikace v produkčním prostředí, která b
 
 \section{Cíl práce}
 
-V první řadě bude nezbytné zjistit, jaké informace bude vhodné umožňovat uživatelům zobrazovat na jejich
-vstupních stránkách, a jak s těmito informacemi pracovat v aplikaci.
+V první řadě bude nezbytné zjistit, jaké informace bude vhodné umožňovat uživatelům zobrazit na jejich
+vstupních stránkách a jak s těmito informacemi pracovat v aplikaci.
 Dále bude následovat analýza a porovnání programovacích jazyků a frameworků, společně s jejich výhodami a nevýhodami.
-Výsledný výběr bude kombinací požadavků aplikace, výhod jednotlivých technologií a osobních preferencí.
-Avšak osobní preference budou hrát roli pouze v případě, kdy nebude možné rozhodnout čistě podle výhod nebo požadavků.
+Výsledný výběr bude kombinací požadavků aplikace, výhod jednotlivých technologií a osobních preferencí -
+ty budou nicméně hrát roli pouze v případě, jestliže nebude možné rozhodnout čistě podle výhod nebo požadavků.
 
 Implementace pak bude vycházet z návrhu datového modelu a struktury aplikace.
 Jednotlivé řešené problémy budou představeny společně s jejich možnými řešeními.
@@ -56,27 +56,27 @@ informace.
 Kromě základních informací, stránky většinou obsahují všemožné kontaktní údaje a odkazy na sociální sítě pro
 získání mnohem detailnějších informací.
 Některé stránky umožňují reprezentovat i například firemní struktury nebo geografické lokace.
-Dostupné druhy informací, které lze definovat na takových stránkách, ale nejsou jasně definované, spíše jsou
+Dostupné druhy informací, které lze definovat na takových stránkách, nejsou ale jasně definované, spíše jsou
 určeny konkrétní webovou aplikací poskytující tyto služby.
 
 Tento typ stránek je velice vhodný pro sdílení svých osobních údajů, a funguje jako takový rejstřík uživatelových
 údajů.
-Tyto stránky by se též daly popsat jako digitální rozšířené vizitky, nejen pro firmy.
+Tyto stránky by se též daly popsat jako digitální rozšířené vizitky, a nejen pro firmy.
 
-Pro tvorbu takovýchto stránek existuje nepřeberné množství webových aplikací, kde lze
+Pro tvorbu takovýchto stránek existuje nepřeberné množství webových aplikací, v nichž lze
 tyto prezentace jednoduše tvořit a rovnou publikovat.
-Ne všechny ale nabízí všechny zmíněné možnosti, a je tak na uživatelovi, jakou webovou aplikaci zvolí.
+Ne všechny ale nabízí všechny zmíněné možnosti, a je tak na uživateli, jakou webovou aplikaci zvolí.
+
+\section{Existující webové aplikace}
 
 Webové aplikace jsou aplikace, které běží ve webovém prohlížeči koncového uživatele bez nutnosti jakékoliv instalace.
 Tyto aplikace svá data ukládají do vzdálených serverů, a
 uživatel tak může ke svým datům jednoduše přistupovat z jakéhokoliv zařízení během okamžiku.
 
-\section{Existující webové aplikace}
-
-Existuje spousta webových aplikací, které by se dali považovat za řešení popsané problematiky.
+Existuje spousta webových aplikací, které by se daly považovat za řešení popsané problematiky.
 Nicméně žádná momentálně nekombinuje prvky sdílení kontaktních údajů, sociálních sítí a firemních struktur s plně
 fulltextovým vyhledáváním bez nutnosti registrace nebo rušivých sociálních prvků.
-Některé navíc neřeší ani ukládání cízích stránek do oblíbených s možností kategorizace či poznámek.
+Některé navíc neřeší ani ukládání cizích stránek do oblíbených s možností kategorizace či poznámek.
 U většiny takových aplikací se totiž spoléhá na navigaci pomocí přímých odkazů, které si daný subjekt
 vloží na své sociální sítě nebo vizitky.
 
@@ -87,7 +87,7 @@ Mezi současně nejznámější existující webové aplikace řešící podobn�
 	Pravděpodobně nejrozšířenější takovou aplikací v zahraničí je Linktree.
 	Ta se zabývá především zobrazováním odkazů na sociální sítě a rozsáhlým přizpůsobením.
 	Momentálně však neumožňuje fulltextově vyhledávat jednotlivé stránky nebo je ukládat do oblíbených.
-	Není ani jistota, že jednotlivé odkazy směřují opravdu na skutečné sociální sítě, protože uživatelé si mohou ke každému
+	Není ani jistota, že jednotlivé odkazy směřují opravdu na skutečné sociální sítě, protože si uživatelé mohou ke každému
 	odkazu zvolit vlastní ikony.
 	Nezabývá se ani firemními hierarchiemi nebo otevíracími dobami.
 	Na druhou stranu, poskytuje spoustu napojení na externí aplikace, především pak ty statistické nebo e-commercové.
@@ -97,14 +97,14 @@ Mezi současně nejznámější existující webové aplikace řešící podobn�
 	Další významnou aplikací je LinkedIn.
 	Ta však směřuje své zaměření spíše na firemní prostředí a pracovní zkušenosti uživatelů.
 	Informace navíc nejsou veřejně dostupné bez registrace.
-	Oproti Linktree, ale obsahuje fulltextové vyhledávání a možnost sledování ostatních uživatelů.
+	Oproti Linktree obsahuje ale fulltextové vyhledávání a možnost sledování ostatních uživatelů.
 	Nevýhodou můžou být všudypřítomné reklamy nebo sociální prvky generující rušivé elementy.
 	I přesto že se zaměřuje na firmy, není snadné dohledat firemní struktury nebo otevírací doby.
 
 	\subsection{AllMyLinks}
 
 	Méně známou alternativou je služba AllMyLinks.
-	Ta nabízí velice podobné funkce jako Linktree - též nabízí pouze sdílení odkazů na sociální sítě.
+	Ta nabízí velice podobné funkce jako Linktree - pouze sdílení odkazů na sociální sítě.
 	Stejně jako Linktree neposkytuje podporu ověřování odkazů oproti sociálním sítím, což má za následek
 	nevěrohodnost odkazů a ošklivé uživatelské ikony.
 
@@ -136,7 +136,7 @@ většinu požadavků soukromých osob, firem a objektů.
 	Každá karta bude jakási moderní rozšířená digitální náhrada klasické fyzické vizitky.
 	Cílem je umožnit vyhledávat a sdílet informace soukromých osob, firem, událostí, produktů, míst, uměleckých děl a podobně.
 	Jedinou podmínkou pro takový subjekt nebo objekt je existence alespoň jednoho údaje důležitého pro ostatní osoby.
-	Tím může být kontaktní údaj, odkaz na jiné webové stránky (např.: sociální sítě), geografická lokace nebo
+	Tím může být kontaktní údaj, odkaz na jiné webové stránky (např. sociální sítě), geografická lokace nebo
 	firemní hierarchie.
 
 	\subsection{Oblíbené karty}
@@ -190,7 +190,7 @@ většinu požadavků soukromých osob, firem a objektů.
 
 	\paragraph{Kategorizační štítky}
 
-	Kategorizační štítky budou sloužit pro globální kategorizaci karet pro úvodní povědomí uživatele, o jakou kartu se jedná
+	Kategorizační štítky budou sloužit pro globální kategorizaci karet, aby měl uživatel povědomí, o jakou kartu se jedná
 	a hlavně pro vyhledání karet ve stejné kategorii.
 	To se může hodit pro seskupení například osob s určitým povoláním nebo vyznávaným životním stylem.
 	Konkrétní využití je však na konkrétních uživatelích, definovat nemusí žádný nebo i několik.
@@ -210,15 +210,15 @@ většinu požadavků soukromých osob, firem a objektů.
 
 	Základními kontaktními údaji se v případě těchto karet rozumí: telefonní číslo, hlavní emailová adresa, webové
 	stránky a \firstac{IČO}.
-	Uživatel si pak vybere jaké z těchto údajů bude chtít zveřejnit a jaké nikoli.
+	Uživatel si pak vybere, jaké z těchto údajů bude chtít zveřejnit a jaké nikoli.
 
 	\paragraph{Odkazy na profily na sociálních sítích}
 
 	Pro většinu karet, zejména pak pro karty reprezentující soukromé osoby, budou nejdůležitější odkazy na sociální sítě.
-	Pro jednoduché rozlišení mezi jednotlivými sítěmi a poskytnutí koncovým uživatelům jistotu, že daný odkaz skutečně
+	Pro jednoduché rozlišení mezi jednotlivými sítěmi a poskytnutí jistoty koncovým uživatelům, že daný odkaz skutečně
 	směřuje na ověřenou doménu, bude mít systém předdefinované podporované sociální sítě.
 	Každá taková definice bude jakási šablona pro výsledné odkazy na sociální sítě a bude obsahovat oficiální název,
-	dále pak názvy podle kterých bude možné síť vyhledat, ikonu, šablony validních \ac{URL} adres a kategorie.
+	dále pak názvy, podle kterých bude možné síť vyhledat, ikonu, šablony validních \ac{URL} adres a kategorie.
 	Uživatel tedy bude moct při tvorbě karty vybrat ručně ze seznamu konkrétní síť nebo nechat aplikaci nalézt správnou
 	síť podle vložené \ac{URL} adresy.
 
@@ -244,7 +244,7 @@ většinu požadavků soukromých osob, firem a objektů.
 
 	\paragraph{Geografická lokace}
 
-	Důležitou informací pro firmy, události, pobočky atd. je geografiká lokace sídla.
+	Důležitou informací pro firmy, události, pobočky atd. je geografická lokace sídla.
 	Ta umožní koncovým uživatelům nalézt subjekt či objekt, reprezentovaný kartou, v reálném světě.
 	Zároveň poskytne možnost zobrazit karty v blízkém okolí daného uživatele pomocí mapy.
 	Uživatel tak jednoduše zjistí, jaké firmy, osoby nebo události se nachází v okolí jeho bydliště, zaměstnaní nebo
@@ -325,7 +325,7 @@ většinu požadavků soukromých osob, firem a objektů.
 	Uživatelské účty jako takové nebudou reprezentovat vždy jen jednu kartu.
 	Místo toho každý účet bude moct vytvořit několik karet a účet bude představovat jen neviditelného vlastníka.
 
-	Kromě těchto hlavních funkcí, správná aplikace musí svým zaregistrovaným uživatelům poskytnout
+	Kromě těchto hlavních funkcí musí správná aplikace svým zaregistrovaným uživatelům poskytnout
 	i nástroje pro správu účtů jako takových.
 	Každý uživatelský účet bude identifikován jednoznačně pouze podle emailové adresy.
 	Aplikace nebude vyžadovat žádné další údaje v podobě jména, bydliště a podobně, protože nejsou potřeba pro
@@ -362,7 +362,7 @@ většinu požadavků soukromých osob, firem a objektů.
 	Zároveň řešení nebude ovlivněno nástroji pro blokování reklam a nebude narušovat soukromí uživatelů v podobě
 	sbírání uživatelských dat.
 	Nevýhodou oproti reklamám je přidaná náročnost implementace systému umožňující uživatelům přepínat a platit
-	plány, a hlavně zamezit uživatelům s bezplatným plánem využívat prémiové funkce.
+	plány a hlavně zamezit uživatelům s bezplatným plánem využívat prémiové funkce.
 	Avšak na rozdíl od fyzických produktů, u nichž je přidaná zátěž stálá, týká se tato zátěž především počátku implementace.
 	Další možnou nevýhodou je malý počet uživatelů platících si prémiový plán, protože pokud nebude dostatečný počet
 	platících zákazníků, nebude dostatečný příjem pro produkční provoz a rozvoj.
@@ -386,7 +386,7 @@ většinu požadavků soukromých osob, firem a objektů.
 	Kromě již základní běžné praktiky hashování hesel bezpečným algoritmem, je nutné zabezpečit mnohem více.
 	V první řadě jde komunikaci mezi prohlížečem a serverem, aby nemohl útočník odposlouchávat posílaná data a následně
 	se vydávat za jiného uživatele.
-	S kradení identity uživatelů souvisí i další praktiky, jako jsou \firstac{CSRF} nebo kradení sezení uživatele.
+	S kradením identity uživatelů souvisí i další praktiky, jako jsou \firstac{CSRF} nebo kradení sezení uživatele.
 	Z pohledu samotného kódu aplikace je zase nutné připravit systém práv, a taková práva uživatelů před vykonáním
 	akcí ověřovat, aby jeden uživatel nemohl upravovat data jiných uživatelů nebo jinak škodit.
 
@@ -419,7 +419,7 @@ je nutné problém obejít, a to může způsobit komplikace v budoucnu v podob�
 složitého zdrojového kódu.
 
 V dnešním moderním světě existuje spousta webových technologií, které umožňují a většinou i značně usnadňují vývoj
-webových stránek, aplikací či mikroslužeb.
+webových stránek, aplikací či mikro služeb.
 Avšak nové alternativní technologie přibývají každým dnem a může být mnohdy obtížné i pro zkušené
 vývojáře zorientovat se a vybrat ty správné pro daný projekt.
 Při rozhodování je důležité vybírat nejen podle popularity, ale především podle typu projektu, ten totiž může zásadně
@@ -459,7 +459,7 @@ Nejrozšířenějším takovým kandidátem je programovací jazyk \ac{JS} domin
 	Nejpopulárnějšími nástroji se staly Figma, Sketch a Adobe DX, a z toho Figma a Adobe XD poskytují dokonce bezplatné
 	varianty s určitými omezeními \cite{design_tools_database}.
 	S pomocí nich je snadné navrhnout základní drátový model pro návrh struktury, grafický model pro vizualizaci
-	vzhledu, i interaktivní demo.
+	vzhledu i interaktivní demo.
 	Tyto modely pak značně usnadňují implementaci \ac{UI}, protože vývojář nemusí vymýšlet
 	vzhled a strukturu za pochodu.
 	Samotný výběr konkrétního nástroje je otázkou operačních systémů designérů a vývojářů, ceny, případně
@@ -539,7 +539,7 @@ Nejrozšířenějším takovým kandidátem je programovací jazyk \ac{JS} domin
 		Méně používanou alternativou k \Ac{SASS} je \firstac{LESS}, který stejně jako \Ac{SASS} rozšiřuje základní \Ac{CSS}
 		o další funkcionality jako vnořování nebo dědičnost, a je též nutné ho překládat do standardizovaného \Ac{CSS}. \cite{less_overview}
 		\Ac{LESS} ale oproti \Ac{SASS} ve spoustě věcech pokulhává, a proto není mezi vývojáři tolik oblíbený.
-		\Ac{SASS} má např. prokročilejší možnosti scriptování zahrnující cykly a podmínky blížící se programovacím jazykům
+		\Ac{SASS} má např. pokročilejší možnosti scriptování zahrnující cykly a podmínky blížící se programovacím jazykům
 		a umožňuje tak jakousi automatizaci generovaného \Ac{CSS} kódu.
 		Naproti tomu \Ac{LESS} poskytuje jen základní cykly a proměnné, což může být pro některé vývojáře dosti omezující.
 		\Ac{SASS} má také mnohem pokročilejší a efektivnější dědičnost, nastavení neduplikuje ale spíše nahrazuje. \cite{sass_vs_less}.
@@ -567,7 +567,7 @@ Nejrozšířenějším takovým kandidátem je programovací jazyk \ac{JS} domin
 		pokročilý.
 		Dnes je tomu naopak a není problém používat pouze čistý \ac{JS}, přesto se dnes spíše
 		používají frameworky a knihovny pro snadnou tvorbu reaktivních znovupoužitelných komponent.
-		Tytp komponenty představují samostatné bloky, jako jsou např. formuláře nebo tlačítka, udržující si vlastní
+		Tyto komponenty představují samostatné bloky, jako jsou např. formuláře nebo tlačítka, udržující si vlastní
 		data a při změně se automaticky překreslují.
 
 		Momentálně nejznámější knihovnou pro tvorbu takových komponent je React, jenž
@@ -710,12 +710,12 @@ Nejrozšířenějším takovým kandidátem je programovací jazyk \ac{JS} domin
 
 		\subsubsection{PHP}
 
-		Dalším, i přes jeho stáří, stále velmi oblíbeným jazykem je \firstac{PHP} zaměřující se především na tvorbu
+		Dalším, i přes jeho stáří stále velmi oblíbeným jazykem je \firstac{PHP} zaměřující se především na tvorbu
 		webových stránek a aplikací. \cite{php}
 
 		Tento jazyk je již sám o sobě mocný a dokáže spoustu věcí.
 		Avšak poskytuje spíše základní nástroje a vývojáři musí tak psát pokročilejší logiku pokaždé od nuly.
-		Proto existují frameworky poskytující jistou úroveň abstrakce, čímž nezbytnost tvorby základní logiky ze strany
+		Proto existují frameworky poskytující jistou úroveň abstrakce, čímž odstraňují nezbytnost tvorby základní logiky ze strany
 		vývojáře,
 		jako třeba navigaci mezi stránkami, obsluhu požadavků atp., která je mnohdy pro většinu stránek a aplikací podobná,
 		ne-li stejná. \cite{best_php_frameworks}
@@ -787,10 +787,10 @@ Nejrozšířenějším takovým kandidátem je programovací jazyk \ac{JS} domin
 	\Ac{SQL} je standardizovaný jazyk postavený na principu relačních databází umožňující pracovat s daty pomocí tabulek.
 	Jedná se o velice univerzální nástroj pro ukládání, vyhledávání a agregaci dat dělající z tohoto jazyka
 	nástroj použitelný pro většinu projektů.
-	Nicméně i přesto, že je tento jazyk standardizovaný, každý databázový systém postavený na \Ac{SQL}
-	má vlastní implementaci a často obsahuje rozšíření nebo změny v syntaxi. \cite{sql_intro}
+	Nicméně i přesto, že je tento jazyk standardizovaný, má každý databázový systém postavený na \Ac{SQL}
+	vlastní implementaci a často obsahuje rozšíření nebo změny v syntaxi. \cite{sql_intro}
 	Odlišnosti od standardu ale nejsou příliš velké, a je proto možné celkem jednoduše přecházet mezi jednotlivými
-	systémy, bez nutnosti učení se kompletně nového jazyka.
+	systémy bez nutnosti učení se kompletně nového jazyka.
 	\Ac{NoSQL} systémy již nijak standardizované nejsou a každý takový systém obvykle přichází s vlastním
 	vyhledávacích jazykem a strukturou dat.
 	Naštěstí se během své existence \Ac{NoSQL} systémy kategorizovaly čtyřmi široce používanými
@@ -802,7 +802,7 @@ Nejrozšířenějším takovým kandidátem je programovací jazyk \ac{JS} domin
 	\Ac{SQL} databáze, jak již bylo zmíněno, ukládají data v tabulkách neboli relacích, v nichž každý řádek reprezentuje
 	jednu entitu/jedince a sloupce reprezentují jednotlivé atributy dané entity.
 	Jednotlivé relace lze navíc mezi sebou propojovat k vytvoření složitějších struktur pomocí vztahů.
-	Díky tomu je možné např.: k entitě logicky navázat kolekci jiných a úplně odlišných entit, které spolu souvisí
+	Díky tomu je možné např.: k entitě logicky navázat kolekci jiných a úplně odlišných entit, které spolu souvisí,
 	nebo tvořit hierarchie entit stejného typu.
 	Možnosti návrhu struktury dat jsou tak celkem rozsáhlé, bohužel pro aplikace využívající \firstac{OOP}
 	je celkem obtížné mapovat tabulky na jednotlivé objekty.
@@ -856,12 +856,12 @@ Nejrozšířenějším takovým kandidátem je programovací jazyk \ac{JS} domin
 		i podporu ze strany firmy Oracle jenž využívají především firmy velkých rozměrů, které mají v takových databázích
 		vyšší milióny dat, a proto potřebují prvotřídní a přímou podporu ze strany poskytovatele databázového systému.
 		Většina firem a jedinců si však toto nemůže dovolit, a proto volí spíše ostatní databáze, které díky rozsáhle komunitě poskytují mnohdy
-		stejné funkce bez větších omezení .
+		stejné funkce bez větších omezení.
 		Díky internetovým diskuzím mají také uživatelé těchto databází přístup k diskuzním fórům nahrazující do jisté míry
 		placenou podporu.
 		Liší se tak spíše v krajních případech, jako jsou podporované datové typy, uživatelská rozšiřitelnost systému
 		nebo v podporovaných indexech.
-		Např.: PostgreSQL obsahuje podporu pro pole hodnot, rozsahy hodnot a pokročilou práci s datovým typem \Ac{JSON}.
+		Např. PostgreSQL obsahuje podporu pro pole hodnot, rozsahy hodnot a pokročilou práci s datovým typem \Ac{JSON}.
 		Naproti tomu MySQL a MariaDB mají omezenější výčet podporovaných datových typů a užší schopnosti práce s datovým
 		typem \Ac{JSON}.
 
@@ -895,7 +895,7 @@ Nejrozšířenějším takovým kandidátem je programovací jazyk \ac{JS} domin
 		zálohování dat, protože vyhledávací data lze kdykoliv obnovit z hlavní databáze.
 		Je spíše kladen důraz na rychlost a dostupnost - toho lze docílit duplikací dat na vícero serverů v různých částech
 		světa, čímž se z globálního hlediska dramaticky zvedne dostupnost a zmenší odezva.
-		Jiná je také struktura dat pro optimální vyhledávání jenž nemusí obsahovat nevyhledávaná data
+		Jiná je také struktura dat pro optimální vyhledávání, které nemusí obsahovat nevyhledávaná data
 		a soustředí se spíše na vhodnou agregaci dat.
 
 		Ačkoliv většina databázových systémů použitých jako primární zdroj, ať už je to PostgreSQL, MySQL nebo MongoDB,
@@ -944,7 +944,7 @@ Nejrozšířenějším takovým kandidátem je programovací jazyk \ac{JS} domin
 	Mezi takové služby patří Cloudinary, Sirv, imgix nebo imagekit.
 	Všechny nabízejí základní funkce zahrnující tvorbu variant obrázků a systém \Ac{CDN} s jednoduchým napojením
 	z webové aplikace.
-	Bohužel za cenu jednoduchosti, přijde vývojář o část kontroly nad uživatelskými daty.
+	Bohužel za cenu jednoduchosti přijde vývojář o část kontroly nad uživatelskými daty.
 	Avšak oproti budování vlastního úložiště je to pro spoustu firem vítaná varianta umožňující především rychlý vývoj
 	aplikací.
 
@@ -952,12 +952,12 @@ Nejrozšířenějším takovým kandidátem je programovací jazyk \ac{JS} domin
 
 	Webová aplikace pracující se zaregistrovanými uživateli potřebuje nějakým způsobem komunikovat se svými uživateli i
 	mimo samotné prostředí webové aplikace.
-	To hlavně když se ve webové aplikaci objeví nějaká nová událost, na kterou je potřeba uživatele upozornit
+	Hlavně když se ve webové aplikaci objeví nějaká nová událost, na kterou je potřeba uživatele upozornit
 	okamžitě bez čekání.
 	Takovou událostí může být cokoliv, zejména upozornění na nové přihlášení z neznámého zařízení, nová aktivita spojená
 	s daným uživatelem nebo upozornění na nové podmínky používání aplikace.
-	Pro tyto a další upozornění se používá převážně emailová komunikace díky její rozšířenosti a univerzálnosti.
-	Kromě upozorňovacích emailů, webové aplikace čím dál častěji využívají hromadné rozesílky novinek,
+	Pro tyto a další upozornění se používá převážně emailová komunikace, díky její rozšířenosti a univerzálnosti.
+	Kromě upozorňovacích emailů, využívají webové aplikace čím dál častěji hromadné rozesílky novinek,
 	například nových produktů.
 	Bohužel implementace rozesílek je poměrně složitá kvůli velkému množství problémů, které mohou nastat
 	při doručování jednotlivých emailů.
@@ -1024,7 +1024,7 @@ Nejrozšířenějším takovým kandidátem je programovací jazyk \ac{JS} domin
 		Mezi takové nejpoužívanější nástroje patří systémy založené na konceptu kontejnerizace aplikací.
 		Kontejner v tomto kontextu představuje spustitelný balíček spojující kód aplikace a všechny její potřebné závislosti, jako jsou
 		knihovny, běhová prostředí, konfigurace prostředí \cite{what_is_container}.
-		Tento balíček je možné spustit na jakémkoliv stroji podporující
+		Tento balíček je možné spustit na jakémkoli stroji podporujícím
 		běh kontejnerů bez omezení \cite{what_is_container}.
 		Příkladem je orchestrační systém Kubernetes zajišťující nejen běh několika aplikací najednou a jejich vzájemné síťové propojení,
 		ale taky schopnost jednoduše duplicitně provozovat webovou aplikaci na více serverech.
@@ -1039,25 +1039,25 @@ Nejrozšířenějším takovým kandidátem je programovací jazyk \ac{JS} domin
 		a navíc ještě třeba databázi pro vyhledávání pomocí pár příkazů v uzavřené lokální síti
 		s pevně definovanými pravidly síťového provozu.
 
-		I přes správně nakonfigurované prostředí však může dojít k chybě v samotné aplikaci, a ta se může stát nedostupnou
+		I přes správně nakonfigurované prostředí však může dojít k chybě v samotné aplikaci a ta se může stát nedostupnou
 		nehledě na to, že samotná infrastruktura funguje v pořádku.
 		Pro tyto případy je dobré mít nějaký monitorovací systém sledující dostupnost aplikace.
 		K tomu je většinou využíván strojově ovládaný prohlížeč simulující základní uživatelské kroky při vstupu na stránku
 		aplikace.
-		Kromě jednoduchého monitorování dostupnosti, umožňují některé nástroje i monitoring rychlosti načtení stránky pro
-		průběžnou kontrolu, že se v aplikaci neděje něco neobvyklého.
+		Kromě jednoduchého monitorování dostupnosti umožňují některé nástroje i monitoring rychlosti načtení stránky pro
+		průběžnou kontrolu, jestli se v aplikaci neděje něco neobvyklého.
 
 		\subsubsection{Poskytovatelé prostředí pro produkční provoz}
 
 		Z důvodu velké náročnosti provozu vlastního fyzického serveru ve vlastní serverovně využívají jednotlivci i menší firmy
-		serverů ostatních společností zabývajících se čistě provozem serverů k pronájmu.
+		servery ostatních společností zabývajících se čistě provozem serverů k pronájmu.
 		Takové společnosti se nazývají poskytovatelé.
 		Koncový administrátor se pak už nemusí starat o infrastrukturu spojenou s propojením serverů k internetu.
 
 		Mezi ty nejznámější patří: DigitalOcean, Microsoft Azure, Google Cloud Platform, Amazon Web Services,
 		Linode nebo třeba Vultr.
 		Samozřejmostí je poskytování základních služeb v podobě různých variant \Ac{VPS} na různě výkonných serverech.
-		Lze si ale pronajmout již předkonfigurovaný server přímo pro konkrétní typ aplikace, kdy stačí navést poskytovateli
+		Lze si ale pronajmout již předkonfigurovaný server přímo pro konkrétní typ aplikace, v němž stačí navést poskytovatele
 		ke zdrojovému kódu, vše ostatní připraví on.
 		Tato varianta je nejjednodušší a ideální pro aplikace nemající specifika oproti standardizovanému postupu
 		pro vybraný programovací jazyk.
@@ -1098,7 +1098,7 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 	\subsection{Pojmy}
 
 	Je dobré si stanovit a vysvětlit určité běžně používané technické pojmy, které
-	nemusí být úplně jednoznačné na první pohled:
+	nemusí být na první pohled úplně jednoznačné:
 
 		\paragraph{Doména}
 
@@ -1118,20 +1118,20 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 	Způsobů, jak implementovat webovou aplikaci, je mnoho, proto může být o to těžší pro nezkušeného programátora vybrat ten vhodný.
 	Není totiž vždy úplně jednoznačné, jakou cestou se vydat, protože pro většinu běžných webových aplikací je více
 	vhodných způsobů.
-	Je tak na zvážení implementátora, jaký způsob je vhodnější pro daný projekt.
+	Je tak na zvážení implementátora, jaký způsob je pro daný projekt vhodnější.
 	Nejpoužívanějšími jsou následující dva přístupy: pomocí serverové aplikace a kombinací klientské a serverové aplikace.
 
 	Serverová aplikace poskytující sestavené stránky prohlížeči je starším a do nedávna nejvíce obecně používaným způsobem.
 	Taková aplikace sestavuje stránky z programátorem připravených šablon jednotlivých stránek, do kterých se při sestavení
 	vloží na určená místa aktuální a požadované informace.
-	Těmi může být téměř cokoli: od jednoduchého údaje, jako je jméno přihlášeného uživatele, přes celý seznam článků k přečtení
+	Těmi může být téměř cokoli: od jednoduchého údaje, jako je jméno přihlášeného uživatele, přes celý seznam článků k přečtení,
 	až po kompletně dynamické sestavení dané stránky, třeba na základě dat z databáze.
 	Pro tvorbu takových šablon existuje velké množství specializovaných scriptovacích jazyků.
 	Sestavená stránka poslaná prohlížeči je nicméně víceméně statická, a i když lze takové stránky pro dodatečnou
 	dynamičnost v uživatelově prohlížeči obohatit například jazykem \ac{JS}, s rostoucí dynamičností roste komplexnost a nepřehlednost.
-	Kvůli této nevýhodě tento způsob společně s nutností tvořit pro každou stránku novou šablonu upadá díky lepším a novějším
+	Kvůli této nevýhodě tento způsob, společně s nutností tvořit pro každou stránku novou šablonu, upadá díky lepším a novějším
 	alternativám.
-	Nástroje pro tvorbu šablon sice do jisté míry umožňují přepoužívání částí stránek bez nutnosti duplicity,
+	Nástroje pro tvorbu šablon sice do jisté míry umožňují znovupoužívání částí stránek bez nutnosti duplicity,
 	nicméně neumožňují velkou míru dynamičnosti po sestavení výsledné stránky.
 	Výhodou je ale přímé propojení s logikou aplikace a díky tomu i snazší přístup k samotným datům.
 	Pro jednodušší, a hlavně méně dynamické stránky v podobě například blogů, může být tento způsob díky jeho
@@ -1141,7 +1141,7 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 
 	Novějším a stále více používaným a oblíbeným způsobem je sestavování stránek pomocí dynamických a znovu použitelných
 	komponent prvků s pomocí jazyka \ac{JS}.
-	Každá komponenta reprezentuje jeden prvek (např.: tlačítko nebo kontejner), který má svoji šablonu pro vykreslení
+	Každá komponenta reprezentuje jeden prvek (např. tlačítko nebo kontejner), který má svoji šablonu pro vykreslení
 	a svůj stav zajišťující dynamičnost prvku v čase nebo při interakci uživatele.
 	Šablonovací nástroje pro tvorbu komponent jsou velmi podobné těm z předchozího způsobu, nicméně hluboce integrují
 	jazyk \ac{JS} pro propojení vzhledu a stavu komponent.
@@ -1151,12 +1151,12 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 	nutnosti přidávat do rodičovské stránky logiku pro ovládání daného prvku.
 	Pro zajištění všech těchto vlastností se používá jazyk \ac{JS} běžící v prohlížeči, kde se běžně
 	děje veškeré sestavování.
-	Nicméně prohlížeč v tomto případě nemá přístup k datům, a je proto nutné zajistit ještě nějaký zdroj dat a komunikaci
+	Nicméně prohlížeč v tomto případě nemá přístup k datům, proto je nutné zajistit ještě nějaký zdroj dat a komunikaci
 	mezi tímto zdrojem a aplikací v prohlížeči.
 	Tím je většinou serverová aplikace poskytující \ac{API} zpřístupňující data pomocí standardizované strojové komunikace.
 	\ac{API} je obecný název pro rozhraní poskytující více aplikacím možnost strojově komunikovat mezi sebou pomocí
 	strukturovaných dat.
-	Aplikace vystavující \ac{API} definuje jaká data a funkce umí zpracovat a ostatní aplikace při dodržení těchto pravidel
+	Aplikace vystavující \ac{API} definuje, jaká data a funkce umí zpracovat, ostatní aplikace při dodržení těchto pravidel
 	mohou získávat z této služby data nebo je naopak odesílat ke zpracování.
 	Momentálně nejpoužívanějšími přístupy jsou \ac{REST} \ac{API} a GraphQL \ac{API}, každý má své výhody, nevýhody
 	a myšlenku, jak má takové \ac{API} vypadat.
@@ -1172,7 +1172,7 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 	Z pohledu vyhledávačů je zde nevýhoda omezených možností nastavení \firstac{SEO} vlastností z důvodu delegovaného sestavování
 	stránek na prohlížeč.
 	S tím má kvůli snížené podpoře \ac{JS} většina botů prohledávající weby problém.
-	Naštěstí zvýšenou náročnost převyšují výhody v podobě velké dynamičnosti, přehlednosti a znovupoužitelnost.
+	Naštěstí zvýšenou náročnost převyšují výhody v podobě velké dynamičnosti, přehlednosti a znovupoužitelnosti.
 	Navíc v současnosti existují i nástroje sestavující prvotní podobu stránek již na serveru, a díky tomu lze poskytnout sestavenou
 	stránku uživateli dříve a se správným nastavením pro \ac{SEO}.
 
@@ -1203,8 +1203,8 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 	\cite{restfulapi}.
 	GraphQL je novější a oproti \ac{REST} postaven na myšlence získání jen těch dat, které aplikace opravdu potřebuje \cite{graphql}.
 	K tomu mu slouží speciální dotazovací jazyk \cite{graphql}.
-	Stejně jako \ac{REST} má pevně danou strukturu dat, ta ale spíše udává jaká všechna data lze získat a jak budou vypadat \cite{graphql}.
-	GraphQL pomocí toho řeší problém se získáváním příliš mnoho dat nebo nedostatek dat, což je nevýhoda \ac{REST} \ac{API}.
+	Stejně jako \ac{REST} má pevně danou strukturu dat, ta ale spíše udává, jaká všechna data lze získat a jak budou vypadat \cite{graphql}.
+	GraphQL pomocí toho řeší problém se získáváním příliš mnoha dat nebo nedostatek dat, což je nevýhoda \ac{REST} \ac{API}.
 	Nelze ale říci, že GraphQL je za všech podmínek lepší než \ac{REST}, protože každé \ac{API} musí z pohledu serveru
 	řešit stejné problémy, jako jsou serializace dat, zpracování chyb, cachování a mnoho dalšího.
 	GraphQL tak sice poskytuje lepší kontrolu nad vracenými daty, nemusí však být vhodné pro některé projekty (např.:
@@ -1230,7 +1230,7 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 	Krajní výjimkou můžou být specifické projekty s náročnými požadavky,
 	to ovšem není případ tohoto projektu.
 	Pro běžnější projekty spočívá hlavní rozdíl ve stylu, jakým se v dané technologii
-	projekt vyvíjí, a v tom, jestli daný vývojář má alespoň nějaké znalosti používaného programovacího či skriptovacího jazyka.
+	projekt vyvíjí, a v tom, jestli má daný vývojář alespoň nějaké znalosti používaného programovacího či skriptovacího jazyka.
 	Čas strávený studováním nových technologií může být v porovnání s již nastudovanými technologiemi
 	poměrně velkou částí samotného vývoje.
 
@@ -1239,8 +1239,8 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 		Jak již bylo zmíněno, vyvíjený projekt bude webovou aplikací potencionálně dostupnou ve všech moderních prohlížečích.
 		Stěžejním kritériem je vybraný přístup s využitím dynamických komponent, a tudíž bude aplikace rozdělena
 		na front-endovou aplikaci a back-endový \ac{API} server.
-		Důležité je omezení pouze na moderní prohlížeče, protože pokud by byl požadavek na podporu i několik let starých,
-		již nepodporovaných prohlížečů používaných jen malým procentem uživatelů, možnosti výběru technologií by to značně
+		Důležité je omezení pouze na moderní prohlížeče, protože pokud by byl požadavek na podporu i několik let starých
+		již nepodporovaných prohlížečů, používaných jen malým procentem uživatelů, možnosti výběru technologií by to značně
 		omezilo.
 		Nebylo by možné použít novější technologie značně usnadňující vývoj a bylo by nutné dělat mnohem více kompromisů,
 		především při samotném vývoji.
@@ -1258,8 +1258,8 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 
 			Prvním nástrojem při návrhu aplikace by měl být grafický editor pro náčrt struktury a vzhledu.
 			Vzhledem k tomu, že všechny dostupné nástroje obsahují podobné základní funkce, byl vybrán editor Figma díky
-			schopnosti běhu v prohlížeči, a tím odpadající nutnosti vlastnit zařízení s operačním systémem Windows nebo macOS.
-			Program je navíc bezplatný i pro základní kolaboraci mezi členy v týmu.
+			schopnosti běhu v prohlížeči, čímž odpadá nutnost vlastnit zařízení s operačním systémem Windows nebo macOS.
+			Program je navíc i pro základní kolaboraci mezi členy v týmu bezplatný.
 
 			\paragraph{Technologie pro vývoj uživatelského prostředí}
 
@@ -1267,16 +1267,16 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 			nelze se úplně vyhnout základním front-endovým technologiím \Ac{HTML}, \Ac{CSS} a \ac{JS}.
 			Ty lze ale do jisté míry nahradit jejich nadstavbami.
 
-			V případě \Ac{CSS} byl vybrán preprocesor \Ac{SASS}, pro jeho širokou komunitu a funkce.
+			V případě \Ac{CSS} byl vybrán, pro jeho širokou komunitu a funkce, preprocesor \Ac{SASS}.
 			Tento preprocesor umožní přehlednější kód a tím rychlejší vývoj.
-			Kvůli výše zmíněné potřebě zobrazovat různé typy odkazů na kartách, \ac{SASS} umožní
+			Kvůli výše zmíněné potřebě zobrazovat různé typy odkazů na kartách umožní \ac{SASS}
 			do jisté míry automatizovat repetitivní a nepřehledné \ac{CSS} třídy pro velké množství barevných kombinací
-			(každá sociální síť používá jiné barevné kombinace ve svém designu).
+			(každá sociální síť ve svém designu používá jiné barevné kombinace).
 
 			V případě tvorby interaktivního \Ac{GUI} je výběr složitější.
 			Je možno využít jak základního \ac{JS}, tak frameworků či knihoven.
-			Alternativou může být jazyk C\# s technologií Blazor, díky které je možné se úplně od ekosystému
-			\ac{JS} odstínit.
+			Alternativou může být jazyk C\# s technologií Blazor, díky které je možné se od ekosystému
+			\ac{JS} úplně odstínit.
 			Ze studijních účelů byl vybrán jazyk \ac{JS}, především pro hlubší pochopení tohoto jazyka, neboť je používán v současné
 			době téměř každou webovou stránkou či aplikací.
 			Jako nadstavba jazyka pro zrychlení vývoje byl vybrán framework Vue díky jeho velmi dobré dokumentaci, snazšího
@@ -1292,18 +1292,18 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 			Co se týče technologií pro vývoj serverové aplikace fungující jako \ac{API} poskytující data, je výběr spíše
 			otázka preferencí a předchozích znalostí vývojáře.
 			Všechny zmiňované totiž nabízí alespoň základní nástroje pro tvorbu \ac{REST} \ac{API}.
-			Z důvodu že byl vybrán serverový framework Nuxt.js pro podporu \Ac{SEO}, by bylo možné jednoduše použít Node.js,
+			Z důvodu, že byl vybrán serverový framework Nuxt.js pro podporu \Ac{SEO}, by bylo možné jednoduše použít Node.js,
 			na kterém Nuxt.js běží v kombinaci s frameworkem Express.js, a vystavit tak \Ac{REST} \ac{API} přímo pomocí něj.
 			Ekvivalentní alternativou je použití jazyka Java, C\# nebo \Ac{PHP}.
 			Ze studijních důvodů a vývojářovy předchozí znalosti byl vybrán právě jazyk Java společně s frameworkem
 			Spring.
-			Kromě podpory pro \ac{REST} \ac{API}, ekosystém Spring přichází například s vlastní knihovnou pro
+			Kromě podpory pro \ac{REST} \ac{API}, přichází ekosystém Spring například s vlastní knihovnou pro
 			zabezpečení dat.
 
 			\paragraph{Databázový systém jako zdroj dat}
 
 			Pro uchovávání uživatelských dat je nutné vybrat vhodný databázový systém.
-			Pro účely tohoto projektu by se daly použít jak \ac{SQL} databáze tak i \ac{NoSQL} databáze.
+			Pro účely tohoto projektu by se daly použít jak \ac{SQL} databáze, tak i \ac{NoSQL} databáze.
 			Projekt nevyžaduje specifické náročné analytické agregace dat, dalo by se tak uvažovat o \ac{NoSQL} databázi
 			MongoDB pro ulehčení mapovaní objektů na \ac{JSON} dokumenty.
 			Nicméně navrhované řešení počítá s určitou hierarchií karet, což už by v případě MongoDB mohl být značný
@@ -1311,9 +1311,9 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 			Projekt sice bude zprvu vyžadovat pouze jednoúrovňovou hierarchii, i tak by ale docházelo ke
 			zbytečné duplicitě dat.
 			Z těchto důvodů padla volba na některou z \ac{SQL} databází.
-			Z bezplatných databází by se dala vybrat například PostgreSQL, MySQL nebo MariaDB, a všechny by byly schopny
-			poskytnou potřebné funkce pro vývoj navrhovaného řešení.
-			Proto finální výběr byl tak spíše preferencí databázového systému PostgreSQL.
+			Z bezplatných databází by se dala vybrat například PostgreSQL, MySQL nebo MariaDB, všechny by byly schopny
+			poskytnout potřebné funkce pro vývoj navrhovaného řešení.
+			Finální výběr byl spíše preferencí databázového systému PostgreSQL.
 
 			\paragraph{Databázový systém pro fulltextové vyhledávání}
 
@@ -1324,29 +1324,29 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 			\paragraph{Souborové úložiště}
 
 			Dalším důležitým úložištěm dat je úložiště uživatelských souborů, v tomto případě se jedná především o obrázky.
-			Implementovat vlastní řešení by bylo poměrně pracné a i přes velký investovaný čas, by nemuselo poskytovat všechny funkce
-			co ostatní řešení.
+			Implementovat vlastní řešení by bylo poměrně pracné, a i přes velký investovaný čas by nemuselo poskytovat všechny funkce
+			jako ostatní řešení.
 			Vhodné řešení by mělo poskytovat kromě \ac{CDN} hlavně tvořič variant.
 			Takových služeb je vícero a mnohdy jsou svými funkcemi ekvivalentní, výběr je tedy opět spíše preferencí.
 			Vybrána byla bezplatná služba Cloudinary především díky její rozšířenosti mezi ostatními uživateli.
 
 			\paragraph{Transakční emaily a rozesílky}
 
-			Protože aplikace bude pracovat se zaregistrovanými uživateli, bude potřeba uživatelům odesílat transakční emaily
+			Protože bude aplikace pracovat se zaregistrovanými uživateli, bude potřeba uživatelům odesílat transakční emaily
 			o důležitých událostech spojených se změnami v účtech, případně o jiných důležitých událostech, jako je třeba změna podmínek
 			aplikace.
 
-			Opět jako v případě souborového úložiště lze připravit vlastní implementaci zpracovávání šablon emailů a jejich
-			odesíláním pomocí knihovny JavaMail, která se stará pouze o odeslání emailů.
+			Opět, jako v případě souborového úložiště, lze připravit vlastní implementaci zpracovávání šablon emailů a jejich
+			odesílání pomocí knihovny JavaMail, která se stará pouze o odeslání emailů.
 			Avšak u emailů je nutnost řešit i šablony (podobně jako u šablon stránek) a doručitelnost.
 			To už by zabralo nemalou část vývojového času.
 
 			Většina nástrojů zmíněných v analýze poskytuje poměrně jednoduché \ac{API} pro odesílání emailů
-			s již připravenou infrastrukturou pro tvorbu šablon a jednoduchou možnost nastavit odesílání emailů, tak, aby
+			s již připravenou infrastrukturou pro tvorbu šablon a jednoduchou možností nastavit odesílání emailů tak, aby
 			byly správně doručeny.
-			Na druhou stranu bezplatné plány jsou omezené na počet možných odeslaných emailů za nějakou dobu, a za větší limity
+			Na druhou stranu bezplatné plány jsou omezené na počet možných odeslaných emailů za nějakou dobu a za větší limity
 			se musí platit.
-			Avšak tato řešení přináší záruku určité spolehlivosti doručitelnosti emailů díky serverům s dobrou pověstí
+			Avšak tato řešení přináší záruku určité spolehlivosti doručitelnosti emailů, a to díky serverům s dobrou pověstí
 			u emailových serverů, které jen tak daný email nezahodí do nevyžádané pošty.
 			V případě této aplikace je kladen důraz především na jednoduchost tvorby šablon a odesílání transakčních emailů.
 			Z toho důvodu byla vybrána služba SendinBlue poskytující intuitivní editor šablon emailů a jednoduché \ac{API}
@@ -1355,10 +1355,9 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 			\paragraph{Provoz aplikace}
 
 			Poslední částí skládanky je samotný provoz v několika prostředích.
-
-			Jak již bylo v analýze nástrojů a poskytovatelů zmíněno, možností jak webovou aplikaci provozovat je mnoho: od
+			Jak již bylo v analýze nástrojů a poskytovatelů zmíněno, možností, jak webovou aplikaci provozovat, je mnoho: od
 			manuálního nastavování a spouštění až kompletní automatizaci.
-			Protože se jedná o nový projekt nemá moc smysl se vydávat starou metodou manuálního nastavování všeho.
+			Protože se jedná o nový projekt, nemá moc smysl se vydávat starou metodou manuálního nastavování všeho.
 			Místo toho se pro tento projekt vyplatí jít cestou kontejnerizace, protože umožňuje jednoduché nahození a propojení
 			všech dílčích aplikací, na kterých bude aplikace stát.
 			Bonusem je zjednodušení celého procesu sestavovaní aplikace ze zdrojového kódu a přenos
@@ -1377,8 +1376,8 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 			najít spoustu komunitních materiálů.
 
 			Finálním nástrojem je externí monitorovací systém.
-			Pro tento konkrétní projekt byla vybrána služba Checkly díky poměrně široké nabídce funkcí, zejména pak
-			možnost monitorovat dotazy na webové stránky, dotazy na \ac{API}, expiraci SSL certifikátu a možnost napojení na
+			Pro tento konkrétní projekt byla vybrána služba Checkly z důvodu poměrně široké nabídce funkcí, zejména pak
+			možnosti monitorovat dotazy na webové stránky, dotazy na \ac{API}, expiraci SSL certifikátu a možnosti napojení na
 			komunikační aplikace (např.: Discord).
 
 	\subsection{Prototyp}
@@ -1391,18 +1390,18 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 	Aplikace však zahrnovala střípky \ac{REST} \ac{API} se snahou udělat \ac{GUI} více dynamické.
 	Aplikace tak měla dvě části: hlavní, v níž byly šablony a business logika hluboce propojeny, a vedlejší
 	poskytující část dat pomocí \ac{API}.
-	Nicméně i přes to, že se jednalo o rannou fázi aplikace s minimem funkcí, začalo být postupně znát, že vytvořit
+	Nicméně i přes to, že se jednalo o ranou fázi aplikace s minimem funkcí, začalo být postupně znát, že vytvořit
 	plně dynamickou aplikaci chovající se podobně jako nativní aplikace, by bylo při nejmenším kostrbaté.
 	Pro rozšíření \ac{API} by se musela business logika přizpůsobit a být více modulární.
-	Šablony stránek byly tvořeny bez jakéhokoliv vzhledu a \ac{UX} návrhu, a obsahovaly pouze nejnutnější prvky pro
+	Šablony stránek byly tvořeny bez jakéhokoliv vzhledu a \ac{UX} návrhu a obsahovaly pouze nejnutnější prvky pro
 	interakci.
 	To však pro aplikaci vyžadující intuitivní \ac{UI} není vhodné a mohlo by se stát, že při implementaci finálního vzhledu
 	by se podstatná část stránek mohla zásadně změnit, což by vyžadovalo velký zásah do již
 	existujícího kódu.
 
-	Právě kvůli těmto obavám a možnostem moderních technologií byl kompletně změněn přístup k vývoji, a bylo potřeba začít
-	od nuly s analýzou technologií a možností.
-	Část původního kódu se sice přepoužila, nicméně původní kód byl po analýze natolik přepracován, že se dá uvažovat
+	Právě kvůli těmto obavám a možnostem moderních technologií byl kompletně změněn přístup k vývoji a bylo potřeba začít
+	od nuly s analýzou technologií a návrhových architektur.
+	Část původního kódu se sice použila znovu, nicméně původní kód byl po analýze natolik přepracován, že se dá uvažovat
 	spíše o nové aplikaci.
 
 	\subsection{Uživatelské prostředí}
@@ -1415,7 +1414,7 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 	dostatečně univerzální.
 
 	Designový jazyk je soubor pravidel, schémat a stylů grafického designu, kterým se řídí vývoj veškerých prvků \ac{UI}.
-	Tento jazyk má zajistit jednotnost designu napříč celou aplikací pro poskytnutí intuitivnějšího rozhraní a zamezení
+	Tento jazyk má zajistit jednotu designu, napříč celou aplikací, pro poskytnutí intuitivnějšího rozhraní a zamezení
 	frustrace uživatelů.
 	Z tohoto důvodu je nutné věnovat návrhu designového jazyka nějaký čas a zamýšlet se nad všemi možnými scénáři.
 
@@ -1423,7 +1422,7 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 	základních rozvržení, velikostí prvků, barev a podobně.
 	Navržený design jazyk se však v některých prvcích rozchází, a není proto pravidlem,
 	že Material Design 2 striktně kopíruje.
-	I tvůrci Material Designu berou tyto materiály jako výchozí bod, a počítají s tím, že daný projekt si ho přizpůsobí,
+	I tvůrci Material Designu berou tyto materiály jako výchozí bod a počítají s tím, že si ho daný projekt přizpůsobí
 	tak, aby co nejlépe vystihoval danou aplikaci.
 	Z Material Designu si bere hlavně \href{https://material.io/design/layout/spacing-methods.html#baseline-grid}{velikosti}
 	mezer a prvků a základní pravidla, jako je pozicování tlačítek, rozvržení seznamů, modální okna a podobně.
@@ -1431,13 +1430,13 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 		\subsubsection{Rozvržení prvků a grafická pravidla}
 
 		Rozvržení prvků by mělo být maximálně přehledné a intuitivní.
-		Mezi hlavní pravidla patří nezatěžování stránek příliš mnoha informacemi, které mnohdy nejsou potřebné.
+		Mezi hlavní pravidla patří nezatěžování stránek příliš mnoha informacemi, které mnohdy ani nejsou potřebné.
 		Pokud je nutnost zobrazit velké množství informací, je lepší rozdělit jednu stránku na více přehlednějších.
 
 		Dalším podstatným pravidlem je zakomponování tzv. bílého prostoru kolem prvků.
-		Bílý prostor je prostor kolem prvků jenž odděluje jednotlivé prvky prázdnotou.
+		Bílý prostor je prostor kolem prvků, jenž odděluje jednotlivé prvky prázdnotou.
 		Prvky tak nejsou na sobě tak nalepené a uživatel se dokáže lépe orientovat.
-		Neméně důležité je vizuálně navést uživatele, co na dané stránce může vše provádět.
+		Neméně důležité je vizuálně navést uživatele k tomu, co na dané stránce může vše provádět.
 		Díky tomu je pravděpodobnější, že uživatel dosáhne svého cíle bez frustrace, opuštění aplikace nebo vyhledání
 		pomoci.
 		Pro spokojenost uživatele je dále nutné udržovat konzistenci grafických pravidel a prvků
@@ -1447,11 +1446,11 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 		Vizuální rovnováha staví na pomyslné vizuální váze prvků, v níž určité vlastnosti, jako je kontrast nebo složitost,
 		váhu navyšují.
 		Následně dva prvky porovnává na páce, která musí zůstat v rovině.
-		V případě, že jsou prvky jinak těžké se využívá odsazení prvků od sebe (bílý prostor). \cite{vizualni_rovnovaha}
+		V případě, že jsou prvky jinak těžké, se využívá odsazení prvků od sebe (bílý prostor). \cite{vizualni_rovnovaha}
 
 		\cntcapfigure{rovnovaha_paka}{8cm}{Páka rovnováhy vzhledu.}{\cite{vizualni_rovnovaha}}
 
-		Rozvržení prvků ale není vše, a je potřeba myslet i na samotný design.
+		Rozvržení prvků ale není vše, je potřeba myslet i na samotný design.
 
 		\paragraph{Paleta barev}
 
@@ -1467,7 +1466,7 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 		Díky stínům je možné uživateli ilustrovat, které prvky jsou více v
 		popředí než ostatní.
 		Způsobů používání stínů je mnoho.
-		Pro tento projekt byl vybrán způsob, kdy se stín snaží simulovat reální stín generovaný světelným zdrojem.
+		Pro tento projekt byl vybrán způsob, ve kterém se stín snaží simulovat reální stín generovaný světelným zdrojem.
 		Na takové stíny jsou totiž uživatelé zvyklí z reálného světa.
 		Velmi používané je i využití linek kolem jednotlivých prvků pro oddělení částí bloků.
 
@@ -1481,20 +1480,20 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 
 		\paragraph{Okraje}
 
-		Kromě linek a stínů je dobré myslet i na samotné okraje prvků, tedy jestli budou mít zaoblené rohy či nikoliv.
-		Po vzoru Material Designu byly zvoleny zaoblené rohy o průměru 8px pro větší lehkost prvků.
+		Kromě linek a stínů je dobré myslet i na samotné okraje prvků, tedy jestli budou mít zaoblené rohy, či nikoli.
+		Po vzoru Material Designu byly pro větší lehkost prvků zvoleny zaoblené rohy o průměru 8px.
 		Toto rozhodnutí je však celkem subjektivní a někteří uživatelé mohou preferovat ostré rohy.
 
 		\paragraph{Signalizace výběru}
 
 		Posledním pravidlem je zobrazování signalizace výběru.
-		Tato část musí být pro koncové uživatele obzvlášť konzistentní a intuitivní napříč aplikací.
+		Tato část musí být pro koncové uživatele napříč aplikací obzvlášť konzistentní a intuitivní.
 		Uživatel musí být schopen jednoznačně určit jaký prvek ze všech možných je vybraný.
-		Velice používaným způsobem jak tuto signalizaci řešit je jednoduchá linka zobrazená u vybraného prvku.
+		Velice používaným způsobem, jak tuto signalizaci řešit je jednoduchá linka zobrazená u vybraného prvku.
 		V rámci této aplikace byly navrženy dvě varianty: varianta pro pás prvků a varianta pro osamocené prvky.
-		Varianta pro pás prvků se použije v případě pásu prvků, u kterých nemůže dojít k přetečení na více řádků.
-		V takovém případě se použije jednoduchá linka pod či nad prvkem.
-		V případě osamocených prvků nebo víceřádkových prvků je použita linka kolem celého okraje prvku.
+		Varianta pro pás prvků se použije v případě pásu prvků, u kterých nemůže dojít k přetečení na více řádcích.
+		V takovém případě se použije jednoduchá linka pod, či nad prvkem.
+		V případě osamocených, prvků nebo víceřádkových prvků je použita linka kolem celého okraje prvku.
 
 		\cntcapfigure{ukazka_vyberu_1}{4cm}{Ukázka signalizace výběru v navigaci.}{[autor]}
 
@@ -1504,12 +1503,12 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 
 		\subsubsection{Strukturální prvky}
 
-		Strukturálními prvky jsou myšlené takové prvky, které slouží jako základní stavební kameny pro jednotné
+		Strukturálními prvky jsou myšleny takové prvky, které slouží jako základní stavební kameny pro jednotné
 		rozvržení stránek.
 
 			\paragraph{Blok obsahu}
 
-			Stránky jsou rozvrženy hlavně pomocí tzv. bloků obsahu označující jeden logický celek informací
+			Stránky jsou rozvrženy hlavně pomocí tzv. bloků obsahu označujících jeden logický celek informací
 			na stránce.
 			Blok obsahu vždy obaluje nějaký konkrétní obsah: dlouhý text, seznam položek, editor nebo cokoliv dalšího.
 			Blok obsahuje hlavičku s nadpisem a lištou tlačítek, která dávají smysl pro celý logický celek.
@@ -1522,8 +1521,8 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 
 			\paragraph{Lišta akcí}
 
-			Kromě hlavní navigační lišty aplikace bylo nutné zavést ještě jeden typ lišty: lištu akcí.
-			Díky ní je možné na určitých stránkách zobrazit sekundární lištu s nadpisem a dodatečnými akcemi, jenž se stahují
+			Kromě hlavní navigační lišty aplikace bylo nutné zavést ještě jeden typ lišty - lištu akcí.
+			Díky ní je možné na určitých stránkách zobrazit sekundární lištu s nadpisem a dodatečnými akcemi, jež se stahují
 			k obsahu celé stránky.
 			Takovými stránkami jsou většinou stránky zobrazující detail určitého objektu, se kterým lze manipulovat.
 
@@ -1534,11 +1533,11 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 			Modální okna představují bloky obsahu, které pro zdůraznění
 			důležitosti při zobrazení překrývají všechen ostatní obsah.
 			Jedná se především o potvrzení určitých akcí nebo zobrazení detailu nějakého objektu.
-			Každé okno má hlavičku, a případně i patičku, avšak struktura se mění podle typu okna.
+			Každé okno má hlavičku a případně i patičku, avšak struktura se mění podle typu okna.
 			Tato aplikace rozlišuje dva primární typy oken: informační a akční okno.
-			Informační okno slouží k zobrazení již existujících dat a nevyžaduje od uživatele žádnou akci.
-			Lze ho zavřít buď křížkem v hlavičce nebo kliknutím mimo okno, a neobsahuje patičku.
-			Akční okno akci vyžaduje a uživatel musí vždy nějakou akci zvolit, nelze okno zavřít pouhým kliknutím mimo okno.
+			Informační okno patičku neobsahuje a slouží k zobrazení již existujících dat a nevyžaduje od uživatele žádnou akci.
+			Lze ho zavřít buď křížkem v hlavičce, nebo kliknutím mimo okno.
+			Akční okno akci vyžaduje a uživatel musí vždy nějakou zvolit, okno nelze zavřít pouhým kliknutím mimo okno.
 			Takové okno má v hlavičce pouze nadpis a obsahuje patičku se všemi dostupnými akcemi.
 			Příkladem takových akcí může být potvrzení vytvoření objektu nebo zrušení operace.
 			Tlačítko nejdůležitější akce je patřičně odlišeno od běžných tlačítek, aby bylo zřejmé, co se po
@@ -1558,8 +1557,8 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 			\paragraph{Kontextuální nabídka}
 
 			Jedná se o malé menu zobrazující rozšířené možnosti nějaké akce.
-			Většinou se používá, pokud není v \ac{UI} dostatek
-			místa pro všechny dostupné akce, nebo ve formuláři pro výběr konkrétní položky z výběrového pole.
+			Většinou se používá, pokud není dostatek
+			místa v \ac{UI} pro všechny dostupné akce, nebo ve formuláři pro výběr konkrétní položky z výběrového pole.
 
 			\cntcapfigure{kontextualni_nabidka_seznam_ukazka}{8cm}{Ukázka kontextuální nabídky akcí položky v seznamu.}{[autor]}
 
@@ -1572,11 +1571,11 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 			Nejhlavnějším takovým prvkem je tlačítko.
 			To umožňuje uživatelům vyvolávat akce, potvrzovat akce nebo se nechat přesměrovat na jiné stránky.
 			Tlačítek je v aplikaci spousta a každé dělá trochu něco jiného.
-			Lze je ale zařadit do pár kategorií, a navrhnout tak několik obecných typů.
-			Všechny tlačítka byla rozdělena na tlačítka s nízkou prioritou, vysokou prioritou a vysokou vážností akce.
+			Lze je ale zařadit do pár kategorií a navrhnout tak několik obecných typů.
+			Všechna tlačítka byla rozdělena na tlačítka s nízkou prioritou, vysokou prioritou a vysokou vážností akce.
 
 			Tlačítko s nízkou prioritou reprezentuje vedlejší akci, kterou sice uživatel může provést, ale není jeho hlavním cílem.
-			Takové tlačítko má neutrální barvu a ve většině případech neobsahuje ani ikonu.
+			Takové tlačítko má neutrální barvu a ve většině případů neobsahuje ani ikonu.
 
 			\cntcapfigure{tlacitko_s_malou_prioritou}{4cm}{Ukázka tlačítka s malou prioritou.}{[autor]}
 
@@ -1588,9 +1587,9 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 
 			\cntcapfigure{tlacitko_s_velkou_prioritou}{4cm}{Ukázka tlačítka s vysokou prioritou.}{[autor]}
 
-			Pro případy, kdy uživatel provádí nějakou akci s vysokou vážností, jako je například nevratné smazání nějakého
+			Pro případy, v nichž uživatel provádí nějakou akci s vysokou vážností, jako je například nevratné smazání nějakého
 			objektu, vzniklo rozšíření tlačítka s vysokou prioritou.
-			Tlačítko se liší pouze v červené barvě evokující dojem závažné akce.
+			Tlačítko se liší pouze červenou barvou evokující dojem závažné akce.
 
 			\cntcapfigure{tlacitko_s_velkou_prioritou_a_velkou_vaznosti}{4cm}{Ukázka tlačítka provádějící nevratnou změnu.}{[autor]}
 
@@ -1598,7 +1597,7 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 
 			Vstupní pole různých druhů jsou společně s tlačítky nejdůležitějšími prvky jakékoliv aplikace.
 			Vstupní pole umožňují uživatelům předat data aplikaci v různých formátech.
-			Vzniklo proto několik základních typů vstupních polí, které lze uvnitř v formulářů jednoduše kombinovat.
+			Vzniklo proto několik základních typů vstupních polí, které lze uvnitř formulářů jednoduše kombinovat.
 			Mezi ně patří: textová pole, výběrová pole, pole pro výběr času a data, pole pro nahrání obrázků a pole pro
 			výběr geografických lokací.
 			Vstupní pole využívají linek namísto stínů, protože reprezentují pouze část celého bloku.
@@ -1613,7 +1612,7 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 			\newpage
 
 			Extenzí textového pole jsou pole pro zadání času a data.
-			Ty rozšiřují manuální zadávání o okénka pro pohodlný výběr bez nutnosti klávesnice.
+			Ta rozšiřují manuální zadávání o okénka pro pohodlný výběr bez nutnosti klávesnice.
 
 			\cntcapfigure{datumove_pole}{6cm}{Ukázka pole s výběrem data a času.}{[autor]}
 
@@ -1626,7 +1625,7 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 			\newpage
 
 			Posledním méně používaným polem v této aplikaci je pole pro výběr obrázku.
-			Pole umožní výběr souboru ze souborového systému uživatele, který je následně nahrát a zobrazen jeho náhled
+			Pole umožní výběr souboru ze souborového systému uživatele, který je následně nahrán a zobrazen jeho náhled
 			přímo v poli.
 			Vybraný obrázek je pak možné jednoduše změnit nebo úplně odstranit.
 
@@ -1635,7 +1634,7 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 			\paragraph{Seznam položek}
 
 			Velmi využívaným prvkem je seznam položek.
-			Každá položka může obsahovat ikonu nebo obrázek, text, seznam akcí, nebo dokonce i vnořený další seznam.
+			Každá položka může obsahovat ikonu nebo obrázek, text, seznam akcí nebo dokonce i vnořený další seznam.
 			Akce položek se kromě běžného zobrazení umí v případě malého místa seskupit a schovat do kontextuální
 			nabídky, aby uživatel využívající malé zařízení nepřišel o možnost využívat všechny akce.
 
@@ -1644,7 +1643,7 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 			\paragraph{Stránkování}
 
 			Při velkém množství položek v jednom seznamu se využívá systém stránkování.
-			Prvek stránkování umožňuje přepínat mezi konkrétními stránkami, nebo se přepínat mezi předchozí a následující stránkou.
+			Prvek stránkování umožňuje přepínat mezi konkrétními stránkami nebo se přepínat mezi předchozí a následující stránkou.
 
 			\cntcapfigure{strankovani}{4cm}{Ukázka stránkování.}{[autor]}
 
@@ -1667,7 +1666,7 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 		Tyto funkce pro samotné API bude zprostředkovávat implementovaná business logika starající se o to, aby všechna data
 		byla správně zpracována a uložena.
 		Je ale stěžejní se na počátku zamyslet, vybrat styl a navrhnout model, jakým bude business logika implementována.
-		Stěžejní je to z důvodu budoucí čitelnosti kódu a možnostech rozšíření o nové funkce.
+		Stěžejní je to z důvodu budoucí čitelnosti kódu a možností rozšíření o nové funkce.
 
 		Vzhledem k tomu, že byl vybrán jazyk Java, který je primárně objektově orientovaným programovací jazykem, business
 		logika bude využívat právě principů \ac{OOP}.
@@ -1704,21 +1703,21 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 		Jak je možno vidět z diagramu, účet má kromě základních přihlašovacích informací i spoustu
 		doplňujících dat.
 
-		V první řadě, každý účet má přiřazený vždy nějaký stav.
+		V první řadě má každý účet přiřazený vždy nějaký stav.
 		Při vytvoření má účet stav \lstinline{Created} vyjadřující nový a zatím neaktivovaný účet.
 		Tento účet nelze využívat.
 		Po aktivaci se změní stav účtu na \lstinline{Active}, který říká, že účet je již aktivovaný, a tedy plně použitelný.
 		Poslední stav \lstinline{TemporarilyDeleted} označuje dočasně smazaný účet, což znamená, že je naplánováno jeho permanentní
-		smazání v budoucnu.
+		smazání.
 		To umožňuje uživatelům v omezené lhůtě svůj účet obnovit.
 
-		Další velmi důležitou komponentou je systém ověřovacích tokenů sloužících k potvrzování akcí, kde
-		je potřeba ověřit, že akci provádí skutečný uživatel, nikoliv podvodník.
+		Další velmi důležitou komponentou je systém ověřovacích tokenů sloužících k potvrzování akcí, u nichž
+		je potřeba ověřit, zda akci provádí skutečný uživatel, nikoliv podvodník.
 		Tokeny jsou pseudo náhodně generované unikátní textové řetězce přiřazené vždy k jednomu určitému uživateli.
 		Typ tokenu pak říká, co daný token ověřuje.
 		Ověřitelnou akcí může být aktivace nového účtu, změna emailové adresy nebo zapomenuté heslo.
 		V případě tokenu pro změnu emailové adresy se nová emailová adresa ukládá přímo k danému tokenu, tedy mimo účet.
-		Díky tomu je možné emailovou adresu změnit, až ve chvíli, kdy byl token ověřen, a zároveň je možné v případě
+		Díky tomu je možné emailovou adresu změnit až ve chvíli, kdy byl token ověřen, a zároveň je možné v případě
 		odcizení účtu zobrazit historii všech změn.
 
 		Systém dále pracuje s rolemi udávajícími obecná práva uživatele.
@@ -1731,21 +1730,21 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 		Druhou rolí je role prémiová, která je určena pro běžné uživatele, a odemyká jim prémiové funkce aplikace.
 		Tato role vzniká automaticky při vytvoření předplatného a zaniká s jeho expirací.
 
-		Pro plánované mazání účtů se uchovává požadavek s informací o tom, jaký účet bude smazán, a kdy dojde k permanentnímu
+		Pro plánované mazání účtů se uchovává požadavek s informací o tom, jaký účet bude smazán a kdy dojde k permanentnímu
 		smazání společně s jeho daty.
 
 		Poslední částí uživatelských účtů jsou komponenty pro prémiové funkce.
 		Jedná se především o popisný objekt předplatného.
-		Ten vzniká aktivací prémiovýho plánu a říká, že účet má práva na prémiové funkce.
+		Ten vzniká aktivací prémiového plánu a říká, že účet má práva na prémiové funkce.
 		V jistých případech může mít přiřazený i datum expirace, se kterým automaticky zanikne.
-		S tím se váže i stav expirace, která pomáhá upozorňovat uživatele na současný stav předplatného.
+		S tím se váže i stav expirace, který pomáhá upozorňovat uživatele na současný stav předplatného.
 
 		\paragraph{Model kupónů}
 
 		Předplatné může vzniknout na základě zadání platného kupónu, avšak systém kupónů je navržen obecně, aby
-		bylo možné ho v případě budoucích rozšíření jednoduše přepoužít i na aktivaci jiných funkcionalit, ne jen
+		bylo možné ho v případě budoucích rozšíření jednoduše použít znovu i na aktivaci jiných funkcionalit, nejen
 		pro prémiové plány.
-		Každý kupón musí mít unikátní kód, buď vygenerovaný nebo zadaný správcem.
+		Každý kupón musí mít unikátní kód, buď vygenerovaný, nebo zadaný správcem.
 		Mimo to má definovanou platnost, maximální počet možných aplikování a dobu po jakou bude vytvořené předplatné platné.
 
 		\cntcapfigure{datovy_model_kupon}{6cm}{Datový model kupónového systému.}{[autor]}
@@ -1765,7 +1764,7 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 		Toto ID je totiž zobrazováno v \ac{URL} adrese konkrétní karty a má za cíl umožnit jednoduše sdílet karty bez nutnosti
 		znát kryptické náhodně generované číselné identifikátory.
 		Toto ID může být definováno ručně uživatelem nebo generováno aplikací (vhodné pro skryté karty).
-		Typ karty definuje jak s danou kartou lze pracovat a jaká data poskytuje.
+		Typ karty definuje, jak lze s danou kartou pracovat a jaká data poskytuje.
 		Momentálními typy jsou obecná karta a karta zaměstnance, avšak tento systém dovoluje poměrně jednoduché rozšiřování
 		o nové typy karet.
 		Obecné karty je možné tvořit uživateli přímo a podporují všechny typy údajů.
@@ -1773,9 +1772,9 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 		v osobních kartách.
 		Tento přístup však přinášel mnoho duplicit, a zároveň znemožňoval uživatelům osobních karet využívat funkce
 		firemních karet, jenž za určitých okolností dávaly smysl i u osobních karet (např. pro OSVČ).
-		Právě kvůli těmto nevýhodám a žádným jasným výhodám, byly tyto dva typy sjednoceny, především pro pohodlí
-		koncových uživatelů.
-		Karty zaměstnanců se pak tvoří nepřímo jako hierarchičtí potomci obecných karet v editaci nadřazené karty, a
+		Právě kvůli těmto nevýhodám a žádným jasným výhodám byly tyto dva typy, především pro pohodlí
+		koncových uživatelů, sjednoceny.
+		Karty zaměstnanců se pak tvoří nepřímo jako hierarchičtí potomci obecných karet v editaci nadřazené karty a
 		obsahují specifická data pouze pro zaměstnance.
 		Posledním důležitým metadatem je viditelnost specifikující, kdo může danou kartu vidět.
 		Veřejné karty může navštívit a vyhledat kdokoliv.
@@ -1783,11 +1782,11 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 		Privátní karta pak už slouží pouze pro autora karty.
 
 		Každé kartě lze přiřadit libovolné množství štítků pro kategorizaci.
-		Štítky jsou uživatelsky definované, a můžou tak obsahovat cokoliv.
+		Štítky jsou uživatelsky definované a můžou tak obsahovat cokoliv.
 		Navíc jsou znovupoužitelné, takže více karet může být označeno stejným štítkem.
 
 		Pro definování informací o kartě existuje koncept napojených dat.
-		Tyto data reprezentují soubor údajů, který daný typ karty podporuje.
+		Tato data reprezentují soubor údajů, který daný typ karty podporuje.
 		Každý typ karty má svoji implementaci těchto dat.
 		Je pak na business logice aplikace, aby dokázala s daty správně pracovat.
 		Tato obecnost umožňuje jednoduše vytvářet nové typy karet s úplně odlišnými daty, aniž by se data musela míchat
@@ -1797,23 +1796,23 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 		především na sociální sítě.
 		Ty z karet dělají jakési rozcestníky pro objevení profilů subjektů na sociálních sítích.
 		Každý jeden odkaz má originální cílovou \ac{URL} adresu, popisek a pořadí mezi ostatními odkazy na stejné úrovni.
-		Popisek slouží především pro odlišení více odkazů vedoucí na stejnou webovou stránku.
+		Popisek slouží především pro odlišení více odkazů vedoucích na stejnou webovou stránku.
 		\ac{URL} adresa je hlavní informace a z důvodu bezpečnosti musí být validována oproti zvolené šabloně sítě.
-		Díky tomu není možné vytvořit odkaz pod jednou sítí, ale odkazovat na podvodnou.
-		Jednotlivé odkazy jsou pak seskupovány do skupin odkazů vycházející ze stejné šablony.
-		I přes to, že skupiny zastřešují vždy nějaký soubor sítí stejného typu, může existovat více skupin vycházející ze
+		Díky tomu není možné maskovat podvodnou síť důvěryhodnou.
+		Jednotlivé odkazy jsou pak seskupovány do skupin odkazů vycházejících ze stejné šablony.
+		I přes to, že skupiny zastřešují vždy nějaký soubor sítí stejného typu, může existovat více skupin vycházejících ze
 		stejné šablony.
 		To umožňuje poměrně velkou flexibilitu struktury odkazů a neomezuje uživatele na jeden odkaz pro jednu síť (což je
 		nevýhoda některých konkurenčních řešení).
 		Jednotlivé šablony jsou reprezentovány separátními konfiguračními třídami.
-		Z návrhu vyplývá potřeba definovat názvy, podle kterých lze šablony vyhledat, a platné šablony \ac{URL} odkazů
+		Z návrhu vyplývá potřeba definovat názvy, podle kterých lze šablony vyhledat, a platné šablony \ac{URL} odkazů,
 		oproti kterým se validují konkrétní cílové \ac{URL} adresy.
 		Stejně jako názvů, může být i více šablon \ac{URL} adres, protože většina webových stránek podporuje více domén třetího řádu,
-		a je tak nutné definovat všechny, protože není jasné jakou \ac{URL} adresu uživatel zadá.
+		a je tak nutné definovat všechny, a protože není jasné, jakou \ac{URL} adresu uživatel zadá.
 		Každá taková šablona je pak zařazena do jedné nebo více kategorií sloužící čistě pro jednodušší vyhledávání.
 
 		Pro firmy poměrně užitečnou informací může být jejich hierarchie poboček a zaměstnanců, zejména u větších společností.
-		Proto každá obecná karta může mít libovolné množství přiřazených poboček/kanceláří/prodejen, kde každá má své jméno
+		Proto každá obecná karta může mít libovolné množství přiřazených poboček/kanceláří/prodejen, z nichž má každá své jméno
 		a geografickou lokaci.
 		Ke každé takové pobočce je možné přiřadit zaměstnanecké karty.
 		Kromě zaměstnanců může mít pobočka i vlastní otevírací dobu.
@@ -1821,7 +1820,7 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 		Velmi důležitou informací pro potencionální zákazníky je aktuální otevírací doba.
 		Byl proto navržen obecný model otevírací doby, který lze navázat na jakoukoliv jinou entitu.
 		Model je zastřešen jednou třídou seskupující otevírací dobu jednotlivých dnů v týdnu.
-		Každý den má pak definovaný interval, kdy má daná entita otevřeno, a kdy má přestávku.
+		Každý den má pak definovaný interval označující, kdy má daná entita otevřeno a kdy má přestávku.
 
 		\newpage
 
@@ -1829,8 +1828,8 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 
 		Oblíbené karty umožňují k uživatelskému účtu přiřazovat cizí karty jako oblíbené.
 		Každý účet může jako oblíbené označit libovolný počet karet, což danému uživateli umožní rychlý přístup
-		k požadovaných informacím.
-		Každá oblíbená karta navíc může mít jednu textovou poznámku s formátováním.
+		k požadovaným informacím.
+		Každá oblíbená karta může mít navíc jednu textovou poznámku s formátováním.
 		Oblíbené karty je pak možné seskupovat do složek definovaných uživatelem pro lepší orientaci.
 		Složky, poznámky ani oblíbené karty však nevidí nikdo jiný než autor.
 
@@ -1845,7 +1844,7 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 		Tento vzor pohlíží na problematiku jako na doménu, a staví hlavně na konceptu služeb,
 		což jsou speciální třídy, které
 		neudržují vnitřní stav, ale poskytují služby manipulující s datovými objekty \cite{ddd_quickly}.
-		Jednotlivé služby by se měli vždy zabývat pouze jedním typem dat kvůli přehlednosti, a ostatní data delegovat na
+		Jednotlivé služby by se měly vždy zabývat pouze jedním typem dat kvůli přehlednosti a ostatní data delegovat na
 		ostatní služby \cite{ddd_quickly}.
 		Druhým podstatným stavebním blokem jsou repozitáře zajišťující předávání dat mezi aplikací a databázovým systémem
 		\cite{ddd_quickly}.
@@ -1853,18 +1852,18 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 		Implementovaná business logika má tak několik službových tříd a repozitářů.
 		Pro každou separátní část modelu existuje manipulující služební třída a jeden repozitář starající se především o
 		načítání a ukládání dat do databáze.
-		Konzumující logika si pak může vybrat přesně s jakými daty chce pracovat.
+		Konzumující logika si pak může přesně vybrat, s jakými daty chce pracovat.
 		Zatímco repozitáře se starají pouze o komunikaci s databází pomocí \ac{SQL} jazyka,
 		služební třídy tyto informace předávají dál, upravují nebo validují.
 
 		\cntcapfigure{sluzby_a_repozitare}{\linewidth}{Zjednodušený model služeb a repozitářů.}{[autor]}
 
 		Momentální implementace služeb komunikuje mezi sebou převážně pomocí primárních klíčů jednotlivých entit, aby
-		bylo zaručeno, že entita, se kterou služba manipuluje je vždy aktuální verzí reflektující stav databáze.
+		bylo zaručeno, že entita, se kterou služba manipuluje, je vždy aktuální verzí reflektující stav databáze.
 		Nicméně tento přístup značně zesložiťuje závislost tříd na jiných třídách, což vede k složitějšímu
 		instanciování a testování tříd.
 
-		Bohužel, při postupném rozšiřování aplikačních požadavků se ukázalo, že rozpad logických celků entit není úplně
+		Bohužel se při postupném rozšiřování aplikačních požadavků ukázalo, že rozpad logických celků entit není úplně
 		vhodný, a i když funguje bez problémů, jeho testování a nastavování je složité.
 		Tento problém však řeší právě návrhový vzor \ac{DDD} svými entitami a hodnotovými objekty.
 		Podle tohoto vzoru by se mělo pracovat s logickými celky jako s jednou entitou, aby se předešlo výše zmíněné složitosti
@@ -1887,18 +1886,18 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 		V případě vybrané \ac{SQL} databáze je ale problém složitější, protože tyto databáze pracují s tabulkami místo objekty.
 		Na první pohled se může zdát, že by to neměl být velký problém, protože sloupce tabulek jsou podobné atributům
 		objektů.
-		Složitost je hlavně v načítání a ukládání komplexních entity složených z více objektů a kolekcí, hlavně pak
+		Složitost je hlavně v načítání a ukládání komplexních entit složených z více objektů a kolekcí, hlavně pak
 		kolekcí 1:N (případně M:N).
-		Jazyk \ac{SQL} totiž neumožňuje jednoduše vrátit více řádků z různých tabulek, a tak není možné najednou
-		vrátit objekty různých tříd tvořící jeden celek.
+		Jazyk \ac{SQL} totiž neumožňuje jednoduše vrátit více řádků z různých tabulek, a tak není možné objekty různých
+		tříd tvořící jeden celek najednou vrátit.
 		Stejný problém je i v případě ukládání dat, při němž \ac{SQL} umožňuje ukládat pouze řádky do jedné tabulky.
 		Ještě horší je to v případě ukládání již existujících dat, protože \ac{SQL} neumožňuje hromadné úpravy.
 
 		Naštěstí existuje několik knihoven a nástrojů, které tyto problémy řeší za programátora.
 		Je však možné vše implementovat ručně, to je ale zdlouhavé a zbytečné.
 		Mezi nejpoužívanější knihovny patří Hibernate a MyBatis.
-		Poměrně novou zajímavou alternativou je Spring Data JDBC, bohužel tato knihovna v době vývoje nebyla příliš
-		rozšířená a neosvědčená na to, aby se dostala do výběru.
+		Poměrně novou zajímavou alternativou je Spring Data JDBC, bohužel v době vývoje nebyla tato knihovna příliš
+		rozšířená a tak osvědčená, aby se dostala do výběru.
 
 		Hibernate a MyBatis mají dost rozdílné přístupy k řešení výše zmíněných problémů.
 		Zatím co Hibernate se snaží být plným \ac{ORM} frameworkem a odstínit programátora od jakéhokoli
@@ -1906,14 +1905,14 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 		nezatěžuje programátora všemi nízkoúrovňovými problémy \cite{mybatis_getting_started}.
 		Další velký rozdíl je v práci s entitami na pozadí.
 		Hibernate využívá mezičlánku mezi repozitářem a databází, kde jsou dočasně entity uloženy \cite{hibernate_docs}.
-		Díky tomu je Hibernate schopen poskytovat mezipamět pro entity při vícenásobném dotahování, a při ukládání
+		Díky tomu je Hibernate schopen poskytovat mezipamět pro entity při vícenásobném dotahování, při ukládání
 		se data nepromítají hned, ale až na konci transakce \cite{hibernate_docs}.
 		Kvůli tomu se tak repozitář chová spíše jako paměťové úložiště, v němž má programátor okamžitý přístup k objektům.
 		Bohužel to má i svá úskalí, a to nejen v celkové komplexitě knihovny.
 		Úskalí se skrývá, hlavně pro tento projekt, ve sdílení instancí jedné entity při vícenásobném
 		dotažení entity z databáze.
 		Tento přístup zamezuje porovnávání originální verze entity a nové upravené (většinou přijaté skrze \ac{API}),
-		protože interně je Hibernate považuje za jednu instanci, a upravují se tak obě dvě.
+		protože interně je Hibernate považuje za jednu instanci a upravují se tak obě dvě.
 		Hibernate má sice dobré nástroje pro validaci entit, ty však validují pouze aktuální hodnoty v objektech, ale
 		není možné porovnat hodnoty s původními verzemi entit.
 		To je v případě, kdy má entita vlastnosti, které se nesmí změnit, poměrně limitující.
@@ -1923,24 +1922,24 @@ Následně je již možné začít se samotnou implementací s pomocí vybranýc
 		To ovšem znamená, že programátor musí odvést více práce při mapování a psát \ac{SQL} dotazy.
 		Musí také ručně řešit ukládání složených entit, což Hibernate řeší sám.
 
-		I když by se mohlo zdát, že Hibernate je ultimátním nástrojem pro 99\% projektů, existuje mnoho materiálů
-		zkušených programátorů využívajících Hibernate spoustu let, kteří si nemyslí, že Hibernate je ideálním nástrojem
+		I když by se mohlo zdát, že Hibernate je ultimátním nástrojem pro 99 \% projektů, existuje mnoho materiálů
+		zkušených programátorů využívajících Hibernate spoustu let, kteří si nemyslí, že je Hibernate ideálním nástrojem
 		pro všechny projekty.
 		Jeho komplexnost totiž může přinést spoustu problémů, které na první pohled nemusí někoho napadnout.
 		Mezi největší problémy patří nejednoznačné zobrazování chyb, nutnost přizpůsobit databázový model Hibernatu,
 		náhodné chyby s odsunutým dotahováním dat nebo nejednoznačné operace
 		v \ac{API} knihovny.
-		Na druhou stranu spousta uživatelů si míru abstrakce pochvaluje. \cite{bad_hibernate}
+		Na druhou stranu si spousta uživatelů míru abstrakce pochvaluje. \cite{bad_hibernate}
 
 		Při výběru tedy hodně záleží na konkrétním projektu a zkušenostech implementátora.
-		Pro tuto aplikaci byl z počátku zvolen Hibernate, právě díky jeho abstrakci mapování.
+		Pro tuto aplikaci byl zpočátku zvolen Hibernate, právě díky jeho abstrakci mapování.
 		Bohužel se posléze začal projevovat již zmiňovaný problém s validací entit.
 		Po dodatečné analýze padlo rozhodnutí nahradit Hibernate MyBatisem.
-		Za cenu prvotní transformace, MyBatis zjednodušil práci s entitami a hledání chyb bylo přímočařejší.
-		MyBatis navíc podporuje konfiguraci pomocí \ac{XML} souborů, nebo pomocí Java anotací přímo v Java rozhraních.
+		Za cenu prvotní transformace zjednodušil MyBatis práci s entitami a hledání chyb bylo přímočařejší.
+		MyBatis navíc podporuje konfiguraci pomocí \ac{XML} souborů nebo pomocí Java anotací přímo v Java rozhraních.
 		Pro zjednodušení a držení logiky na jednom místě byl vybrán přístup s Java anotacemi.
-		Ten se ukázal jako dostačující, avšak našli se výjimky, kdy složitost použitého \ac{SQL} kódu
-		byla na hraně přehlednosti.
+		Ten se ukázal jako dostačující, avšak našly se výjimky, kdy složitost byla použitého \ac{SQL} kódu
+		na hraně přehlednosti.
 		Momentálně tedy existuje pro každý typ entity třída reprezentující repozitář, která obsahuje metody obalené \ac{SQL}
 		dotazy.
 		Zde je možné vidět reprezentativní ukázku části repozitáře pro práci s uživatelskými účty.
@@ -1962,14 +1961,14 @@ public interface AccountDao {
 
 		\subsubsection{Validace entit}
 
-		Validace entit je velice důležitá, pokud uživatelé mohou data upravovat zvenčí.
+		Validace entit je velice důležitá, pokud mohou uživatelé data upravovat zvenčí.
 		Díky ní se do databáze dostanou jen validní data.
-		Tato aplikace využívá dvou typů validací, každou pro validování něčeho jiného.
+		Tato aplikace využívá dvou typů validací a každou pro validování něčeho jiného.
 		První a hlavní validací je validace hodnot entit.
 		Tato validace je ta jednodušší, protože je jasně předem daný formát hodnot, a navíc pro tuto problematiku existují knihovny.
 		Druhým typem využívané validace je validace hodnoty oproti původní verzi.
 		Takovými hodnotami jsou většinou stavy entit nebo různé datumy.
-		Příkladem může být stav karty, kde smazaná karta již nesmí přejít do stavu aktivní karty, protože nemá potřebná data.
+		Příkladem může být stav karty, v němž nesmí smazaná karta již přejít do stavu aktivní karty, protože nemá potřebná data.
 		Dalším příkladem je datum vytvoření entity, který se nesmí změnit jinak by postrádal svůj účel.
 
 		Pro tento projekt byla využita knihovna Hibernate Validator zabývající se především prvním typem validací.
@@ -1994,7 +1993,7 @@ public class CardLinkGroup {
 			\captionsource{Ukázka třídy s validačními pravidly pomocí Java anotací.}{[autor]}
 		\end{codeblock}
 
-		Díky rozšířitelnosti této knihovny je možné jednoduše implementovat i druhý typ validací.
+		Díky rozšiřitelnosti této knihovny je možné jednoduše implementovat i druhý typ validací.
 		Tyto validace pak mají vlastní Java anotace a validátory.
 		Pokud se nějaký takový atribut o proti původní verzi změnil, validace selže a neumožní uživateli
 		uložit novou verzi entity.
@@ -2010,7 +2009,7 @@ public class CardLinkGroup {
 		Aplikace k ukládání a získávání souborů využívá \ac{API} vystavené službou Cloudinary.
 		Získávání variant obrázků do \ac{GUI} zajišťuje front-endová aplikace přímo ze serverů Cloudinary.
 
-		Cloudinary poskytuje jeden velký adresář pro všechny soubory, což je při více typů souborů nevhodné.
+		Cloudinary poskytuje jeden velký adresář pro všechny soubory, což je při více typech souborů nevhodné.
 		Naštěstí podporuje vnořené adresáře.
 		Z tohoto důvodu vznikl koncept typů uložišť, kde každý typ definuje cestu
 		relativního kořenového adresáře, typ ukládaných souborů a interní ID.
@@ -2034,7 +2033,7 @@ public class StorageFile {
 		\end{codeblock}
 
 		Autor a typ úložiště slouží momentálně hlavně k jednoduché validaci zvoleného obrázku při ukládání karty, kdy
-		se validuje jestli majitel karty je zároveň majitelem obrázku a zdali se jedná skutečně o profilový obrázek.
+		se validuje, jestli majitel karty je zároveň majitelem obrázku a zdali se jedná skutečně o profilový obrázek.
 		Tyto validace existují, aby nebylo možné někým záměrně využít obrázek někoho jiného nebo soubor, který k tomu
 		není určený.
 
@@ -2066,27 +2065,27 @@ https://res.cloudinary.com/id_uloziste/image/upload/t_256x256/id_souboru
 		\subsubsection{Transakční emaily}
 
 		Cílem bylo vytvořit systém umožňující odesílat předem definované zprávy na základě aplikačních událostí.
-		Tím že aplikace bude využívat externí službu SendinBlue, v aplikaci bylo nutné připravit pouze propojení
+		Tím, že aplikace bude využívat externí službu SendinBlue, bylo v aplikaci nutné připravit pouze propojení
 		\ac{API} s aplikačními událostmi.
 
 		Pro odesílaní emailů se nejdříve připravily šablony zpráv, aby bylo co odesílat.
 		K tomu byl využit integrovaný klikací editor, protože
-		podpora zobrazování ostylovaného \ac{HTML} obsahu v
+		podpora zobrazování stylovaného \ac{HTML} obsahu v
 		emailových klientech je poměrně omezená a velice se liší mezi jednotlivými klienty.
 		Kvůli tomu by bylo časově náročné připravit šablonu fungující na všech populárních klientech, a to navíc ve dvou
 		verzích: desktopové a mobilní.
 
 		Každá šablona má v systému unikátní ID, takže byla tvořena jednoduchá mapovací enumerace.
-		Díky této enumeraci je pak v aplikaci jasné jaká šablona bude použita.
+		Díky této enumeraci je pak v aplikaci jasné, jaká šablona bude použita.
 		Dále může šablona využívat parametry místo konkrétního textu, které jsou při zpracování šablony nahrazeny
 		parametry požadavku.
 		Těmi může být cokoliv, například emailová adresa adresáta nebo expirační datum nějaké entity.
 
 		Odeslání konkrétního emailu už je pak jednoduché a vyžaduje pouze specifikování adresáta,
-		šablony emailu a parametrů, a následné odeslání požadavku do \ac{API} služby.
+		šablony emailu a parametrů a následné odeslání požadavku do \ac{API} služby.
 
 		Jak bylo nastíněno, systém bude odesílat emaily automaticky, jako reakci na vzniklé události v aplikaci.
-		Události jsou v tomto případě reprezentování aplikačními událostmi z frameworku Spring.
+		Události jsou v tomto případě reprezentovány aplikačními událostmi z frameworku Spring.
 		Spring umožňuje do systému publikovat aplikační události a definovat pozorovatele, kteří těmto událostem
 		naslouchají a mohou na ně reagovat.
 		Samotná aplikační událost je pouze jednoduchý objekt nesoucí kontextová data reprezentovaná událostí.
@@ -2103,7 +2102,7 @@ public class CardUpdatedEvent extends ApplicationEvent {
 		\end{codeblock}
 
 		Příkladem může být událost vyvolaná jako následek uložení upravené karty.
-		Událost reprezentuje úpravu karty a nese sebou upravenou kartu, kterou pozorovatel může
+		Událost reprezentuje úpravu karty a nese s sebou upravenou kartu, kterou může pozorovatel
 		využít pro provedení svých operací.
 
 		\begin{codeblock}
@@ -2119,9 +2118,9 @@ public class CardUpdatedEventListener {
 		\end{codeblock}
 
 		Právě tento přístup využívá modul odesílání emailů.
-		Modul má do systému vystavené vlastní posluchače na konkrétní aplikační události (změna emailu uživatele, změna hesla,
-		vypršení platnosti předplatného...), kteří při vzniku údalostí odesílají pomocí \ac{API} emaily.
-		Tento přístup je vhodný, protože ostatní moduly vůbec nevědí o modulu emailů, a nevzniká
+		Modul má do systému vystavené na konkrétní aplikační události vlastní posluchače (změna emailu uživatele, změna hesla,
+		vypršení platnosti předplatného...), kteří při vzniku událostí odesílají pomocí \ac{API} emaily.
+		Tento přístup je vhodný, protože ostatní moduly vůbec nevědí o modulu emailů a nevzniká
 		tak fyzické propojení znepřehledňující kód.
 		Navíc je jednoduché přidávat nové události a jejich posluchače.
 
@@ -2130,7 +2129,7 @@ public class CardUpdatedEventListener {
 		Fulltextové vyhledávání je komplexní operace, která vyžaduje analýzu textů a přípravu vyhledatelných dat.
 
 		I přes míru abstrakce je potřeba znát základní koncepty fulltextového vyhledávání.
-		Fulltextové vyhledávání pracuje s tzv. analyzátory, kteří analyzují text a generují z něj index relevantních
+		Fulltextové vyhledávání pracuje s tzv. analyzátory, které analyzují text a generují z něj index relevantních
 		slov.
 		Tento proces je aplikován na vyhledatelné dokumenty a uživatelské vyhledávací fráze.
 		Vygenerované indexy se při vyhledávání porovnávají, a podle určitých kritérií databáze vyhodnotí relevantnost
@@ -2139,8 +2138,8 @@ public class CardUpdatedEventListener {
 		Každý analyzér se skládá z filtrů znaků, tokenizérů a filtrů tokenů.
 		Filtry znaků v analyzovaném textu upravují jednotlivé znaky.
 		Znaky mohou přidávat, odebírat nebo nahrazovat jinými (např.: odstranění diakritiky).
-		Poté je takto upravený text předán tokenizérům, kteří text rozdělí na kolekci tokenů.
-		Token může představovat cokoliv co dává v kontextu aplikace smysl, nicméně většinou přestavuje jedno
+		Poté je takto upravený text předán tokenizérům, které text rozdělí na kolekci tokenů.
+		Token může představovat cokoli, co dává v kontextu aplikace smysl, nicméně většinou přestavuje jedno
 		slovo.
 		Tyto tokeny můžou být ještě upraveny pomocí filtrů tokenů.
 		Ty umožňují přidávat, upravovat a mazat tokeny.
@@ -2148,17 +2147,17 @@ public class CardUpdatedEventListener {
 		diakritiky nebo filtr pro převedení tokenů na malá písmena.
 		Výsledné tokeny pak tvoří index, nad kterým již lze vyhledávat.
 		\cite{analyzer_anatomy}
-		Pro tuto aplikaci byl sestaven analyzér skládající se primárně z tokenizéru rozdělující věty na slova a filtru
+		Pro tuto aplikaci byl sestaven analyzér skládající se primárně z tokenizéru rozdělujícího věty na slova a filtru
 		přidávající dodatečné části původních slov pro širší podporu hledaných frází.
 
 		Elasticsearch pracuje s tzv. indexy, což jsou kolekce dokumentů entit stejného typu.
 		Tyto dokumenty pak lze vyhledávat pomocí dotazovacího jazyka.
 		Každý index má kromě samotných dat i konfiguraci, jak s daty pracovat.
-		Kromě obecných konfiguračních hodnot obsahuje hlavně strukturu dokumentů, aby databáze byla schopna efektivně vyhledávat.
+		Kromě obecných konfiguračních hodnot obsahuje hlavně strukturu dokumentů, aby byla databáze schopna efektivně vyhledávat.
 		Tato definice zahrnuje v první řadě určení datových typů jednotlivých atributů entit.
 		Od datového typu se pak odvíjí další konfigurační hodnoty.
 		Nejdůležitějším takovým nastavením pro fulltextové vyhledávání je specifikování analyzérů pro textové hodnoty.
-		Specifikované analyzéry by měli odpovídat analyzéru použitému při vyhledávání.
+		Specifikované analyzéry by měly odpovídat analyzéru použitému při vyhledávání.
 
 		Elasticsearch pro práci s těmito indexy a dokumenty poskytuje Java knihovnu reflektující jeho \ac{REST} \ac{API},
 		prostřednictvím které lze jednoduše nahrávat entity do indexů.
@@ -2175,7 +2174,7 @@ final IndexResponse cardResponse = esClient.index(i -> i
 		\end{codeblock}
 
 		Hlavní řešené problémy spočívaly v přípravě entit a správě indexů.
-		Tuto problematiku totiž Elasticsearch knihovna řeší ve formě dílčích operací, nikoliv však jako celek.
+		Tuto problematiku totiž Elasticsearch knihovna řeší ve formě dílčích operací, nikoli však jako celek.
 		Bylo potřeba vyřešit indexaci a vyhledávání karet a geografických míst.
 		Karty musí být uživatel schopen vyhledat fulltextově skrze vícero atributů (název, popisek, odkazy...) a geografická
 		místa podle lokace v mapě.
@@ -2183,11 +2182,11 @@ final IndexResponse cardResponse = esClient.index(i -> i
 		První jednodušší problematikou je příprava entit.
 		Mohlo by se zdát, že tento problém nastane spíše v nestandardním projektu, avšak data využívaná k vyhledávání
 		jsou trochu jiná než ta hlavní.
-		V případě karet je nebytné komplexní strukturu dat značně zjednodušit, protože by jinak Elasticsearch
+		V případě karet je nezbytné komplexní strukturu dat značně zjednodušit, protože by jinak Elasticsearch
 		nebyl schopen zanořená data správně analyzovat.
 		Některé atributy je zase potřeba agregovat do jiné formy.
-		V případě geografických míst je naproti tomu nutné zagregovat více různých dat, a paradoxně strukturu míst lehce
-		zesložitit, aby obsahovala vše co uživatel potřebuje.
+		V případě geografických míst je naproti tomu nutné zagregovat více různých dat a paradoxně strukturu míst lehce
+		zesložitit, aby obsahovala vše, co uživatel potřebuje.
 
 		\begin{codeblock}
 			\begin{verbatim}
@@ -2251,10 +2250,10 @@ jan_novak
 		Oba způsoby mají podobnou základní strukturu, ale liší se v přípravě dat.
 		Proces nejdřív vytvoří nový prázdný index s novým nastavením.
 		Následně se některým ze způsobů indexují data do nového indexu.
-		Po dokončené indexaci se přesune unifikovaný identifikátor indexu na nový index, a starý index se permanentně
+		Po dokončené indexaci se přesune unifikovaný identifikátor indexu na nový index a starý index se permanentně
 		smaže.
 
-		Prvním jednodušším a rychlejším způsobem je reindexace na úrovni Elasticsearch.
+		Prvním, jednodušším a rychlejším způsobem je reindexace na úrovni Elasticsearch.
 		Pro tento případ má Elasticsearch připravené jednoduché \ac{API}, v němž programátor pouze specifikuje starý a nový
 		index, a vše ostatní už si zařídí sám Elasticsearch.
 		Tento způsob však nenabízí možnost nahrání upravených dat entit, pouze změnu konfigurace indexu.
@@ -2265,7 +2264,7 @@ jan_novak
 		reindexace dat z primární databáze.
 		Tento způsob obsahuje hromadné stažení entit z primární databáze, jejich transformaci do indexovatelných entit
 		a hromadnou indexaci pomocí \ac{API}.
-		Tento proces je zdlouhavý, právě kvůli nutnosti přesunutí dat mezi dvěma kompletně oddělenými systémy.
+		Tento proces je zdlouhavý právě kvůli nutnosti přesunutí dat mezi dvěma kompletně oddělenými systémy.
 
 		\cntcapfigure{proces_reindexace_z_db}{5cm}{Proces hromadné reindexace nových dat z primární databáze.}{[autor]}
 
@@ -2278,7 +2277,7 @@ jan_novak
 		U většiny aplikací se nachází alespoň nastavení připojení k primární databázi, která je pro každého prostředí
 		odlišná, aby nedocházelo k poškození dat (např.: mezi vývojovým a produkčním prostředím).
 
-		Tato nastavení musí být dostupná v aplikaci, a je tak nutné definovat jak se budou nastavení zapisovat, a jak se
+		Tato nastavení musí být dostupná v aplikaci, a je tak nutné definovat, jak se budou nastavení zapisovat a jak se
 		zpřístupní kódu.
 		V případě Java aplikací se často využívá "properties" souborů, které obsahují nastavení v podobě klíč-hodnota.
 		V modernějších aplikacích postavených na frameworku Spring se tento formát postupně nahrazuje flexibilnějším
@@ -2326,7 +2325,7 @@ accounts:
 			S pomocí speciálních vyhrazených sekvencí znaků je možné definovat poměrně velké množství kombinací
 			šablon.
 			Šablony jsou při načtení zanalyzovány a jsou z nich vytvořeny Regex výrazy.
-			Regex je výrazový jazyk skládající se ze speciálních znaků definující pravidla porovnávání \cite{regex}.
+			Regex je výrazový jazyk skládající se ze speciálních znaků definujících pravidla porovnávání \cite{regex}.
 			Díky tomu je možné jednoduše zjišťovat, jestli textové řetězce vyhovují nějakému výrazu.
 			Systém momentálně podporuje sekvence \lstinline{*} a \lstinline!{userPart}!.
 			Sekvence \lstinline{*} říká, že se na tomto místě může nacházet jakýkoliv znak, vyjma hostové části \ac{URL}
@@ -2344,7 +2343,7 @@ https://{userPart}.example.com
 				\captionsource{Ukázka šablon URL adres.}{[autor]}
 			\end{codeblock}
 
-			Systém obsahuje různé validace aplikované při analyzování šablon, aby se do aplikace nemohli načíst
+			Systém obsahuje různé validace aplikované při analyzování šablon, aby se do aplikace nemohly načíst
 			nevalidní šablony.
 			Momentálně definovanými pravidly URL šablon jsou následující:
 			\begin{itemize}
@@ -2359,12 +2358,12 @@ https://{userPart}.example.com
 			První část řeší, jestli \ac{URL} adresa odpovídá předpokládané \ac{URL} šabloně.
 			Předpokládaná šablona je určena nadřazenou skupinou odkazů.
 			Validátor se pak pokusí pro předanou adresu nalézt existující šablonu.
-			Pokud je tento předpoklad splněn, a zároveň se nemá validovat existence adresy, validace končí úspěchem.
-			V případě vyžadované validace existence validátor přechází do druhé části.
+			Pokud je tento předpoklad splněn a zároveň se nemá validovat existence adresy, validace končí úspěchem.
+			V případě vyžadované validace existence přechází validátor do druhé části.
 			Druhá část se zabývá validací existence \ac{URL} adresy, tedy, zda URL adresa odkazuje na nějakou existující
 			webovou stránku.
-			Toto se ověřuje simulováním \ac{HTTP} požadavku webového prohlížeče, a z odpovědi se zjistí, že buď stránka
-			existuje, stránka neexistuje nebo \ac{URL} adresa přesměrovává na jinou stránku.
+			Toto se ověřuje simulováním \ac{HTTP} požadavku webového prohlížeče a z odpovědi se zjistí, že buď stránka
+			existuje, neexistuje, nebo \ac{URL} adresa přesměrovává na jinou stránku.
 			V prvních dvou případech validace končí jasným výsledkem: validní, nevalidní.
 			V tom posledním se proces opakuje s novou vrácenou \ac{URL} adresou.
 			I u této adresy se kontroluje šablona a existence.
@@ -2378,8 +2377,8 @@ https://{userPart}.example.com
 			Bohužel ne u všech \ac{URL} adres lze validovat existenci.
 			Některé stránky mají pokročilou ochranu proti škodlivým strojovým botům, které tento validátor označí za
 			škodlivého bota.
-			Byly provedeny optimalizace v podobě úpravy \ac{HTTP} hlaviček, aby se validace tvářila jako webový prohlížeč,
-			a u některých stránek to skutečně pomohlo, jiné jsou ale pečlivější.
+			Byly provedeny optimalizace v podobě úpravy \ac{HTTP} hlaviček, aby se validace tvářila jako webový prohlížeč.
+			U některých stránek to skutečně pomohlo, jiné jsou ale pečlivější.
 			Proto se zavedl příznak přímo do definice šablon, který tuto validaci existence vypíná.
 			Naštěstí se jedná o nižší procenta stránek, a pro bezpečnost uživatelů je stěžejní pouze první část validace.
 
@@ -2387,17 +2386,17 @@ https://{userPart}.example.com
 
 		Proces aktivace prémiového plánu začíná aktivováním platného kupónu.
 		Na základě této aktivace je uživateli přiřazena speciální role a vytvořen nový popisný objekt předplatného
-		obsahující datum expirace.
-		Datum expirace je vypočítán z doby platnosti kupónu.
-		Každý kupón definuje, po jakou dobu bude předplatné aktivní, a při aktivaci se tato doba přičte k aktuálnímu datu.
+		obsahujícího datum expirace.
+		Datum expirace je vypočítáno z doby platnosti kupónu.
+		Každý kupón definuje, po jakou dobu bude předplatné aktivní; při aktivaci se tato doba přičte k aktuálnímu datu.
 		V tuto chvíli uživatel může využívat všechny prémiové funkce.
-		Pokud by v tuto chvíli uživatel aplikoval další kupón, datum expirace by se změnil podle nového kupónu.
+		Pokud by v tuto chvíli uživatel aplikoval další kupón, datum expirace by se změnilo podle nového kupónu.
 
 		V případě placeného předplatného by objekt předplatného zprvu datum expirace neměl.
-		Ta by se nastavila automaticky, až při neprovedené následující platbě.
+		To by se nastavilo automaticky až při neprovedené následující platbě.
 
 		Systém tedy při vytváření a ukládání karet musí vždy validovat zda daná karta neobsahuje prémiový obsah.
-		Pokud ano, musí zkontrolovat, zdali uživatel má příslušnou roli.
+		Pokud ano, musí zkontrolovat, zdali má uživatel příslušnou roli.
 		V případě, že by neměl, je celý požadavek zaříznut a uživateli je vrácena chyba.
 
 		Nejkomplikovanější částí celého systému je expirace předplatného.
@@ -2405,7 +2404,7 @@ https://{userPart}.example.com
 		Pokud uživatel v době expirace nemá na svém účtu prémiový obsah, je situace jednoduchá a předplatné se zruší okamžitě.
 		Pokud však uživatel v době expirace má na svém účtu prémiový obsah, je potřeba s těmito daty nějak naložit.
 		Uživatel tak dostane tři možnosti.
-		Tou nejjednodušší je upozornění ignorovat, a v takovém případě se po nějaké době všechny karty uživatele skryjí
+		Tou nejjednodušší je upozornění ignorovat - v takovém případě se po nějaké době všechny karty uživatele skryjí
 		a veřejnost se na ně už nepodívá.
 		Druhou možností je prémiový obsah pomocí speciálního formuláře odstranit, aby bylo možné zrušit předplatné.
 		Poslední možností je prodloužení předplatného.
@@ -2414,7 +2413,7 @@ https://{userPart}.example.com
 		Celý proces začíná nějakou dobou před expirací.
 		Uživatel je dopředu emailem upozorněn na blížící se expiraci.
 		Pokud uživatel do té doby nesmaže všechen prémiový obsah, v den expirace přijde druhý email s informací o
-		proběhlé expiraci, a možnostmi, které uživatel může provést.
+		proběhlé expiraci a možnostmi, které uživatel může provést.
 		Pokud bude uživatel ignorovat toto upozornění, během několika dní mu přijde druhé upozornění.
 		V případě, že uživatel ignoruje i toto poslední varování, všechna data uživatele jsou během několika dní
 		automaticky skryta.
@@ -2424,14 +2423,14 @@ https://{userPart}.example.com
 
 		\subsubsection{REST API}
 
-		K zajištění komunikace mezi front-endovou \ac{GUI} aplikací a aplikací \ac{API} serveru, server
-		vystavuje právě \ac{REST} \ac{API}.
+		K zajištění komunikace mezi front-endovou \ac{GUI} aplikací a aplikací \ac{API} serveru, vystavuje server
+		právě \ac{REST} \ac{API}.
 		Díky němu je možné vytvářet, ukládat a získávat entity, a spouštět různé akce.
 
 		\ac{REST} \ac{API} obecně pracuje s tzv. zdroji.
 		Každý zdroj představuje jeden typ pojmenovatelné informace.
-		Tím může být entita, obrázek, dokument, nebo třeba kolekce.
-		Jednotlivé zdroje jsou pak vystaveny na přesně daných \ac{URL} adresách, a pomocí \ac{HTTP} metod (GET, POST, PUT...)
+		Tím může být entita, obrázek, dokument nebo třeba kolekce.
+		Jednotlivé zdroje jsou pak vystaveny na přesně daných \ac{URL} adresách a pomocí \ac{HTTP} metod (GET, POST, PUT...)
 		je možné nad těmito zdroji provádět operace.
 		Operace jsou většinou následující: získání konkrétního zdroje nebo jeho kolekce, vytvoření nového zdroje nebo
 		úprava již existujícího.
@@ -2450,12 +2449,12 @@ https://{userPart}.example.com
 
 			\cntcapfigure{api_model_ucty}{\linewidth}{Stromový přehled struktury API uživatelských účtů.}{[autor]}
 
-			Nejpodstatnější \ac{API} se zabývá manipulací karet, a zároveň umožňuje získávat i další podřazené entity.
+			Nejpodstatnější \ac{API} se zabývá manipulací karet a zároveň umožňuje získávat i další podřazené entity.
 			Mimo to nabízí i pomocné operace pro manipulaci s display ID.
 
 			\cntcapfigure{api_model_karty}{\linewidth}{Stromový přehled struktury API karet.}{[autor]}
 
-			\ac{API} úložiště momentálně umožňuje pouze soubory nahrávat, protože systém pracuje pouze s veřejnými soubory, které
+			\ac{API} úložiště momentálně umožňuje soubory pouze nahrávat, protože systém pracuje pouze s veřejnými soubory, které
 			lze získat přímo z Cloudinary serverů.
 
 			\cntcapfigure{api_model_uloziste}{10cm}{Stromový přehled struktury API uložiště.}{[autor]}
@@ -2465,7 +2464,7 @@ https://{userPart}.example.com
 			\cntcapfigure{api_model_vyhledavani}{10cm}{Stromový přehled struktury API vyhledávání karet.}{[autor]}
 
 			Aplikace také nabízí interní administraci pro správce.
-			Proto vzniklo i \ac{API} pro spouštění servisních operací a k správě zákulisních zdrojů (např.: kupóny).
+			Proto vzniklo i \ac{API} pro spouštění servisních operací a ke správě zákulisních zdrojů (např.: kupóny).
 
 			\cntcapfigure{api_model_adm}{\linewidth}{Stromový přehled struktury API operací administrace.}{[autor]}
 
@@ -2478,10 +2477,10 @@ https://{userPart}.example.com
 			Nejtypičtějšími takovými daty jsou hesla uživatelů.
 			Někdy je také nezbytné poskytnout agregované atributy, které však nemají své místo v originálních datech.
 			Právě z těchto důvodů \ac{API} využívá tzv. \firstac{DTO}.
-			Tyto datové objekty slouží obecně pro přenos daty mezi procesy.
+			Tyto datové objekty slouží obecně pro přenos dat mezi procesy.
 			V tomto případě přenáší data mezi \ac{API} serverem a front-endovou aplikací.
 			\ac{API} tak na venek pracuje pouze s \ac{DTO} objekty, které reflektují doménové objekty.
-			Speciálním případem jsou \ac{DTO} objekty jenž slouží pouze pro jednorázové předání dat.
+			Speciálním případem jsou \ac{DTO} objekty, jež slouží pouze pro jednorázové předání dat.
 			Většinou se používají pro specifikování požadavků front-endové aplikace na zvolenou operaci, nebo jako
 			objekty nesoucí výsledek nějaké operace.
 
@@ -2503,7 +2502,7 @@ public interface DtoFactory<E, D> {
 			Transformace z \ac{DTO} objektu na doménový objekt je specifická v tom, že pro transformaci používá zároveň
 			i originální doménový objekt.
 			Díky tomu je možné zajistit, že výsledný objekt bude mít změněné pouze ty atributy, u nichž je to povolené.
-			Rozhraní továrny je generické, a proto pro každá doménová entita má vlastní implementaci.
+			Rozhraní továrny je generické, a proto má každá doménová entita vlastní implementaci.
 
 			\paragraph{Zabezpečení}
 
@@ -2519,7 +2518,7 @@ public interface DtoFactory<E, D> {
 			nástroje pro tvorbu přihlašování a práv uživatelů.
 			Programátor si navíc tyto nástroje může relativně snadno rozšířit nebo implementovat vlastní.
 
-			Specificky pro tuto aplikaci bylo definováno jaké \ac{URL} adresy \ac{API} vyžadují přihlášení a specifické
+			Specificky pro tuto aplikaci bylo definováno, jaké \ac{URL} adresy \ac{API} vyžadují přihlášení a specifické
 			role, a výchozí přihlašovací proces byl rozšířen o externí poskytovatele a vlastní správu účtů.
 
 			\begin{codeblock}
@@ -2542,10 +2541,10 @@ protected void configure(HttpSecurity http) throws Exception {
 
 			Korektní implementace procesu přihlašování je pro aplikaci využívající uživatelské účty stěžejní.
 			Zabraňuje neoprávněným uživatelům vydávat se za jiné uživatele.
-			Standardním, dlouhá léta využívaným, přístupem je ověření kombinace emailové adresy/uživatelského jména
+			Standardním, dlouhá léta využívaným přístupem je ověření kombinace emailové adresy/uživatelského jména
 			a hesla.
 			U tohoto přístupu kombinaci ověřuje přímo aplikace.
-			Druhým, stále více používaným, přístupem je přihlašování pomocí třetích stran.
+			Druhým, stále více používaným přístupem je přihlašování pomocí třetích stran.
 			Při tomto přístupu aplikace deleguje přihlašování na jiného poskytovatele uživatelských účtů, který následně
 			vrátí aplikaci informace o přihlášeném uživateli.
 			Aplikace se tak nemusí starat o ověřování hesla a podobně.
@@ -2559,13 +2558,13 @@ protected void configure(HttpSecurity http) throws Exception {
 			některých z poskytovatelů.
 			Momentálně jsou připraveni nejvyužívanější poskytovatelé Google, GitHub a Facebook, nicméně rozšíření o
 			další poskytovatele nepředstavuje příliš práce.
-			Zaregistrovaný uživatel si pak může ke svému účtu připojit i další způsoby, tedy, pokud se zaregistroval emailovou
+			Zaregistrovaný uživatel si pak může ke svému účtu připojit i další způsoby, tedy pokud se zaregistroval emailovou
 			adresou, může si připojit některého z poskytovatelů a obráceně.
 			Díky tomu si uživatel může při každém přihlášení vybrat, jakým způsobem se přihlásí.
 
 			Druhým řešeným problémem je, jak verifikovat přihlášeného uživatele při každém následujícím \ac{HTTP} požadavku na server,
 			aniž by musel uživatel pokaždé zadávat přihlašovací údaje.
-			Aplikace na serveru může buď udržovat v paměti sezení každého uživatele nebo vygenerovat uživateli token
+			Aplikace na serveru může buď udržovat v paměti sezení každého uživatele, nebo vygenerovat uživateli token
 			obsahující informace o uživateli.
 
 			V případě, že aplikace využívá sezení, je na serveru spravován objekt s informacemi o přihlášeném uživateli.
@@ -2574,12 +2573,12 @@ protected void configure(HttpSecurity http) throws Exception {
 			Bohužel server musí zajistit opatření proti krádeži těchto ID.
 
 			Alternativou je vygenerování tokenu obsahující uživatelské informace.
-			Tento token je následně předán klientovi, a ten musí zaručit předání vygenerovaného tokenu severu.
+			Tento token je následně předán klientovi, který musí zaručit předání vygenerovaného tokenu severu.
 			Tento způsob je převážně využíván pro komunikaci mezi servery, avšak začíná se používat i v aplikacích, kde
 			je aplikace rozdělena na \ac{GUI} část a \ac{API} část.
 			Díky tomuto přístupu server nemusí udržovat sezení přihlášených uživatelů.
-			Tím že server nemá token pod svojí správou, není však snadné takový token označit jako neplatný, třeba v případě odhlášení.
-			To jde řešit například ukládáním tokenů do databáze, nicméně správa tokenů se pak částečně přenáší zpět
+			Tím že server nemá token pod svojí správou, není snadné takový token označit jako neplatný, třeba v případě odhlášení.
+			To lze řešit například ukládáním tokenů do databáze, nicméně správa tokenů se pak částečně přenáší zpět
 			na server, a výhody nezávislosti na serveru mizí.
 			Řešení se tak přibližuje přístupu se sezeními, avšak za cenu složitější implementace.
 
@@ -2587,7 +2586,7 @@ protected void configure(HttpSecurity http) throws Exception {
 			řešení je zbytečně složité a ne úplně spolehlivé.
 			Přihlašování bylo tedy přepracováno na řešení se sezeními, které má již knihovna Spring Security v základu
 			vyřešené, což neplatilo o předchozím přístupu.
-			Díky tomu se celý proces zjednodušil a delegoval se na externí knihovnu, na které pracují experti v oboru.
+			Díky tomu se celý proces zjednodušil a delegoval na externí knihovnu, na které pracují experti z oboru.
 			Bonusem bylo zjednodušení implementace přihlašování pomocí poskytovatelů třetích stran, protože pro tyto scénáře
 			má knihovna Spring Security připravenou podporu.
 
@@ -2605,7 +2604,7 @@ protected void configure(HttpSecurity http) throws Exception {
 
 		Automatizované testování umožňuje kód aplikace otestovat ještě před samotným spuštěním a testovat
 		kód průběžně při úpravách a rozšiřováních.
-		Díky tomuto testování je možné předejít velkému množství logických chyb, již v počátku implementace.
+		Díky tomuto testování je možné předejít velkému množství logických chyb již v počátku implementace.
 
 		Způsobů testování je více.
 		Tato aplikace využívá unit testování a integračního testování.
@@ -2620,7 +2619,7 @@ protected void configure(HttpSecurity http) throws Exception {
 		Hlavní knihovnou zpřístupňující nástroje pro spouštění testů a ověřování výsledků je JUnit.
 		Aby bylo možné třídy testovat izolovaně, je potřeba simulovat chování ostatních komponent, se kterými testovaná
 		třída komunikuje.
-		K tomu je využita knihovna Mockito, která zároveň umožňuje zkoumat proběhlé interakce, a na základě toho vyhodnocovat testy.
+		K tomu je využita knihovna Mockito, která zároveň umožňuje zkoumat proběhlé interakce a na základě toho vyhodnocovat testy.
 
 		\begin{codeblock}
 			\begin{verbatim}
@@ -2644,7 +2643,7 @@ public void getMostUsedTags_ExpectedFoundCorrectOnes() {
 		komponent k zajištění výsledků.
 
 		Při testování repozitářů je potřeba testovat \ac{SQL} dotazy oproti reálné databázi s daty.
-		K spuštění takových testů je tedy potřeba běžící testovací databáze s připravenými testovacími daty.
+		Ke spuštění takových testů je tedy potřeba běžící testovací databáze s připravenými testovacími daty.
 		Ta jsou do databáze nahrávána před každým testem a mazána po každém testu.
 		Tím je zaručena izolovanost jednotlivých testů, aby nedocházelo k mylným výsledkům.
 
@@ -2683,7 +2682,7 @@ public void validateLink_InvalidLink_ExpectedFalse() {
 		\subsubsection{Komunikace s API serverem}
 
 		Prvním stavebním kamenem je možnost komunikovat s vyvinutým \ac{API}.
-		Opět existuje spousta ověřených knihoven řešící problémy komunikace.
+		Opět existuje spousta ověřených knihoven řešících problémy komunikace.
 		Nuxt přichází se svou vlastní, která má jednoduché \ac{API}, a proto byla zvolena.
 		Díky integraci s Nuxt frameworkem bylo možné jednoduše centralizovaně přednastavit knihovnu pro všechna volání \ac{API}.
 		Hlavní takovou konfigurací byla správa chyb z volání \ac{API}.
@@ -2717,7 +2716,7 @@ $http.onRequest(async (request) => {
 
 		\subsubsection{Lokalizace textů}
 
-		Lokalizace textů se zabývá zobrazováním textů prvků \ac{UI} v konkrétním jazyce uživatele.
+		Lokalizace textů se zabývá zobrazováním textů prvků \ac{UI} v konkrétním jazyku uživatele.
 		Díky tomu různí uživatelé mluvící odlišnými jazyky mohou bez problému aplikaci využívat v jejich nativním jazyce.
 
 		Tuto problematiku řeší například knihovna i18n od tvůrců frameworku Nuxt.
@@ -2742,11 +2741,11 @@ $http.onRequest(async (request) => {
 
 		\cntcapfigure{nevalidni_pole_formulare}{8cm}{Ukázka pole formuláře s textem v nevalidním formátu.}{[autor]}
 
-		Pomocí knihovny Vuelidate bylo implementováno zobrazování chyb přímo v konkrétních polích hned,
-		jakmile uživatel vyplní dané pole.
+		Pomocí knihovny Vuelidate bylo implementováno zobrazování chyb přímo v konkrétních polích, hned
+		jak uživatel vyplní dané pole.
 		Knihovna řeší celý mechanismus validace hodnot polí a poskytování výpisu všech chyb ve formuláři.
 		Zároveň přichází s obecnými validátory, ale programátor může implementovat i vlastní.
-		Toho bylo využito především u validace \ac{URL} adres odkazů na sociální síťě, u nichž je potřeba se dotázat \ac{API},
+		Toho bylo využito především u validace \ac{URL} adres odkazů na sociální sítě, u nichž je potřeba se dotázat \ac{API},
 		které adresy zvaliduje.
 
 		\begin{codeblock}
@@ -2776,13 +2775,13 @@ return async function (displayId) {
 		Pokud v aplikaci vznikne nějaká událost (chyba, úspěšnost operace...), je nutné o tom informovat uživatele.
 		To je v tomto případě vyřešeno vyskakujícími upozorněnými po vzoru mobilních operačních
 		systémů.
-		Tento způsob je výhodný v tom, že uživatel si upozornění všimne ať už je kdekoliv na stránce, i
+		Tento způsob je výhodný v tom, že si uživatel upozornění všimne, ať už je kdekoliv na stránce, i
 		při přechodu mezi modálními okny.
 
 		\cntcapfigure{upozorneni_chyba}{6cm}{Ukázka upozornění na chybu vzniklou špatnými přihlašovacími údaji.}{[autor]}
 
 		K implementaci upozornění byla využita knihovna Vue.js notifications
-		poskytující dostatečnou volnost přizpůsobení vzhledu a chování, oproti ostatním podobným knihovnám.
+		poskytující oproti ostatním podobným knihovnám dostatečnou volnost přizpůsobení vzhledu a chování.
 		Je navíc na míru tvořena pro knihovnou Vue.
 		Knihovna poskytuje jednoduché \ac{API} pro vystavování upozornění pomocí specifikování typu zprávy (chyba, úspěch, info...) a
 		samotné zprávy.
@@ -2792,7 +2791,7 @@ return async function (displayId) {
 		Tato kombinace tak značně zvyšuje riziko chybovosti kódu.
 		Vznikla proto jednoduchá abstrakce zpřístupňující pomocné metody, které jsou dostupné celou aplikací.
 		Pro každý používaný typ zprávy (chyba, úspěch, info) existuje právě jedna metoda vyžadující pouze klíč překladového textu.
-		Malou výjimkou jsou chybové zprávy, kde existují dvě metody: jedna s možností vložení vlastního textu, druhá
+		Malou výjimkou jsou chybové zprávy, v nichž existují dvě metody: jedna s možností vložení vlastního textu, druhá
 		zobrazující generickou chybu.
 
 		\begin{codeblock}
@@ -2856,7 +2855,7 @@ ENTRYPOINT yarn start --dotenv=.env.$ENV
 
 		\subsubsection{Nastavení Kubernetes}
 
-		Na základě připravených Docker imagí pro obě aplikace byl zprovozněn systém Kubernetes.
+		Na základě připravených Docker images byl pro obě aplikace zprovozněn systém Kubernetes.
 		V systému se kromě implementovaných aplikací nachází i webový server nginx a databázový systém Elasticsearch.
 		Jediný databázový systém PostgreSQL je provozován samostatně poskytovatelem DigitalOcean,
 		není tak nutné se starat o ruční zálohovaní nebo výpadky.
@@ -2864,7 +2863,7 @@ ENTRYPOINT yarn start --dotenv=.env.$ENV
 		\cntcapfigure{architektura_produkce}{\linewidth}{Putování HTTP požadavku infrastrukturou.}{[autor]}
 
 		Webový server slouží jako vstupní brána do celého systému a poskytuje nástroje pro zabezpečení požadavků.
-		Zároveň zahazuje neplatné požadavky ještě dřív, než by mohli způsobit škody v samotných aplikacích.
+		Zároveň zahazuje neplatné požadavky ještě dřív, než by mohly způsobit škody v samotných aplikacích.
 		Následně platné požadavky deleguje na serverovou část front-endové aplikace s požadavkem na poskytnutí webových stránek.
 		V případě, že jsou vyžadována data z API serveru, front-endová aplikace část požadavku deleguje právě na \ac{API}.
 		\ac{API} server si navíc data může vyžádat z primární nebo vyhledávací databáze.
@@ -2872,7 +2871,7 @@ ENTRYPOINT yarn start --dotenv=.env.$ENV
 
 		Obě aplikace a server nginx jsou nakonfigurované jako Deploymenty, jediný Elasticsearch je nastaven jako StatefulSet.
 		Deployment je entita Kubernetes systému popisující, jak bude aplikace spuštěna \cite{deployements}.
-		Deploymenty se používají v případě, kdy aplikace neudržuje důležitá data, o která by se v případě vypnutí přišlo
+		Deploymenty se používají v případě, že aplikace neudržuje důležitá data, o která by se v případě vypnutí přišlo
 		\cite{deployements}.
 		StatefulSety jsou jakousi nadstavbou nad Deploymenty, a zaručují udržení stavů spuštěných aplikací. \cite{statefulsets}.
 		Právě z těchto důvodů mohou být implementované aplikace spouštěny jednoduššími Deploymenty, protože všechna důležitá
@@ -2900,10 +2899,10 @@ Oproti prodeji produktů zase nepředstavují tak vysokou zátěž na vývoj.
 
 Následovala analýza a porovnání webových technologií a nástrojů pro implementaci.
 Výběr obsahoval programovací jazyky a frameworky pro vývoj uživatelského rozhraní a serverové aplikace, nástroje pro návrh
-rozhraní, a podpůrné systémy, jako jsou databáze, úložiště souborů, systémy pro odesílání emailů a nástroje pro provoz
+rozhraní a podpůrné systémy, jako jsou databáze, úložiště souborů, systémy pro odesílání emailů a nástroje pro provoz
 v produkčním prostředí.
 
-Po analýze dostupných technologií, byla v první řadě zvolena architektura aplikace, od které se odvíjel výběr technologií a vývoj.
+Po analýze dostupných technologií byla v první řadě zvolena architektura aplikace, od které se odvíjel výběr technologií a vývoj.
 Pro zajištění vysoké interaktivnosti byla zvolena architektura, která rozděluje aplikace na front-endovou \ac{JS} aplikaci a back-endový
 \ac{API} server.
 Pro komunikaci v rámci této architektury byl zvolen vzor \ac{REST} pro jeho rozšířenost a vyspělost.
@@ -2912,12 +2911,12 @@ Po zvolení architektury aplikace bylo možné vybrat konkrétní technologie.
 Pro implementaci samotného vzhledu stránek byl využit framework \ac{SASS} pro zjednodušení vývoje stylů stránek.
 Mezi technologiemi pro implementaci interaktivnosti uživatelského rozhraní se objevily frameworky Vue, React, Angular a Swelte.
 Z těchto byl vybrán framework Vue pro jeho jednoduchost a kvalitní dokumentaci pro začátečníky.
-U jazyků a frameworků pro vývoj serverové části obsahující veškerou business logiku aplikace, se rozhodovalo mezi Javou,
+U jazyků a frameworků pro vývoj serverové části, obsahující veškerou business logiku aplikace, se rozhodovalo mezi Javou,
 C\#, PHP a Javascriptem.
-Kvůli velmi podobným výhodám napříč programovacími jazyky, byl vybrán jazyk Java společně s frameworkem Spring, spíše podle
-osobních preferencích a předchozích znalostí.
+Kvůli velmi podobným výhodám napříč programovacími jazyky byl vybrán jazyk Java společně s frameworkem Spring, ten ale
+spíše podle osobních preferencích a předchozích znalostí.
 
-Další rozhodování se zabývalo výběrem vhodné primární databáze pro uchování uživatelských dat a nástrojem pro
+Další rozhodování se zabývalo výběrem vhodné primární databáze pro uchování uživatelských dat a nástroje pro
 poskytnutí fulltextového vyhledávání.
 Výběr primární databáze zahrnoval populární kandidáty PostgreSQL, MySQL, Oracle DB, MariaDB a MongoDB.
 Na základě požadavků aplikace se výběr zúžil pouze na \ac{SQL} databáze, z nichž byla vybrána PostgreSQL,
@@ -2929,13 +2928,13 @@ Souborové úložiště ani systém pro odesílání emailů nebyly implementov�
 V případě souborového úložiště se jedná o Cloudinary (poskytující \ac{CDN} a tvořič variant obrázků), a v případě
 emailů byla zvolena služba SendinBlue.
 
-Nakonec, pro provoz aplikace byl zvolen systém Kubernetes a poskytovatel DigitalOcean.
+Nakonec byl pro provoz aplikace zvolen systém Kubernetes a poskytovatel DigitalOcean.
 Kuberenetes z důvodu volnosti konfigurace více aplikací bez nutnosti spravovat celý server.
 DigitalOcean pak kvůli nízkým cenám a celkové pověsti poskytovatele.
 
 Následoval návrh uživatelského rozhraní, podle kterého byl navržen i datový model a zvolen návrhový vzor \ac{DDD} pro strukturování
 kódu aplikace.
-Na základě modelu byla nejdříve implementována business logika, jenž byla vzápětí obalena \ac{REST} \ac{API}.
+Na základě modelu byla nejdříve implementována business logika, jež byla vzápětí obalena \ac{REST} \ac{API}.
 Business logika zahrnovala mimo jiné implementaci přístupu k databázi pomocí knihovny MyBatis, validaci entit, napojení
 na souborový systém a propojení aplikačních událostí s emailových systémem.
 Dále pak zahrnovala i implementaci vyhledávání karet a míst, konfiguraci sociálních sítí nebo implementaci prémiových plánů.
@@ -2944,7 +2943,7 @@ doménových entity na přenosné datové objekty.
 S připraveným funkčním \ac{API} se zaměření přesunulo na tvorbu front-endové části podle návrhu uživatelského rozhraní.
 Ta řešila problémy v podobě implementace komunikace s \ac{API}, centrálního zdroje informací,
 validace vstupních polí nebo upozornění.
-Nakonec byly pro obě aplikace vytvořeny Docker image a byl nakonfigurován systém Kubernetes.
+Nakonec byly pro obě aplikace vytvořeny Docker image a nakonfigurován systém Kubernetes.
 
 Všechny definované požadavky na aplikaci byly ve výsledku splněny a aplikace byla otestována na produkčním prostředí.
 Aplikace je dále otevřena k potencionálním budoucím rozšířením.
